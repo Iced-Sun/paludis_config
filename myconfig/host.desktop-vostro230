@@ -1,0 +1,5 @@
+x11-server/xorg-server							&xf86-video-intel
+sys-fs/btrfs-progs
+sys-apps/systemd        simple-net
+sys-devel/distcc        systemd
+x11-misc/synergy        systemd

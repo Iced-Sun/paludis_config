@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+PHASES=(sync_all_post install_all_post uninstall_all_post)
+
+hook_auto_names() {
+    echo ${PHASES[@]}
+}
+
+for h in ${PHASES[@]}; do
+    eval "hook_run_${h}() { update_search_index ; }"
+done
+
+update_search_index() {
+    source "${PALUDIS_EBUILD_DIR}/echo_functions.bash"
+
+    IDX=${ROOT}/var/cache/paludis/pkg.index
+
+    einfo "Rebuilding package indices..."
+    ${CAVE} manage-search-index --create ${IDX}
+    einfo "Done rebuilding package indices."
+
+    return 0
+}
+
+

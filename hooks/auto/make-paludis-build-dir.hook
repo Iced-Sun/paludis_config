@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+PHASES=(install_task_execute_pre sync_all_pre)
+
+hook_auto_names() {
+    echo ${PHASES[@]}
+}
+
+for h in ${PHASES[@]}; do
+    eval "hook_run_${h}() { mk_tmpdir ; }"
+done
+
+mk_tmpdir() {
+    source "${PALUDIS_EBUILD_DIR}/echo_functions.bash"
+
+    BUILD_DIR="/var/tmp/paludis/build"
+    mkdir -p "${BUILD_DIR}"
+    chown paludisbuild:paludisbuild "${BUILD_DIR}"
+    chmod g+wrx "${BUILD_DIR}"
+
+    return 0
+}
+
+

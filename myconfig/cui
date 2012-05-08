@@ -1,0 +1,48 @@
+### <Tab> => dependency, "&" => recommendation and suggestion, "~" => unstable
+## repositories
+repository/arbor
+repository/emacs
+repository/media
+repository/ingmar
+
+## essential app and lib
+sys-boot/grub
+sys-apps/systemd							&-*/*
+sys-fs/udev
+sys-apps/dbus			X
+sys-apps/paludis		prebuilt-documentation search-index
+
+## app-arch
+app-arch/p7zip
+app-arch/unrar
+app-arch/unzip
+app-arch/xz
+
+## fs
+sys-fs/dosfstools
+sys-fs/ntfs-3g_ntfsprogs
+
+## media
+sys-sound/alsa-utils
+
+## editors
+app-editors/emacs		-alsa
+	app-spell/aspell						&-*/* aspell-en
+app-emacs/exheres-mode
+app-emacs/cc-mode
+app-emacs/org
+
+## sys-apps
+app-terminal/tmux
+app-misc/mc
+sys-apps/lesspipe		hilight					&-*/*
+app-misc/unison			build_options: symbols=preserve
+	dev-lang/ocaml		ocamlopt
+sys-process/htop
+sys-process/lsof
+app-admin/sudo
+app-shells/zsh
+
+## dev
+sys-devel/gdb
+dev-scm/git			curl					&-*/*

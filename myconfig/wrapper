@@ -1,0 +1,83 @@
+#!/bin/bash
+
+##########################################
+BASE="/etc/paludis"
+MYCONFIG="${BASE}"/myconfig
+
+OBJECTS=(cui gui test)
+[[ -f ${MYCONFIG}/host.$(hostname) ]] && OBJECTS+=(host.$(hostname))
+##########################################
+
+INVOKED_NAME=$(basename ${0%.bash})
+
+# default options
+read -r -d '' DEFAULT_OPTIONS <<'EOF'
+*/*			-* pam
+*/*			alsa
+*/*			ipv6
+*/*			threads openmp
+*/*			zsh-completion
+
+*/*::x11		X
+*/*::desktop		dbus libnotify
+*/*::gnome		gtk3
+
+*/* build_options:	symbols=strip -recommended_tests
+*/* linguas:		zh_CN
+*/* amd64_cpu_features:	sse2 ssse3
+*/* video_drivers:	intel -gallium-intel
+
+*/*::subi build_options:      preserve_work
+*/*::subi-hack build_options:      preserve_work
+EOF
+
+show_sets() {
+    cd ${MYCONFIG}
+    for f in ${OBJECTS[@]}; do
+	awk '{sub("#.*",""); if(NF>0) print}' ${f} | \
+	    awk '!/^[ \t]/ {sub("~","",$1); print "* " $1}'
+    done
+}
+
+show_options() {
+    echo "${DEFAULT_OPTIONS}"
+
+    cd ${MYCONFIG}
+    for f in ${OBJECTS[@]}; do
+	awk '{sub("#.*",""); if(NF>0) print}' ${f} | \
+           awk '{gsub("(&.*|~|^[[:blank:]]+)",""); if ( NF > 1 ) print}'
+    done
+
+    # special systemd
+    awk '{sub("#.*",""); if(NF>0) print $1 " systemd"}' systemd
+}
+
+show_suggestions() {
+#    echo '*/* -*/*'
+    
+    cd ${MYCONFIG}
+    for f in ${OBJECTS[@]}; do
+	awk '{gsub("(~|#.*)",""); if(NF>0) print}' ${f} | \
+           awk '/&/ {sub("^\t*",""); sub("\t.*&","\t"); print}'
+    done
+}
+
+if [[ -d ${MYCONFIG} ]]; then
+    case "${INVOKED_NAME}" in
+	all )
+            show_sets
+	    ;;
+	options )
+            show_options
+	    ;;
+	suggestions )
+	    show_suggestions
+	    ;;
+	* )
+            echo everything else
+	    ;;
+    esac
+else
+    echo "# My config dir does not exist."
+fi
+

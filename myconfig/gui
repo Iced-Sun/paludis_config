@@ -1,0 +1,47 @@
+## repositories
+repository/x11
+repository/desktop
+repository/gnome
+
+## xorg
+x11-server/xorg-server							&-*/* xf86-input-evdev
+x11-apps/xinit								&-*/*
+x11-apps/xset
+x11-dri/mesa
+	dev-libs/libxml2			python
+
+## fonts
+fonts/terminus-font
+fonts/wqy-bitmapfont
+fonts/wqy-microhei				lite
+
+## X session
+x11-wm/i3					i3-wsbar		&i3lock i3status dmenu
+x11-apps/rxvt-unicode				perl xft xim
+x11-apps/notify-osd
+
+## www
+net-www/firefox
+	dev-libs/xulrunner			dbus libnotify
+net-plugins/adobe-flash
+
+## i18n
+inputmethods/fcitx                              dbus gtk gtk3 pango
+	
+## office
+#app-office/TeXmacs				X pdf
+
+## text
+app-text/mupdf
+
+## media
+media/mplayer2					X ass truetype opengl
+	media/ffmpeg		
+	media-libs/libass			fontconfig
+app-text/enca
+
+## editor && IDE
+app-editors/emacs				X freetype gtk jpeg gif png svg tiff xpm
+
+## misc
+x11-misc/synergy

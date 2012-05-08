@@ -1,0 +1,41 @@
+## repositories
+repository/compnerd
+repository/hardware
+repository/net
+
+## tuxonice
+sys-power/hibernate-script
+sys-apps/tuxonice-userui
+
+## net
+net-misc/openvpn		lzo threads
+net-proxy/tsocks
+net-ftp/lftp
+net-misc/dhcpcd
+net-www/elinks
+
+## wireless
+net-wireless/iwlwifi-3945-ucode
+net-misc/wicd			curses
+	dev-python/urwid	ncurses
+
+## mail
+mail-client/notmuch		emacs
+net-mail/getmail
+net-mail/offlineimap
+        dev-lang/python         sqlite
+app-admin/mime-support
+mail-mta/msmtp
+
+## X11
+x11-server/xorg-server							&xf86-video-intel
+x11-apps/arandr
+
+## media
+~media-sound/mpd		ffmpeg                  		&-*/*
+~media-sound/ncmpcpp		taglib #taglib enables tag-editor
+media-plugins/osd-lyrics			mpd
+
+## misc
+dev-util/schroot
+sys-devel/distcc

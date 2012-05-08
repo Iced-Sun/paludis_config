@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+hook_auto_names() {
+    echo merger_install_pre
+}
+
+hook_run_merger_install_pre() {
+    source "${PALUDIS_EBUILD_DIR}"/echo_functions.bash
+
+    einfo "Removing docs..."
+    (
+        rm -fr ${IMAGE}/usr/share/doc
+    ) 2>/dev/null
+
+    return 0
+}

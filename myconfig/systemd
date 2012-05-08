@@ -1,0 +1,9 @@
+sys-fs/udev
+sys-apps/dbus
+net-misc/openvpn
+net-misc/wicd
+net-misc/openssh
+sys-sound/alsa-utils
+net-wireless/bluez
+sys-auth/polkit
+

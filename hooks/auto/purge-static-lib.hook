@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+hook_auto_names() {
+    echo merger_install_pre
+}
+
+hook_run_merger_install_pre() {
+    source "${PALUDIS_EBUILD_DIR}"/echo_functions.bash
+
+    # module-init-tools require static libz
+    [[ "${CATEGORY}/${PN}" == "sys-libs/zlib" ]] && return 0  
+
+    # for xulrunner
+    [[ "${CATEGORY}/${PN}" == "dev-libs/nss" ]] && return 0  
+
+    # for firefox
+    [[ "${CATEGORY}/${PN}" == "dev-libs/xulrunner" ]] && return 0  
+
+    # for pam
+    [[ "${CATEGORY}/${PN}" == "sys-devel/flex" ]] && return 0  
+
+    # for unison
+    [[ "${CATEGORY}/${PN}" == "dev-lang/ocaml" ]] && return 0  
+
+    # cause lots of problems
+    [[ "${CATEGORY}/${PN}" == "sys-libs/glibc" ]] && return 0  
+    [[ "${CATEGORY}/${PN}" == "sys-devel/gcc" ]] && return 0
+    [[ "${CATEGORY}/${PN}" == "sys-devel/binutils" ]] && return 0  
+
+    einfo "Removing static libraries..."
+    (
+	cd ${IMAGE}
+	find . -iname '*.a' | xargs rm -v --
+    ) 2>/dev/null
+
+    return 0
+}

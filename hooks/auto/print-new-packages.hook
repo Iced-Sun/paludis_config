@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+hook_auto_names() {
+    echo sync_all_pre sync_all_post
+}
+
+hook_run_sync_all_pre() {
+    source "${PALUDIS_EBUILD_DIR}/echo_functions.bash"
+    
+    syncfile="${ROOT}/var/tmp/paludis/sync.${PALUDIS_PID}"
+
+    einfo "Building available packages list"
+    ${CAVE} print-packages | sort -u >"${syncfile}"
+}
+
+hook_run_sync_all_post() {
+    source "${PALUDIS_EBUILD_DIR}/echo_functions.bash"
+    
+    syncfile="${ROOT}/var/tmp/paludis/sync.${PALUDIS_PID}"
+
+    echo
+    einfo "Newly available packages:"
+    ${CAVE} print-packages | sort -u >"${syncfile}".new
+    
+    diff "${syncfile}" "${syncfile}.new" | grep '^>' | cut -d' ' -f2- \
+    | while read line ; do
+         einfo "  ${line}"
+#        einfo "  ${line}:"
+#        einfo "    $(${CAVE} show ${line} | sed -n -e 's/^ *Summary *//p' )"
+#        einfo "    $(${CAVE} show ${line} | sed -n -e 's/^ *Homepage *//p' )"
+    done
+    rm -f "${syncfile}" "${syncfile}".new
+    echo
+}

@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+hook_auto_names() {
+   echo install_post
+}
+
+hook_run_install_post() {
+    [[ "${TARGET##app-misc/mc}" == "${TARGET}" ]] && return 0
+
+    source "${PALUDIS_EBUILD_DIR}"/echo_functions.bash
+
+    PKG=$(${CAVE} show 'x11-drivers/*::installed' 2>/dev/null | sed -e '/\*/{d}; /^$/{d}')
+
+    if [[ -z ${PKG} ]]; then
+	ewarn "You don't have any X11 drivers installed."
+	return 0
+    fi
+
+    ${CAVE} resolve ${PKG} -x1
+}
