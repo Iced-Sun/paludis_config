@@ -16,9 +16,10 @@ case "${PN}" in
 esac    
 CXXFLAGS="${CFLAGS}"
 
-# todo: enable conditionally
 EXJOBS=4
-PATH="/usr/libexec/distcc:${PATH}"
-DISTCC_DIR="/var/tmp/paludis/distcc"
-EMAKE_WRAPPER="pump"
-DISTCC_HOSTS="--randomize 192.168.6.50,lzo,cpp"
+if [[ $(hostname) == "laptop-x61" ]]; then
+    PATH="/usr/libexec/distcc:${PATH}"
+    DISTCC_DIR="/var/tmp/paludis/distcc"
+    EMAKE_WRAPPER="pump"
+    DISTCC_HOSTS="--randomize 192.168.6.50,lzo,cpp"
+fi
