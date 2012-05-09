@@ -26,7 +26,8 @@ net-www/firefox
 net-plugins/adobe-flash
 
 ## i18n
-inputmethods/fcitx                              dbus gtk gtk3 pango
+inputmethods/fcitx                              dbus gtk gtk3 pango systemd
+inputmethods/fcitx-configtool                   gtk3
 	
 ## office
 #app-office/TeXmacs				X pdf
