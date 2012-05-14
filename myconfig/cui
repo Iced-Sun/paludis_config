@@ -29,7 +29,6 @@ sys-sound/alsa-utils
 app-editors/emacs		-alsa
 	app-spell/aspell						&-*/* aspell-en
 app-emacs/exheres-mode
-app-emacs/cc-mode
 app-emacs/org
 
 ## sys-apps
