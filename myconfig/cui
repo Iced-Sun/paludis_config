@@ -1,16 +1,11 @@
 ### <Tab> => dependency, "&" => recommendation and suggestion, "~" => unstable
-## repositories
-repository/arbor
-repository/emacs
-repository/media
-repository/ingmar
-
 ## essential app and lib
 sys-boot/grub
 sys-apps/systemd							&-*/*
 sys-fs/udev
 sys-apps/dbus			X
 sys-apps/paludis		prebuilt-documentation search-index
+sys-devel/gcc                   java
 
 ## app-arch
 app-arch/p7zip
@@ -29,7 +24,6 @@ sys-sound/alsa-utils
 app-editors/emacs		-alsa
 	app-spell/aspell						&-*/* aspell-en
 app-emacs/exheres-mode
-app-emacs/org
 
 ## sys-apps
 app-terminal/tmux
@@ -44,4 +38,5 @@ app-shells/zsh
 
 ## dev
 sys-devel/gdb
+sys-devel/distcc
 dev-scm/git			curl					&-*/*

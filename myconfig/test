@@ -1,1 +1,1 @@
-inputmethods/fcitx              dbus gtk gtk3 pango -opencc classic-ui
+sys-apps/util-linux     udev

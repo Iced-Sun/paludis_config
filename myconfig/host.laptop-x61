@@ -1,8 +1,3 @@
-## repositories
-repository/compnerd
-repository/hardware
-repository/net
-
 ## tuxonice
 sys-power/hibernate-script
 sys-apps/tuxonice-userui
@@ -12,7 +7,6 @@ net-misc/openvpn		lzo threads
 net-proxy/tsocks
 net-ftp/lftp
 net-misc/dhcpcd
-net-www/elinks
 
 ## wireless
 net-wireless/iwlwifi-3945-ucode
@@ -26,6 +20,8 @@ net-mail/offlineimap
         dev-lang/python         sqlite
 app-admin/mime-support
 mail-mta/msmtp
+app-emacs/emacs-w3m
+office-libs/wv
 
 ## X11
 x11-server/xorg-server							&xf86-video-intel
@@ -38,4 +34,3 @@ media-plugins/osd-lyrics			mpd
 
 ## misc
 dev-util/schroot
-sys-devel/distcc
