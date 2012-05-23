@@ -8,10 +8,7 @@ case "${PN}" in
     ocaml|notmuch)
 	LDFLAGS=""
 	;;&
-    boost|xulrunner|xorg-server|dconf|glib|openssl|zlib|distcc|python|mplayer2|pycairo|notify-python|fcitx)
-	;;
     *)
-#	CFLAGS+=" -flto -fwhole-program"
 	;;
 esac    
 CXXFLAGS="${CFLAGS}"
