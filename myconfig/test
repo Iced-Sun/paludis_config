@@ -1,1 +1,3 @@
 sys-apps/util-linux     udev
+#media-libs/SDL          X
+media-libs/imlib2       X gif tiff

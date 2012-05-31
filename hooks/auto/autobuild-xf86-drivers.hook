@@ -4,7 +4,7 @@ hook_auto_names() {
 }
 
 hook_run_install_post() {
-    [[ "${TARGET##app-misc/mc}" == "${TARGET}" ]] && return 0
+    [[ "${TARGET##x11-server/xorg-server}" == "${TARGET}" ]] && return 0
 
     source "${PALUDIS_EBUILD_DIR}"/echo_functions.bash
 

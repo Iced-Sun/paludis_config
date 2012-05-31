@@ -2,7 +2,6 @@
 ## essential app and lib
 sys-boot/grub
 sys-apps/systemd							&-*/*
-sys-fs/udev
 sys-apps/dbus			X
 sys-apps/paludis		prebuilt-documentation search-index
 sys-devel/gcc                   java
