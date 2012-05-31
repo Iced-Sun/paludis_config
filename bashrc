@@ -12,9 +12,10 @@ case "${PN}" in
 	;;
 esac    
 CXXFLAGS="${CFLAGS}"
+EXJOBS=3
 
-EXJOBS=4
 if [[ $(hostname) == "laptop-x61" ]]; then
+    EXJOBS=4
     PATH="/usr/libexec/distcc:${PATH}"
     DISTCC_DIR="/var/tmp/paludis/distcc"
     EMAKE_WRAPPER="pump"
