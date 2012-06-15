@@ -1,6 +1,6 @@
 #!/bin/bash
 CHOST="x86_64-pc-linux-gnu"
-CFLAGS="-march=core2 -O2 -pipe"
+CFLAGS="-march=core2 -O3 -pipe"
 [[ $(hostname) == "laptop-x61" ]] && CFLAGS+=" -msse4.1"
 LDFLAGS="-Wl,-O1 -Wl,--as-needed -Wl,--sort-common"
 
