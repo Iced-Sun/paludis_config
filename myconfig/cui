@@ -1,6 +1,5 @@
 ### <Tab> => dependency, "&" => recommendation and suggestion, "~" => unstable
 ## essential app and lib
-sys-boot/grub
 sys-apps/systemd							&-*/*
 sys-apps/dbus			X
 sys-apps/paludis		prebuilt-documentation search-index
