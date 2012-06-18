@@ -1,3 +1,7 @@
-sys-apps/util-linux     udev
-#media-libs/SDL          X
-media-libs/imlib2       X gif tiff
+        sys-apps/util-linux     udev
+        #media-libs/SDL          X
+        media-libs/imlib2       X gif tiff
+        net-www/w3m             gtk2
+
+app-shells/fishfish
+net-fs/cifs-utils
