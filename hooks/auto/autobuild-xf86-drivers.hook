@@ -6,14 +6,22 @@ hook_auto_names() {
 hook_run_install_post() {
     [[ "${TARGET##x11-server/xorg-server}" == "${TARGET}" ]] && return 0
 
-    source "${PALUDIS_EBUILD_DIR}"/echo_functions.bash
+    shopt -s extglob
+    export PATH="$(${PALUDIS_EBUILD_DIR}/utils/canonicalise ${PALUDIS_EBUILD_DIR}/utils/ ):${PATH}"
+    source ${PALUDIS_ECHO_FUNCTIONS_DIR:-${PALUDIS_EBUILD_DIR}}/echo_functions.bash
 
-    PKG=$(${CAVE} show 'x11-drivers/*::installed' 2>/dev/null | sed -e '/\*/{d}; /^$/{d}')
+    einfo_unhooked "Rebuilding all installed x11-drivers..."
+
+    PKG=$(${CAVE:-cave} show 'x11-drivers/*::installed' 2>/dev/null | sed -e '/\*/{d}; /^$/{d}')
 
     if [[ -z ${PKG} ]]; then
 	ewarn "You don't have any X11 drivers installed."
 	return 0
     fi
 
-    ${CAVE} resolve ${PKG} -x1
+    ${CAVE:-cave} resolve ${PKG} -x1
+    
+    einfo_unhooked "Done rebuilding x11-drivers."
+
+    return 0
 }

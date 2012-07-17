@@ -47,20 +47,22 @@ purgeman() {
 }
 
 hook_run_merger_install_pre() {
-    source "${PALUDIS_EBUILD_DIR}/echo_functions.bash"
+    shopt -s extglob
+    export PATH="$(${PALUDIS_EBUILD_DIR}/utils/canonicalise ${PALUDIS_EBUILD_DIR}/utils/ ):${PATH}"
+    source ${PALUDIS_ECHO_FUNCTIONS_DIR:-${PALUDIS_EBUILD_DIR}}/echo_functions.bash
 
     echo 
-    einfo "Purging locales..."
+    einfo_unhooked "Purging .mo files..."
     for folder in ${LOCALEDIRS[@]}; do
 	purgelocale "$folder"
     done
-    einfo "Purging locales done."
+    einfo_unhooked "Done purging .mo files."
 
-    einfo "Purging man pages..."
+    einfo_unhooked "Purging man pages..."
     for folder in ${MANPAGEDIRS[@]}; do
 	purgeman "$folder"
     done
-    einfo "Purging man pages done."
+    einfo_unhooked "Done purging man pages."
 
     return 0
 }

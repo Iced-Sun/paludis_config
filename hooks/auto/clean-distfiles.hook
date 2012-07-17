@@ -4,14 +4,15 @@ hook_auto_names() {
 }
 
 hook_run_sync_all_post() {
-    source "${PALUDIS_EBUILD_DIR}/echo_functions.bash"
-
-    echo
-    einfo "Removing unused distfiles..."
+    shopt -s extglob
+    export PATH="$(${PALUDIS_EBUILD_DIR}/utils/canonicalise ${PALUDIS_EBUILD_DIR}/utils/ ):${PATH}"
+    source ${PALUDIS_ECHO_FUNCTIONS_DIR:-${PALUDIS_EBUILD_DIR}}/echo_functions.bash
+    
+    einfo_unhooked "Removing unused distfiles..."
     (
-	${CAVE} print-unused-distfiles | xargs rm -v --
+	${CAVE:-cave} print-unused-distfiles | xargs rm -v --
     ) 2>/dev/null
-    einfo "Done removing unused distfiles."
+    einfo_unhooked "Done removing unused distfiles."
 
     return 0
 }

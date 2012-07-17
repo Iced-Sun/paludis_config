@@ -4,30 +4,36 @@ hook_auto_names() {
 }
 
 hook_run_sync_all_pre() {
-    source "${PALUDIS_EBUILD_DIR}/echo_functions.bash"
+    shopt -s extglob
+    export PATH="$(${PALUDIS_EBUILD_DIR}/utils/canonicalise ${PALUDIS_EBUILD_DIR}/utils/ ):${PATH}"
+    source ${PALUDIS_ECHO_FUNCTIONS_DIR:-${PALUDIS_EBUILD_DIR}}/echo_functions.bash
     
     syncfile="${ROOT}/var/tmp/paludis/sync.${PALUDIS_PID}"
 
-    einfo "Building available packages list"
-    ${CAVE} print-packages | sort -u >"${syncfile}"
+    echo
+    einfo_unhooked "Building available packages list"
+    ${CAVE:-cave} print-packages | sort -u >"${syncfile}"
+
+    return 0
 }
 
 hook_run_sync_all_post() {
-    source "${PALUDIS_EBUILD_DIR}/echo_functions.bash"
+    shopt -s extglob
+    export PATH="$(${PALUDIS_EBUILD_DIR}/utils/canonicalise ${PALUDIS_EBUILD_DIR}/utils/ ):${PATH}"
+    source ${PALUDIS_ECHO_FUNCTIONS_DIR:-${PALUDIS_EBUILD_DIR}}/echo_functions.bash
     
     syncfile="${ROOT}/var/tmp/paludis/sync.${PALUDIS_PID}"
 
     echo
-    einfo "Newly available packages:"
-    ${CAVE} print-packages | sort -u >"${syncfile}".new
+    einfo_unhooked "Newly available packages:"
+    ${CAVE:-cave} print-packages | sort -u >"${syncfile}".new
     
     diff "${syncfile}" "${syncfile}.new" | grep '^>' | cut -d' ' -f2- \
     | while read line ; do
-         einfo "  ${line}"
-#        einfo "  ${line}:"
-#        einfo "    $(${CAVE} show ${line} | sed -n -e 's/^ *Summary *//p' )"
-#        einfo "    $(${CAVE} show ${line} | sed -n -e 's/^ *Homepage *//p' )"
+         einfo_unhooked "  ${line}"
     done
     rm -f "${syncfile}" "${syncfile}".new
     echo
+
+    return 0
 }

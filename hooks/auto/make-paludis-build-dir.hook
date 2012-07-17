@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 PHASES=(install_task_execute_pre sync_all_pre)
 
 hook_auto_names() {
@@ -7,17 +6,30 @@ hook_auto_names() {
 }
 
 for h in ${PHASES[@]}; do
-    eval "hook_run_${h}() { mk_tmpdir ; }"
+    eval "hook_run_${h}() { make_build_dir ; }"
 done
 
-mk_tmpdir() {
-    source "${PALUDIS_EBUILD_DIR}/echo_functions.bash"
+make_build_dir() {
+    validate() {
+	mkdir -p "$1"
+	chown paludisbuild:paludisbuild "$1"
+	chmod g+wrx "$1"
+    }
+    
+    shopt -s extglob
+    export PATH="$(${PALUDIS_EBUILD_DIR}/utils/canonicalise ${PALUDIS_EBUILD_DIR}/utils/ ):${PATH}"
+    source ${PALUDIS_ECHO_FUNCTIONS_DIR:-${PALUDIS_EBUILD_DIR}}/echo_functions.bash
+
+    einfo_unhooked "Ensure /var/tmp/paludis structure..."
 
     BUILD_DIR="/var/tmp/paludis/build"
-    mkdir -p "${BUILD_DIR}"
-    chown paludisbuild:paludisbuild "${BUILD_DIR}"
-    chmod g+wrx "${BUILD_DIR}"
-
+    validate ${BUILD_DIR}
+    
+    source /etc/paludis/bashrc
+    if [[ -n ${DISTCC_DIR} ]]; then
+	validate ${DISTCC_DIR}
+    fi
+    
     return 0
 }
 

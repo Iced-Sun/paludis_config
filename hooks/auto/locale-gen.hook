@@ -10,7 +10,9 @@ LOCALE_GEN=(
 hook_run_merger_install_post() {
     [[ "${CATEGORY}/${PN}" != "sys-libs/glibc" ]] && return 0
  
-    source "${PALUDIS_EBUILD_DIR}"/echo_functions.bash
+    shopt -s extglob
+    export PATH="$(${PALUDIS_EBUILD_DIR}/utils/canonicalise ${PALUDIS_EBUILD_DIR}/utils/ ):${PATH}"
+    source ${PALUDIS_ECHO_FUNCTIONS_DIR:-${PALUDIS_EBUILD_DIR}}/echo_functions.bash
  
     local localedef="$(type -P localedef 2>/dev/null)"
     if [[ -z "${localedef}" ]]; then
@@ -41,4 +43,6 @@ hook_run_merger_install_post() {
         echo "Generating locale ${name}"
         ${localedef} -i "${input}" -f "${charmap}" "${name}"
     done
+
+    return 0
 }
