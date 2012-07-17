@@ -37,7 +37,7 @@ media/mplayer2					X ass truetype opengl
 media-gfx/sxiv
 
 ## editor && IDE
-app-editors/emacs				X freetype gtk jpeg gif png svg tiff xpm
+app-editors/emacs				X freetype gtk3 jpeg gif png tiff xpm
 
 ## misc
 x11-misc/synergy
