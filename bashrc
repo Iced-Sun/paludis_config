@@ -1,7 +1,7 @@
 #!/bin/bash
 CHOST="x86_64-pc-linux-gnu"
 CFLAGS="-march=core2 -O3 -pipe"
-[[ $(hostname) == "laptop-x61" ]] && CFLAGS+=" -msse4.1"
+[[ $(hostname) == "laptop-x61" ]] && CFLAGS+=" -msse4.1" && USE_DISTCC=true
 LDFLAGS="-Wl,-O1 -Wl,--as-needed -Wl,--sort-common"
 
 case "${PN}" in
@@ -14,7 +14,7 @@ esac
 CXXFLAGS="${CFLAGS}"
 EXJOBS=3
 
-if [[ $(hostname) == "laptop-x61" ]]; then
+if ${USE_DISTCC}; then
     EXJOBS=4
     PATH="/usr/libexec/distcc:${PATH}"
     DISTCC_DIR="/var/tmp/paludis/distcc"
