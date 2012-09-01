@@ -11,7 +11,7 @@ OBJECTS=(cui gui test)
 INVOKED_NAME=$(basename ${0%.bash})
 
 # default options
-read -r -d '' DEFAULT_OPTIONS <<'EOF'
+read -r -d '' DEFAULT_OPTIONS <<EOF
 */*			-* pam
 */*			alsa
 */*			ipv6
@@ -19,16 +19,15 @@ read -r -d '' DEFAULT_OPTIONS <<'EOF'
 */*			zsh-completion
 
 */*::x11		X
-*/*::desktop		dbus libnotify
 */*::gnome		gtk3
 
-*/* build_options:	symbols=strip -recommended_tests
-*/* linguas:		zh_CN
-*/* amd64_cpu_features:	sse2 ssse3
-*/* video_drivers:	intel -gallium-intel
+*/*			build_options:		symbols=strip -recommended_tests
+*/*			linguas:		zh_CN
+*/*			amd64_cpu_features:	sse2 ssse3
+*/*			video_drivers:		intel -gallium-intel
 
-*/*::subi build_options:      preserve_work
-*/*::subi-hack build_options:      preserve_work
+*/*::subi		build_options:      	work=preserve
+*/*::subi-hack		build_options:      	work=preserve
 EOF
 
 show_sets() {

@@ -15,15 +15,11 @@ x11-wm/i3					i3-wsbar		&i3lock i3status dmenu
 x11-apps/rxvt-unicode				perl xft xim
 x11-apps/notify-osd
 
-## www
-net-www/firefox
-	dev-libs/xulrunner			dbus libnotify
-net-plugins/adobe-flash
-
 ## i18n
 inputmethods/fcitx                              dbus gtk gtk3 pango systemd classic-ui
 inputmethods/fcitx-configtool                   gtk3
-	
+inputmethods/fcitx-libpinyin
+
 ## office
 #app-office/TeXmacs				X pdf
 
@@ -35,9 +31,14 @@ media/mplayer2					X ass truetype opengl
 	media/ffmpeg		
 	media-libs/libass			fontconfig
 media-gfx/sxiv
+        media-libs/imlib2                       X gif tiff
 
 ## editor && IDE
 app-editors/emacs				X freetype gtk3 jpeg gif png tiff xpm
 
 ## misc
 x11-misc/synergy
+
+## www
+net-www/firefox
+net-plugins/adobe-flash
