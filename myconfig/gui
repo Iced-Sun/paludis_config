@@ -41,4 +41,5 @@ x11-misc/synergy
 
 ## www
 net-www/firefox
+        dev-lang/python         sqlite
 net-plugins/adobe-flash

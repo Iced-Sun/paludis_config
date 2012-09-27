@@ -17,7 +17,6 @@ net-misc/wicd			curses
 mail-client/notmuch		emacs
 net-mail/getmail
 net-mail/offlineimap
-        dev-lang/python         sqlite
 app-admin/mime-support
 mail-mta/msmtp
 app-emacs/emacs-w3m
