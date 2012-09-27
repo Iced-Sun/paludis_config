@@ -34,3 +34,4 @@ media-plugins/osd-lyrics			mpd
 
 ## misc
 dev-util/schroot
+app-text/chmsee

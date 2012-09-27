@@ -1,6 +1,7 @@
 ### <Tab> => dependency, "&" => recommendation and suggestion, "~" => unstable
 ## essential app and lib
 sys-apps/systemd							&-*/*
+sys-apps/util-linux             udev
 sys-apps/dbus			X
 sys-apps/paludis		prebuilt-documentation search-index
 sys-devel/gcc                   java
@@ -14,6 +15,7 @@ app-arch/xz
 ## fs
 sys-fs/dosfstools
 sys-fs/ntfs-3g_ntfsprogs
+sys-fs/btrfs-progs
 
 ## media
 sys-sound/alsa-utils
