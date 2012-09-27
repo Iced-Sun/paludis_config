@@ -4,8 +4,10 @@
 BASE="/etc/paludis"
 MYCONFIG="${BASE}"/myconfig
 
-OBJECTS=(cui gui test)
-[[ -f ${MYCONFIG}/host.$(hostname) ]] && OBJECTS+=(host.$(hostname))
+SETS=()
+for s in cui gui test host.`hostname`; do
+    [[ -f ${MYCONFIG}/${s} ]] && SETS+=( ${s} )
+done
 ##########################################
 
 INVOKED_NAME=$(basename ${0%.bash})
@@ -33,7 +35,7 @@ EOF
 
 show_sets() {
     cd ${MYCONFIG}
-    for f in ${OBJECTS[@]}; do
+    for f in ${SETS[@]}; do
 	awk '{sub("#.*",""); if(NF>0) print}' ${f} | \
 	    awk '!/^[ \t]/ {sub("~","",$1); print "* " $1}'
     done
@@ -43,7 +45,7 @@ show_options() {
     echo "${DEFAULT_OPTIONS}"
 
     cd ${MYCONFIG}
-    for f in ${OBJECTS[@]}; do
+    for f in ${SETS[@]}; do
 	awk '{sub("#.*",""); if(NF>0) print}' ${f} | \
            awk '{gsub("(&.*|~|^[[:blank:]]+)",""); if ( NF > 1 ) print}'
     done
@@ -56,7 +58,7 @@ show_suggestions() {
 #    echo '*/* -*/*'
     
     cd ${MYCONFIG}
-    for f in ${OBJECTS[@]}; do
+    for f in ${SETS[@]}; do
 	awk '{gsub("(~|#.*)",""); if(NF>0) print}' ${f} | \
            awk '/&/ {sub("^\t*",""); sub("\t.*&","\t"); print}'
     done
