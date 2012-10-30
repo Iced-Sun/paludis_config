@@ -23,13 +23,13 @@ app-emacs/emacs-w3m
 office-libs/wv
 
 ## X11
-x11-server/xorg-server							&xf86-video-intel
+x11-server/xorg-server							&*/xf86-video-intel
 x11-apps/arandr
 
 ## media
-~media-sound/mpd		ffmpeg systemd                 		&-*/*
-~media-sound/ncmpcpp		taglib #taglib enables tag-editor
-media-plugins/osd-lyrics			mpd
+~media-sound/mpd		ffmpeg systemd
+~media-sound/ncmpcpp		taglib
+media-plugins/osd-lyrics	mpd
 
 ## misc
 dev-util/schroot
