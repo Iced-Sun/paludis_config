@@ -1,9 +1,12 @@
 #!/bin/bash
+
+### base
 CHOST="x86_64-pc-linux-gnu"
 CFLAGS="-march=core2 -O3 -pipe"
-[[ $(hostname) == "laptop-x61" ]] && CFLAGS+=" -msse4.1" && USE_DISTCC=true
 LDFLAGS="-Wl,-O1 -Wl,--as-needed -Wl,--sort-common"
 
+### special care
+[[ $(hostname) == "laptop-x61" ]] && CFLAGS+=" -msse4.1" && USE_DISTCC=true
 case "${PN}" in
     ocaml|notmuch)
 	LDFLAGS=""
@@ -11,9 +14,12 @@ case "${PN}" in
     *)
 	;;
 esac    
+
+### finalize
 CXXFLAGS="${CFLAGS}"
 EXJOBS=3
 
+### distcc
 if [[ ${USE_DISTCC} == "true" ]]; then
     EXJOBS=4
     PATH="/usr/libexec/distcc:${PATH}"
