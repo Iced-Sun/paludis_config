@@ -14,7 +14,7 @@ esac
 CXXFLAGS="${CFLAGS}"
 EXJOBS=3
 
-if ${USE_DISTCC}; then
+if [[ ${USE_DISTCC} == "true" ]]; then
     EXJOBS=4
     PATH="/usr/libexec/distcc:${PATH}"
     DISTCC_DIR="/var/tmp/paludis/distcc"

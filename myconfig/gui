@@ -1,6 +1,6 @@
 ## xorg
-x11-server/xorg-server							&-*/* xf86-input-evdev
-x11-apps/xinit								&-*/*
+x11-server/xorg-server							&*/xf86-input-evdev
+x11-apps/xinit
 x11-apps/xset
 x11-dri/mesa
 	dev-libs/libxml2			python
@@ -11,7 +11,7 @@ fonts/wqy-bitmapfont
 fonts/wqy-microhei				lite
 
 ## X session
-x11-wm/i3					i3-wsbar		&i3lock i3status dmenu
+x11-wm/i3					i3-wsbar		&*/i3lock */i3status */dmenu
 x11-apps/rxvt-unicode				perl xft xim
 x11-apps/notify-osd
 

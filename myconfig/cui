@@ -1,6 +1,6 @@
 ### <Tab> => dependency, "&" => recommendation and suggestion, "~" => unstable
 ## essential app and lib
-sys-apps/systemd							&-*/*
+sys-apps/systemd
 sys-apps/util-linux             udev
 sys-apps/dbus			X
 sys-apps/paludis		prebuilt-documentation search-index
@@ -22,13 +22,13 @@ sys-sound/alsa-utils
 
 ## editors
 app-editors/emacs		-alsa
-	app-spell/aspell						&-*/* aspell-en
+	app-spell/aspell						&*/aspell-en
 app-emacs/exheres-mode
 
 ## sys-apps
 app-terminal/tmux
 app-misc/mc
-sys-apps/lesspipe		hilight					&-*/*
+sys-apps/lesspipe		hilight
 app-misc/unison			build_options: symbols=preserve
 	dev-lang/ocaml		ocamlopt
 sys-process/htop
@@ -39,4 +39,4 @@ app-shells/zsh
 ## dev
 sys-devel/gdb
 sys-devel/distcc
-dev-scm/git			curl					&-*/*
+dev-scm/git			curl
