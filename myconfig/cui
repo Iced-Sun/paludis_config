@@ -2,7 +2,7 @@
 ## essential app and lib
 sys-apps/systemd							&-*/*
 sys-apps/util-linux             udev
-sys-apps/dbus			X
+sys-apps/dbus			X systemd
 sys-apps/paludis		prebuilt-documentation search-index
 sys-devel/gcc                   java
 
@@ -18,7 +18,7 @@ sys-fs/ntfs-3g_ntfsprogs
 sys-fs/btrfs-progs
 
 ## media
-sys-sound/alsa-utils
+sys-sound/alsa-utils            systemd
 
 ## editors
 app-editors/emacs		-alsa
@@ -35,6 +35,7 @@ sys-process/htop
 sys-process/lsof
 app-admin/sudo
 app-shells/zsh
+net-misc/openssh                systemd
 
 ## dev
 sys-devel/gdb
