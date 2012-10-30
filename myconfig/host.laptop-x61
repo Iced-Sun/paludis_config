@@ -3,14 +3,14 @@ sys-power/hibernate-script
 sys-apps/tuxonice-userui
 
 ## net
-net-misc/openvpn		lzo threads
+net-misc/openvpn		lzo threads systemd
 net-proxy/tsocks
 net-ftp/lftp
 net-misc/dhcpcd
 
 ## wireless
 net-wireless/iwlwifi-3945-ucode
-net-misc/wicd			curses
+net-misc/wicd			curses systemd
 	dev-python/urwid	ncurses
 
 ## mail
@@ -27,7 +27,7 @@ x11-server/xorg-server							&xf86-video-intel
 x11-apps/arandr
 
 ## media
-~media-sound/mpd		ffmpeg                  		&-*/*
+~media-sound/mpd		ffmpeg systemd                 		&-*/*
 ~media-sound/ncmpcpp		taglib #taglib enables tag-editor
 media-plugins/osd-lyrics			mpd
 

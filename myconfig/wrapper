@@ -48,9 +48,6 @@ show_options() {
 	awk '{sub("#.*",""); if(NF>0) print}' ${f} | \
            awk '{gsub("(&.*|~|^[[:blank:]]+)",""); if ( NF > 1 ) print}'
     done
-
-    # special systemd
-    awk '{sub("#.*",""); if(NF>0) print $1 " systemd"}' systemd
 }
 
 show_suggestions() {

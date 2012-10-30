@@ -37,7 +37,7 @@ media-gfx/sxiv
 app-editors/emacs				X freetype gtk3 jpeg gif png tiff xpm
 
 ## misc
-x11-misc/synergy
+x11-misc/synergy                                systemd
 
 ## www
 net-www/firefox
