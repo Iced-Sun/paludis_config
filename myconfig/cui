@@ -2,8 +2,8 @@
 ## essential app and lib
 sys-apps/systemd
 sys-apps/util-linux             udev
-sys-apps/dbus			X systemd
-sys-apps/paludis		prebuilt-documentation search-index
+sys-apps/dbus                   X systemd
+sys-apps/paludis                prebuilt-documentation search-index
 sys-devel/gcc                   java
 
 ## app-arch
