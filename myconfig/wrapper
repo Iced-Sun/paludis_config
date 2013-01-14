@@ -1,8 +1,8 @@
 #!/bin/bash
 
 ##########################################
-BASE="/etc/paludis"
-MYCONFIG="${BASE}"/myconfig
+CONFIG_ROOT="/etc/paludis"
+MYCONFIG="${CONFIG_ROOT}"/myconfig
 
 SETS=()
 for s in cui gui test host.`hostname`; do
@@ -20,13 +20,12 @@ read -r -d '' DEFAULT_OPTIONS <<EOF
 */*			threads openmp
 */*			zsh-completion
 
+*/*			gobject-introspection
 */*::x11		X
 */*::gnome		gtk3
 
 */*			build_options:		symbols=strip -recommended_tests
 */*			linguas:		zh_CN
-*/*			amd64_cpu_features:	sse2 ssse3
-*/*			video_drivers:		intel -gallium-intel
 
 */*::subi		build_options:      	work=preserve
 */*::subi-hack		build_options:      	work=preserve
@@ -36,7 +35,7 @@ show_sets() {
     cd ${MYCONFIG}
     for f in ${SETS[@]}; do
 	awk '{sub("#.*",""); if(NF>0) print}' ${f} | \
-	    awk '!/^[ \t]/ {sub("~","",$1); print "* " $1}'
+	    awk '!/^[ \t*]/ {sub("~","",$1); print "* " $1}'
     done
 }
 
