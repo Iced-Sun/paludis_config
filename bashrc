@@ -6,7 +6,7 @@ CFLAGS="-march=core2 -O3 -pipe"
 LDFLAGS="-Wl,-O1 -Wl,--as-needed -Wl,--sort-common"
 
 ### special care
-[[ $(hostname) == "laptop-x61" ]] && CFLAGS+=" -msse4.1" && USE_DISTCC=true
+[[ $(hostname) == "laptop-x61" ]] && USE_DISTCC=true
 case "${PN}" in
     ocaml|notmuch)
 	LDFLAGS=""
