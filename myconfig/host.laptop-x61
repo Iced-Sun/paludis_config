@@ -2,8 +2,7 @@
 */*	                        video_drivers:       intel
 
 ## tuxonice
-sys-power/hibernate-script
-sys-apps/tuxonice-userui
+sys-apps/tuxonice-userui        systemd
 
 ## net
 net-misc/openvpn		lzo threads systemd
