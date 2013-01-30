@@ -10,14 +10,17 @@ hook_run_install_post() {
     export PATH="$(${PALUDIS_EBUILD_DIR}/utils/canonicalise ${PALUDIS_EBUILD_DIR}/utils/ ):${PATH}"
     source ${PALUDIS_ECHO_FUNCTIONS_DIR:-${PALUDIS_EBUILD_DIR}}/echo_functions.bash
 
-    einfo_unhooked "Rebuilding all installed x11-drivers..."
+    einfo_unhooked "Searching for installed x11-drivers..."
 
-    PKG=$(${CAVE:-cave} show 'x11-drivers/*::installed' 2>/dev/null | sed -e '/\*/{d}; /^$/{d}')
+    PKG=$(${CAVE:-cave} print-ids --matching 'x11-drivers/*::installed' --format '%p ')
 
     if [[ -z ${PKG} ]]; then
 	ewarn "You don't have any X11 drivers installed."
 	return 0
     fi
+
+    einfo_unhooked "Rebuilding installed x11-drivers:"
+    einfo_unhooked "  ${PKG}"
 
     ${CAVE:-cave} resolve ${PKG} -x1
     
