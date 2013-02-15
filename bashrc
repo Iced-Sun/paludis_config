@@ -5,6 +5,14 @@ CHOST="x86_64-pc-linux-gnu"
 CFLAGS="-march=core2 -O3 -pipe"
 LDFLAGS="-Wl,-O1 -Wl,--as-needed -Wl,--sort-common"
 
+ohmy()
+{
+    "$@" --disable-static
+}
+ECONF_WRAPPER="ohmy"
+
+
+
 ### special care
 [[ $(hostname) == "laptop-x61" ]] && USE_DISTCC=true
 case "${PN}" in

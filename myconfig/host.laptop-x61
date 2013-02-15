@@ -1,6 +1,9 @@
 */*                             amd64_cpu_features:  sse3 ssse3 sse4.1
 */*	                        video_drivers:       intel
 
+        app-virtualization/qemu amd64 sdl
+                media-libs/SDL  X
+                
 ## tuxonice
 sys-apps/tuxonice-userui        systemd
 
