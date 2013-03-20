@@ -5,11 +5,11 @@ CHOST="x86_64-pc-linux-gnu"
 CFLAGS="-march=core2 -O3 -pipe"
 LDFLAGS="-Wl,-O1 -Wl,--as-needed -Wl,--sort-common"
 
-ohmy()
+disable_static_lib()
 {
     "$@" --disable-static
 }
-ECONF_WRAPPER="ohmy"
+ECONF_WRAPPER="disable_static_lib"
 
 
 
