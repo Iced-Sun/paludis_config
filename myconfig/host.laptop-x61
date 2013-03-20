@@ -1,9 +1,6 @@
-*/*                             amd64_cpu_features:  sse3 ssse3 sse4.1
+*/*                             amd64_cpu_features:  sse sse2 sse3 ssse3 sse4.1
 */*	                        video_drivers:       intel
 
-        app-virtualization/qemu amd64 sdl
-                media-libs/SDL  X
-                
 ## tuxonice
 sys-apps/tuxonice-userui        systemd
 
@@ -25,6 +22,7 @@ net-mail/offlineimap
 app-admin/mime-support
 mail-mta/msmtp
 app-emacs/emacs-w3m
+	net-www/w3m				gtk2
 office-libs/wv
 
 ## X11
@@ -39,3 +37,6 @@ media-plugins/osd-lyrics	mpd
 ## misc
 dev-util/schroot
 app-text/chmsee
+app-misc/unison			build_options: symbols=preserve
+	dev-lang/ocaml		ocamlopt
+sys-devel/distcc

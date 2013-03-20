@@ -1,19 +1,25 @@
-### <Tab> => dependency, "&" => recommendation and suggestion, "~" => unstable
-## essential app and lib
+### <Tab> => dependency,
+### "&"   => recommendation and suggestion
+### "~"   => unstable
+###
+
+## system set
+	dev-scm/git		curl
+	net-misc/openssh        systemd
+	sys-apps/util-linux     udev
+	sys-apps/paludis	prebuilt-documentation search-index
+	sys-devel/gcc
+
+## system app not in system set 
 sys-apps/systemd
-sys-apps/util-linux             udev
 sys-apps/dbus                   X systemd
-sys-apps/paludis                prebuilt-documentation search-index
-sys-devel/gcc                   -java
 
 ## app-arch
 app-arch/p7zip
 app-arch/unrar
 app-arch/unzip
-app-arch/xz
 
 ## fs
-sys-fs/dosfstools
 sys-fs/ntfs-3g_ntfsprogs
 sys-fs/btrfs-progs
 
@@ -25,19 +31,11 @@ app-editors/emacs		-alsa
 	app-spell/aspell						&*/aspell-en
 app-emacs/exheres-mode
 
-## sys-apps
+## miscs
 app-terminal/tmux
 app-misc/mc
 sys-apps/lesspipe		hilight
-app-misc/unison			build_options: symbols=preserve
-	dev-lang/ocaml		ocamlopt
 sys-process/htop
 sys-process/lsof
 app-admin/sudo
 app-shells/zsh
-net-misc/openssh                systemd
-
-## dev
-sys-devel/gdb
-sys-devel/distcc
-dev-scm/git			curl

@@ -1,5 +1,6 @@
 ## xorg
 x11-server/xorg-server							&*/xf86-input-evdev
+x11-apps/xcompmgr
 x11-apps/xinit
 x11-apps/xset
 x11-dri/mesa
@@ -8,20 +9,20 @@ x11-dri/mesa
 ## fonts
 fonts/terminus-font
 fonts/wqy-bitmapfont
-fonts/wqy-microhei				lite
+fonts/wqy-microhei
 
 ## X session
 x11-wm/i3					i3-wsbar		&*/i3lock */i3status */dmenu
 x11-apps/rxvt-unicode				perl xft xim
 x11-apps/notify-osd
+gnome-desktop/gnome-icon-theme
+gnome-desktop/gnome-icon-theme-symbolic
 
 ## i18n
-inputmethods/fcitx                              dbus gtk gtk3 pango systemd classic-ui
-inputmethods/fcitx-configtool                   gtk3
+inputmethods/fcitx				systemd classic-ui
+inputmethods/fcitx-gtk				gtk gtk3
+inputmethods/fcitx-configtool			gtk3
 inputmethods/fcitx-libpinyin
-
-## office
-#app-office/TeXmacs				X pdf
 
 ## text
 app-text/mupdf
@@ -31,15 +32,12 @@ media/mplayer2					X ass truetype opengl
 	media/ffmpeg		
 	media-libs/libass			fontconfig
 media-gfx/sxiv
-        media-libs/imlib2                       X gif tiff
+	media-libs/imlib2                       X gif tiff
 
 ## editor && IDE
 app-editors/emacs				X freetype gtk3 jpeg gif png tiff xpm
 
-## misc
-x11-misc/synergy                                systemd
-
 ## www
 net-www/firefox
-        dev-lang/python         sqlite
+	dev-lang/python				sqlite
 net-plugins/adobe-flash
