@@ -7,8 +7,8 @@ if [[ -n ${DISTCC_DIR} ]]; then
     case "${HOOK}" in
 	ebuild_compile_pre|ebuild_install_pre)
 	    einfo_unhooked "Allowing net connection for distcc..."
-	    esandbox allow_net --connect "inet:0.0.0.0/0@3632"
-	    esandbox allow_net "unix:/tmp/distcc-pump.*/socket"
+	    edo esandbox allow_net --connect "inet:0.0.0.0/0@3632"
+	    edo esandbox allow_net "unix:/tmp/distcc-pump.*/socket"
 	    ;;
 	*)
 	    ;;

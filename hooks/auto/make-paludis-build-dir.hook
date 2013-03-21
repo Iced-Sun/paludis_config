@@ -28,6 +28,7 @@ make_build_dir() {
     source /etc/paludis/bashrc
     if [[ -n ${DISTCC_DIR} ]]; then
 	validate ${DISTCC_DIR}
+	validate ${DISTCC_DIR}/state
     fi
     
     return 0

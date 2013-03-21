@@ -9,6 +9,7 @@
 	sys-apps/util-linux     udev
 	sys-apps/paludis	prebuilt-documentation search-index
 	sys-devel/gcc
+	sys-apps/sydbox		seccomp
 
 ## system app not in system set 
 sys-apps/systemd
