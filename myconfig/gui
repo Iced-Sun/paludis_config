@@ -25,14 +25,16 @@ inputmethods/fcitx-configtool			gtk3
 inputmethods/fcitx-libpinyin
 
 ## text
-app-text/mupdf
+app-text/zathura
+text-plugins/zathura-djvu
+text-plugins/zathura-pdf-mupdf
 
 ## media
 media/mplayer2					X ass truetype opengl
 	media/ffmpeg		
 	media-libs/libass			fontconfig
 media-gfx/sxiv
-	media-libs/imlib2                       X gif tiff
+	media-libs/imlib2                       X gif -tiff
 
 ## editor && IDE
 app-editors/emacs				X freetype gtk3 jpeg gif png tiff xpm

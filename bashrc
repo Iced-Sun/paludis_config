@@ -1,5 +1,20 @@
 #!/bin/bash
 
+## functions
+has_ipv6()
+{
+    {
+	which ifconfig && ifconfig | grep '2001:da8' && return 0 || return 1
+    } >/dev/null 2>&1
+}
+
+is_in_2112()
+{
+    {
+	which ifconfig && ifconfig | grep '10.2.112' && return 0 || return 1
+    } >/dev/null 2>&1
+}
+
 append_configure_option()
 {
     n="$1"
@@ -10,7 +25,7 @@ append_configure_option()
 	opts+=( "$1" )
 	shift
     done
-    
+
     edo "$@" "${opts[@]}"
 }
 
@@ -19,17 +34,30 @@ CHOST="x86_64-pc-linux-gnu"
 CFLAGS="-march=core2 -O3 -pipe"
 LDFLAGS="-Wl,-O1 -Wl,--as-needed -Wl,--sort-common"
 
-### ECONF HACK
-EXTRA_ECONF=( --disable-static )
+### Build extra
+EXJOBS=3
+custom_EXTRA_ECONF=( --disable-static )
+
+### distcc
+if [[ $(hostname) == "laptop-x61" ]]; then
+    if is_in_2112; then
+#	PATH="/usr/libexec/distcc:${PATH}"
+#	DISTCC_DIR="/var/tmp/paludis/distcc"
+#	EXJOBS=20
+#	DISTCC_HOSTS='--randomize 10.2.112.51,lzo'
+    fi
+    #EMAKE_WRAPPER="pump"
+    #192.168.1.50,lzo,cpp
+fi
 
 ### special care
-[[ $(hostname) == "laptop-x61" ]] && USE_DISTCC=true
 case "${PN}" in
-    db)
-	EXTRA_ECONF=()
+    db|nettle)
+	custom_EXTRA_ECONF=()
 	;;&
     xulrunner)
-	EXTRA_ECONF+=( --disable-elf-hack )
+	custom_EXTRA_ECONF+=( --disable-elf-hack )
+	EXJOBS=5
 	;;&
     ocaml|notmuch)
 	LDFLAGS=""
@@ -40,14 +68,4 @@ esac
 
 ### finalize
 CXXFLAGS="${CFLAGS}"
-ECONF_WRAPPER="append_configure_option ${#EXTRA_ECONF[@]} ${EXTRA_ECONF[@]}"
-EXJOBS=3
-
-### distcc
-if [[ ${USE_DISTCC} == "true" ]]; then
-    EXJOBS=4
-    PATH="/usr/libexec/distcc:${PATH}"
-    DISTCC_DIR="/var/tmp/paludis/distcc"
-    EMAKE_WRAPPER="pump"
-    DISTCC_HOSTS="--randomize 192.168.6.50,lzo,cpp"
-fi
+ECONF_WRAPPER="append_configure_option ${#custom_EXTRA_ECONF[@]} ${custom_EXTRA_ECONF[@]}"

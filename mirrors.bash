@@ -30,7 +30,7 @@ add_site()
 MIRRORS=()
 
 ## IPv4/v6 mirrors
-BJTU=( http://debian.bjtu.edu.cn
+BJTU=( http://mirror.bjtu.edu.cn
     apache cpan cran 'ctan CTAN' debian freebsd 'gentoo gentoo/distfiles' gimp gnome gnu kde 'kernel kernel/pub' 'libreoffice tdf/libreoffice' )
 TSU=( http://mirrors.tuna.tsinghua.edu.cn
     apache 'ctan CTAN' 'cran CRAN' 'ctan CTAN' debian freebsd 'gentoo gentoo/distfiles' gnu 'kernel kernel/pub' opensuse )
@@ -46,8 +46,6 @@ add_site "${BJTU[@]}"
 add_site "${TSU[@]}"
 add_site "${USTC[@]}"
 add_site "${HEANET[@]}"
-#if ( ifconfig | grep 'inet6 2001:' ) >/dev/null 2>&1; then
-#fi
 add_site "${NETEASE[@]}"
 
 ## echo mirrors

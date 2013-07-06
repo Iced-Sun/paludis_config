@@ -21,7 +21,6 @@ app-arch/unrar
 app-arch/unzip
 
 ## fs
-sys-fs/ntfs-3g_ntfsprogs
 sys-fs/btrfs-progs
 
 ## media
@@ -35,8 +34,7 @@ app-emacs/exheres-mode
 ## miscs
 app-terminal/tmux
 app-misc/mc
-sys-apps/lesspipe		hilight
 sys-process/htop
 sys-process/lsof
 app-admin/sudo
-app-shells/zsh
+app-shells/fish

@@ -4,6 +4,10 @@
 ## tuxonice
 sys-apps/tuxonice-userui        systemd
 
+## fs
+sys-fs/ntfs-3g_ntfsprogs
+net-fs/cifs-utils               systemd
+
 ## net
 net-misc/openvpn		lzo threads systemd
 net-proxy/tsocks
@@ -32,7 +36,6 @@ x11-apps/arandr
 ## media
 ~media-sound/mpd		ffmpeg systemd
 ~media-sound/ncmpcpp		taglib
-media-plugins/osd-lyrics	mpd
 
 ## misc
 dev-util/schroot
