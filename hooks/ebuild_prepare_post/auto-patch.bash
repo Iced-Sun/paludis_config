@@ -1,0 +1,1 @@
+../auto-patch.bash
