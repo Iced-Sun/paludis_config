@@ -13,8 +13,8 @@ fonts/wqy-microhei
 
 ## X session
 x11-wm/i3					i3-wsbar		&*/i3lock */i3status */dmenu
+x11-apps/dunst
 x11-apps/rxvt-unicode				perl xft xim
-x11-apps/notify-osd
 gnome-desktop/gnome-icon-theme
 gnome-desktop/gnome-icon-theme-symbolic
 
@@ -37,7 +37,7 @@ media-gfx/sxiv
 	media-libs/imlib2                       X gif -tiff
 
 ## editor && IDE
-app-editors/emacs				X freetype gtk3 jpeg gif png tiff xpm
+app-editors/emacs				X freetype gtk3 jpeg gif png tiff xpm xim
 
 ## www
 net-www/firefox

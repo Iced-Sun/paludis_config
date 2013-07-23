@@ -18,7 +18,6 @@ read -r -d '' DEFAULT_OPTIONS <<EOF
 */*			alsa
 */*			ipv6
 */*			threads openmp
-*/*			zsh-completion
 
 */*			gobject-introspection
 */*::x11		X

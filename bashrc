@@ -41,10 +41,10 @@ custom_EXTRA_ECONF=( --disable-static )
 ### distcc
 if [[ $(hostname) == "laptop-x61" ]]; then
     if is_in_2112; then
-#	PATH="/usr/libexec/distcc:${PATH}"
-#	DISTCC_DIR="/var/tmp/paludis/distcc"
-#	EXJOBS=20
-#	DISTCC_HOSTS='--randomize 10.2.112.51,lzo'
+	PATH="/usr/libexec/distcc:${PATH}"
+	DISTCC_DIR="/var/tmp/paludis/distcc"
+	EXJOBS=20
+	DISTCC_HOSTS='--randomize 10.2.112.51,lzo'
     fi
     #EMAKE_WRAPPER="pump"
     #192.168.1.50,lzo,cpp
@@ -61,6 +61,10 @@ case "${PN}" in
 	;;&
     ocaml|notmuch)
 	LDFLAGS=""
+	;;&
+    mc)
+	EXJOBS=5
+	DISTCC_HOSTS=
 	;;&
     *)
 	;;

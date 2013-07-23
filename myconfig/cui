@@ -21,7 +21,7 @@ app-arch/unrar
 app-arch/unzip
 
 ## fs
-sys-fs/btrfs-progs
+sys-fs/btrfs-progs              systemd
 
 ## media
 sys-sound/alsa-utils            systemd
