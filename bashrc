@@ -36,7 +36,6 @@ LDFLAGS="-Wl,-O1 -Wl,--as-needed -Wl,--sort-common"
 
 ### Build extra
 EXJOBS=3
-custom_EXTRA_ECONF=( --disable-static )
 
 ### distcc
 if [[ $(hostname) == "laptop-x61" ]]; then
@@ -52,9 +51,6 @@ fi
 
 ### special care
 case "${PN}" in
-    db|nettle)
-	custom_EXTRA_ECONF=()
-	;;&
     xulrunner)
 	custom_EXTRA_ECONF+=( --disable-elf-hack )
 	EXJOBS=5
@@ -66,7 +62,14 @@ case "${PN}" in
 	EXJOBS=5
 	DISTCC_HOSTS=
 	;;&
+    notmuch|db|nettle)
+	;; # don't disable static
+    glib|schroot|xulrunner|firefox)
+	;; # no clang
     *)
+	CC="clang"
+	CXX="clang++"
+	custom_EXTRA_ECONF=( --disable-static )
 	;;
 esac    
 

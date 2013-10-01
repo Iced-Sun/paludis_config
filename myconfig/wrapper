@@ -19,10 +19,10 @@ read -r -d '' DEFAULT_OPTIONS <<EOF
 */*			ipv6
 */*			threads openmp
 
-*/*			gobject-introspection
 */*::x11		X
 */*::gnome		gtk3
 
+*/*			python_abis:		-* 2.7
 */*			build_options:		symbols=strip -recommended_tests
 */*			linguas:		zh_CN
 
@@ -54,7 +54,7 @@ show_suggestions() {
     cd ${MYCONFIG}
     for f in ${SETS[@]}; do
 	awk '{gsub("(~|#.*)",""); if(NF>0) print}' ${f} | \
-           awk '/&/ {sub("^\t*",""); sub("\t.*&","\t"); print}'
+           awk '/&/ {sub("^\t*",""); sub("\t.*\\&", "\t"); print}'
     done
 }
 

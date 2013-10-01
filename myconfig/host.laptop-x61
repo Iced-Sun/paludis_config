@@ -16,9 +16,10 @@ net-misc/dhcpcd
 
 ## wireless
 net-wireless/iwlwifi-3945-ucode
-net-misc/wicd			curses systemd
-	dev-python/urwid	ncurses
-
+gnome-desktop/network-manager-applet
+        net-wireless/wpa_supplicant        dbus nl80211 systemd
+        net-apps/NetworkManager            systemd
+        
 ## mail
 mail-client/notmuch		emacs
 net-mail/getmail
@@ -32,14 +33,16 @@ office-libs/wv
 ## X11
 x11-server/xorg-server							&*/xf86-video-intel
 x11-apps/arandr
+x11-apps/xcompmgr
 
 ## media
-~media-sound/mpd		ffmpeg systemd
+~media-sound/mpd		ffmpeg systemd				&-*/*
 ~media-sound/ncmpcpp		taglib
+~media/mpv
 
 ## misc
 dev-util/schroot
 app-text/chmsee
-app-misc/unison			build_options: symbols=preserve
+app-misc/unison
 	dev-lang/ocaml		ocamlopt
 sys-devel/distcc

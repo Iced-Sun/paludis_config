@@ -1,6 +1,5 @@
 ## xorg
-x11-server/xorg-server							&*/xf86-input-evdev
-x11-apps/xcompmgr
+x11-server/xorg-server							&-*/* */xf86-input-evdev
 x11-apps/xinit
 x11-apps/xset
 x11-dri/mesa
@@ -13,6 +12,8 @@ fonts/wqy-microhei
 
 ## X session
 x11-wm/i3					i3-wsbar		&*/i3lock */i3status */dmenu
+x11-apps/i3lock
+x11-plugins/i3status
 x11-apps/dunst
 x11-apps/rxvt-unicode				perl xft xim
 gnome-desktop/gnome-icon-theme
@@ -34,7 +35,7 @@ media/mplayer2					X ass truetype opengl
 	media/ffmpeg		
 	media-libs/libass			fontconfig
 media-gfx/sxiv
-	media-libs/imlib2                       X gif -tiff
+	media-libs/imlib2                       X gif
 
 ## editor && IDE
 app-editors/emacs				X freetype gtk3 jpeg gif png tiff xpm xim

@@ -4,7 +4,7 @@
 ###
 
 ## system set
-	dev-scm/git		curl
+	dev-scm/git							&-*/*
 	net-misc/openssh        systemd
 	sys-apps/util-linux     udev
 	sys-apps/paludis	prebuilt-documentation search-index
@@ -13,6 +13,7 @@
 
 ## system app not in system set 
 sys-apps/systemd
+        sys-boot/dracut         systemd
 sys-apps/dbus                   X systemd
 
 ## app-arch
@@ -28,8 +29,11 @@ sys-sound/alsa-utils            systemd
 
 ## editors
 app-editors/emacs		-alsa
-	app-spell/aspell						&*/aspell-en
+	app-spell/aspell						&-*/* */aspell-en
 app-emacs/exheres-mode
+
+## dev
+dev-lang/clang
 
 ## miscs
 app-terminal/tmux
