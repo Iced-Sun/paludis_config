@@ -1,0 +1,6 @@
+PATH="/etc/paludis/myconfig/clang-lto:${PATH}"
+CC="clang -flto"
+CXX="clang++ -flto"
+AR="clang-ar"
+NM="nm --plugin /usr/lib64/LLVMgold.so"
+RANLIB=/bin/true

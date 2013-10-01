@@ -31,23 +31,10 @@ append_configure_option()
 
 ### basic flags
 CHOST="x86_64-pc-linux-gnu"
-CFLAGS="-march=core2 -O3 -pipe"
+CFLAGS="-O3 -pipe"
 LDFLAGS="-Wl,-O1 -Wl,--as-needed -Wl,--sort-common"
 
-### Build extra
-EXJOBS=3
-
-### distcc
-if [[ $(hostname) == "laptop-x61" ]]; then
-    if is_in_2112; then
-	PATH="/usr/libexec/distcc:${PATH}"
-	DISTCC_DIR="/var/tmp/paludis/distcc"
-	EXJOBS=20
-	DISTCC_HOSTS='--randomize 10.2.112.51,lzo'
-    fi
-    #EMAKE_WRAPPER="pump"
-    #192.168.1.50,lzo,cpp
-fi
+[[ -f /etc/paludis/myconfig/bashrc.`hostname` ]] && source /etc/paludis/myconfig/bashrc.`hostname`
 
 ### special care
 case "${PN}" in
@@ -67,8 +54,7 @@ case "${PN}" in
     glib|schroot|xulrunner|firefox)
 	;; # no clang
     *)
-	CC="clang"
-	CXX="clang++"
+	source /etc/paludis/myconfig/clang-lto/bashrc
 	custom_EXTRA_ECONF=( --disable-static )
 	;;
 esac    
