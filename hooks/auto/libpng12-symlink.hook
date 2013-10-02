@@ -6,11 +6,10 @@ hook_auto_names() {
 hook_run_merger_install_pre() {
     [[ "${CATEGORY}/${PN}" != "media-libs/libpng" ]] && return 0
     
-    shopt -s extglob
     export PATH="$(${PALUDIS_EBUILD_DIR}/utils/canonicalise ${PALUDIS_EBUILD_DIR}/utils/ ):${PATH}"
     source ${PALUDIS_ECHO_FUNCTIONS_DIR:-${PALUDIS_EBUILD_DIR}}/echo_functions.bash
 
-    einfo_unhooked "Add a symlink of libpng12.so.0..."
+    einfo_unhooked "Adding a symlink of libpng12.so.0..."
     for so in `find ${IMAGE}/usr/ -iname 'libpng.so'`; do
 	pushd `dirname ${so}` >/dev/null
 	ln -s `basename ${so}` libpng12.so.0

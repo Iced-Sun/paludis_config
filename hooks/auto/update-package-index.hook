@@ -11,15 +11,13 @@ for h in ${PHASES[@]}; do
 done
 
 update_search_index() {
-    shopt -s extglob
     export PATH="$(${PALUDIS_EBUILD_DIR}/utils/canonicalise ${PALUDIS_EBUILD_DIR}/utils/ ):${PATH}"
     source ${PALUDIS_ECHO_FUNCTIONS_DIR:-${PALUDIS_EBUILD_DIR}}/echo_functions.bash
 
     IDX=${ROOT}/var/cache/paludis/pkg.index
 
-    einfo_unhooked "Rebuilding package indices..."
+    einfo "Rebuilding package indices..."
     ${CAVE:-cave} manage-search-index --create ${IDX}
-    einfo_unhooked "Done rebuilding package indices."
 
     return 0
 }
