@@ -4,15 +4,14 @@ hook_auto_names() {
 }
 
 hook_run_merger_install_pre() {
-    shopt -s extglob
     export PATH="$(${PALUDIS_EBUILD_DIR}/utils/canonicalise ${PALUDIS_EBUILD_DIR}/utils/ ):${PATH}"
     source ${PALUDIS_ECHO_FUNCTIONS_DIR:-${PALUDIS_EBUILD_DIR}}/echo_functions.bash
 
-    einfo_unhooked "Removing /usr/share/doc/*..."
+    einfo "Removing /usr/share/doc/*..."
     (
         rm -fr ${IMAGE}/usr/share/doc
     ) 2>/dev/null
-    einfo_unhooked "Done removing /usr/share/doc/*"
+    einfo "Done removing /usr/share/doc/*"
 
     return 0
 }

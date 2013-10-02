@@ -6,12 +6,10 @@ hook_auto_names() {
 hook_run_install_post() {
     [[ "${TARGET##x11-server/xorg-server}" == "${TARGET}" ]] && return 0
 
-    shopt -s extglob
     export PATH="$(${PALUDIS_EBUILD_DIR}/utils/canonicalise ${PALUDIS_EBUILD_DIR}/utils/ ):${PATH}"
     source ${PALUDIS_ECHO_FUNCTIONS_DIR:-${PALUDIS_EBUILD_DIR}}/echo_functions.bash
 
-    einfo_unhooked "Searching for installed x11-drivers..."
-
+    einfo "Searching for installed x11-drivers..."
     PKG=$(${CAVE:-cave} print-ids --matching 'x11-drivers/*::installed' --format '%p ')
 
     if [[ -z ${PKG} ]]; then
@@ -19,12 +17,12 @@ hook_run_install_post() {
 	return 0
     fi
 
-    einfo_unhooked "Rebuilding installed x11-drivers:"
-    einfo_unhooked "  ${PKG}"
+    einfo "Rebuilding installed x11-drivers:"
+    einfo "  ${PKG}"
 
     ${CAVE:-cave} resolve ${PKG} -x1
     
-    einfo_unhooked "Done rebuilding x11-drivers."
+    einfo "Done rebuilding x11-drivers."
 
     return 0
 }
