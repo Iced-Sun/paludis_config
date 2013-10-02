@@ -33,6 +33,7 @@ append_configure_option()
 CHOST="x86_64-pc-linux-gnu"
 CFLAGS="-O3 -pipe"
 LDFLAGS="-Wl,-O1 -Wl,--as-needed -Wl,--sort-common"
+EXJOBS=3
 
 [[ -f /etc/paludis/myconfig/bashrc.`hostname` ]] && source /etc/paludis/myconfig/bashrc.`hostname`
 
