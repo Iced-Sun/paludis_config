@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+hook_auto_names() {
+    echo merger_install_pre
+}
+
+hook_run_merger_install_pre() {
+    export PATH="$(${PALUDIS_EBUILD_DIR}/utils/canonicalise ${PALUDIS_EBUILD_DIR}/utils/ ):${PATH}"
+    source ${PALUDIS_ECHO_FUNCTIONS_DIR:-${PALUDIS_EBUILD_DIR}}/echo_functions.bash
+
+    einfo "Checking if systemd is installed..."
+    ${CAVE:-cave} print-best-version sys-apps/systemd >/dev/null|| return 0
+    
+    einfo "Collecting systemd units to be installed..."
+    UNITDIR=/etc/paludis/myconfig/systemd
+    pushd ${UNITDIR} >/dev/null
+    UNITS=( `find . -type f -iname '*.service'` )
+    INSTALL_UNITS=()
+    for UNIT in "${UNITS[@]}"; do
+	SPLITS=( ${UNIT//\// } )
+	if [[ "${SPLITS[1]}/${SPLITS[2]}" = "${CATEGORY}/${PN}" ]]; then
+	    INSTALL_UNITS+=( "${SPLITS[3]}/${SPLITS[4]}" )
+	fi
+    done
+    popd >/dev/null
+
+    # nothing to do
+    [[ ${#INSTALL_UNITS[@]} -eq 0 ]] && return 0
+
+    # work
+    LIBDIR=lib64
+    for unit in ${INSTALL_UNITS[@]}; do
+	einfo "Installing ${unit}..."
+	install -m 644 -D ${UNITDIR}/${CATEGORY}/${PN}/${unit} "${IMAGE}/usr/${LIBDIR}/systemd/${unit}"
+    done
+    
+    return 0
+}
