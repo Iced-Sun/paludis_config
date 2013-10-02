@@ -1,6 +1,6 @@
 */*                             amd64_cpu_features:  sse3 ssse3
 
-x11-server/xorg-server							&*/xf86-video-intel
+x11-server/xorg-server							&-*/* xf86-video-intel
 sys-fs/btrfs-progs
 sys-apps/systemd        simple-net
 sys-devel/distcc        systemd

@@ -1,5 +1,5 @@
 ## xorg
-x11-server/xorg-server							&-*/* */xf86-input-evdev
+x11-server/xorg-server							&-*/* xf86-input-evdev
 x11-apps/xinit
 x11-apps/xset
 x11-dri/mesa
@@ -11,7 +11,7 @@ fonts/wqy-bitmapfont
 fonts/wqy-microhei
 
 ## X session
-x11-wm/i3					i3-wsbar		&*/i3lock */i3status */dmenu
+x11-wm/i3					i3-wsbar		&i3lock i3status dmenu
 x11-apps/i3lock
 x11-plugins/i3status
 x11-apps/dunst
@@ -31,7 +31,7 @@ text-plugins/zathura-djvu
 text-plugins/zathura-pdf-mupdf
 
 ## media
-media/mplayer2					X ass truetype opengl
+media/mplayer2					X ass truetype opengl   +[=scm]
 	media/ffmpeg		
 	media-libs/libass			fontconfig
 media-gfx/sxiv

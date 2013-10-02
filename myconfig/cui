@@ -1,6 +1,7 @@
 ### <Tab> => dependency,
 ### "&"   => recommendation and suggestion
 ### "~"   => unstable
+### "+"   => unmask
 ###
 
 ## system set
@@ -8,11 +9,11 @@
 	net-misc/openssh        systemd
 	sys-apps/util-linux     udev
 	sys-apps/paludis	prebuilt-documentation search-index
-	sys-devel/gcc
+	sys-devel/gcc							+:4.8
 	sys-apps/sydbox		seccomp
 
 ## system app not in system set 
-sys-apps/systemd
+sys-apps/systemd							&dracut
         sys-boot/dracut         systemd
 sys-apps/dbus                   X systemd
 
@@ -22,14 +23,14 @@ app-arch/unrar
 app-arch/unzip
 
 ## fs
-sys-fs/btrfs-progs              systemd
+sys-fs/btrfs-progs              systemd                                 +[=scm]
 
 ## media
 sys-sound/alsa-utils            systemd
 
 ## editors
 app-editors/emacs		-alsa
-	app-spell/aspell						&-*/* */aspell-en
+	app-spell/aspell						&-*/* aspell-en
 app-emacs/exheres-mode
 
 ## dev
@@ -42,3 +43,4 @@ sys-process/htop
 sys-process/lsof
 app-admin/sudo
 app-shells/fish
+

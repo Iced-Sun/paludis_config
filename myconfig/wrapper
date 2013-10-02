@@ -1,19 +1,15 @@
 #!/bin/bash
 
-##########################################
-CONFIG_ROOT="/etc/paludis"
-MYCONFIG="${CONFIG_ROOT}"/myconfig
+###### Defaults ######
+# platform
+read -r -d '' PLATFORMS <<EOF
+### defaults
+*/*		~amd64
+*/*[=scm]	~amd64
+EOF
 
-SETS=()
-for s in cui gui test host.`hostname`; do
-    [[ -f ${MYCONFIG}/${s} ]] && SETS+=( ${s} )
-done
-##########################################
-
-INVOKED_NAME=$(basename ${0%.bash})
-
-# default options
-read -r -d '' DEFAULT_OPTIONS <<EOF
+# options
+read -r -d '' OPTIONS <<EOF
 */*			-* pam
 */*			alsa
 */*			ipv6
@@ -30,47 +26,112 @@ read -r -d '' DEFAULT_OPTIONS <<EOF
 */*::subi-hack		build_options:      	work=preserve
 EOF
 
+# mirrors
+SITES=( BJTU TSU USTC HEANET NETEASE )
+BJTU=(http://mirror.bjtu.edu.cn
+    apache cpan cran 'ctan CTAN' debian freebsd 'gentoo gentoo/distfiles' gimp gnome gnu kde 'kernel kernel/pub' 'libreoffice tdf/libreoffice')
+TSU=( http://mirrors.tuna.tsinghua.edu.cn
+    apache 'ctan CTAN' 'cran CRAN' 'ctan CTAN' debian freebsd 'gentoo gentoo/distfiles' gnu 'kernel kernel/pub' opensuse )
+USTC=( http://mirrors.ustc.edu.cn
+    'cpan CPAN' 'cran CRAN' 'ctan CTAN' debian freebsd 'gentoo gentoo/distfiles' gnome gnu kde 'kernel linux-kernel' opensuse )
+HEANET=( http://heanet.dl.sourceforge.net sourceforge )
+NETEASE=( http://mirrors.163.com
+    cpan debian 'freebsd FreeBSD' 'gentoo gentoo/distfiles' 'opensuse openSUSE')
+######### END #########
+
+###### Base vars ######
+CONFIG_ROOT="/etc/paludis"
+MYCONFIG="${CONFIG_ROOT}"/myconfig
+ACTION=$(basename ${0%.bash})
+
+SETS=()
+for s in cui gui test host.`hostname`; do
+    [[ -f ${MYCONFIG}/${s} ]] && SETS+=( ${MYCONFIG}/${s} )
+done
+######### END #########
+
+####### Actions #######
+remove_comment_and_platform() {
+    sed -r -e '/#.*/d' -e 's/~//' -e '/^[[:blank:]]*$/d'
+}
+remove_custom_mark() {
+    sed -e 's/+.*//' -e 's/&.*//'
+}
+
+show_platforms() {
+    echo "${PLATFORMS}"
+}
+
 show_sets() {
-    cd ${MYCONFIG}
     for f in ${SETS[@]}; do
-	awk '{sub("#.*",""); if(NF>0) print}' ${f} | \
-	    awk '!/^[ \t*]/ {sub("~","",$1); print "* " $1}'
+	cat ${f} | remove_comment_and_platform | awk '!/^[[:blank:]*]/ {print "* " $1}'
     done
 }
 
 show_options() {
-    echo "${DEFAULT_OPTIONS}"
+    echo "${OPTIONS}"
 
-    cd ${MYCONFIG}
     for f in ${SETS[@]}; do
-	awk '{sub("#.*",""); if(NF>0) print}' ${f} | \
-           awk '{gsub("(&.*|~|^[[:blank:]]+)",""); if ( NF > 1 ) print}'
+	cat ${f} | remove_comment_and_platform | remove_custom_mark | awk '{if (NF>1) print}'
     done
 }
 
 show_suggestions() {
-#    echo '*/* -*/*'
-    
-    cd ${MYCONFIG}
     for f in ${SETS[@]}; do
-	awk '{gsub("(~|#.*)",""); if(NF>0) print}' ${f} | \
-           awk '/&/ {sub("^\t*",""); sub("\t.*\\&", "\t"); print}'
+	cat ${f} | remove_comment_and_platform | sed -r -n '/&/ s/[[:blank:]]*([[:punct:][:alnum:]]+).*&/\1\t/ p'
+    done
+}
+
+show_package_unmask() {
+    for f in ${SETS[@]}; do
+	cat ${f} | remove_comment_and_platform | sed -r -n '/\+/ s/[[:blank:]]*([[:punct:][:alnum:]]+).*\+/\1/ p'
+    done    
+}
+
+show_mirrors() {
+    add_mirror()
+    {
+	url_base=$1
+	set -- $2
+    
+	url="$url_base/${2:-$1}"
+	name=$1
+
+	num=${#MIRRORS[@]}
+	for ((i=0; i<$num; i++)); do
+	    set -- ${MIRRORS[i]}
+	    if [[ $name == $1 ]]; then
+		MIRRORS[i]+=" $url"
+		return 0
+	    fi
+	done
+	MIRRORS+=( "$name $url" )
+	return 0
+    }
+
+    MIRRORS=()
+    for site in ${SITES[@]}; do
+	eval site=\( \${${site}[@]} \)
+	set -- ${site[@]}
+	url_base=$1; shift
+	while [[ $# -gt 0 ]]; do
+	    add_mirror "$url_base" "$1"
+	    shift
+	done
+    done
+
+    for m in "${MIRRORS[@]}"; do
+	echo ${m}
     done
 }
 
 if [[ -d ${MYCONFIG} ]]; then
-    case "${INVOKED_NAME}" in
+    case "$ACTION" in
 	all )
             show_sets
 	    ;;
-	options )
-            show_options
-	    ;;
-	suggestions )
-	    show_suggestions
-	    ;;
 	* )
-            echo everything else
+            show_${ACTION}
 	    ;;
     esac
 else

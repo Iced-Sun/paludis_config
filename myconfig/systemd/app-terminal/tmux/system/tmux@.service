@@ -2,10 +2,13 @@
 Description=Start tmux in detached session
 
 [Service]
-Type=oneshot
+User=%I
+ControlGroup=%R/user/%U.user/shared cpu:/
+ControlGroupModify=yes
 RemainAfterExit=yes
 KillMode=none
-User=%I
+WorkingDirectory=%h
+Type=oneshot
 ExecStart=/usr/bin/tmux new-session -s %u -d
 ExecStop=/usr/bin/tmux kill-session -t %u
 

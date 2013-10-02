@@ -31,7 +31,7 @@ app-emacs/emacs-w3m
 office-libs/wv
 
 ## X11
-x11-server/xorg-server							&*/xf86-video-intel
+x11-server/xorg-server							&xf86-video-intel
 x11-apps/arandr
 x11-apps/xcompmgr
 
@@ -46,3 +46,6 @@ app-text/chmsee
 app-misc/unison
 	dev-lang/ocaml		ocamlopt
 sys-devel/distcc
+
+## unmask
+   dev-lang/python                                                      +:3.3
