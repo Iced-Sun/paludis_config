@@ -34,6 +34,7 @@ CHOST="x86_64-pc-linux-gnu"
 CFLAGS="-O3 -pipe"
 LDFLAGS="-Wl,-O1 -Wl,--as-needed -Wl,--sort-common"
 EXJOBS=3
+custom_EXTRA_ECONF=( --disable-static )
 
 [[ -f /etc/paludis/myconfig/bashrc.`hostname` ]] && source /etc/paludis/myconfig/bashrc.`hostname`
 
@@ -51,14 +52,26 @@ case "${PN}" in
 	DISTCC_HOSTS=
 	;;&
     notmuch|db|nettle)
-	;; # don't disable static
+	custom_EXTRA_ECONF=()
+	;;&
     glib|schroot|xulrunner|firefox)
-	;; # no clang
+	NO_CLANG=true
+	;;&
+    gcc)
+	NO_CLANG_LTO=true
+	;;&
     *)
-	source /etc/paludis/myconfig/clang-lto/bashrc
-	custom_EXTRA_ECONF=( --disable-static )
 	;;
 esac    
+
+if [[ ${NO_CLANG}x != truex ]]; then
+    CC="clang"
+    CXX="clang++"
+    if [[ ${NO_CLANG_LTO}x != truex ]]; then
+	source /etc/paludis/myconfig/clang-lto/bashrc
+    fi
+fi
+
 
 ### finalize
 CXXFLAGS="${CFLAGS}"
