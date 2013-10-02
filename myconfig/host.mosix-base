@@ -1,0 +1,3 @@
+#*/*                             amd64_cpu_features:  sse3 ssse3
+
+sys-apps/systemd        static-net

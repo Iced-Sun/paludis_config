@@ -1,0 +1,2 @@
+CFLAGS+=" -march=core2 -msse4.1"
+
