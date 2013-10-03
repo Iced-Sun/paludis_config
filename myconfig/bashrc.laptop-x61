@@ -1,4 +1,4 @@
-CFLAGS+=" -march=core2 -msse4.1"
+CFLAGS+=( -march=core2 -msse4.1 )
 
 ### distcc
 if [[ $(hostname) == "laptop-x61" ]]; then

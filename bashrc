@@ -29,50 +29,60 @@ append_configure_option()
     edo "$@" "${opts[@]}"
 }
 
-### basic flags
+### default flags
 CHOST="x86_64-pc-linux-gnu"
-CFLAGS="-O3 -pipe"
-LDFLAGS="-Wl,-O1 -Wl,--as-needed -Wl,--sort-common"
+CFLAGS=( -O3 -pipe )
+LDFLAGS=( -Wl,-O1 -Wl,--as-needed -Wl,--sort-common )
 EXJOBS=3
-custom_EXTRA_ECONF=( --disable-static )
 
-[[ -f /etc/paludis/myconfig/bashrc.`hostname` ]] && source /etc/paludis/myconfig/bashrc.`hostname`
+### default custom flags
+EXTRA_ECONF=( --disable-static )
+CLANG=true
+LTO=true
 
 ### special care
 case "${PN}" in
     xulrunner)
-	custom_EXTRA_ECONF+=( --disable-elf-hack )
+	EXTRA_ECONF+=( --disable-elf-hack )
 	EXJOBS=5
 	;;&
     ocaml|notmuch)
 	LDFLAGS=""
 	;;&
-    mc)
-	EXJOBS=5
-	DISTCC_HOSTS=
-	;;&
     notmuch|db|nettle)
-	custom_EXTRA_ECONF=()
+	EXTRA_ECONF=( ${EXTRA_ECONF[@]/--disable-static/} )
 	;;&
     glib|schroot|xulrunner|firefox)
-	NO_CLANG=true
+	CLANG=false
 	;;&
     gcc)
-	NO_CLANG_LTO=true
+	LTO=false
 	;;&
     *)
 	;;
 esac    
 
-if [[ ${NO_CLANG}x != truex ]]; then
+### combination of compiler and lto
+if [[ ${LTO}x == truex ]]; then
+    CFLAGS+=( -flto )
+    LDFLAGS+=( -flto )
+fi
+    
+if [[ ${CLANG}x == truex ]]; then
     CC="clang"
     CXX="clang++"
-    if [[ ${NO_CLANG_LTO}x != truex ]]; then
-	source /etc/paludis/myconfig/clang-lto/bashrc
+    # clang-lto need special setting
+    if [[ ${LTO}x != truex ]]; then
+	PATH="/etc/paludis/myconfig/scripts:${PATH}"
+	AR="clang-ar"
+	NM="nm --plugin /usr/lib64/LLVMgold.so"
+	RANLIB=/bin/true
     fi
 fi
 
-
 ### finalize
+[[ -f /etc/paludis/myconfig/bashrc.`hostname` ]] && source /etc/paludis/myconfig/bashrc.`hostname`
+
+CFLAGS="${CFLAGS[@]}"
 CXXFLAGS="${CFLAGS}"
-ECONF_WRAPPER="append_configure_option ${#custom_EXTRA_ECONF[@]} ${custom_EXTRA_ECONF[@]}"
+ECONF_WRAPPER="append_configure_option ${#EXTRA_ECONF[@]} ${EXTRA_ECONF[@]}"
