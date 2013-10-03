@@ -23,9 +23,6 @@ hook_run_merger_install_pre() {
     done
     popd >/dev/null
 
-    # nothing to do
-    [[ ${#INSTALL_UNITS[@]} -eq 0 ]] && return 0
-
     # work
     LIBDIR=lib64
     for unit in ${INSTALL_UNITS[@]}; do
