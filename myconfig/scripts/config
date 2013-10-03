@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# platform
+read -r -d '' PLATFORMS <<EOF
+### defaults
+*/*		amd64 ~amd64
+*/*[=scm]	~amd64
+EOF
+
+# options
+read -r -d '' OPTIONS <<EOF
+*/*			-* pam
+*/*			alsa
+*/*			ipv6
+*/*			threads openmp
+
+*/*::x11		X
+*/*::gnome		gtk3
+
+*/*			python_abis:		-* 2.7
+*/*			build_options:		symbols=strip -recommended_tests
+*/*			linguas:		zh_CN
+
+*/*::subi		build_options:      	work=preserve
+*/*::subi-hack		build_options:      	work=preserve
+EOF
+
+# mirrors
+SITES=( BJTU TSU USTC HEANET NETEASE )
+BJTU=(http://mirror.bjtu.edu.cn
+    apache cpan cran 'ctan CTAN' debian freebsd 'gentoo gentoo/distfiles' gimp gnome gnu kde 'kernel kernel/pub' 'libreoffice tdf/libreoffice')
+TSU=( http://mirrors.tuna.tsinghua.edu.cn
+    apache 'ctan CTAN' 'cran CRAN' 'ctan CTAN' debian freebsd 'gentoo gentoo/distfiles' gnu 'kernel kernel/pub' opensuse )
+USTC=( http://mirrors.ustc.edu.cn
+    'cpan CPAN' 'cran CRAN' 'ctan CTAN' debian freebsd 'gentoo gentoo/distfiles' gnome gnu kde 'kernel linux-kernel' opensuse )
+HEANET=( http://heanet.dl.sourceforge.net sourceforge )
+NETEASE=( http://mirrors.163.com
+    cpan debian 'freebsd FreeBSD' 'gentoo gentoo/distfiles' 'opensuse openSUSE')

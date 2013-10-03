@@ -28,12 +28,11 @@ inputmethods/fcitx-libpinyin
 ## text
 app-text/zathura
 text-plugins/zathura-djvu
-text-plugins/zathura-pdf-mupdf
+text-plugins/zathura-pdf-poppler
+        app-text/poppler                        glib
 
 ## media
-media/mplayer2					X ass truetype opengl   +[=scm]
-	media/ffmpeg		
-	media-libs/libass			fontconfig
+media/mpv
 media-gfx/sxiv
 	media-libs/imlib2                       X gif
 

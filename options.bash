@@ -1,1 +1,1 @@
-myconfig/wrapper
+myconfig/scripts/wrapper
