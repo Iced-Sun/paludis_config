@@ -4,7 +4,7 @@
 # platform
 read -r -d '' PLATFORMS <<EOF
 ### defaults
-*/*		~amd64
+*/*		amd64 ~amd64
 */*[=scm]	~amd64
 EOF
 
