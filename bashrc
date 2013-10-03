@@ -47,13 +47,16 @@ case "${PN}" in
 	EXJOBS=5
 	;;&
     ocaml|notmuch)
-	LDFLAGS=""
+#	LDFLAGS=()
 	;;&
     notmuch|db|nettle)
 	EXTRA_ECONF=( ${EXTRA_ECONF[@]/--disable-static/} )
 	;;&
     glib|schroot|xulrunner|firefox)
 	CLANG=false
+	;;&
+    TECkit)
+	LIBTOOL=true
 	;;&
     gcc)
 	LTO=false
@@ -71,8 +74,12 @@ fi
 if [[ ${CLANG}x == truex ]]; then
     CC="clang"
     CXX="clang++"
+    if [[ ${LIBTOOL}x == truex ]]; then # stupid libtool igore LDFLAGS!
+	CC="clang -flto"
+	CXX="clang++ -flto"
+    fi
     # clang-lto need special setting
-    if [[ ${LTO}x != truex ]]; then
+    if [[ ${LTO}x == truex ]]; then
 	PATH="/etc/paludis/myconfig/scripts:${PATH}"
 	AR="clang-ar"
 	NM="nm --plugin /usr/lib64/LLVMgold.so"
@@ -85,4 +92,5 @@ fi
 
 CFLAGS="${CFLAGS[@]}"
 CXXFLAGS="${CFLAGS}"
+LDFLAGS="${LDFLAGS[@]}"
 ECONF_WRAPPER="append_configure_option ${#EXTRA_ECONF[@]} ${EXTRA_ECONF[@]}"
