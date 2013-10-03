@@ -52,10 +52,10 @@ case "${PN}" in
     notmuch|db|nettle)
 	EXTRA_ECONF=( ${EXTRA_ECONF[@]/--disable-static/} )
 	;;&
-    glib|schroot|xulrunner|firefox)
+    luatex|glib|schroot|xulrunner|firefox)
 	CLANG=false
 	;;&
-    TECkit)
+    acl|TECkit)
 	LIBTOOL=true
 	;;&
     gcc)
