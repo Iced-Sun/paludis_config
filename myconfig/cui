@@ -42,5 +42,4 @@ app-misc/mc
 sys-process/htop
 sys-process/lsof
 app-admin/sudo
-app-shells/fish
 
