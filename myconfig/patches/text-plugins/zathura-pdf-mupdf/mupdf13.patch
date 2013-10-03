@@ -1,0 +1,115 @@
+diff -Naur ori/config.mk new/config.mk
+--- ori/config.mk	2013-10-02 22:51:14.692779523 +0800
++++ new/config.mk	2013-10-02 22:46:58.407983523 +0800
+@@ -29,7 +29,7 @@
+ endif
+ 
+ INCS = ${GTK_INC} ${ZATHURA_INC} ${GIRARA_INC}
+-LIBS = ${GIRARA_LIB} ${GTK_LIB} -lfitz -ljbig2dec -lopenjpeg -ljpeg
++LIBS = ${GIRARA_LIB} ${GTK_LIB} -lmupdf -ljbig2dec -lopenjp2 -ljpeg
+ 
+ # flags
+ CFLAGS += -std=c99 -fPIC -pedantic -Wall -Wno-format-zero-length $(INCS)
+diff -Naur ori/pdf.c new/pdf.c
+--- ori/pdf.c	2013-10-02 22:24:13.822043195 +0800
++++ new/pdf.c	2013-10-02 22:22:51.355074174 +0800
+@@ -6,8 +6,8 @@
+ #include <ctype.h>
+ #include <girara/datastructures.h>
+ #include <glib.h>
+-#include <muxps.h>
+-#include <mupdf.h>
++#include <mupdf/xps.h>
++#include <mupdf/pdf.h>
+ 
+ #include "pdf.h"
+ 
+@@ -222,7 +222,7 @@
+ 
+   /* setup text */
+   mupdf_page->extracted_text = false;
+-  mupdf_page->text           = fz_new_text_page(mupdf_page->ctx, &mupdf_page->bbox);
++  mupdf_page->text           = fz_new_text_page(mupdf_page->ctx);//, &mupdf_page->bbox);
+   if (mupdf_page->text == NULL) {
+     goto error_free;
+   }
+@@ -447,11 +447,11 @@
+ 
+   for (fz_text_block* block = text_page->blocks; block < text_page->blocks + text_page->len; block++) {
+     for (fz_text_line* line = block->lines; line < block->lines + block->len; line++) {
+-      for (fz_text_span* span = line->spans; span < line->spans + line->len; span++) {
++      for (fz_text_span* span = line->first_span; span < line->last_span; span++) {
+         bool seen = false;
+ 
+         for (int i = 0; i < span->len; i++) {
+-          fz_rect hitbox = span->text[i].bbox;
++          fz_rect hitbox = span->bbox;
+           int c = span->text[i].c;
+ 
+           if (c < 32) {
+@@ -467,7 +467,7 @@
+           }
+         }
+ 
+-        if (seen == true && span + 1 == line->spans + line->len) {
++        if (seen == true && span + 1 == line->last_span) {
+           g_string_append_c(text, '\n');
+         }
+       }
+@@ -653,7 +653,7 @@
+   unsigned int length = 0;
+   for (fz_text_block* block = page->blocks; block < page->blocks + page->len; block++) {
+     for (fz_text_line* line = block->lines; line < block->lines + block->len; line++) {
+-      for (fz_text_span* span = line->spans; span < line->spans + line->len; span++) {
++      for (fz_text_span* span = line->first_span; span < line->last_span; span++) {
+         length += span->len;
+       }
+ 
+@@ -699,12 +699,12 @@
+   int offset = 0;
+   for (fz_text_block* block = page->blocks; block < page->blocks + page->len; block++) {
+     for (fz_text_line* line = block->lines; line < block->lines + block->len; line++) {
+-      for (fz_text_span* span = line->spans; span < line->spans + line->len; span++) {
++      for (fz_text_span* span = line->first_span; span < line->last_span; span++) {
+         if (index < offset + span->len) {
+           return span->text[index - offset].c;
+         }
+ 
+-        if (span + 1 == line->spans + line->len) {
++        if (span + 1 == line->last_span) {
+           if (index == offset + span->len) {
+             return ' ';
+           }
+@@ -730,9 +730,9 @@
+   int offset = 0;
+   for (fz_text_block* block = page->blocks; block < page->blocks + page->len; block++) {
+     for (fz_text_line* line = block->lines; line < block->lines + block->len; line++) {
+-      for (fz_text_span* span = line->spans; span < line->spans + line->len; span++) {
++      for (fz_text_span* span = line->first_span; span < line->last_span; span++) {
+         if (index < offset + span->len) {
+-          fz_rect coordinates = span->text[index - offset].bbox;
++          fz_rect coordinates = span->bbox;
+ 
+           if (rectangle->x1 == 0) {
+             rectangle->x1 = coordinates.x0;
+@@ -753,7 +753,7 @@
+           return;
+         }
+ 
+-        if (span + 1 == line->spans + line->len) {
++        if (span + 1 == line->last_span) {
+           offset++;
+         }
+ 
+diff -Naur ori/pdf.h new/pdf.h
+--- ori/pdf.h	2013-10-02 22:24:05.977141270 +0800
++++ new/pdf.h	2013-10-02 22:22:56.850005478 +0800
+@@ -5,7 +5,7 @@
+ 
+ #include <stdbool.h>
+ #include <zathura/plugin-api.h>
+-#include <fitz.h>
++#include <mupdf/fitz.h>
+ 
+ #if HAVE_CAIRO
+ #include <cairo.h>
