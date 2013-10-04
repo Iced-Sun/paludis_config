@@ -55,9 +55,6 @@ case "${PN}" in
     luatex|glib|schroot|xulrunner|firefox)
 	CLANG=false
 	;;&
-    acl|TECkit)
-	LIBTOOL=true
-	;;&
     gcc)
 	LTO=false
 	;;&
@@ -74,12 +71,11 @@ fi
 if [[ ${CLANG}x == truex ]]; then
     CC="clang"
     CXX="clang++"
-    if [[ ${LIBTOOL}x == truex ]]; then # stupid libtool igore LDFLAGS!
-	CC="clang -flto"
-	CXX="clang++ -flto"
-    fi
     # clang-lto need special setting
     if [[ ${LTO}x == truex ]]; then
+	# libtool filters -flto when linking, so we need hack CC and CXX
+	CC="clang -flto"
+	CXX="clang++ -flto"
 	PATH="/etc/paludis/myconfig/scripts:${PATH}"
 	AR="clang-ar"
 	NM="nm --plugin /usr/lib64/LLVMgold.so"
