@@ -23,11 +23,15 @@ hook_run_merger_install_pre() {
     done
     popd >/dev/null
 
-    # work
+    # FIXME: set LIBDIR correctly
     LIBDIR=lib64
     for unit in ${INSTALL_UNITS[@]}; do
-	einfo "Installing ${unit}..."
-	install -m 644 -D ${UNITDIR}/${CATEGORY}/${PN}/${unit} "${IMAGE}/usr/${LIBDIR}/systemd/${unit}"
+	if [[ -f "${IMAGE}/usr/${LIBDIR}/systemd/${unit}" ]]; then
+	    ewarn "The systemd unit ${unit} is already shipped with ${PN}."
+	else
+	    einfo "Installing ${unit}..."
+	    install -m 644 -D ${UNITDIR}/${CATEGORY}/${PN}/${unit} "${IMAGE}/usr/${LIBDIR}/systemd/${unit}"
+	fi
     done
     
     return 0
