@@ -55,7 +55,7 @@ case "${PN}" in
     luatex|glib|schroot|xulrunner|firefox)
 	CLANG=false
 	;;&
-    gcc)
+    rxvt-unicode|gcc) # urxvt compiles with -flto, but not execute correctly
 	LTO=false
 	;;&
     *)
