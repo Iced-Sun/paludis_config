@@ -39,7 +39,6 @@ dev-lang/clang
 ## miscs
 app-terminal/tmux
 app-misc/mc
-sys-process/htop
+sys-process/htop                cgroups
 sys-process/lsof
 app-admin/sudo
-
