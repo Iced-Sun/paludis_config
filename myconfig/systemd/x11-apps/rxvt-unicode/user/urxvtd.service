@@ -1,0 +1,8 @@
+[Unit]
+Description=rxvt-unicode daemon
+
+[Service]
+ExecStart=/usr/bin/urxvtd
+
+[Install]
+WantedBy=graphical.target
