@@ -46,6 +46,7 @@ app-text/chmsee
 app-misc/unison
 	dev-lang/ocaml		ocamlopt
 sys-devel/distcc
+app-shells/fish
 
 ## unmask
    dev-lang/python                                                      +:3.3
