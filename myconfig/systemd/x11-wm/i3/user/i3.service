@@ -1,0 +1,10 @@
+[Unit]
+Description=i3 tiling window manager
+Requires=xserver.target
+After=xserver.target
+
+[Service]
+ExecStart=/usr/bin/i3
+
+[Install]
+WantedBy=graphical.target

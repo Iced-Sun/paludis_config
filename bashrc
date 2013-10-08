@@ -52,10 +52,10 @@ case "${PN}" in
     notmuch|db|nettle)
 	EXTRA_ECONF=( ${EXTRA_ECONF[@]/--disable-static/} )
 	;;&
-    luatex|glib|schroot|xulrunner|firefox)
+    kexec-tools|xf86-video-intel|luatex|glib|schroot|xulrunner|firefox)
 	CLANG=false
 	;;&
-    gcc)
+    dbus|rxvt-unicode|gcc) # -flto breaks some apps
 	LTO=false
 	;;&
     *)
@@ -63,19 +63,11 @@ case "${PN}" in
 esac    
 
 ### combination of compiler and lto
-if [[ ${LTO}x == truex ]]; then
-    CFLAGS+=( -flto )
-    LDFLAGS+=( -flto )
-fi
-    
 if [[ ${CLANG}x == truex ]]; then
     CC="clang"
     CXX="clang++"
     # clang-lto need special setting
     if [[ ${LTO}x == truex ]]; then
-	# libtool filters -flto when linking, so we need hack CC and CXX
-	CC="clang -flto"
-	CXX="clang++ -flto"
 	PATH="/etc/paludis/myconfig/scripts:${PATH}"
 	AR="clang-ar"
 	NM="nm --plugin /usr/lib64/LLVMgold.so"
@@ -83,6 +75,13 @@ if [[ ${CLANG}x == truex ]]; then
     fi
 fi
 
+if [[ ${LTO}x == truex ]]; then
+#    CFLAGS+=( -flto )
+#    LDFLAGS+=( -flto )
+    CC="${CC} -flto"
+    CXX="${CXX} -flto"
+fi
+    
 ### finalize
 [[ -f /etc/paludis/myconfig/bashrc.`hostname` ]] && source /etc/paludis/myconfig/bashrc.`hostname`
 

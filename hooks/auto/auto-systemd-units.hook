@@ -13,7 +13,7 @@ hook_run_merger_install_pre() {
     einfo "Collecting systemd units to be installed..."
     UNITDIR=/etc/paludis/myconfig/systemd
     pushd ${UNITDIR} >/dev/null
-    UNITS=( `find . -type f -iname '*.service'` )
+    UNITS=( `find . -type f -name '*.service' -or -name '*.target' -or -name '*.timer' -or -name '*.socket'` )
     INSTALL_UNITS=()
     for UNIT in "${UNITS[@]}"; do
 	SPLITS=( ${UNIT//\// } )
@@ -23,11 +23,15 @@ hook_run_merger_install_pre() {
     done
     popd >/dev/null
 
-    # work
+    # FIXME: set LIBDIR correctly
     LIBDIR=lib64
     for unit in ${INSTALL_UNITS[@]}; do
-	einfo "Installing ${unit}..."
-	install -m 644 -D ${UNITDIR}/${CATEGORY}/${PN}/${unit} "${IMAGE}/usr/${LIBDIR}/systemd/${unit}"
+	if [[ -f "${IMAGE}/usr/${LIBDIR}/systemd/${unit}" ]]; then
+	    ewarn "The systemd unit ${unit} is already shipped with ${PN}."
+	else
+	    einfo "Installing ${unit}..."
+	    install -m 644 -D ${UNITDIR}/${CATEGORY}/${PN}/${unit} "${IMAGE}/usr/${LIBDIR}/systemd/${unit}"
+	fi
     done
     
     return 0
