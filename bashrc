@@ -52,10 +52,10 @@ case "${PN}" in
     notmuch|db|nettle)
 	EXTRA_ECONF=( ${EXTRA_ECONF[@]/--disable-static/} )
 	;;&
-    luatex|glib|schroot|xulrunner|firefox)
+    kexec-tools|xf86-video-intel|luatex|glib|schroot|xulrunner|firefox)
 	CLANG=false
 	;;&
-    rxvt-unicode|gcc) # urxvt compiles with -flto, but not execute correctly
+    dbus|rxvt-unicode|gcc) # -flto breaks some apps
 	LTO=false
 	;;&
     *)
@@ -76,9 +76,6 @@ if [[ ${CLANG}x == truex ]]; then
 fi
 
 if [[ ${LTO}x == truex ]]; then
-    # libtool and a lot of compiling logic filter out -flto, so hack CC and CXX to enable lto unconditionally
-#	CC="clang -flto"
-#	CXX="clang++ -flto"
 #    CFLAGS+=( -flto )
 #    LDFLAGS+=( -flto )
     CC="${CC} -flto"
