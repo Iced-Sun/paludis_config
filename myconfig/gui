@@ -1,6 +1,6 @@
 ## xorg
 x11-server/xorg-server							&-*/* xf86-input-evdev
-x11-apps/xinit
+x11-apps/xrdb
 x11-apps/xset
 x11-dri/mesa
 	dev-libs/libxml2			python
