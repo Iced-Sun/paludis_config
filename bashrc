@@ -55,7 +55,7 @@ case "${PN}" in
     squashfs-tools|sbcl|kexec-tools|xf86-video-intel|luatex|glib|schroot|xulrunner|firefox)
 	CLANG=false
 	;;&
-    sbcl|dbus|rxvt-unicode|gcc) # -flto breaks some apps
+    unzip|sbcl|dbus|rxvt-unicode|gcc) # -flto breaks some apps
 	LTO=false
 	;;&
     *)
