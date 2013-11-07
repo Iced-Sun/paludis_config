@@ -47,15 +47,15 @@ case "${PN}" in
 	EXJOBS=5
 	;;&
     ocaml|notmuch)
-#	LDFLAGS=()
+	LDFLAGS=()
 	;;&
     notmuch|db|nettle)
 	EXTRA_ECONF=( ${EXTRA_ECONF[@]/--disable-static/} )
 	;;&
-    kexec-tools|xf86-video-intel|luatex|glib|schroot|xulrunner|firefox)
+    squashfs-tools|sbcl|kexec-tools|xf86-video-intel|luatex|glib|schroot|xulrunner|firefox)
 	CLANG=false
 	;;&
-    dbus|rxvt-unicode|gcc) # -flto breaks some apps
+    sbcl|dbus|rxvt-unicode|gcc) # -flto breaks some apps
 	LTO=false
 	;;&
     *)
