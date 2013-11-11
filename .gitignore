@@ -1,7 +1,0 @@
-.gitignore
-
-myconfig/test
-
-/repositories/*
-!/repositories/repository.conf
-
