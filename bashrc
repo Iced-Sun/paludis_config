@@ -28,11 +28,16 @@ case "${PN}" in
 #	EXTRA_ECONF=( ${EXTRA_ECONF[@]/--disable-static/} )
 #	;;&
 #    mpd|glibc|elfutils|binutils|squashfs-tools|sbcl|kexec-tools|xf86-video-intel|luatex|glib|schroot|xulrunner|firefox)
-#	CLANG=false
-#	;;&
+    db)
+	EXTRA_ECONF=( ${EXTRA_ECONF[@]/--disable-static/} )
+	;;&
+    db)
+    	CLANG=false
+	;;&
 #    firefox|ffmpeg|xulrunner|alsa-lib|nss|libvpx|qt|yajl|cairo|pciutils|glib|glibc|texinfo|elfutils|binutils|gperf|flex|distcc|unzip|sbcl|dbus|rxvt-unicode|gcc)
-#	LTO=false
-#	;;&
+    db)
+	LTO=false
+	;;&
     *)
 	;;
 esac    
@@ -59,11 +64,6 @@ fi
 CFLAGS="${CFLAGS[@]}"
 CXXFLAGS="${CFLAGS}"
 LDFLAGS="${LDFLAGS[@]}"
-
-# libtool fix
-EMAKE_WRAPPER="eval"
-MAKE="make"
-MAKEOPTS="CFLAGS='${CFLAGS}' CXXFLAGS='${CXXFLAGS}' LDFLAGS='${LDFLAGS}'"
 
 # extra econf
 ECONF_WRAPPER="append_configure_option ${#EXTRA_ECONF[@]} ${EXTRA_ECONF[@]}"

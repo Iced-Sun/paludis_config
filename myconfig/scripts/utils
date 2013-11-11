@@ -25,5 +25,5 @@ append_configure_option()
 	shift
     done
 
-    edo "$@" "${opts[@]}"
+    edo "$@" CFLAGS="$CFLAGS" CXXFLAGS="${CXXFLAGS}" LDFLAGS="${LDFLAGS}" "${opts[@]}"
 }
