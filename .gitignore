@@ -1,10 +1,7 @@
+.gitignore
+
 myconfig/test
 
 /repositories/*
-!/repositories/arbor.conf
-!/repositories/accounts.conf
-!/repositories/installed_accounts.conf
-!/repositories/installed.conf
 !/repositories/repository.conf
-!/repositories/unavailable-unofficial.conf
-!/repositories/unavailable.conf
+

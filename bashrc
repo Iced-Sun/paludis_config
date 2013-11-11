@@ -1,33 +1,5 @@
 #!/bin/bash
-
-## functions
-has_ipv6()
-{
-    {
-	which ifconfig && ifconfig | grep '2001:da8' && return 0 || return 1
-    } >/dev/null 2>&1
-}
-
-is_in_2112()
-{
-    {
-	which ifconfig && ifconfig | grep '10.2.112' && return 0 || return 1
-    } >/dev/null 2>&1
-}
-
-append_configure_option()
-{
-    n="$1"
-    shift
-
-    opts=()
-    for ((i=0; i<n; ++i)); do
-	opts+=( "$1" )
-	shift
-    done
-
-    edo "$@" "${opts[@]}"
-}
+source /etc/paludis/myconfig/scripts/utils
 
 ### default flags
 CHOST="x86_64-pc-linux-gnu"
@@ -40,24 +12,27 @@ EXTRA_ECONF=( --disable-static )
 CLANG=true
 LTO=true
 
+### default host specific flags
+[[ -f /etc/paludis/myconfig/host/`hostname`/bashrc ]] && source /etc/paludis/myconfig/host/`hostname`/bashrc
+
 ### special care
 case "${PN}" in
-    xulrunner)
-	EXTRA_ECONF+=( --disable-elf-hack )
-	EXJOBS=5
-	;;&
-    ocaml|notmuch)
-	LDFLAGS=()
-	;;&
-    notmuch|db|nettle)
-	EXTRA_ECONF=( ${EXTRA_ECONF[@]/--disable-static/} )
-	;;&
-    squashfs-tools|sbcl|kexec-tools|xf86-video-intel|luatex|glib|schroot|xulrunner|firefox)
-	CLANG=false
-	;;&
-    unzip|sbcl|dbus|rxvt-unicode|gcc) # -flto breaks some apps
-	LTO=false
-	;;&
+#    xulrunner)
+#	EXTRA_ECONF+=( --disable-elf-hack )
+#	EXJOBS=5
+#	;;&
+#    ocaml|notmuch)
+#	LDFLAGS=()
+#	;;&
+#    notmuch|db|nettle)
+#	EXTRA_ECONF=( ${EXTRA_ECONF[@]/--disable-static/} )
+#	;;&
+#    mpd|glibc|elfutils|binutils|squashfs-tools|sbcl|kexec-tools|xf86-video-intel|luatex|glib|schroot|xulrunner|firefox)
+#	CLANG=false
+#	;;&
+#    firefox|ffmpeg|xulrunner|alsa-lib|nss|libvpx|qt|yajl|cairo|pciutils|glib|glibc|texinfo|elfutils|binutils|gperf|flex|distcc|unzip|sbcl|dbus|rxvt-unicode|gcc)
+#	LTO=false
+#	;;&
     *)
 	;;
 esac    
@@ -76,16 +51,19 @@ if [[ ${CLANG}x == truex ]]; then
 fi
 
 if [[ ${LTO}x == truex ]]; then
-#    CFLAGS+=( -flto )
-#    LDFLAGS+=( -flto )
-    CC="${CC} -flto"
-    CXX="${CXX} -flto"
+    CFLAGS+=( -flto )
+    LDFLAGS+=( -flto )
 fi
     
 ### finalize
-[[ -f /etc/paludis/myconfig/bashrc.`hostname` ]] && source /etc/paludis/myconfig/bashrc.`hostname`
-
 CFLAGS="${CFLAGS[@]}"
 CXXFLAGS="${CFLAGS}"
 LDFLAGS="${LDFLAGS[@]}"
+
+# libtool fix
+EMAKE_WRAPPER="eval"
+MAKE="make"
+MAKEOPTS="CFLAGS='${CFLAGS}' CXXFLAGS='${CXXFLAGS}' LDFLAGS='${LDFLAGS}'"
+
+# extra econf
 ECONF_WRAPPER="append_configure_option ${#EXTRA_ECONF[@]} ${EXTRA_ECONF[@]}"

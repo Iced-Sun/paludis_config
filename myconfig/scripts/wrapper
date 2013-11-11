@@ -1,18 +1,8 @@
 #!/bin/bash
-###### Base vars ######
-CONFIG_ROOT="/etc/paludis"
-MYCONFIG="${CONFIG_ROOT}"/myconfig
-ACTION=$(basename ${0%.bash})
 
-SETS=()
-for s in cui gui test host.`hostname`; do
-    [[ -f ${MYCONFIG}/${s} ]] && SETS+=( ${MYCONFIG}/${s} )
-done
-######### END #########
+SCRIPT_DIR=$(dirname `readlink -f $0`)
+source ${SCRIPT_DIR}/config
 
-source "${MYCONFIG}/scripts/config"
-
-####### Actions #######
 remove_comment_and_platform() {
     sed -r -e '/#.*/d' -e 's/~//' -e '/^[[:blank:]]*$/d'
 }
@@ -20,6 +10,7 @@ remove_custom_mark() {
     sed -e 's/+.*//' -e 's/&.*//'
 }
 
+####### Actions #######
 show_platforms() {
     echo "${PLATFORMS}"
 }
@@ -33,16 +24,16 @@ show_set() {
 }
 
 show_cui() {
-    show_set ${MYCONFIG}/cui
+    show_set ${CONFIG_DIR}/cui
 }
 
 show_gui() {
-    show_set ${MYCONFIG}/gui
+    show_set ${CONFIG_DIR}/gui
 }
 
 show_host() {
-    show_set ${MYCONFIG}/test
-    show_set ${MYCONFIG}/host.`hostname`
+    show_set ${CONFIG_DIR}/test
+    show_set ${CONFIG_DIR}/host.`hostname`
 }
 
 show_options() {
@@ -101,13 +92,13 @@ show_mirrors() {
     done
 }
 
-if [[ -d ${MYCONFIG} ]]; then
+if [[ -d ${CONFIG_DIR} ]]; then
     case "$ACTION" in
 	*)
             show_${ACTION}
 	    ;;
     esac
 else
-    echo "# My config dir does not exist."
+    echo "The config dir does not exist."
 fi
 

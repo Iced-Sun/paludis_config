@@ -1,0 +1,29 @@
+#!/bin/bash
+
+has_ipv6()
+{
+    {
+	which ifconfig && ifconfig | grep '2001:da8' && return 0 || return 1
+    } >/dev/null 2>&1
+}
+
+is_in_2112()
+{
+    {
+	which ifconfig && ifconfig | grep -E '10.2.112|10.0.0' && return 0 || return 1
+    } >/dev/null 2>&1
+}
+
+append_configure_option()
+{
+    n="$1"
+    shift
+
+    opts=()
+    for ((i=0; i<n; ++i)); do
+	opts+=( "$1" )
+	shift
+    done
+
+    edo "$@" "${opts[@]}"
+}
