@@ -24,18 +24,13 @@ case "${PN}" in
 #    ocaml|notmuch)
 #	LDFLAGS=()
 #	;;&
-#    notmuch|db|nettle)
-#	EXTRA_ECONF=( ${EXTRA_ECONF[@]/--disable-static/} )
-#	;;&
-#    mpd|glibc|elfutils|binutils|squashfs-tools|sbcl|kexec-tools|xf86-video-intel|luatex|glib|schroot|xulrunner|firefox)
     db)
 	EXTRA_ECONF=( ${EXTRA_ECONF[@]/--disable-static/} )
 	;;&
-    db)
+    libxkbui|TeXmacs|db)
     	CLANG=false
 	;;&
-#    firefox|ffmpeg|xulrunner|alsa-lib|nss|libvpx|qt|yajl|cairo|pciutils|glib|glibc|texinfo|elfutils|binutils|gperf|flex|distcc|unzip|sbcl|dbus|rxvt-unicode|gcc)
-    db)
+    gcc|db)
 	LTO=false
 	;;&
     *)
