@@ -30,7 +30,13 @@ case "${PN}" in
     libxkbui|TeXmacs|db)
     	CLANG=false
 	;;&
-    gcc|db)
+    libXxf86misc|db)
+	LTO=fix
+	;;&
+    iputils|sysfsutils|file)
+	LTO=hack
+	;;&
+    test-gcc)
 	LTO=false
 	;;&
     *)
@@ -38,11 +44,11 @@ case "${PN}" in
 esac    
 
 ### combination of compiler and lto
-if [[ ${CLANG}x == truex ]]; then
+if [[ ${CLANG}x = truex ]]; then
     CC="clang"
     CXX="clang++"
     # clang-lto need special setting
-    if [[ ${LTO}x == truex ]]; then
+    if [[ ${LTO}x != falsex ]]; then
 	PATH="/etc/paludis/myconfig/scripts:${PATH}"
 	AR="clang-ar"
 	NM="nm --plugin /usr/lib64/LLVMgold.so"
@@ -50,9 +56,20 @@ if [[ ${CLANG}x == truex ]]; then
     fi
 fi
 
-if [[ ${LTO}x == truex ]]; then
+if [[ ${LTO}x != falsex ]]; then
     CFLAGS+=( -flto )
-    LDFLAGS+=( -flto )
+    if [[ ${LTO} = fix ]]; then
+	if [[ ${CLANG} = true ]]; then
+	    LDFLAGS+=( -Wc,-flto ) # for clang (libXxf86misc)
+	else
+	    LDFLAGS+=( -Wl,-flto ) # for gcc (db)
+	fi
+    elif [[ ${LTO} = hack ]]; then
+	CC+=" -flto"
+	CXX+=" -flto"
+    else
+	LDFLAGS+=( -flto ) # for normal one
+    fi
 fi
     
 ### finalize
