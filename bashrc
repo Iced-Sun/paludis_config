@@ -30,7 +30,7 @@ case "${PN}" in
     db)
 	EXTRA_ECONF=( ${EXTRA_ECONF[@]/--disable-static/} )
 	;;&
-    pycairo|libsecret|ncmpcpp|notmuch|paludis|libxkbui|TeXmacs|db)
+    mpd|pycairo|libsecret|ncmpcpp|notmuch|paludis|libxkbui|TeXmacs|db)
     	CLANG=false
 	;;&
     pygtk|chmlib|libXfontcache|imlib2|libXxf86misc|db)
@@ -39,7 +39,7 @@ case "${PN}" in
     wv|ntfs-3g_ntfsprogs|dhcpcd|gmime|i3status|dwz|iputils|sysfsutils|file)
 	LTO=hack
 	;;&
-    libsecret|ncmpcpp|djvu|paludis|openssh|cpio|bc|groff) # TODO: /usr/bin/x86_64-pc-linux-gnu-ld: error: ../lib/libbc.a: no archive symbol table (run ranlib)
+    mpd|libsecret|ncmpcpp|djvu|paludis|openssh|cpio|bc|groff) # TODO: /usr/bin/x86_64-pc-linux-gnu-ld: error: ../lib/libbc.a: no archive symbol table (run ranlib)
 	LTO=false
 	;;&
     ### runtime breakage
