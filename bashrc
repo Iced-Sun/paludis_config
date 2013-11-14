@@ -21,23 +21,33 @@ case "${PN}" in
 #	EXTRA_ECONF+=( --disable-elf-hack )
 #	EXJOBS=5
 #	;;&
-#    ocaml|notmuch)
-#	LDFLAGS=()
-#	;;&
+    w3m)
+	LDFLAGS=()
+    talloc|notmuch)
+	AUTOTOOL=false
+	;;&
     db)
 	EXTRA_ECONF=( ${EXTRA_ECONF[@]/--disable-static/} )
 	;;&
-    libxkbui|TeXmacs|db)
+    pycairo|libsecret|ncmpcpp|notmuch|paludis|libxkbui|TeXmacs|db)
     	CLANG=false
 	;;&
-    libXxf86misc|db)
+    pygtk|chmlib|libXfontcache|imlib2|libXxf86misc|db)
 	LTO=fix
 	;;&
-    iputils|sysfsutils|file)
+    wv|ntfs-3g_ntfsprogs|dhcpcd|gmime|i3status|dwz|iputils|sysfsutils|file)
 	LTO=hack
 	;;&
-    test-gcc)
+    libsecret|ncmpcpp|djvu|paludis|openssh|cpio|bc|groff) # TODO: /usr/bin/x86_64-pc-linux-gnu-ld: error: ../lib/libbc.a: no archive symbol table (run ranlib)
 	LTO=false
+	;;&
+    ### runtime breakage
+    ### BIG FAT WARNING: dbus compiles with -flto, but breaks SYSTEMD at runtime!
+    xapian-core|dbus|rxvt-unicode)
+	LTO=false
+	;;&
+    xapian-core)
+    	CLANG=false
 	;;&
     *)
 	;;
@@ -60,9 +70,9 @@ if [[ ${LTO}x != falsex ]]; then
     CFLAGS+=( -flto )
     if [[ ${LTO} = fix ]]; then
 	if [[ ${CLANG} = true ]]; then
-	    LDFLAGS+=( -Wc,-flto ) # for clang (libXxf86misc)
+	    LDFLAGS+=( -Wc,-flto ) # for clang (e.g. libXxf86misc)
 	else
-	    LDFLAGS+=( -Wl,-flto ) # for gcc (db)
+	    LDFLAGS+=( -Wl,-flto ) # for gcc (e.g. db)
 	fi
     elif [[ ${LTO} = hack ]]; then
 	CC+=" -flto"
@@ -78,4 +88,7 @@ CXXFLAGS="${CFLAGS}"
 LDFLAGS="${LDFLAGS[@]}"
 
 # extra econf
-ECONF_WRAPPER="append_configure_option ${#EXTRA_ECONF[@]} ${EXTRA_ECONF[@]}"
+if [[ ${AUTOTOOL}x != falsex ]]; then
+    ECONF_WRAPPER="append_configure_option ${#EXTRA_ECONF[@]} ${EXTRA_ECONF[@]}"
+fi
+
