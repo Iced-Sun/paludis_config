@@ -23,6 +23,7 @@ case "${PN}" in
 #	;;&
     w3m)
 	LDFLAGS=()
+	;;&
     talloc|notmuch)
 	AUTOTOOL=false
 	;;&
