@@ -1,0 +1,12 @@
+myconfig/test
+
+/repositories/*
+!/repositories/repository.conf
+!/repositories/accounts.conf
+!/repositories/unavailable-unofficial.conf
+!/repositories/arbor.conf
+!/repositories/installed_accounts.conf
+!/repositories/installed.conf
+!/repositories/unavailable.conf
+
+
