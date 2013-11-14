@@ -33,7 +33,7 @@ show_gui() {
 
 show_host() {
     show_set ${CONFIG_DIR}/test
-    show_set ${CONFIG_DIR}/host.`hostname`
+    show_set ${CONFIG_DIR}/host/`hostname`/packages
 }
 
 show_options() {

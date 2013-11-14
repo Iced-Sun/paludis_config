@@ -40,7 +40,7 @@ x11-apps/xcompmgr
 ## misc
 app-text/chmsee
 app-misc/unison
-	dev-lang/ocaml		ocamlopt
+	dev-lang/ocaml
 sys-devel/distcc
 app-shells/fish
 
