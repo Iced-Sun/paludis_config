@@ -2,3 +2,4 @@
 
 sys-apps/systemd        static-net
 net-fs/samba		acl ads async -avahi -cluster -cups gnutls ldap quotas -swat -syslog systemd winbind
+net-dns/dnsmasq		conntrack dbus systemd
