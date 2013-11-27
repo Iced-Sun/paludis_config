@@ -1,9 +1,11 @@
+#!/bin/bash
+
 CFLAGS+=( -march=core2 -msse4.1 )
 EXJOBS=10
 
 case "${PN}" in
-    bind-tools)
-    	CLANG=false
+     bind-tools)
+	EXTRA_ECONF+=( --with-gssapi )
 	;;&
     *)
 	;;
