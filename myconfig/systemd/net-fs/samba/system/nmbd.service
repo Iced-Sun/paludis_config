@@ -4,7 +4,6 @@
 [Unit]
 Description=Samba NetBIOS name server
 After=network.target
-Before=samba.target
 
 [Service]
 Type=forking
