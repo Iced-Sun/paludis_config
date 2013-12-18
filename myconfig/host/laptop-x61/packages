@@ -33,6 +33,7 @@ x11-apps/arandr
 x11-apps/xcompmgr
 
 ## media
+sys-sound/alsa-utils
 ~media-sound/mpd		ffmpeg systemd				&-*/*
 ~media-sound/ncmpcpp		taglib
 ~media/mpv

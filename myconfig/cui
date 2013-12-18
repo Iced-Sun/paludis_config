@@ -25,9 +25,6 @@ app-arch/unzip
 ## fs
 sys-fs/btrfs-progs              systemd                                 +[=scm]
 
-## media
-sys-sound/alsa-utils            systemd
-
 ## editors
 app-editors/emacs		-alsa
 	app-spell/aspell						&-*/* aspell-en
