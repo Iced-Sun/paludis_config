@@ -4,11 +4,11 @@ hook_auto_names() {
 }
 
 hook_run_merger_install_pre() {
-    export PATH="$(${PALUDIS_EBUILD_DIR}/utils/canonicalise ${PALUDIS_EBUILD_DIR}/utils/ ):${PATH}"
+    export PATH="$(${PALUDIS_EBUILD_DIR}/utils/canonicalise ${PALUDIS_EBUILD_DIR}/utils/):${PATH}"
     source ${PALUDIS_ECHO_FUNCTIONS_DIR:-${PALUDIS_EBUILD_DIR}}/echo_functions.bash
 
     einfo "Checking if systemd is installed..."
-    ${CAVE:-cave} print-best-version sys-apps/systemd >/dev/null|| return 0
+    ${CAVE:-cave} print-best-version sys-apps/systemd >/dev/null || return 0
     
     einfo "Collecting systemd units to be installed..."
     UNITDIR=/etc/paludis/myconfig/systemd
@@ -28,10 +28,10 @@ hook_run_merger_install_pre() {
     for unit in ${INSTALL_UNITS[@]}; do
 	if [[ -f "${IMAGE}/usr/${LIBDIR}/systemd/${unit}" ]]; then
 	    ewarn "The systemd unit ${unit} is already shipped with ${PN}."
-	else
-	    einfo "Installing ${unit}..."
-	    install -m 644 -D ${UNITDIR}/${CATEGORY}/${PN}/${unit} "${IMAGE}/usr/${LIBDIR}/systemd/${unit}"
+	    ewarn "Will overwrite them..."
 	fi
+	einfo "Installing ${unit}..."
+	install -m 644 -D ${UNITDIR}/${CATEGORY}/${PN}/${unit} "${IMAGE}/usr/${LIBDIR}/systemd/${unit}"
     done
     
     return 0
