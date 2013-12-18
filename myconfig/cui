@@ -6,7 +6,7 @@
 
 ## system set
 	dev-scm/git							&-*/*
-	net-misc/openssh        systemd
+	net-misc/openssh        X systemd
 	sys-apps/util-linux     udev
 	sys-apps/paludis	prebuilt-documentation search-index
 	sys-devel/gcc							+:4.8
