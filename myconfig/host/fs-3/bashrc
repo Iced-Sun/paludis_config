@@ -1,0 +1,16 @@
+#!/bin/bash
+
+CFLAGS+=( -march=core2 -msse4.1 )
+EXJOBS=10
+
+case "${PN}" in
+    bind-tools)
+	EXTRA_ECONF+=( --with-gssapi )
+	;;&
+    samba)
+	EXTRA_ECONF+=( --with-shared-modules=idmap_ad )
+	;;&
+    *)
+	;;
+esac    
+
