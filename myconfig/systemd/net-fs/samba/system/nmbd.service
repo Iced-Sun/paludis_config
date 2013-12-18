@@ -1,0 +1,16 @@
+# Copyright 2010-2013 Wulf C. Krueger <philantrop@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+[Unit]
+Description=Samba NetBIOS name server
+After=network.target
+Before=samba.target
+
+[Service]
+Type=forking
+PIDFile=/run/samba/nmbd.pid
+ExecStart=/usr/sbin/nmbd -D
+ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target

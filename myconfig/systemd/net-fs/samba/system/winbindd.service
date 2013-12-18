@@ -1,0 +1,16 @@
+# Copyright 2010-2013 Wulf C. Krueger <philantrop@exherbo.org>
+# Distributed under the terms of the GNU General Public License v2
+
+[Unit]
+Description=Samba Winbind daemon
+After=network.target nmbd.service
+Before=samba.target
+
+[Service]
+Type=forking
+PIDFile=/run/samba/winbindd.pid
+ExecStart=/usr/sbin/winbindd -D
+ExecReload=/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target
