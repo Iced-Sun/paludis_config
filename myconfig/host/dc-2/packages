@@ -3,7 +3,8 @@
 sys-apps/systemd        static-net
 
 net-fs/samba		acl ads async -avahi -cluster -cups gnutls ldap quotas -swat -syslog systemd winbind
-
+net-dns/bind-tools
 net-dns/dnsmasq		conntrack dbus systemd
 
-www-servers/nginx	file-aio http http-cache mail systemd nginx_modules: fastcgi ssl stub_status
+sys-devel/distcc	ipv6 systemd
+dev-lang/clang

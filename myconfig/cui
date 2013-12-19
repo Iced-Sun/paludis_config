@@ -30,9 +30,6 @@ app-editors/emacs		-alsa
 	app-spell/aspell						&-*/* aspell-en
 app-emacs/exheres-mode
 
-## dev
-dev-lang/clang
-
 ## miscs
 app-terminal/tmux
 app-misc/mc
