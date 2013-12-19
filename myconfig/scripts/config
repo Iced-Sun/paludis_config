@@ -11,12 +11,10 @@ EOF
 # options
 read -r -d '' OPTIONS <<EOF
 */*			-* pam
-*/*			alsa
 */*			ipv6
 */*			threads openmp
 
 */*::x11		X
-*/*::gnome		gtk3
 
 */*			python_abis:		-* 2.7
 */*			build_options:		symbols=strip -recommended_tests

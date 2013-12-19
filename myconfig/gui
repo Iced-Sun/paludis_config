@@ -37,7 +37,7 @@ media-gfx/sxiv
 	media-libs/imlib2                       X gif
 
 ## editor && IDE
-app-editors/emacs				X freetype gtk3 jpeg gif png tiff xpm xim
+app-editors/emacs				X freetype jpeg gif png tiff xpm xim
 
 ## www
 net-www/firefox
