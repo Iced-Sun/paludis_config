@@ -25,7 +25,7 @@ case "${PN}" in
     talloc|notmuch)
 	AUTOTOOL=false
 	;;&
-    db)
+    nettle|db)
 	EXTRA_ECONF=( ${EXTRA_ECONF[@]/--disable-static/} )
 	;;&
     *)
