@@ -61,7 +61,6 @@ if [[ ${LTO}x != falsex ]]; then
     fi
 fi
 
-
 ### distcc
 if is_in_2112; then
     PATH="/usr/libexec/distcc:${PATH}"

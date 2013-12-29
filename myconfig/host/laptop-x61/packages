@@ -1,5 +1,7 @@
-*/*                             amd64_cpu_features:  sse sse2 sse3 ssse3 sse4.1
-*/*	                        video_drivers:       intel
+*/*			amd64_cpu_features:  sse sse2 sse3 ssse3 sse4.1
+*/*			video_drivers:       intel
+*/*::subi		build_options:      	work=preserve
+*/*::subi-hack		build_options:      	work=preserve
 
 ## fs
 sys-fs/ntfs-3g_ntfsprogs
