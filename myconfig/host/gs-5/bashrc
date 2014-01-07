@@ -1,0 +1,4 @@
+#!/bin/bash
+
+CFLAGS+=( -march=core2 -msse4.1 )
+EXJOBS=10
