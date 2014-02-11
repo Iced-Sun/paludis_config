@@ -22,7 +22,7 @@ case "${PN}" in
     w3m)
 	LDFLAGS=()
 	;;&
-    talloc|notmuch)
+    firefox|xulrunner|nspr|talloc|notmuch)
 	AUTOTOOL=false
 	;;&
     nettle|db)
