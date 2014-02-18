@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-PHASES=(sync_all_post install_all_post uninstall_all_post)
+#PHASES=(sync_all_post install_all_post uninstall_all_post)
+PHASES=( sync_all_post )
 
 hook_auto_names() {
     echo ${PHASES[@]}
