@@ -1,0 +1,5 @@
+*/*                     amd64_cpu_features:  mmx sse sse2 sse3 ssse3 sse4.1
+
+net-misc/dhcpcd		systemd
+net-misc/libteam	systemd
+#net-fs/samba		acl ads async -avahi -cluster -cups gnutls ldap quotas -swat -syslog systemd winbind

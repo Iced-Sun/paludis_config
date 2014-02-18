@@ -38,9 +38,10 @@ NETEASE=( http://mirrors.163.com
 ###### Script config ######
 CONFIG_DIR=$(dirname ${SCRIPT_DIR})
 ACTION=$(basename ${0%.bash})
+HOST=`hostname|cut -d. -f1`
 
 SETS=()
-for s in cui gui test host/`hostname`/packages; do
+for s in cui gui test host/${HOST}/packages; do
     [[ -f ${CONFIG_DIR}/${s} ]] && SETS+=( ${CONFIG_DIR}/${s} )
 done
 #### Script config end ####

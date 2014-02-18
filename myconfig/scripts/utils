@@ -10,9 +10,10 @@ has_ipv6()
 is_in_2112()
 {
     {
-	which ifconfig && ifconfig | grep -E '10.2.112|10.0.0|10.8.0' && return 0 || return 1
+	which ifconfig && ifconfig | grep -E '10.2.112|10.0.0|10.8.0|10.21.12' && return 0 || return 1
+	# FIXME: sydbox not allow pinging.
 	#edo test -e '/dev/sydbox/whitelist/network/connect+inet:10.2.112.0/24@1025'
-	#ping -c 4 10.2.112.1 && return 0 || return 1
+#	ping 10.2.112.1 -c 1 -W 2 -q && return 0 || return 1
     } >/dev/null 2>&1
 }
 
@@ -27,5 +28,5 @@ append_configure_option()
 	shift
     done
 
-    edo "$@" CFLAGS="$CFLAGS" CXXFLAGS="${CXXFLAGS}" LDFLAGS="${LDFLAGS}" "${opts[@]}"
+    edo "$@" CFLAGS="${CFLAGS}" CXXFLAGS="${CXXFLAGS}" LDFLAGS="${LDFLAGS}" "${opts[@]}"
 }
