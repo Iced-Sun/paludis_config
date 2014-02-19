@@ -11,7 +11,7 @@ fonts/wqy-bitmapfont
 fonts/wqy-microhei
 
 ## X session
-x11-wm/i3					i3-wsbar		&i3lock i3status dmenu
+x11-wm/i3								&i3lock i3status dmenu
 x11-apps/i3lock
 x11-plugins/i3status
 x11-apps/dunst
@@ -26,15 +26,14 @@ inputmethods/fcitx-configtool			gtk3
 inputmethods/fcitx-libpinyin
 
 ## text
-app-text/zathura
 text-plugins/zathura-djvu
 text-plugins/zathura-pdf-poppler
-        app-text/poppler                        glib
+	app-text/poppler			glib
 
 ## media
 media/mpv
 media-gfx/sxiv
-	media-libs/imlib2                       X gif
+	media-libs/imlib2			X gif
 
 ## editor && IDE
 app-editors/emacs				X freetype jpeg gif png tiff xpm xim

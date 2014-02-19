@@ -6,16 +6,16 @@
 
 ## system set
 	dev-scm/git							&-*/*
-	net-misc/openssh        X systemd
-	sys-apps/util-linux     udev
-	sys-apps/paludis	prebuilt-documentation search-index
-	sys-devel/gcc							+:4.8
+	net-misc/openssh	X systemd
+	sys-apps/util-linux	udev
+	sys-apps/paludis	prebuilt-documentation search-index pbin
+	sys-devel/gcc
 	sys-apps/sydbox		seccomp
 
 ## system app not in system set 
 sys-apps/systemd							&dracut
-        sys-boot/dracut         systemd
-sys-apps/dbus                   X systemd
+	sys-boot/dracut		systemd
+sys-apps/dbus			X systemd
 
 ## app-arch
 app-arch/p7zip
@@ -23,16 +23,16 @@ app-arch/unrar
 app-arch/unzip
 
 ## fs
-sys-fs/btrfs-progs              systemd                                 +[=scm]
+sys-fs/btrfs-progs		systemd
 
 ## editors
-app-editors/emacs		-alsa
+app-editors/emacs
 	app-spell/aspell						&-*/* aspell-en
 app-emacs/exheres-mode
 
 ## miscs
 app-terminal/tmux
 app-misc/mc
-sys-process/htop                cgroups
+sys-process/htop		cgroups
 sys-process/lsof
 app-admin/sudo
