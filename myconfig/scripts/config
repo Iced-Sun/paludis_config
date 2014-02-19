@@ -11,7 +11,6 @@ EOF
 # options
 read -r -d '' OPTIONS <<EOF
 */*			-* pam
-*/*			ipv6
 */*			threads openmp
 */*			acl xattr
 
