@@ -1,5 +1,0 @@
-#!/bin/sh
-firstarg=${1}
-shift
-
-exec /usr/bin/ar "${firstarg}" --plugin /usr/lib64/LLVMgold.so "${@}"
