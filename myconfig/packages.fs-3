@@ -6,4 +6,4 @@ sys-fs/ntfs-3g_ntfsprogs
 
 app-virtualization/qemu	amd64 async caps -gnutls -iasl -iscsi -rbd -sasl spice -usb-passthrough -vde
 
-www-servers/nginx	file-aio http systemd
+www-servers/nginx	file-aio http systemd nginx_modules: autoindex
