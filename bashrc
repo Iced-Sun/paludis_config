@@ -15,14 +15,10 @@ EXTRA_ECONF=( --disable-static )
 
 ### special care
 case "${PN}" in
-#    xulrunner)
-#	EXTRA_ECONF+=( --disable-elf-hack )
-#	EXJOBS=5
-#	;;&
-    w3m)
-	LDFLAGS=()
+    w3m|paludis)
+	LDFLAGS=( -Wl,-O1 )
 	;;&
-    firefox|xulrunner|nspr|talloc|notmuch)
+    libseccomp|firefox|xulrunner|nspr|talloc|notmuch)
 	AUTOTOOL=false
 	;;&
     nettle|db)
@@ -41,4 +37,3 @@ LDFLAGS="${LDFLAGS[@]}"
 if [[ ${AUTOTOOL}x != falsex ]]; then
     ECONF_WRAPPER="append_configure_option ${#EXTRA_ECONF[@]} ${EXTRA_ECONF[@]}"
 fi
-

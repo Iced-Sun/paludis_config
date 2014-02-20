@@ -6,7 +6,7 @@
 
 ## system set
 	dev-scm/git							&-*/*
-	net-misc/openssh	X systemd
+	net-misc/openssh	systemd
 	sys-apps/util-linux	udev
 	sys-apps/paludis	prebuilt-documentation search-index pbin
 	sys-devel/gcc
@@ -15,7 +15,7 @@
 ## system app not in system set 
 sys-apps/systemd							&dracut
 	sys-boot/dracut		systemd
-sys-apps/dbus			X systemd
+sys-apps/dbus			systemd
 
 ## app-arch
 app-arch/p7zip

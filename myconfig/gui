@@ -1,3 +1,7 @@
+## sys-apps
+	net-misc/openssh	X
+	sys-apps/dbus		X
+
 ## xorg
 x11-server/xorg-server							&-*/* xf86-input-evdev
 x11-apps/xrdb
