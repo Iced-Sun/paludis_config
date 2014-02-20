@@ -18,7 +18,7 @@ purgelocale() {
 	    continue;
 	fi
 	einfo "  <-- ${LOCALE}"
-        /bin/rm -rf ./${LOCALE}
+	rm -rfv ./${LOCALE}
     done
     
     AFTER=$(du -s -BK | cut -dK -f1)
@@ -39,7 +39,7 @@ purgeman() {
 	    continue;
 	fi
 	einfo "  <-- ${LOCALE}"
-        /bin/rm -rf ./${LOCALE}
+	rm -rfv ./${LOCALE}
     done
     
     AFTER=$(du -s -BK | cut -dK -f1)
