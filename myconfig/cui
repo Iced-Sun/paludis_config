@@ -28,7 +28,6 @@ sys-fs/btrfs-progs		systemd
 ## editors
 app-editors/emacs
 	app-spell/aspell						&-*/* aspell-en
-app-emacs/exheres-mode
 
 ## miscs
 app-terminal/tmux

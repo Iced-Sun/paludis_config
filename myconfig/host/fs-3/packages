@@ -3,3 +3,5 @@
 net-misc/dhcpcd		systemd
 net-fs/samba		acl ads async -avahi -cluster -cups gnutls ldap quotas -swat -syslog systemd winbind
 sys-fs/ntfs-3g_ntfsprogs
+
+app-virtualization/qemu	amd64 async caps -gnutls -iasl -iscsi -rbd -sasl spice -usb-passthrough -vde

@@ -32,27 +32,39 @@ show_gui() {
 }
 
 show_host() {
-    show_set ${CONFIG_DIR}/test
     show_set ${CONFIG_DIR}/host/${HOST}/packages
 }
 
 show_options() {
     echo "${OPTIONS}"
-    for f in ${SETS[@]}; do
-	cat ${f} | remove_comment_and_platform | remove_custom_mark | awk '{if (NF>1) print}'
+    set -- ${SETS[@]}
+    while [[ $# -gt 0 ]]; do
+	for w in ${WORLD[@]}; do
+	    if [[ $1 == $w ]]; then
+		cat ${2} | remove_comment_and_platform | remove_custom_mark | awk '{if (NF>1) print}'
+	    fi
+	done
+	shift
+	shift
     done
 }
 
 show_suggestions() {
-    for f in ${SETS[@]}; do
-	cat ${f} | remove_comment_and_platform | sed -r -n '/&/ s/[[:blank:]]*([[:punct:][:alnum:]]+).*&/\1\t/ p'
+    set -- ${SETS[@]}
+    while [[ $# -gt 0 ]]; do
+	shift
+	cat $1 | remove_comment_and_platform | sed -r -n '/&/ s/[[:blank:]]*([[:punct:][:alnum:]]+).*&/\1\t/ p'
+	shift
     done
 }
 
 show_package_unmask() {
-    for f in ${SETS[@]}; do
-	cat ${f} | remove_comment_and_platform | sed -r -n '/\+/ s/[[:blank:]]*([[:punct:][:alnum:]]+).*\+/\1/ p'
-    done    
+    set -- ${SETS[@]}
+    while [[ $# -gt 0 ]]; do
+	shift
+	cat $1 | remove_comment_and_platform | sed -r -n '/\+/ s/[[:blank:]]*([[:punct:][:alnum:]]+).*\+/\1/ p'
+	shift
+    done
 }
 
 show_mirrors() {
@@ -101,4 +113,3 @@ if [[ -d ${CONFIG_DIR} ]]; then
 else
     echo "The config dir does not exist."
 fi
-
