@@ -7,7 +7,7 @@
 !/repositories/installed.bash
 !/repositories/installed_accounts.conf
 !/repositories/subi.conf
-!/repositories/subi-bin.conf
+!/repositories/subi-bin.bash
 
 
 

@@ -5,3 +5,5 @@ net-fs/samba		acl ads async -avahi -cluster -cups gnutls ldap quotas -swat -sysl
 sys-fs/ntfs-3g_ntfsprogs
 
 app-virtualization/qemu	amd64 async caps -gnutls -iasl -iscsi -rbd -sasl spice -usb-passthrough -vde
+
+www-servers/nginx	file-aio http systemd

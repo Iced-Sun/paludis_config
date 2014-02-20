@@ -34,4 +34,3 @@ app-terminal/tmux
 app-misc/mc
 sys-process/htop		cgroups
 sys-process/lsof
-app-admin/sudo

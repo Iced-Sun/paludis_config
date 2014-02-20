@@ -22,7 +22,7 @@ read -r -d '' OPTIONS <<EOF
 EOF
 
 # mirrors
-SITES=( BJTU TSU USTC HEANET NETEASE )
+SITES=( BJTU TSU USTC HEANET NETEASE BIR )
 BJTU=(http://mirror.bjtu.edu.cn
     apache cpan cran 'ctan CTAN' debian freebsd 'gentoo gentoo/distfiles' gimp gnome gnu kde 'kernel kernel/pub' 'libreoffice tdf/libreoffice')
 TSU=( http://mirrors.tuna.tsinghua.edu.cn
@@ -32,6 +32,7 @@ USTC=( http://mirrors.ustc.edu.cn
 HEANET=( http://heanet.dl.sourceforge.net sourceforge )
 NETEASE=( http://mirrors.163.com
     cpan debian 'freebsd FreeBSD' 'gentoo gentoo/distfiles' 'opensuse openSUSE')
+BIR=( http://10.2.112.3 subi-bin )
 #### Paludis config end ####
 
 ###### Script config ######
