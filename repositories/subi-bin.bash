@@ -3,7 +3,7 @@
 cat <<EOF
 format = e
 location = ${root}/var/db/paludis/repositories/subi-bin
-sync = git://github.com/sunbing81/subi-bin.git
+sync = git@github.com:sunbing81/subi-bin.git
 sync_options = --no-reset
 importance = 100
 EOF
