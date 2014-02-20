@@ -16,23 +16,28 @@ show_platforms() {
 }
 
 show_set() {
-    if [[ -e $1 ]]; then
-	cat $1 | remove_comment_and_platform | awk '!/^[[:blank:]*]/ {print "* " $1}'
-    else
-	echo
-    fi
+    s=$1
+    set -- ${SETS[@]}
+    while [[ $# -gt 0 ]]; do
+	if [[ $1 == $s ]]; then
+	    cat $2 | remove_comment_and_platform | awk '!/^[[:blank:]*]/ {print "* " $1}'
+	    break
+	fi
+	shift
+	shift
+    done
 }
 
 show_cui() {
-    show_set ${CONFIG_DIR}/cui
+    show_set cui
 }
 
 show_gui() {
-    show_set ${CONFIG_DIR}/gui
+    show_set gui
 }
 
 show_host() {
-    show_set ${CONFIG_DIR}/host/${HOST}/packages
+    show_set host
 }
 
 show_options() {

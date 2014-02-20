@@ -10,8 +10,32 @@ EXJOBS=3
 ### default custom flags
 EXTRA_ECONF=( --disable-static )
 
-### default host specific flags
-[[ -f /etc/paludis/myconfig/host/`hostname`/bashrc ]] && source /etc/paludis/myconfig/host/`hostname`/bashrc
+### host specific flags
+HOST=`hostname|cut -d. -f1`
+case "${HOST}" in
+    dc-2|fs-3|gs-5)
+	CFLAGS+=( -march=core2 -msse4.1 )
+	EXJOBS=10
+	case "${PN}" in
+	    bind-tools)
+		EXTRA_ECONF+=( --with-gssapi )
+		;;&
+	    *)
+		;;
+	esac
+	;;&
+    laptop-x61)
+	CFLAGS+=( -march=core2 -msse4.1 )
+	### distcc
+	if is_in_2112; then
+	    PATH="/usr/libexec/distcc:${PATH}"
+	    DISTCC_DIR="/var/tmp/paludis/distcc"
+	    EXJOBS=10
+	    DISTCC_HOSTS='--randomize 10.2.112.2,lzo'
+	fi
+	#EMAKE_WRAPPER="pump"
+	#192.168.1.50,lzo,cpp
+esac
 
 ### special care
 case "${PN}" in

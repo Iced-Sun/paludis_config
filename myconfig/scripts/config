@@ -43,7 +43,7 @@ SETS=()
 for s in cui gui; do
     [[ -f ${CONFIG_DIR}/${s} ]] && SETS+=( "${s} ${CONFIG_DIR}/${s}" )
 done
-[[ -f ${CONFIG_DIR}/host/${HOST}/packages ]] && SETS+=( "host ${CONFIG_DIR}/host/${HOST}/packages" )
+[[ -f ${CONFIG_DIR}/packages.${HOST} ]] && SETS+=( "host ${CONFIG_DIR}/packages.${HOST}" )
 
 eval WORLD=`cat ${CONFIG_DIR}/../general.conf | grep world | cut -d' ' -f3`
 WORLD=( `cat ${WORLD}` )
