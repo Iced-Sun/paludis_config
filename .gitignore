@@ -4,7 +4,7 @@
 !/repositories/repository.conf
 !/repositories/unavailable-unofficial.conf
 !/repositories/unavailable.conf
-!/repositories/installed.conf
+!/repositories/installed.bash
 !/repositories/installed_accounts.conf
 !/repositories/subi.conf
 !/repositories/subi-bin.conf

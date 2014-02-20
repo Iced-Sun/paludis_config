@@ -45,7 +45,7 @@ for s in cui gui; do
 done
 [[ -f ${CONFIG_DIR}/packages.${HOST} ]] && SETS+=( "host ${CONFIG_DIR}/packages.${HOST}" )
 
-eval WORLD=`cat ${CONFIG_DIR}/../general.conf | grep world | cut -d' ' -f3`
+eval WORLD=`${CONFIG_DIR}/../general.bash | grep world | cut -d' ' -f3`
 WORLD=( `cat ${WORLD}` )
 #### Script config end ####
 
