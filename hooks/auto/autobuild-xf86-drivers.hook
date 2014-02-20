@@ -4,7 +4,8 @@ hook_auto_names() {
 }
 
 hook_run_install_post() {
-    [[ "${TARGET##x11-server/xorg-server}" == "${TARGET}" ]] && return 0
+    [[ "${CATEGORY}/${PN}" != "x11-server/xorg-server" ]] && return 0
+#    [[ "${TARGET##x11-server/xorg-server}" == "${TARGET}" ]] && return 0
 
     export PATH="$(${PALUDIS_EBUILD_DIR}/utils/canonicalise ${PALUDIS_EBUILD_DIR}/utils/ ):${PATH}"
     source ${PALUDIS_ECHO_FUNCTIONS_DIR:-${PALUDIS_EBUILD_DIR}}/echo_functions.bash
