@@ -4,14 +4,16 @@ hook_auto_names() {
 }
 
 hook_run_merger_install_pre() {
+    [[ "${CATEGORY}/${PN}" != "app-editors/emacs" ]] && return 0
+
     export PATH="$(${PALUDIS_EBUILD_DIR}/utils/canonicalise ${PALUDIS_EBUILD_DIR}/utils/ ):${PATH}"
     source ${PALUDIS_ECHO_FUNCTIONS_DIR:-${PALUDIS_EBUILD_DIR}}/echo_functions.bash
 
-    einfo "Removing /usr/share/doc/*..."
+    einfo "Removing /usr/src/emacs/*..."
     (
-        rm -frv ${IMAGE}/usr/share/doc
+        rm -frv ${IMAGE}/usr/src/emacs/
     ) 2>/dev/null
-    einfo "Done removing /usr/share/doc/*"
+    einfo "Done removing /usr/src/emacs/*"
 
     return 0
 }
