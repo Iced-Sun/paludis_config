@@ -26,8 +26,9 @@ app-arch/unzip
 sys-fs/btrfs-progs		systemd
 
 ## editors
-app-editors/emacs
-	app-spell/aspell						&-*/* aspell-en
+# fixme: do we need aspell everywhere?
+app-editors/emacs							&app-spell/aspell
+	app-spell/aspell						&app-dicts/aspell-en
 
 ## miscs
 app-terminal/tmux
