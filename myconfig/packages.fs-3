@@ -3,7 +3,4 @@
 net-misc/dhcpcd
 net-fs/samba		acl ads async -avahi -cluster -cups gnutls ldap quotas -swat -syslog winbind
 sys-fs/ntfs-3g_ntfsprogs
-
-app-virtualization/qemu	amd64 async caps -gnutls -iasl -iscsi -rbd -sasl spice -usb-passthrough -vde
-
 www-servers/nginx	file-aio http nginx_modules: autoindex
