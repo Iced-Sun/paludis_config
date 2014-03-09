@@ -6,7 +6,6 @@
 
 ## system set
 	dev-scm/git							&-*/*
-	net-misc/openssh	systemd
 	sys-apps/util-linux	udev
 	sys-apps/paludis	prebuilt-documentation search-index pbin
 	sys-devel/gcc
@@ -14,8 +13,8 @@
 
 ## system app not in system set 
 sys-apps/systemd							&dracut
-	sys-boot/dracut		systemd
-sys-apps/dbus			systemd
+	sys-boot/dracut
+sys-apps/dbus
 
 ## app-arch
 app-arch/p7zip
@@ -23,7 +22,7 @@ app-arch/unrar
 app-arch/unzip
 
 ## fs
-sys-fs/btrfs-progs		systemd
+sys-fs/btrfs-progs
 
 ## editors
 # fixme: do we need aspell everywhere?

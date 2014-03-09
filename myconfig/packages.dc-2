@@ -2,9 +2,9 @@
 
 sys-apps/systemd        static-net
 
-net-fs/samba		acl ads async -avahi -cluster -cups gnutls ldap quotas -swat -syslog systemd winbind
+net-fs/samba		acl ads async -avahi -cluster -cups gnutls ldap quotas -swat -syslog winbind
 net-dns/bind-tools
-net-dns/dnsmasq		conntrack dbus systemd
+net-dns/dnsmasq		conntrack dbus
 
-sys-devel/distcc	ipv6 systemd
+sys-devel/distcc	ipv6
 dev-lang/clang

@@ -1,9 +1,9 @@
 */*                     amd64_cpu_features:  mmx sse sse2 sse3 ssse3 sse4.1
 
-net-misc/dhcpcd		systemd
-net-fs/samba		acl ads async -avahi -cluster -cups gnutls ldap quotas -swat -syslog systemd winbind
+net-misc/dhcpcd
+net-fs/samba		acl ads async -avahi -cluster -cups gnutls ldap quotas -swat -syslog winbind
 sys-fs/ntfs-3g_ntfsprogs
 
 app-virtualization/qemu	amd64 async caps -gnutls -iasl -iscsi -rbd -sasl spice -usb-passthrough -vde
 
-www-servers/nginx	file-aio http systemd nginx_modules: autoindex
+www-servers/nginx	file-aio http nginx_modules: autoindex
