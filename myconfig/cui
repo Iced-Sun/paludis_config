@@ -12,7 +12,7 @@
 	sys-apps/sydbox		seccomp
 
 ## system app not in system set 
-sys-apps/systemd							&dracut
+sys-apps/systemd							&sys-boot/dracut
 	sys-boot/dracut
 sys-apps/dbus
 
@@ -25,9 +25,7 @@ app-arch/unzip
 sys-fs/btrfs-progs
 
 ## editors
-# fixme: do we need aspell everywhere?
-app-editors/emacs							&app-spell/aspell
-	app-spell/aspell						&app-dicts/aspell-en
+app-editors/emacs
 
 ## miscs
 app-terminal/tmux

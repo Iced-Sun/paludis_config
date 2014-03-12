@@ -78,3 +78,6 @@ media/mplayer2					X ass truetype opengl   +[=scm]
 	media-libs/libass			fontconfig
 
 app-virtualization/qemu            amd64 gtk3 opengl usb-passthrough xattr
+
+	app-editors/emacs						&app-spell/aspell
+	app-spell/aspell						&app-dicts/aspell-en
