@@ -13,6 +13,7 @@ x11-dri/mesa
 fonts/terminus-font
 fonts/wqy-bitmapfont
 fonts/wqy-microhei
+	media-libs/freetype			harfbuzz
 
 ## X session
 x11-wm/i3								&i3lock i3status dmenu

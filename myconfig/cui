@@ -1,4 +1,4 @@
-### <Tab> => dependency,
+### <Tab> => dependency
 ### "&"   => recommendation and suggestion
 ### "~"   => unstable
 ### "+"   => unmask
@@ -32,3 +32,7 @@ app-terminal/tmux
 app-misc/mc
 sys-process/htop		cgroups
 sys-process/lsof
+
+## virtuals
+    virtual/syslog		providers: -rsyslog systemd
+    virtual/pkg-config		providers: -pkg-config pkgconf
