@@ -42,7 +42,7 @@ case "${PN}" in
     w3m|paludis)
 	LDFLAGS=( -Wl,-O1 )
 	;;&
-    libseccomp|firefox|xulrunner|nspr|talloc|notmuch)
+    autoconf|libseccomp|firefox|xulrunner|nspr|talloc|notmuch)
 	AUTOTOOL=false
 	;;&
     nettle|db)
