@@ -10,7 +10,7 @@ EOF
 
 # options
 read -r -d '' OPTIONS <<EOF
-*/*			-* pam
+*/*			-* pam systemd
 */*			threads openmp
 */*			acl xattr
 

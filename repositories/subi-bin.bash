@@ -10,7 +10,6 @@ EOF
 
 if [[ `hostname` == "fs-3.bir.pku.edu.cn" ]]; then
     cat <<EOF
-
 binary_destination = true
 binary_distdir = /srv/subi-bin
 binary_keywords_filter = amd64 ~amd64

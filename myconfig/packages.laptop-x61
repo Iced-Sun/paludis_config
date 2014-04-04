@@ -5,10 +5,10 @@
 
 ## fs
 sys-fs/ntfs-3g_ntfsprogs
-net-fs/cifs-utils               systemd
+net-fs/cifs-utils
 
 ## net
-net-misc/openvpn		lzo threads systemd
+net-misc/openvpn		lzo threads
 net-proxy/tsocks
 net-ftp/lftp
 net-misc/dhcpcd
@@ -16,9 +16,8 @@ net-misc/dhcpcd
 ## wireless
 net-wireless/iwlwifi-3945-ucode
 gnome-desktop/network-manager-applet
-        net-wireless/wpa_supplicant        dbus nl80211 systemd
-        net-apps/NetworkManager            systemd
-        
+        net-wireless/wpa_supplicant        dbus nl80211
+
 ## mail
 mail-client/notmuch		emacs
 net-mail/getmail
@@ -54,8 +53,8 @@ app-office/TeXmacs      qt postscript
         sci-apps/gnuplot                X qt cairo
 
         x11-libs/qt                     qt3support
-        
-x11-misc/synergy        systemd
+
+x11-misc/synergy
 
         dev-libs/glib-networking           gnutls
 
@@ -79,3 +78,6 @@ media/mplayer2					X ass alsa truetype opengl   +[=scm]
 	media-libs/libass			fontconfig
 
 app-virtualization/qemu            amd64 gtk3 opengl usb-passthrough xattr
+
+	app-editors/emacs						&app-spell/aspell
+	app-spell/aspell						&app-dicts/aspell-en

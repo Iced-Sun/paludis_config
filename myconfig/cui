@@ -1,4 +1,4 @@
-### <Tab> => dependency,
+### <Tab> => dependency
 ### "&"   => recommendation and suggestion
 ### "~"   => unstable
 ### "+"   => unmask
@@ -6,16 +6,15 @@
 
 ## system set
 	dev-scm/git							&-*/*
-	net-misc/openssh	systemd
 	sys-apps/util-linux	udev
 	sys-apps/paludis	prebuilt-documentation search-index pbin
 	sys-devel/gcc
 	sys-apps/sydbox		seccomp
 
 ## system app not in system set 
-sys-apps/systemd							&dracut
-	sys-boot/dracut		systemd
-sys-apps/dbus			systemd
+sys-apps/systemd							&sys-boot/dracut
+	sys-boot/dracut
+sys-apps/dbus
 
 ## app-arch
 app-arch/p7zip
@@ -23,15 +22,17 @@ app-arch/unrar
 app-arch/unzip
 
 ## fs
-sys-fs/btrfs-progs		systemd
+sys-fs/btrfs-progs
 
 ## editors
-# fixme: do we need aspell everywhere?
-app-editors/emacs							&app-spell/aspell
-	app-spell/aspell						&app-dicts/aspell-en
+app-editors/emacs
 
 ## miscs
 app-terminal/tmux
 app-misc/mc
 sys-process/htop		cgroups
 sys-process/lsof
+
+## virtuals
+    virtual/syslog		providers: -rsyslog systemd
+    virtual/pkg-config		providers: -pkg-config pkgconf

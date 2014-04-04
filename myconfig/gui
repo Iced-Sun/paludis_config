@@ -13,6 +13,7 @@ x11-dri/mesa
 fonts/terminus-font
 fonts/wqy-bitmapfont
 fonts/wqy-microhei
+	media-libs/freetype			harfbuzz
 
 ## X session
 x11-wm/i3								&i3lock i3status dmenu
@@ -24,7 +25,7 @@ gnome-desktop/gnome-icon-theme
 gnome-desktop/gnome-icon-theme-symbolic
 
 ## i18n
-inputmethods/fcitx				systemd classic-ui
+inputmethods/fcitx				classic-ui
 inputmethods/fcitx-gtk				gtk gtk3
 inputmethods/fcitx-configtool			gtk3
 inputmethods/fcitx-libpinyin
