@@ -10,6 +10,24 @@ EXJOBS=3
 ### default custom flags
 EXTRA_ECONF=( --disable-static )
 
+### special care
+case "${PN}" in
+    wine)
+	CFLAGS=( -O2 -pipe )
+	;;&
+    w3m|paludis)
+	LDFLAGS=( -Wl,-O1 )
+	;;&
+    autoconf|libseccomp|firefox|xulrunner|nspr|talloc|notmuch)
+	AUTOTOOL=false
+	;;&
+    nettle|db)
+	EXTRA_ECONF=( ${EXTRA_ECONF[@]/--disable-static/} )
+	;;&
+    *)
+	;;
+esac    
+
 ### host specific flags
 HOST=`hostname|cut -d. -f1`
 case "${HOST}" in
@@ -36,21 +54,6 @@ case "${HOST}" in
 	#EMAKE_WRAPPER="pump"
 	#192.168.1.50,lzo,cpp
 esac
-
-### special care
-case "${PN}" in
-    w3m|paludis)
-	LDFLAGS=( -Wl,-O1 )
-	;;&
-    autoconf|libseccomp|firefox|xulrunner|nspr|talloc|notmuch)
-	AUTOTOOL=false
-	;;&
-    nettle|db)
-	EXTRA_ECONF=( ${EXTRA_ECONF[@]/--disable-static/} )
-	;;&
-    *)
-	;;
-esac    
 
 ### finalize
 CFLAGS="${CFLAGS[@]}"
