@@ -35,12 +35,12 @@ x11-apps/xcompmgr
 
 ## media
 sys-sound/alsa-utils
-~media-sound/mpd		ffmpeg					&-*/*
+~media-sound/mpd		alsa ffmpeg systemd				&-*/*
 ~media-sound/ncmpcpp		taglib
-~media/mpv
+~media/mpv			alsa
 
 ## misc
-app-text/chmsee
+#app-text/chmsee
 app-misc/unison
 	dev-lang/ocaml
 sys-devel/distcc
@@ -73,7 +73,7 @@ app-text/wgetpaste
 
          sys-fs/squashfs-tools          xz
          
-media/mplayer2					X ass truetype opengl   +[=scm]
+media/mplayer2					X ass alsa truetype opengl   +[=scm]
 	media/ffmpeg		                +[>=2.0]
 	media-libs/libass			fontconfig
 
