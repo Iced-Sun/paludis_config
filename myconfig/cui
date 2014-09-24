@@ -8,7 +8,7 @@
 	dev-scm/git							&-*/*
 	sys-apps/util-linux	udev
 	sys-apps/paludis	prebuilt-documentation search-index pbin
-	sys-devel/gcc
+	sys-devel/gcc							+:4.9
 	sys-apps/sydbox		seccomp
 
 ## system app not in system set 
