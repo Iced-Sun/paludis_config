@@ -4,3 +4,16 @@ net-misc/dhcpcd
 net-fs/samba		acl ads async -avahi -cluster -cups gnutls ldap quotas -swat -syslog winbind
 sys-fs/ntfs-3g_ntfsprogs
 www-servers/nginx	file-aio http nginx_modules: autoindex
+
+
+# for making binaries
+	dev-libs/libxml2	python
+	media-libs/libcanberra	gtk3 alsa
+	net-wireless/wpa_supplicant	dbus nl80211
+	app-text/poppler	cairo glib
+	media-libs/imlib2	X gif
+	app-editors/emacs	X freetype gif gtk3 svg tiff xim
+	dev-lang/python		sqlite
+	*/*			video_drivers: intel
+	dev-scm/git		curl
+	sys-apps/dbus		X
