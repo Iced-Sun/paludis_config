@@ -24,6 +24,7 @@ app-arch/unzip
 
 ## fs
 sys-fs/btrfs-progs
+net-fs/cifs-utils
 
 ## editors
 app-editors/emacs
