@@ -25,7 +25,6 @@ net-mail/offlineimap
 app-admin/mime-support
 mail-mta/msmtp
 app-emacs/emacs-w3m
-	net-www/w3m				gtk2
 office-libs/wv
 
 ## X11
@@ -64,11 +63,11 @@ app-text/wgetpaste
 
 #        dev-texlive/texlive-bibtexextra
 #        texlive-fontsextra              # for bbm
-#        app-text/texlive-core           -cjk xetex
+        app-text/texlive-core           cjk xetex
 #        dev-tex/xcolor
 #        dev-texlive/texlive-pstricks
         app-text/poppler                cairo
-#        dev-texlive/texlive-langcjk
+        dev-texlive/texlive-langcjk
 #        dev-texlive/texlive-science
 
          sys-fs/squashfs-tools          xz
