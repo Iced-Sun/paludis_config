@@ -8,6 +8,7 @@
 	dev-scm/git							&-*/*
 	sys-apps/util-linux	udev
 	sys-apps/paludis	prebuilt-documentation search-index pbin
+	    dev-libs/libxml2	python
 	sys-devel/gcc							+:4.9
 	sys-apps/sydbox		seccomp
 
@@ -23,6 +24,7 @@ app-arch/unzip
 
 ## fs
 sys-fs/btrfs-progs
+net-fs/cifs-utils
 
 ## editors
 app-editors/emacs
