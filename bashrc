@@ -24,6 +24,9 @@ case "${PN}" in
     nettle|db)
 	EXTRA_ECONF=( ${EXTRA_ECONF[@]/--disable-static/} )
 	;;&
+    fcitx-table-other)
+	EXJOBS=1
+	;;&
     *)
 	;;
 esac    

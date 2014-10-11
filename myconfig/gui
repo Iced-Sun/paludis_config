@@ -25,8 +25,7 @@ gnome-desktop/gnome-icon-theme
 gnome-desktop/gnome-icon-theme-symbolic
 
 ## i18n
-inputmethods/fcitx				classic-ui
-inputmethods/fcitx-gtk				gtk gtk3
+inputmethods/fcitx				classic-ui gtk3 gtk table
 inputmethods/fcitx-configtool			gtk3
 inputmethods/fcitx-libpinyin
 
