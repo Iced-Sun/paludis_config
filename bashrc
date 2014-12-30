@@ -15,16 +15,16 @@ case "${PN}" in
     wine)
 	CFLAGS=( -O2 -pipe )
 	;;&
-    w3m|paludis)
+    lua|w3m|paludis)
 	LDFLAGS=( -Wl,-O1 )
 	;;&
     autoconf|libseccomp|firefox|xulrunner|nspr|talloc|notmuch)
 	AUTOTOOL=false
 	;;&
-    nettle|db)
+    jpeg|gtest|nettle|db)
 	EXTRA_ECONF=( ${EXTRA_ECONF[@]/--disable-static/} )
 	;;&
-    fcitx-table-other)
+    i3|fcitx-table-other)
 	EXJOBS=1
 	;;&
     *)

@@ -7,7 +7,7 @@ x11-server/xorg-server							&-*/* xf86-input-evdev
 x11-apps/xrdb
 x11-apps/xset
 x11-dri/mesa
-	dev-libs/libxml2			python
+	dev-libs/libxml2			python python_abis: 2.7
 
 ## fonts
 fonts/terminus-font
@@ -36,13 +36,11 @@ text-plugins/zathura-pdf-poppler
 
 ## media
 media/mpv
-media-gfx/sxiv
-	media-libs/imlib2			X gif
+media-gfx/sxiv                                  gif
+	media-libs/imlib2			X
 
 ## editor && IDE
-app-editors/emacs				X freetype jpeg gif png tiff xpm xim gtk3
+app-editors/emacs				X freetype jpeg png tiff xpm xim gtk3
 
 ## www
-net-www/firefox
-	dev-lang/python				sqlite
 net-plugins/adobe-flash

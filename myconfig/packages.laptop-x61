@@ -1,5 +1,6 @@
 */*			amd64_cpu_features:  sse sse2 sse3 ssse3 sse4.1
 */*			video_drivers:       intel
+*/*			python_abis:         2.7 3.4
 */*::subi		build_options:      	work=preserve
 */*::subi-hack		build_options:      	work=preserve
 
@@ -22,6 +23,7 @@ gnome-desktop/network-manager-applet
 mail-client/notmuch		emacs
 net-mail/getmail
 net-mail/offlineimap
+        dev-lang/python:2.7     sqlite
 app-admin/mime-support
 mail-mta/msmtp
 app-emacs/emacs-w3m
@@ -46,7 +48,6 @@ sys-devel/distcc
 app-shells/fish
 
 ## unmask
-   dev-lang/python                                                      +:3.3
 app-office/TeXmacs      qt postscript
         media-gfx/GraphicsMagick        imagemagick
         sci-apps/gnuplot                X qt cairo
@@ -61,15 +62,6 @@ x11-misc/synergy
 
 app-text/wgetpaste
 
-#        dev-texlive/texlive-bibtexextra
-#        texlive-fontsextra              # for bbm
-        app-text/texlive-core           cjk xetex
-#        dev-tex/xcolor
-#        dev-texlive/texlive-pstricks
-        app-text/poppler                cairo
-        dev-texlive/texlive-langcjk
-#        dev-texlive/texlive-science
-
          sys-fs/squashfs-tools          xz
          
 media/mplayer2					X ass alsa truetype opengl   +[=scm]
@@ -80,3 +72,10 @@ app-virtualization/qemu            amd64 gtk3 opengl usb-passthrough xattr
 
 	app-editors/emacs						&app-spell/aspell
 	app-spell/aspell						&app-dicts/aspell-en
+
+#        dev-lang/clang                                                       +[=scm]
+#        dev-lang/llvm                                                        +[=scm]
+
+
+        sci-apps/gnuplot           wxwidgets
+        dev-lang/lua                            +[=5.2]

@@ -8,7 +8,6 @@
 	dev-scm/git							&-*/*
 	sys-apps/util-linux	udev
 	sys-apps/paludis	prebuilt-documentation search-index pbin
-	    dev-libs/libxml2	python
 	sys-devel/gcc							+:4.9
 	sys-apps/sydbox		seccomp
 
