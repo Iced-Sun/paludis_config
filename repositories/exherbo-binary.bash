@@ -5,7 +5,7 @@ format = e
 location = ${root}/var/db/paludis/repositories/exherbo-binary
 sync = git+ssh://git@github.com/sunbing81/subi-bin.git
 sync_options = --no-reset
-importance = 100
+importance = -1
 EOF
 
 if [[ `hostname` == "fs-3.bir.pku.edu.cn" ]]; then
