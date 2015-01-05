@@ -5,6 +5,7 @@
 !/repositories/unavailable-unofficial.conf
 !/repositories/unavailable.conf
 !/repositories/installed.bash
+!/repositories/installed_chroot.bash
 !/repositories/installed_accounts.conf
 !/repositories/subi.conf
 !/repositories/subi-bin.bash
