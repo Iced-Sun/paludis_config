@@ -8,7 +8,8 @@ if [[ `hostname` == "fs-3.bir.pku.edu.cn" ]]; then
     echo name = installed-base
     echo location = ${chroot}/var/db/paludis/repositories/installed
 else
-    echo location = /var/empty
+    echo root = should-not-exist
     echo name = should-not-exist
+    echo location = /var/empty
 fi
 
