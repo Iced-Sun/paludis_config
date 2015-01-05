@@ -8,13 +8,15 @@
 	dev-scm/git							&-*/*
 	sys-apps/util-linux	udev
 	sys-apps/paludis	prebuilt-documentation search-index pbin
-	sys-devel/gcc							+:4.9
+	sys-devel/gcc
 	sys-apps/sydbox		seccomp
+
+## virtuals
+    virtual/syslog		providers: -rsyslog systemd
+    virtual/pkg-config		providers: -pkg-config pkgconf
 
 ## system app not in system set 
 sys-apps/systemd							&sys-boot/dracut
-	sys-boot/dracut
-sys-apps/dbus
 
 ## app-arch
 app-arch/p7zip
@@ -34,6 +36,3 @@ app-misc/mc
 sys-process/htop		cgroups
 sys-process/lsof
 
-## virtuals
-    virtual/syslog		providers: -rsyslog systemd
-    virtual/pkg-config		providers: -pkg-config pkgconf
