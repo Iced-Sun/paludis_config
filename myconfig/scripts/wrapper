@@ -28,18 +28,6 @@ show_set() {
     done
 }
 
-show_cui() {
-    show_set cui
-}
-
-show_gui() {
-    show_set gui
-}
-
-show_host() {
-    show_set host
-}
-
 show_options() {
     echo "${OPTIONS}"
     set -- ${SETS[@]}
@@ -110,11 +98,11 @@ show_mirrors() {
 }
 
 if [[ -d ${CONFIG_DIR} ]]; then
-    case "$ACTION" in
-	*)
-            show_${ACTION}
-	    ;;
-    esac
+    if type show_${ACTION} >/dev/null 2>&1; then
+	show_${ACTION}
+    else
+	show_set ${ACTION}
+    fi
 else
     echo "The config dir does not exist."
 fi

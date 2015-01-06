@@ -10,8 +10,9 @@ EOF
 
 if [[ `hostname` == "fs-3.bir.pku.edu.cn" ]]; then
     cat <<EOF
+location = /media/btrfs_raid6_MD1000_4_WD1003FBYX/linux/exherbo-binary/repository
 binary_destination = true
-binary_distdir = /media/btrfs_raid6_MD1000_4_WD1003FBYX/linux/exherbo-binary
+binary_distdir = /media/btrfs_raid6_MD1000_4_WD1003FBYX/linux/exherbo-binary/distfiles
 binary_keywords_filter = amd64 ~amd64
 binary_uri_prefix = mirror://exherbo-binary/
 EOF

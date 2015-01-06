@@ -41,7 +41,7 @@ ACTION=$(basename ${0%.bash})
 HOST=`hostname|cut -d. -f1`
 
 SETS=()
-for s in cui gui; do
+for s in minimal cui gui; do
     [[ -f ${CONFIG_DIR}/${s} ]] && SETS+=( "${s} ${CONFIG_DIR}/${s}" )
 done
 [[ -f ${CONFIG_DIR}/packages.${HOST} ]] && SETS+=( "host ${CONFIG_DIR}/packages.${HOST}" )

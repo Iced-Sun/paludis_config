@@ -6,7 +6,6 @@
 
 ## system set
 	dev-scm/git							&-*/*
-	sys-apps/util-linux	udev
 	sys-apps/paludis	prebuilt-documentation search-index pbin
 	sys-devel/gcc
 	sys-apps/sydbox		seccomp
@@ -16,7 +15,7 @@
     virtual/pkg-config		providers: -pkg-config pkgconf
 
 ## system app not in system set 
-sys-apps/systemd							&sys-boot/dracut
+sys-apps/systemd
 
 ## app-arch
 app-arch/p7zip
