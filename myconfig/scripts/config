@@ -35,6 +35,7 @@ NETEASE=( http://mirrors.163.com
 BIR=( http://10.2.112.3 exherbo-binary )
 #### Paludis config end ####
 
+
 ###### Script config ######
 CONFIG_DIR=$(dirname ${SCRIPT_DIR})
 ACTION=$(basename ${0%.bash})

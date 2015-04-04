@@ -2,13 +2,7 @@
 
 SCRIPT_DIR=$(dirname `readlink -f $0`)
 source ${SCRIPT_DIR}/config
-
-remove_comment_and_platform() {
-    sed -r -e '/#.*/d' -e 's/~//' -e '/^[[:blank:]]*$/d'
-}
-remove_custom_mark() {
-    sed -e 's/+.*//' -e 's/&.*//'
-}
+source ${SCRIPT_DIR}/utils
 
 ####### Actions #######
 show_platforms() {
