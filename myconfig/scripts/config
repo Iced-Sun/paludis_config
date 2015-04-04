@@ -36,18 +36,3 @@ BIR=( http://10.2.112.3 exherbo-binary )
 #### Paludis config end ####
 
 
-###### Script config ######
-CONFIG_DIR=$(dirname ${SCRIPT_DIR})
-ACTION=$(basename ${0%.bash})
-HOST=`hostname|cut -d. -f1`
-
-SETS=()
-for s in minimal cui gui; do
-    [[ -f ${CONFIG_DIR}/${s} ]] && SETS+=( "${s} ${CONFIG_DIR}/${s}" )
-done
-[[ -f ${CONFIG_DIR}/packages.${HOST} ]] && SETS+=( "host ${CONFIG_DIR}/packages.${HOST}" )
-
-eval WORLD=`${CONFIG_DIR}/../general.bash | grep world | cut -d' ' -f3`
-WORLD=( `cat ${WORLD}` )
-#### Script config end ####
-

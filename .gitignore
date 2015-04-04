@@ -1,13 +1,13 @@
 /repositories/*
+!/repositories/*.bash
 !/repositories/arbor.conf
 !/repositories/accounts.conf
 !/repositories/repository.conf
 !/repositories/unavailable-unofficial.conf
 !/repositories/unavailable.conf
-!/repositories/installed.bash
 !/repositories/installed_accounts.conf
 !/repositories/subi.conf
-!/repositories/exherbo-binary.bash
+
 
 
 
