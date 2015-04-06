@@ -1,68 +1,133 @@
 #!/bin/bash
 
 ### TODO: support bashrc
+### TODO: if cave can add an option --binary-path like --chroot-path, we can add set/repo bindist-laptop-x61
+### TODO: or better, if there is an option --destination (so we can use 'cave resolve package --destination bindist-laptop-x61/installed-laptop-x61')
 
-#### Initialize directory ####
-detect_dir() {
+#### Initialize ####
+init() {
+    ## set directories: all paths are relative to $PALUDIS_CONFIG_DIR
     local SCRIPT_ABSOLUTE=$(realpath $0)
-
     PALUDIS_CONFIG_DIR=$(realpath $(dirname $(realpath $SCRIPT_ABSOLUTE))/../../)
-
-    SCRIPT_DIR=$(realpath $(dirname ${SCRIPT_ABSOLUTE}) --relative-base=${PALUDIS_CONFIG_DIR})
+    local SCRIPT_DIR=$(realpath $(dirname ${SCRIPT_ABSOLUTE}) --relative-base=${PALUDIS_CONFIG_DIR})
     CONFIG_DIR=$(dirname ${SCRIPT_DIR})
 
+    ## determine actions
     local INVOKER=$(realpath -s $(realpath $(dirname $0))/$(basename $0) --relative-base=${PALUDIS_CONFIG_DIR})
     ACTION=$(echo ${INVOKER%.bash}/ | cut -d/ -f1)
     SUB_ACTION=$(echo ${INVOKER%.bash}/ | cut -d/ -f2)
 
+    ## change PWD asap
+    pushd $PALUDIS_CONFIG_DIR >/dev/null
+
+    ## misc
     HOST=`hostname | cut -d. -f1`
 
-    print_debug_info() {
-	echo "Paludis dir:" ${PALUDIS_CONFIG_DIR}
-	echo "Script dir:" ${SCRIPT_DIR}
-	echo "Config dir:" ${CONFIG_DIR}
-	echo "Action:" ${ACTION} ${SUB_ACTION}
-	echo "Hostname:" ${HOST}
+    ## import pre-config and utility functions
+    source ${SCRIPT_DIR}/config
+    source ${SCRIPT_DIR}/utils
+
+    ## determine install destination: slash or chroot
+    detect_destination() {
+	local SUB_REPO=$(echo ${1}- | cut -d- -f2)
+
+	if [[ x$SUB_REPO == "x" ]]; then
+	    DESTINATION=/var/db/paludis/repositories/installed/local
+	else
+	    DESTINATION=/var/db/paludis/repositories/installed/container/$SUB_REPO
+	fi
+
+	WORLD=${DESTINATION}/world
     }
-    #print_debug_info 1>&2
+
+    detect_destination ${CAVE_PERFORM_CMDLINE_destination}
+    
+    ## other paludis config
+    SETS=$(cd ${CONFIG_DIR}/packages && find . -type f -printf '%P\n')
+    ACTIVE_SETS=$(sort ${WORLD} <(printf '%s\n' ${SETS[@]} host) |uniq -d)
+
+    ## debug
+    print_debug_info() {
+	echo "===== Host information ====="
+	echo "Paludis path:" ${PALUDIS_CONFIG_DIR}
+	echo "Config path:" ${CONFIG_DIR}
+	echo "Action:" ${ACTION}::${SUB_ACTION}
+	echo "Host:" ${HOST}
+	echo
+	echo "===== Paludis information ====="
+	echo "Destination:" ${DISTINATION}
+	echo "World:" ${WORLD}
+	echo "Sets:" ${SETS[@]}
+	echo "Active sets:" ${ACTIVE_SETS[@]}
+	echo "===== End debug information ====="
+	echo
+    }
+    [[ x$PALUDIS_CLIENT == "x" ]] && print_debug_info 1>&2
 }
 
-detect_dir
-
-pushd $PALUDIS_CONFIG_DIR >/dev/null
-
-source ${SCRIPT_DIR}/config
-source ${SCRIPT_DIR}/utils
-
-detect_destination() {
-    local SUB_REPO=$(echo ${1}- | cut -d- -f2)
-
-    if [[ x$SUB_REPO == "x" ]]; then
-	DESTINATION=/var/db/paludis/repositories/installed/local
-    else
-	DESTINATION=/var/db/paludis/repositories/installed/container/$SUB_REPO
-    fi
-
-    WORLD=${DESTINATION}/world
-}
-
-detect_destination ${CAVE_PERFORM_CMDLINE_destination}
+init
 
 ####### Action handlers #######
 show_general() {
     echo root = /
-    echo world = ${root}/${WORLD}
+    echo world = ${WORLD}
+}
+
+show_repositories() {
+    local REPO=${1%%-*}
+    local SUB_REPO=${1#${REPO}}
+    SUB_REPO=${SUB_REPO#-}
+    
+    case $REPO in
+	installed)
+	    detect_destination $1
+
+	    echo format = exndbam
+	    echo location = $DESTINATION
+
+	    if [[ x$SUB_REPO == "x" ]]; then
+		echo
+	    else
+		echo root = /media/btrfs_raid6_MD1000_4_WD1003FBYX/linux/container/system/exherbo
+		echo name = ${1/@/-}
+	    fi
+	    ;;
+
+	binary)
+	    cat <<EOF
+format = e
+sync = git+ssh://git@github.com/sunbing81/subi-bin.git
+sync_options = --no-reset
+#importance = -1
+EOF
+
+	    if [[ x$HOST == xfs-3 ]]; then
+		cat <<EOF
+location = /media/btrfs_raid6_MD1000_4_WD1003FBYX/linux/paludis/repositories/$1
+binary_destination = true
+binary_distdir = /media/btrfs_raid6_MD1000_4_WD1003FBYX/linux/paludis/distfiles
+binary_keywords_filter = amd64 ~amd64
+binary_uri_prefix = mirror://exherbo-binary/
+EOF
+	    else
+		echo location = ${root}/var/db/paludis/repositories/binary
+	    fi
+	    ;;
+	*)
+	    echo "Unsupported repository" 1>&2
+	    ;;
+    esac
 }
 
 show_platforms() {
     echo "${PLATFORMS}"
 }
 
-## TODO should not use `cat $WORLD` as sets
 show_options() {
     echo "### Global options:"
     echo "${OPTIONS}"
-    for set in $(cat ${WORLD}); do
+
+    for set in ${ACTIVE_SETS[@]}; do
 	echo
 	echo "### Options for set --$set--"
 	cat $(find_set $set) | remove_comment_and_platform | remove_custom_mark | awk '{if (NF>1) print}'
@@ -70,7 +135,7 @@ show_options() {
 }
 
 show_package_unmask() {
-    for set in $(cat ${WORLD}); do
+    for set in ${ACTIVE_SETS[@]}; do
 	echo
 	echo "### Package unmasks for set --$set--"
 	cat $(find_set $set) | remove_comment_and_platform | sed -r -n '/\+/ s/[[:blank:]]*([[:punct:][:alnum:]]+).*\+/\1/ p'
@@ -116,7 +181,7 @@ show_mirrors() {
 }
 
 show_suggestions() {
-    for set in $(cat ${WORLD}); do
+    for set in ${ACTIVE_SETS[@]}; do
 	echo 
 	echo "### Package suggestions for set --$set--"
 	cat $(find_set $set) | remove_comment_and_platform | sed -r -n '/&/ s/[[:blank:]]*([[:punct:][:alnum:]]+).*&/\1\t/ p'
@@ -125,51 +190,6 @@ show_suggestions() {
 
 show_sets() {
     cat $(find_set $1) | remove_comment_and_platform | awk '!/^[[:blank:]*]/ {print "* " $1}'
-}
-
-show_repositories() {
-    local REPO=$(echo ${1}- | cut -d- -f1)
-    local SUB_REPO=$(echo ${1}- | cut -d- -f2)
-    
-    case $REPO in
-	installed)
-	    detect_destination $1
-
-	    echo format = exndbam
-	    echo location = $DESTINATION
-
-	    if [[ x$SUB_REPO == "x" ]]; then
-		echo
-	    else
-		echo root = /media/btrfs_raid6_MD1000_4_WD1003FBYX/linux/container/system/exherbo/$SUB_REPO
-		echo name = $1
-	    fi
-	    ;;
-
-	binary)
-	    cat <<EOF
-format = e
-sync = git+ssh://git@github.com/sunbing81/subi-bin.git
-sync_options = --no-reset
-#importance = -1
-EOF
-
-	    if [[ x$HOST == xfs-3 ]]; then
-		cat <<EOF
-location = /media/btrfs_raid6_MD1000_4_WD1003FBYX/linux/paludis/repositories/binary/repository
-binary_destination = true
-binary_distdir = /media/btrfs_raid6_MD1000_4_WD1003FBYX/linux/paludis/repositories/binary/distfiles
-binary_keywords_filter = amd64 ~amd64
-binary_uri_prefix = mirror://exherbo-binary/
-EOF
-	    else
-		echo location = ${root}/var/db/paludis/repositories/binary
-	    fi
-	    ;;
-	*)
-	    echo "Unsupported repository" 1>&2
-	    ;;
-    esac
 }
 
 show_repository_defaults() {

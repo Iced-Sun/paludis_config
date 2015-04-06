@@ -40,5 +40,3 @@ remove_custom_mark() {
 find_set() {
     [[ x$1 == "xhost" ]] && echo ${CONFIG_DIR}/packages/host-specific/$HOST || echo ${CONFIG_DIR}/packages/$1
 }
-
-
