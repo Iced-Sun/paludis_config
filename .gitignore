@@ -1,5 +1,6 @@
 /repositories/*
 !/repositories/*.bash
+/repositories/installed-*.bash
 !/repositories/arbor.conf
 !/repositories/accounts.conf
 !/repositories/repository.conf
