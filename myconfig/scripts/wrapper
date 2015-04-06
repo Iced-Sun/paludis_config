@@ -73,6 +73,13 @@ show_general() {
     echo world = ${WORLD}
 }
 
+show_repository_defaults() {
+    echo names_cache = /var/cache/paludis/names
+    echo write_cache = /var/cache/paludis/metadata
+    ## 2013-11-7: shallow clone failed
+    #sync_options = --git-clone-option=--depth=1 --git-pull-option=--depth=1  --git-fetch-option=--depth=1
+}
+
 show_repositories() {
     local REPO=${1%%-*}
     local SUB_REPO=${1#${REPO}}
@@ -110,7 +117,7 @@ binary_keywords_filter = amd64 ~amd64
 binary_uri_prefix = mirror://exherbo-binary/
 EOF
 	    else
-		echo location = ${root}/var/db/paludis/repositories/binary
+		echo location = ${root}/var/db/paludis/repositories/$1
 	    fi
 	    ;;
 	*)
@@ -190,13 +197,6 @@ show_suggestions() {
 
 show_sets() {
     cat $(find_set $1) | remove_comment_and_platform | awk '!/^[[:blank:]*]/ {print "* " $1}'
-}
-
-show_repository_defaults() {
-    echo names_cache = /var/cache/paludis/names
-    echo write_cache = /var/cache/paludis/metadata
-    ## 2013-11-7: shallow clone failed
-    #sync_options = --git-clone-option=--depth=1 --git-pull-option=--depth=1  --git-fetch-option=--depth=1
 }
 
 ##### Dispatcher ####
