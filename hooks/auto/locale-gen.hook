@@ -21,17 +21,17 @@ hook_run_merger_install_pre() {
         local charmap="${locale#* }"
 
         if [[ -z "${name}" ]]; then
-	    ewarn "failed to grab locale name from \"${locale}\" in LOCALE_GEN"
+	    ewarn_unhooked "failed to grab locale name from \"${locale}\" in LOCALE_GEN"
 	    continue
         elif [[ -z "${input}" ]]; then
-	    ewarn "failed to grab input name from \"${locale}\" in LOCALE_GEN"
+	    ewarn_unhooked "failed to grab input name from \"${locale}\" in LOCALE_GEN"
 	    continue
         elif [[ -z "${charmap}" ]]; then
-	    ewarn "failed to grab charmap name from \"${locale}\" in LOCALE_GEN"
+	    ewarn_unhooked "failed to grab charmap name from \"${locale}\" in LOCALE_GEN"
 	    continue
         fi
  
-        einfo "Generating locale ${name}"
+        einfo_unhooked "Generating locale ${name}"
 	mkdir -p $(dirname ${localedef})/../lib/locale
         ${localedef} --prefix=${IMAGE} -i "${input}" -f "${charmap}" "${name}"
     done

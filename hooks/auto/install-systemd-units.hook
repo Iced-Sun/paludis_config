@@ -12,8 +12,6 @@ hook_run_merger_install_pre() {
     UNITDIR=/etc/paludis/myconfig/systemd/${CATEGORY}/${PN}
     [[ -d ${UNITDIR} ]] || return 0
     
-    einfo "Collecting systemd units to be installed..."
-
     pushd ${UNITDIR} >/dev/null
     UNITS=( `find . -type f \( -name '*.service' -o -name '*.target' -o -name '*.timer' -o -name '*.socket' \) -printf '%P\n'` )
     popd >/dev/null
@@ -22,14 +20,14 @@ hook_run_merger_install_pre() {
     
     for UNIT in ${UNITS[@]}; do
 	if [[ -f "${IMAGE}/usr/${TARGET}/lib/systemd/${UNIT}" ]]; then
-	    ewarn "The systemd unit ${UNIT} is already shipped with ${PN}."
+	    ewarn_unhooked "The systemd unit ${UNIT} is already shipped with ${PN}."
 	    ewarn "Will overwrite them..."
 	fi
 
-	einfo "Installing ${UNIT}..."
+	einfo_unhooked "Installing ${UNIT}..."
 	install -m 644 -D ${UNITDIR}/${UNIT} "${IMAGE}/usr/${TARGET}/lib/systemd/${UNIT}"
 
-	einfo "Patching ${UNIT} with multiarch paths..."
+	einfo_unhooked "Patching ${UNIT} with multiarch paths..."
 	sed -i "${IMAGE}/usr/${TARGET}/lib/systemd/${UNIT}" -e "s|/usr/bin|/usr/${TARGET}/bin|"
     done
 

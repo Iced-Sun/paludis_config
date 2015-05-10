@@ -11,7 +11,6 @@ hook_run_sync_all_post() {
     (
 	${CAVE:-cave} print-unused-distfiles | xargs rm -v --
     ) 2>/dev/null
-    einfo_unhooked "Done removing unused distfiles."
 
     return 0
 }
