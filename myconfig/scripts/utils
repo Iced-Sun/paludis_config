@@ -15,23 +15,23 @@ is_in_2112() {
 }
 
 wrap_ebuild_phase() {
-    einfo "Wrapping the ${EXHERES_PHASE} phase..."
+    einfo_unhooked "Wrapping the ${EXHERES_PHASE} phase..."
     
     while [[ "$#" -gt 0 ]]; do
 	group=()
 	while true; do
 	    if [[ x"$1" == "x:WRAP_END:" ]]; then
 		shift
-		einfo "  Running the wrapper ${group[@]}..."
+		einfo_unhooked "  Running the wrapper ${group[@]}..."
 		"${group[@]}"
 		break
 	    elif [[ "$#" -eq 0 ]]; then
-		einfo "  Running the ${EXHERES_PHASE} phase..."
+		einfo_unhooked "  Entering the ${EXHERES_PHASE} phase..."
 	    
 		## FIXME shall we add CFLAGS="${CFLAGS}" CXXFLAGS="${CXXFLAGS}"
 		## LDFLAGS="${LDFLAGS}" to enforce the flags?
 		if [[ ${EXHERES_PHASE} == "configure" ]]; then
-		    einfo "  Applying EXTRA_ECONF..."
+		    einfo_unhooked "  Applying EXTRA_ECONF..."
 		    edo "${group[@]}" "${EXTRA_ECONF[@]}"
 		else
 		    edo "${group[@]}"
@@ -54,7 +54,7 @@ wrap_ebuild_phase() {
 ##
 ## Use a dangerous and fragile hack to work it aroud!!!
 emake() {
-    ewarn "A hijacked version of emake is invoked! Be sure you know what is happening!"
+    ewarn_unhooked "A hijacked version of emake is invoked! Be sure you know what is happening!"
     
     source "${PALUDIS_EBUILD_DIR}"/die_functions.bash
 
@@ -67,6 +67,7 @@ emake() {
     ${EMAKE_WRAPPER} ${MAKE:-make} ${PALUDIS_JOBS_ARGS} ${MAKEOPTS} "$@"
     ret=$?
     [[ 0 != $ret ]] && paludis_die_or_error "emake returned error $ret"
+    
     return $ret
 }
 

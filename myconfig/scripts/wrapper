@@ -259,6 +259,7 @@ init() {
 
     ## debug
     print_debug_info() {
+	echo
 	echo "===== Host information ====="
 	echo "Paludis path:" ${PALUDIS_CONFIG_DIR}
 	echo "Config path:" ${CONFIG_DIR}
@@ -423,7 +424,7 @@ if [[ -d ${CONFIG_DIR} ]]; then
 	echo "Not supported action: " ${ACTION} 1>&2
     fi
 else
-    echo "The config dir does not exist."
+    echo "The configuration path does not exist."
 fi
 
 #### Finalize ####
