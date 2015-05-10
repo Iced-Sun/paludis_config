@@ -1,35 +1,32 @@
 #!/usr/bin/env bash
+
 hook_auto_names() {
     echo sync_all_pre sync_all_post
 }
 
-hook_run_sync_all_pre() {
-    export PATH="$(${PALUDIS_EBUILD_DIR}/utils/canonicalise ${PALUDIS_EBUILD_DIR}/utils/ ):${PATH}"
-    source ${PALUDIS_ECHO_FUNCTIONS_DIR:-${PALUDIS_EBUILD_DIR}}/echo_functions.bash
-    
-    syncfile="${ROOT}/var/tmp/paludis/sync.${PALUDIS_PID}"
+BEFORE="${ROOT}/${XDG_RUNTIME_DIR:-/run}/paludis-sync-before"
+AFTER="${ROOT}/${XDG_RUNTIME_DIR:-/run}/paludis-sync-after"
 
-    echo
+hook_run_sync_all_pre() {
+    source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
+    
     einfo "Building available packages list"
-    ${CAVE:-cave} print-packages | sort -u >"${syncfile}"
+    ${CAVE:-cave} print-packages | sort -u > ${BEFORE}
 
     return 0
 }
 
 hook_run_sync_all_post() {
-    export PATH="$(${PALUDIS_EBUILD_DIR}/utils/canonicalise ${PALUDIS_EBUILD_DIR}/utils/ ):${PATH}"
-    source ${PALUDIS_ECHO_FUNCTIONS_DIR:-${PALUDIS_EBUILD_DIR}}/echo_functions.bash
+    source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
     
-    syncfile="${ROOT}/var/tmp/paludis/sync.${PALUDIS_PID}"
-
     echo
     einfo "Newly available packages:"
-    ${CAVE:-cave} print-packages | sort -u >"${syncfile}".new
+    ${CAVE:-cave} print-packages | sort -u > ${AFTER}
     
-    diff "${syncfile}" "${syncfile}.new" | grep '^>' | cut -d' ' -f2- | while read line ; do
+    diff ${BEFORE} ${AFTER} | grep '^>' | cut -d' ' -f2- | while read line ; do
          einfo "  ${line}"
     done
-    rm -f "${syncfile}" "${syncfile}".new
+    rm -f ${BEFORE} ${AFTER}
     echo
 
     return 0
