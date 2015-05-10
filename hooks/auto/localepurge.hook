@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 hook_auto_names() {
     echo merger_install_pre
 }
@@ -6,12 +7,11 @@ hook_auto_names() {
 NOPURGE=( zh_CN ) # en en_GB?
 LOCALEDIRS=( /usr/share/locale )
 MANPAGEDIRS=( /usr/share/man )
-SCHEMADIRS=( /etc/gconf/gconf.xml.defaults )
 
 purgelocale() {
     [[ -d ${IMAGE}/${1} ]] || return 0
     
-    cd ${IMAGE}/$1
+    pushd ${IMAGE}/${1} >/dev/null
     BEFORE=$(du -s -BK | cut -dK -f1)
     for LOCALE in `find . -type d -path '*/LC_MESSAGES' | cut  -d/ -f2`; do
 	if echo "${NOPURGE[@]}" | grep -q ${LOCALE}; then
@@ -20,15 +20,16 @@ purgelocale() {
 	einfo "  <-- ${LOCALE}"
 	rm -rfv ./${LOCALE}
     done
-    
     AFTER=$(du -s -BK | cut -dK -f1)
+    popd >/dev/null
+    
     einfo "Disk space freed in ${1}: $((BEFORE-AFTER))K"
 }
 
 purgeman() {
     [[ -d ${IMAGE}/${1} ]] || return 0
 
-    cd ${IMAGE}/$1
+    pushd ${IMAGE}/${1} >/dev/null
     BEFORE=$(du -s -BK | cut -dK -f1)
     for LOCALE in *; do
 	if echo "${NOPURGE[@]}" | grep -q ${LOCALE}; then
@@ -41,14 +42,14 @@ purgeman() {
 	einfo "  <-- ${LOCALE}"
 	rm -rfv ./${LOCALE}
     done
-    
     AFTER=$(du -s -BK | cut -dK -f1)
+    popd >/dev/null
+
     einfo "Disk space freed in ${1}: $((BEFORE-AFTER))K"
 }
 
 hook_run_merger_install_pre() {
-    export PATH="$(${PALUDIS_EBUILD_DIR}/utils/canonicalise ${PALUDIS_EBUILD_DIR}/utils/ ):${PATH}"
-    source ${PALUDIS_ECHO_FUNCTIONS_DIR:-${PALUDIS_EBUILD_DIR}}/echo_functions.bash
+    source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
 
     echo 
     einfo "Purging .mo language files..."
