@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+hook_auto_names() {
+    echo install_pre install_post
+}
+
+OLD_LD=${ROOT}/${XDG_RUNTIME_DIR:-/run}/paludis_ld_provider
+
+hook_run_install_pre() {
+    [[ "${TARGET##sys-libs/glibc}" == "${TARGET}" ]] && return 0
+
+    source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
+
+    einfo "Setting ld to bfd to build glibc..." ${ROOT}/${XDG_RUNTIME_DIR:-/run}/paludis_ld_provider
+    eclectic ld show > ${OLD_LD}
+    eclectic ld set --force bfd
+
+    return 0
+}
+
+hook_run_install_post() {
+    [[ "${TARGET##sys-libs/glibc}" == "${TARGET}" ]] && return 0
+
+    source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
+
+    einfo "Restoring ld to original provider..."
+    eclectic ld set --force $(cat ${OLD_LD})
+    rm -f ${OLD_LD}
+
+    return 0
+}
