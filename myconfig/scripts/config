@@ -10,12 +10,17 @@ EOF
 
 # options
 read -r -d '' OPTIONS <<EOF
+### targets
+*/* targets: x86_64-pc-linux-gnu -i686-pc-linux-gnu
+
+### options
 */*			-* pam systemd
 */*			threads openmp
 */*			acl xattr
 
 */*::x11		X
 
+### suboptions
 */*			python_abis:		-* 2.7
 */*			build_options:		symbols=strip -recommended_tests
 */*			linguas:		zh_CN

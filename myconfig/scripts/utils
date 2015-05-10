@@ -1,13 +1,11 @@
 ### for bashrc
-has_ipv6()
-{
+has_ipv6() {
     {
 	which ifconfig && ifconfig | grep '2001:da8' && return 0 || return 1
     } >/dev/null 2>&1
 }
 
-is_in_2112()
-{
+is_in_2112() {
     {
 	which ifconfig && ifconfig | grep -E '10.2.112|10.0.0|10.8.0|10.21.12' && return 0 || return 1
 	# FIXME: sydbox not allow pinging.
@@ -16,27 +14,87 @@ is_in_2112()
     } >/dev/null 2>&1
 }
 
-append_configure_option()
-{
-    n="$1"
-    shift
-
-    opts=()
-    for ((i=0; i<n; ++i)); do
-	opts+=( "$1" )
-	shift
+wrap_ebuild_phase() {
+    einfo "Wrapping the ${EXHERES_PHASE} phase..."
+    
+    while [[ "$#" -gt 0 ]]; do
+	group=()
+	while true; do
+	    if [[ x"$1" == "x:WRAP_END:" ]]; then
+		shift
+		einfo "  Running the wrapper ${group[@]}..."
+		"${group[@]}"
+		break
+	    elif [[ "$#" -eq 0 ]]; then
+		einfo "  Running the ${EXHERES_PHASE} phase..."
+	    
+		## FIXME shall we add CFLAGS="${CFLAGS}" CXXFLAGS="${CXXFLAGS}"
+		## LDFLAGS="${LDFLAGS}" to enforce the flags?
+		if [[ ${EXHERES_PHASE} == "configure" ]]; then
+		    einfo "  Applying EXTRA_ECONF..."
+		    edo "${group[@]}" "${EXTRA_ECONF[@]}"
+		else
+		    edo "${group[@]}"
+		fi
+	    
+		break
+	    else
+		group+=( "$1" )
+		shift
+	    fi
+	done
     done
+}
 
-    edo "$@" CFLAGS="${CFLAGS}" CXXFLAGS="${CXXFLAGS}" LDFLAGS="${LDFLAGS}" "${opts[@]}"
+## econf, einstall are functions defined in exheres-0/build_functions.bash,
+## hence the functions defined here are visible for them.
+##
+## On the other hand, emake is a command as utils/exheres-0/emake, hence functions here
+## are not visible for it.
+##
+## Use a dangerous and fragile hack to work it aroud!!!
+emake() {
+    ewarn "A hijacked version of emake is invoked! Be sure you know what is happening!"
+    
+    source "${PALUDIS_EBUILD_DIR}"/die_functions.bash
+
+    PALUDIS_JOBS_ARGS=
+    if [[ -n "${PALUDIS_JOBS_VAR}" ]] && [[ -n "${!PALUDIS_JOBS_VAR}" ]] ; then
+	PALUDIS_JOBS_ARGS="-j${!PALUDIS_JOBS_VAR}"
+    fi
+
+    echo ${EMAKE_WRAPPER} ${MAKE:-make} ${PALUDIS_JOBS_ARGS} ${MAKEOPTS} "$@" 1>&2
+    ${EMAKE_WRAPPER} ${MAKE:-make} ${PALUDIS_JOBS_ARGS} ${MAKEOPTS} "$@"
+    ret=$?
+    [[ 0 != $ret ]] && paludis_die_or_error "emake returned error $ret"
+    return $ret
+}
+
+try_enable_distcc() {
+    ## FIXME should split to setup_env & sandbox allow_net
+    if is_in_2112; then
+	if [[ $PATH != "/usr/${CHOST}/libexec/distcc:"* ]]; then
+	    export PATH="/usr/${CHOST}/libexec/distcc:${PATH}"
+	fi
+	export DISTCC_DIR="/var/tmp/paludis/distcc"
+	export EXJOBS=10
+        export DISTCC_HOSTS='--randomize 10.2.112.2,lzo'
+	
+	edo esandbox allow_net --connect "inet:10.2.112.2/24@3632"
+    fi
+    #EMAKE_WRAPPER="pump"
+    #192.168.1.50,lzo,cpp
 }
 
 ### for paludis config wrapper
 remove_comment_and_platform() {
     sed -r -e '/#.*/d' -e 's/~//' -e '/^[[:blank:]]*$/d'
 }
+
 remove_custom_mark() {
     sed -e 's/+.*//' -e 's/&.*//'
 }
+
 find_set() {
     [[ x$1 == "xhost" ]] && echo ${CONFIG_DIR}/packages/host-specific/$HOST || echo ${CONFIG_DIR}/packages/$1
 }

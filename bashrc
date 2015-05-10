@@ -1,10 +1,9 @@
 #!/bin/bash
-source /etc/paludis/myconfig/scripts/utils
 
 ### default flags
 CHOST="x86_64-pc-linux-gnu"
-CFLAGS=( -O3 -pipe )
-LDFLAGS=( -Wl,-O1 -Wl,--as-needed -Wl,--sort-common )
+MY_CFLAGS=( -O3 -pipe )
+MY_LDFLAGS=( -Wl,-O1 -Wl,--as-needed -Wl,--sort-common )
 EXJOBS=3
 
 ### default custom flags
@@ -12,30 +11,27 @@ EXTRA_ECONF=( --disable-static )
 
 ### special care
 case "${PN}" in
-    wine)
-	CFLAGS=( -O2 -pipe )
-	;;&
-    lua|w3m|paludis)
-	LDFLAGS=( -Wl,-O1 )
-	;;&
-    autoconf|libseccomp|firefox|xulrunner|nspr|talloc|notmuch)
-	AUTOTOOL=false
-	;;&
-    jpeg|gtest|nettle|db)
-	EXTRA_ECONF=( ${EXTRA_ECONF[@]/--disable-static/} )
-	;;&
-    i3|fcitx-table-other)
+    NetworkManager)
 	EXJOBS=1
+	;;&
+    gtk+)
+	[[ $SLOT == 2 ]] && MY_LDFLAGS=( -Wl,-O1 )
+	;;&
+    notmuch|talloc|db|ocaml|gtk+|pinktrace)
+	EXTRA_ECONF=( ${EXTRA_ECONF[@]/--disable-static/} )
 	;;&
     *)
 	;;
 esac    
 
 ### host specific flags
+## TODO how do we add  "-march=native" ?
+## TODO use HOST from myconfig
 HOST=`hostname|cut -d. -f1`
 case "${HOST}" in
     dc-2|fs-3|gs-5)
-	CFLAGS+=( -march=core2 -msse4.1 )
+	### target march and host march
+	MY_CFLAGS+=( -march=core2 -msse4.1 )
 	EXJOBS=10
 	case "${PN}" in
 	    bind-tools)
@@ -46,24 +42,28 @@ case "${HOST}" in
 	esac
 	;;&
     laptop-x61)
-	CFLAGS+=( -march=core2 -msse4.1 )
-	### distcc
-	if is_in_2112; then
-	    PATH="/usr/libexec/distcc:${PATH}"
-	    DISTCC_DIR="/var/tmp/paludis/distcc"
-	    EXJOBS=10
-	    DISTCC_HOSTS='--randomize 10.2.112.2,lzo'
-	fi
-	#EMAKE_WRAPPER="pump"
-	#192.168.1.50,lzo,cpp
+	MY_CFLAGS+=( -march=core2 -msse4.1 )
 esac
 
 ### finalize
-CFLAGS="${CFLAGS[@]}"
-CXXFLAGS="${CFLAGS}"
-LDFLAGS="${LDFLAGS[@]}"
+x86_64_pc_linux_gnu_CFLAGS="${MY_CFLAGS[@]}"
+i686_pc_linux_gnu_CFLAGS="${MY_CFLAGS[@]}"
+#x86_64_pc_linux_gnu_CXXFLAGS="${MY_CFLAGS[@]}"
+#i686_pc_linux_gnu_CXXFLAGS="${MY_CFLAGS[@]}"
+LDFLAGS="${MY_LDFLAGS[@]}"
 
-# extra econf
-if [[ ${AUTOTOOL}x != falsex ]]; then
-    ECONF_WRAPPER="append_configure_option ${#EXTRA_ECONF[@]} ${EXTRA_ECONF[@]}"
-fi
+### Advanced customization
+## NOTE: bashrc is sourced only once in builtin_init phase when cave-perform
+
+source /etc/paludis/myconfig/scripts/utils
+
+ECONF_WRAPPER="wrap_ebuild_phase try_enable_distcc :WRAP_END:"
+EMAKE_WRAPPER="wrap_ebuild_phase try_enable_distcc :WRAP_END:"
+EINSTALL_WRAPPER="wrap_ebuild_phase try_enable_distcc :WRAP_END:"
+
+## cmake.exlib uses emake, but not econf; need export the distcc environment
+##
+## the problem is that ecmake doesn't provide a customization point, and hence
+## it is not possible to allow net_access in sandboxing
+### FIXME think it through
+#[[ -n $EXHERES_PHASE ]] && try_enable_distcc
