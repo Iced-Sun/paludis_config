@@ -24,7 +24,6 @@ hook_run_merger_install_pre() {
     popd >/dev/null
 
     TARGET=$(basename $(dirname $(echo ${IMAGE}/usr/*/bin)))
-    echo ${TARGET}
     
     for unit in ${INSTALL_UNITS[@]}; do
 	if [[ -f "${IMAGE}/usr/${TARGET}/lib/systemd/${unit}" ]]; then
