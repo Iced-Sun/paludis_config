@@ -11,7 +11,7 @@ hook_run_install_pre() {
 
     source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
 
-    einfo "Setting ld to bfd to build glibc..." ${ROOT}/${XDG_RUNTIME_DIR:-/run}/paludis_ld_provider
+    einfo_unhooked "Setting ld to bfd to build glibc..." ${ROOT}/${XDG_RUNTIME_DIR:-/run}/paludis_ld_provider
     eclectic ld show > ${OLD_LD}
     eclectic ld set --force bfd
 
@@ -23,7 +23,7 @@ hook_run_install_post() {
 
     source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
 
-    einfo "Restoring ld to original provider..."
+    einfo_unhooked "Restoring ld to original provider..."
     eclectic ld set --force $(cat ${OLD_LD})
     rm -f ${OLD_LD}
 

@@ -8,9 +8,9 @@ hook_run_merger_install_pre() {
     source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
 
     if [[ -d ${IMAGE}/usr/src ]]; then
-	einfo "Removing package source in /usr/src..."
+	einfo_unhooked "Removing package source in /usr/src..."
 	(
-            rm -frv ${IMAGE}/usr/src/
+            rm -fr ${IMAGE}/usr/src/
 	) 2>/dev/null
     fi
 

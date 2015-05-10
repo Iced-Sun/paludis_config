@@ -2,30 +2,24 @@
 
 hook_auto_names() {
     echo install_post
-    # unmerger_unlink_post
 }
 
 hook_run_install_post() {
 
     [[ "${TARGET##x11-server/xorg-server}" == "${TARGET}" ]] && return 0
-    #[[ "${CATEGORY}/${PN}" != "x11-server/xorg-server" ]] && return 0
 
     source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
 
-    einfo "Searching for installed x11-drivers..."
     PKG=$(${CAVE:-cave} print-ids --matching 'x11-drivers/*::installed' --format '%p ')
 
     if [[ -z ${PKG} ]]; then
-	ewarn "You don't have any X11 drivers installed."
+	ewarn_unhooked "You don't have any X11 drivers installed."
 	return 0
     fi
 
-    einfo "Rebuilding installed x11-drivers:"
-    einfo "  ${PKG}"
+    einfo_unhooked "Rebuilding installed x11-drivers: ${PKG}"
 
     ${CAVE:-cave} resolve ${PKG} -x1
     
-    einfo "Done rebuilding x11-drivers."
-
     return 0
 }

@@ -2,13 +2,11 @@
 
 case "${HOOK}" in
     ebuild_install_post )
-	einfo "Searching for empty directory to avoid merger failure..."
+	for DIR in $(find ${IMAGE} -type d -empty); do
+	    einfo_unhooked "Keep empty directory of ${DIR} to avoid merger failure..."
 
-	pushd ${IMAGE} >/dev/null
-	for dir in $(find . -type d -empty); do
-            edo keepdir "${dir#.}"
+            edo keepdir "${DIR#.}"
 	done
-	popd >/dev/null
 	;;
     *)
         ;;

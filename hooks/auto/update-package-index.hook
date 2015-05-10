@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-#PHASES=(sync_all_post install_all_post uninstall_all_post)
 PHASES=( sync_all_post )
 
 hook_auto_names() {
@@ -12,12 +11,11 @@ for h in ${PHASES[@]}; do
 done
 
 update_search_index() {
-    export PATH="$(${PALUDIS_EBUILD_DIR}/utils/canonicalise ${PALUDIS_EBUILD_DIR}/utils/ ):${PATH}"
-    source ${PALUDIS_ECHO_FUNCTIONS_DIR:-${PALUDIS_EBUILD_DIR}}/echo_functions.bash
+    source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
 
     IDX=${ROOT}/var/cache/paludis/pkg.index
 
-    einfo "Rebuilding package indices..."
+    einfo_unhooked "Rebuilding package indices..."
     ${CAVE:-cave} manage-search-index --create ${IDX}
 
     return 0

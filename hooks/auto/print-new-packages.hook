@@ -10,7 +10,7 @@ AFTER="${ROOT}/${XDG_RUNTIME_DIR:-/run}/paludis-sync-after"
 hook_run_sync_all_pre() {
     source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
     
-    einfo "Building available packages list"
+    einfo_unhooked "Building available packages list"
     ${CAVE:-cave} print-packages | sort -u > ${BEFORE}
 
     return 0
@@ -19,15 +19,13 @@ hook_run_sync_all_pre() {
 hook_run_sync_all_post() {
     source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
     
-    echo
-    einfo "Newly available packages:"
+    einfo_unhooked "Newly available packages:"
     ${CAVE:-cave} print-packages | sort -u > ${AFTER}
     
     diff ${BEFORE} ${AFTER} | grep '^>' | cut -d' ' -f2- | while read line ; do
          einfo "  ${line}"
     done
     rm -f ${BEFORE} ${AFTER}
-    echo
 
     return 0
 }
