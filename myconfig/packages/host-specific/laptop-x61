@@ -10,8 +10,8 @@ net-fs/cifs-utils
 
 ## net
 net-misc/openvpn		lzo threads
-net-proxy/tsocks
-net-ftp/lftp
+#net-proxy/tsocks
+#net-ftp/lftp
 net-misc/dhcpcd
 
 ## wireless
@@ -26,13 +26,13 @@ net-mail/offlineimap
         dev-lang/python:2.7     sqlite
 app-admin/mime-support
 mail-mta/msmtp
-app-emacs/emacs-w3m
+#app-emacs/emacs-w3m
 office-libs/wv
 
 ## X11
 x11-server/xorg-server							&xf86-video-intel
 x11-apps/arandr
-x11-apps/xcompmgr
+#x11-apps/xcompmgr
 
 ## media
 sys-sound/alsa-utils
@@ -45,35 +45,34 @@ sys-sound/alsa-utils
 ## misc
 #app-text/chmsee
 app-misc/unison
-	dev-lang/ocaml
-sys-devel/distcc
+sys-devel/distcc                   masquerade
 app-shells/fish
 
 ## unmask
-app-office/TeXmacs      qt postscript
+#app-office/TeXmacs      qt postscript
         media-gfx/GraphicsMagick        imagemagick
         sci-apps/gnuplot                X qt cairo
 
         x11-libs/qt                     qt3support
 
-x11-misc/synergy
+#x11-misc/synergy
 
         dev-libs/glib-networking           gnutls
 
-        sys-devel/distcc                   masquerade
-
-app-text/wgetpaste
+#app-text/wgetpaste
 
          sys-fs/squashfs-tools          xz
 
-app-virtualization/qemu            amd64 gtk3 opengl usb-passthrough xattr
+         app-virtualization/qemu            amd64 gtk3 opengl usb-passthrough xattr
 
 	app-editors/emacs						&app-spell/aspell
 	app-spell/aspell						&app-dicts/aspell-en
 
-#        dev-lang/clang                                                       +[=scm]
-#        dev-lang/llvm                                                        +[=scm]
+        dev-lang/llvm              shared-libs
 
+        virtual/notification-daemon     providers: dunst -notification-daemon
 
-        sci-apps/gnuplot           wxwidgets
-        dev-lang/lua                            +[=5.2]
+        sys-devel/gcc                   +:5.1
+        sys-libs/libstdc++              +:5.1
+        #sys-libs/libgcc                 +:5.1
+        sys-libs/libatomic              +:5.1

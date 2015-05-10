@@ -32,7 +32,7 @@ inputmethods/fcitx-libpinyin
 ## text
 text-plugins/zathura-djvu
 text-plugins/zathura-pdf-poppler
-	app-text/poppler			glib
+	app-text/poppler			glib cairo
 
 ## media
 media/mpv

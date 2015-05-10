@@ -7,7 +7,6 @@
 ## system set
 	dev-scm/git							&-*/*
 	sys-apps/paludis	prebuilt-documentation search-index pbin
-	sys-devel/gcc
 	sys-apps/sydbox		seccomp
 
 ## virtuals
