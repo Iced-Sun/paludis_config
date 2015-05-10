@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+hook_auto_names() {
+    echo merger_install_pre
+}
+
+LOCALE_GEN=( "zh_CN.UTF-8 UTF-8" )
+
+hook_run_merger_install_pre() {
+    [[ "${CATEGORY}/${PN}" != "sys-libs/glibc" ]] && return 0
+
+    source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
+
+    local localedef=$(find ${IMAGE}/usr -iname localedef -executable)
+
+    local locale
+
+    for locale in "${LOCALE_GEN[@]}"; do
+        local name="${locale% *}"
+        local input="${name%.*}"
+        local charmap="${locale#* }"
+
+        if [[ -z "${name}" ]]; then
+	    ewarn "failed to grab locale name from \"${locale}\" in LOCALE_GEN"
+	    continue
+        elif [[ -z "${input}" ]]; then
+	    ewarn "failed to grab input name from \"${locale}\" in LOCALE_GEN"
+	    continue
+        elif [[ -z "${charmap}" ]]; then
+	    ewarn "failed to grab charmap name from \"${locale}\" in LOCALE_GEN"
+	    continue
+        fi
+ 
+        einfo "Generating locale ${name}"
+	mkdir -p $(dirname ${localedef})/../lib/locale
+        ${localedef} --prefix=${IMAGE} -i "${input}" -f "${charmap}" "${name}"
+    done
+}
