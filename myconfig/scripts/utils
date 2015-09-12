@@ -54,7 +54,7 @@ wrap_ebuild_phase() {
 ##
 ## Use a dangerous and fragile hack to work it aroud!!!
 emake() {
-    ewarn_unhooked "A hijacked version of emake is invoked! Be sure you know what is happening!"
+    ewarn "A hijacked version of emake is invoked! Be sure you know what is happening!"
     
     source "${PALUDIS_EBUILD_DIR}"/die_functions.bash
 

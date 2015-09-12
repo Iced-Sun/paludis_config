@@ -1,6 +1,5 @@
 */*			amd64_cpu_features:  sse sse2 sse3 ssse3 sse4.1
 */*			video_drivers:       intel
-*/*			python_abis:         2.7 3.4
 */*::subi		build_options:      	work=preserve
 */*::subi-hack		build_options:      	work=preserve
 
@@ -72,7 +71,11 @@ app-shells/fish
 
         virtual/notification-daemon     providers: dunst -notification-daemon
 
-        sys-devel/gcc                   +:5.1
-        sys-libs/libstdc++              +:5.1
+        #sys-devel/gcc                   +:5.1
+        #sys-libs/libstdc++              +:5.1
         #sys-libs/libgcc                 +:5.1
-        sys-libs/libatomic              +:5.1
+        #sys-libs/libatomic              +:5.1
+
+app-admin/sudo
+
+        dev-scm/git     curl
