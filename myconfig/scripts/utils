@@ -93,7 +93,7 @@ remove_comment_and_platform() {
 }
 
 remove_custom_mark() {
-    sed -e 's/+.*//' -e 's/&.*//'
+    sed -e 's/&.*//'
 }
 
 find_set() {
