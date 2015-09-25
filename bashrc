@@ -17,6 +17,9 @@ case "${PN}" in
     gtk+)
 	[[ $SLOT == 2 ]] && MY_LDFLAGS=( -Wl,-O1 )
 	;;&
+    gettext)
+	MY_LDFLAGS=( -Wl,-O1 )
+	;;&
     jpeg|git|notmuch|talloc|db|ocaml|gtk+|pinktrace)
 	EXTRA_ECONF=( ${EXTRA_ECONF[@]/--disable-static/} )
 	;;&
