@@ -9,8 +9,6 @@ net-fs/cifs-utils
 
 ## net
 net-misc/openvpn		lzo threads
-#net-proxy/tsocks
-#net-ftp/lftp
 net-misc/dhcpcd
 
 ## wireless
@@ -25,7 +23,6 @@ net-mail/offlineimap
         dev-lang/python:2.7     sqlite
 app-admin/mime-support
 mail-mta/msmtp
-#app-emacs/emacs-w3m
 office-libs/wv
 
 ## X11
@@ -38,7 +35,7 @@ sys-sound/alsa-utils
 ~media-sound/mpd		alsa ffmpeg systemd				&-*/*
 ~media-sound/ncmpcpp		taglib
 ~media/mpv			alsa
-	media/ffmpeg		                +[>=2.0]
+	media/ffmpeg
 	media-libs/libass			fontconfig
 
 ## misc
@@ -47,18 +44,7 @@ app-misc/unison
 sys-devel/distcc                   masquerade
 app-shells/fish
 
-## unmask
-#app-office/TeXmacs      qt postscript
-        media-gfx/GraphicsMagick        imagemagick
-        sci-apps/gnuplot                X qt cairo
-
-        x11-libs/qt                     qt3support
-
 #x11-misc/synergy
-
-        dev-libs/glib-networking           gnutls
-
-#app-text/wgetpaste
 
          sys-fs/squashfs-tools          xz
 
@@ -67,14 +53,7 @@ app-shells/fish
 	app-editors/emacs						&app-spell/aspell
 	app-spell/aspell						&app-dicts/aspell-en
 
-        dev-lang/llvm              shared-libs
-
         virtual/notification-daemon     providers: dunst -notification-daemon
-
-        #sys-devel/gcc                   +:5.1
-        #sys-libs/libstdc++              +:5.1
-        #sys-libs/libgcc                 +:5.1
-        #sys-libs/libatomic              +:5.1
 
 app-admin/sudo
 
