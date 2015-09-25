@@ -4,10 +4,12 @@ PATCH_DIR="/etc/paludis/myconfig/patches"
 
 case "${HOOK}" in
     ebuild_prepare_post )
-	for PATCH in `find ${PATCH_DIR}/${CATEGORY}/${PN} -type f -iname '*.patch'`; do
-	    einfo_unhooked "Applying patch ${PATCH}..."
-	    expatch "${PATCH}"
-	done
+	if [[ -d ${PATCH_DIR}/${CATEGORY}/${PN} ]]; then
+	    for PATCH in `find ${PATCH_DIR}/${CATEGORY}/${PN} -type f -iname '*.patch'`; do
+		einfo "Applying patch ${PATCH}..."
+		expatch "${PATCH}"
+	    done
+	fi
 	;;
     *)
 	;;
