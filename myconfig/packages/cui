@@ -10,8 +10,10 @@
 	sys-apps/sydbox		seccomp
 
 ## virtuals
-    virtual/syslog		providers: -rsyslog systemd
-    virtual/pkg-config		providers: -pkg-config pkgconf
+    virtual/syslog		providers: -* systemd
+    virtual/pkg-config		providers: -* pkgconf
+    virtual/tar			providers: -* libarchive
+    virtual/cpio		providers: -* libarchive
 
 ## system app not in system set 
 sys-apps/systemd
