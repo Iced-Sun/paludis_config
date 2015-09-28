@@ -20,7 +20,7 @@ case "${PN}" in
     gettext)
 	MY_LDFLAGS=( -Wl,-O1 )
 	;;&
-    jpeg|git|notmuch|talloc|db|ocaml|gtk+|pinktrace)
+    zip|busybox|jpeg|git|notmuch|talloc|db|ocaml|gtk+|pinktrace)
 	EXTRA_ECONF=( ${EXTRA_ECONF[@]/--disable-static/} )
 	;;&
     *)
@@ -51,8 +51,8 @@ esac
 ### finalize
 x86_64_pc_linux_gnu_CFLAGS="${MY_CFLAGS[@]}"
 i686_pc_linux_gnu_CFLAGS="${MY_CFLAGS[@]}"
-#x86_64_pc_linux_gnu_CXXFLAGS="${MY_CFLAGS[@]}"
-#i686_pc_linux_gnu_CXXFLAGS="${MY_CFLAGS[@]}"
+x86_64_pc_linux_gnu_CXXFLAGS="${MY_CFLAGS[@]}"
+i686_pc_linux_gnu_CXXFLAGS="${MY_CFLAGS[@]}"
 LDFLAGS="${MY_LDFLAGS[@]}"
 
 ### Advanced customization
