@@ -14,7 +14,7 @@ read -r -d '' OPTIONS <<EOF
 */* targets: x86_64-pc-linux-gnu -i686-pc-linux-gnu
 
 ### options
-*/*			-* pam systemd
+*/*			-* pam systemd udev
 */*			threads openmp
 */*			acl xattr
 
