@@ -6,4 +6,4 @@
 !/repositories/repository.conf
 !/repositories/unavailable-unofficial.conf
 !/repositories/unavailable.conf
-!/repositories/installed_accounts.conf
+!/repositories/installed-accounts.conf
