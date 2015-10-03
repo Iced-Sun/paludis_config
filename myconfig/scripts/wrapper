@@ -6,206 +6,22 @@
 
 #src_configure
 typical_env_for_cave() {
-    AR=x86_64-pc-linux-gnu-ar
-    AS=x86_64-pc-linux-gnu-as
-    CC=x86_64-pc-linux-gnu-gcc
-    CPP=x86_64-pc-linux-gnu-cpp
-    CXX=x86_64-pc-linux-gnu-g++
-    FORTRAN=x86_64-pc-linux-gnu-gfortran
-    LD=x86_64-pc-linux-gnu-ld
-    NM=x86_64-pc-linux-gnu-nm
-    OBJCOPY=x86_64-pc-linux-gnu-objcopy
-    OBJDUMP=x86_64-pc-linux-gnu-objdump
-    PKG_CONFIG=x86_64-pc-linux-gnu-pkg-config
-    RANLIB=x86_64-pc-linux-gnu-ranlib
-
-    CHOST=x86_64-pc-linux-gnu
-    CHOST_default=
-    CTARGET_default=
-    GCC_VERSION=
-
-    CFLAGS=-O3 -pipe -march=core2 -msse4.1
-    CPPFLAGS=-O3 -pipe -march=core2 -msse4.1 
-    CXXCPPFLAGS=-O3 -pipe -march=core2 -msse4.1 
-    CXXFLAGS=-O3 -pipe -march=core2 -msse4.1 -O3 -pipe -march=core2 -msse4.1
-    FCFLAGS=-O3 -pipe -march=core2 -msse4.1 
-    LDFLAGS=-O3 -pipe -march=core2 -msse4.1 -Wl,-O1 -Wl,--as-needed -Wl,--sort-common
-    i686_pc_linux_gnu_CFLAGS=-O3 -pipe -march=core2 -msse4.1
-    i686_pc_linux_gnu_CXXFLAGS=-O3 -pipe -march=core2 -msse4.1
-    x86_64_pc_linux_gnu_CFLAGS=-O3 -pipe -march=core2 -msse4.1
-    x86_64_pc_linux_gnu_CXXFLAGS=-O3 -pipe -march=core2 -msse4.1
-
-    CROSS_COMPILE_FLAGS=CFLAGS CPPFLAGS:CFLAGS CXXFLAGS CXXCPPFLAGS:CXXFLAGS LDFLAGS FCFLAGS
-    CROSS_COMPILE_TARGETS=arm-exherbo-linux-gnueabi i686-pc-linux-gnu x86_64-pc-linux-gnu
-    CROSS_COMPILE_TOOLS=AR:ar AS:as CC:gcc CPP:cpp CXX:g++ FORTRAN:gfortran LD:ld NM:nm OBJCOPY:objcopy OBJDUMP:objdump PKG_CONFIG:pkg-config RANLIB:ranlib
-
-    AMD64_CPU_FEATURES=
-    ARM_CPU_FEATURES=
-    X86_CPU_FEATURES=
-
-    ACCEPT_PLATFORMS=amd64
-    ARCHIVES=tmux-1.9a.tar.gz
-    CATEGORY=app-terminal
-
-    CAVE=cave
-    CAVE_CMDLINE_PARAMS=perform install --hooks --managed-output --output-exclusivity with-others =app-terminal/tmux-1.9a:0::arbor --destination installed --replacing =app-terminal/tmux-1.9a:0::installed --x-of-y 1 of 1
-    CAVE_DISPLAY_RESOLUTION_CMDLINE_PARAMS=tmux
-    CAVE_EXECUTE_RESOLUTION_CMDLINE_PARAMS=tmux
-    CAVE_EXECUTE_RESOLUTION_CMDLINE_preserve_world=1
-    CAVE_EXECUTE_RESOLUTION_CMDLINE_world_specs=app-terminal/tmux
-    CAVE_PERFORM_CMDLINE_PARAMS=install =app-terminal/tmux-1.9a:0::arbor
-    CAVE_PERFORM_CMDLINE_destination=installed
-    CAVE_PERFORM_CMDLINE_hooks=1
-    CAVE_PERFORM_CMDLINE_if_supported=1
-    CAVE_PERFORM_CMDLINE_managed_output=1
-    CAVE_PERFORM_CMDLINE_output_exclusivity=with-others
-    CAVE_PERFORM_CMDLINE_replacing==app-terminal/tmux-1.9a:0::installed
-    CAVE_PERFORM_CMDLINE_x_of_y=1 of 1
-    CAVE_RESOLVE_CMDLINE_PARAMS=tmux
-    CAVE_RESOLVE_CMDLINE_execute=1
-    CAVE_RESOLVE_CMDLINE_preserve_world=1
-
     ECONF_WRAPPER=try_enable_distcc append_configure_option 1 --disable-static
     EMAKE_WRAPPER=/usr/sbin/env ; try_enable_distcc
     DISTCC_DIR=/var/tmp/paludis/distcc
     DISTCC_HOSTS=--randomize 10.2.112.2,lzo
 
-    DEFAULT_ABI=default
-    DESTTREE=/usr/x86_64-pc-linux-gnu
-    EAPI=exheres-0
-    EBUILD=/var/db/paludis/repositories/arbor/packages/app-terminal/tmux/tmux-1.9a.exheres-0
-    EBUILD_KILL_PID=16399
-    EBUILD_PROGRAM_NAME=/usr/x86_64-pc-linux-gnu/libexec/paludis/ebuild.bash
     EXHERES_PHASE=configure
-    EXJOBS=10
-    EXLIBSDIRS=/var/db/paludis/repositories/arbor/exlibs /var/db/paludis/repositories/arbor/packages/app-terminal/exlibs /var/db/paludis/repositories/arbor/packages/app-terminal/tmux
-    FETCHEDDIR=/var/cache/paludis/distfiles
-    FILES=/var/db/paludis/repositories/arbor/packages/app-terminal/tmux/files
     FILESYSTEM_LAYOUT=cross
-    HIDDEN_SUBOPTIONS=ARM_CPU_FEATURES MULTIBUILD_C PLATFORM X86_CPU_FEATURES
-    HOME=/var/tmp/paludis/build/app-terminal-tmux-1.9a/temp/
     HOOK=ebuild_configure_pre
-    HOST=laptop-x61
-    HOSTS=
-    IMAGE=/var/tmp/paludis/build/app-terminal-tmux-1.9a/image/
-    LC_ALL=C
-    LDPATH=/usr/local/lib:/usr/x86_64-pc-linux-gnu/lib/qt4
-    LIBDIR_default=lib
-    LINGUAS=
-    MOPREFIX=tmux
-    OLDPWD=/var/tmp/paludis/build
-    OPTIONS=
 
-    PALUDIS_ARCHIVES_VAR=ARCHIVES
     PALUDIS_BASHRC_FILES=/etc/paludis/bashrc
-    PALUDIS_BEST_HAS_VERSION_HOST_ROOT=
-    PALUDIS_BINARY_DISTDIR_VARIABLE=FETCHEDDIR
-    PALUDIS_BRACKET_MERGED_VARIABLES=DEPENDENCIES MYOPTIONS
-    PALUDIS_BRACKET_MERGED_VARIABLES_ANNOTATABLE=DEPENDENCIES MYOPTIONS
-    PALUDIS_BRACKET_MERGED_VARIABLES_ANNOTATION=defined-in
     PALUDIS_CLIENT=CAVE
     PALUDIS_CONFIG_DIR=/etc/paludis/
-    PALUDIS_CONFIG_PROTECT=/etc
-    PALUDIS_CONFIG_PROTECT_MASK=/etc/ca-certificates.conf /etc/env.d /etc/xdg /usr/x86_64-pc-linux-gnu/lib/udev/rules.d
-    PALUDIS_CROSS_COMPILE_TOOL_PREFIX=x86_64-pc-linux-gnu-
-    PALUDIS_DIRECTORY_IF_EXISTS_VARIABLES=build:FILES
-    PALUDIS_DIRECTORY_VARIABLES=build:FETCHEDDIR build:REPODIR
-    PALUDIS_DODOC_R=yes
-    PALUDIS_DOINS_SYMLINK=yes
-    PALUDIS_DOMAN_LANG_FILENAMES=yes
-    PALUDIS_DOMAN_LANG_FILENAMES_OVERRIDES=
-    PALUDIS_DOSYM_NO_MKDIR=yes
-    PALUDIS_EBUILD_DIR=/usr/x86_64-pc-linux-gnu/libexec/paludis
-    PALUDIS_EBUILD_FUNCTIONS=builtin_infovars builtin_init builtin_initmisc builtin_loadenv builtin_metadata builtin_kiin_saveenv builtin_tidyup builtin_variable pkg_config pkg_info pkg_nofetch pkg_postinst pkg_postrm pkg_preinst pkg_prerm pkg_pretend pkg_setup pkg_bad_options src_compile src_configure src_fetch_extra src_install src_prepare src_test src_test_expensive src_unpack
-    PALUDIS_EBUILD_LOG_LEVEL=qa
-    PALUDIS_EBUILD_MODULES_DIR=/usr/x86_64-pc-linux-gnu/libexec/paludis
-    PALUDIS_EBUILD_MODULE_SUFFIXES=exheres-0
-    PALUDIS_EBUILD_MUST_NOT_SET_VARIABLES=DEPEND RDEPEND PDEPEND PROVIDE USE IUSE KEYWORDS LICENSE LICENSES LICENCE SRC_URI
-    PALUDIS_EBUILD_PHASE_FUNC_VAR=
-    PALUDIS_EBUILD_PHASE_VAR=EXHERES_PHASE
-    PALUDIS_EBUILD_QUIET=
-    PALUDIS_ECLASS_MUST_NOT_SET_VARIABLES=PLATFORMS
-    PALUDIS_ECONF_EXTRA_OPTIONS=
-    PALUDIS_ECONF_EXTRA_OPTIONS_HELP_DEPENDENT=
-    PALUDIS_FAILURE_IS_FATAL=yes
-    PALUDIS_FETCHERS_DIRS=/etc/paludis/fetchers /usr/share/paludis/fetchers /usr/x86_64-pc-linux-gnu/libexec/paludis/fetchers
-    PALUDIS_F_FUNCTION_PREFIX=exheres_internal
-    PALUDIS_HOME=/root
-    PALUDIS_HOOK_DIRS=/etc/paludis/hooks /usr/x86_64-pc-linux-gnu/libexec/paludis/hooks /usr/share/paludis/hooks /usr/x86_64-pc-linux-gnu/lib/paludis/hooks
-    PALUDIS_IGNORE_PIVOT_ENV_FUNCTIONS=
-    PALUDIS_IGNORE_PIVOT_ENV_VARIABLES=
-    PALUDIS_IMAGE_DIR_VAR=IMAGE
-    PALUDIS_JOBS_VAR=EXJOBS
-    PALUDIS_LOADSAVEENV_DIR=/var/tmp/paludis/build/app-terminal-tmux-1.9a/temp
-    PALUDIS_LOAD_MODULES=conditional_functions kernel_functions sydbox portage_stubs ever_functions multilib_functions install_functions build_functions exlib_functions
-    PALUDIS_MUST_NOT_CHANGE_AFTER_SOURCE_VARIABLES=DEFAULT_SRC_COMPILE_PARAMS DEFAULT_SRC_CONFIGURE_PARAMS DEFAULT_SRC_CONFIGURE_OPTIONS DEFAULT_SRC_CONFIGURE_OPTION_ENABLES DEFAULT_SRC_CONFIGURE_OPTION_WITHS DEFAULT_SRC_CONFIGURE_TESTS DEFAULT_SRC_INSTALL_PARAMS DEFAULT_SRC_INSTALL_EXTRA_DOCS DEFAULT_SRC_INSTALL_EXTRA_PREFIXES DEFAULT_SRC_INSTALL_EXTRA_SUBDIRS DEFAULT_SRC_INSTALL_EXCLUDE DEFAULT_SRC_PREPARE_PATCHES DEFAULT_SRC_TEST_PARAMS UPSTREAM_CHANGELOG UPSTREAM_DOCUMENTATION UPSTREAM_RELEASE_NOTES
-    PALUDIS_MUST_NOT_CHANGE_VARIABLES=
-    PALUDIS_MUST_NOT_SET_VARS_STARTING_WITH=DEFAULT_PKG_ DEFAULT_SRC_ UPSTREAM_
-    PALUDIS_NAME_VERSION_REVISION_VAR=PNVR
-    PALUDIS_NEW_STDIN=
-    PALUDIS_NON_EMPTY_VARIABLES=PNV PV PR PN PVR PNVR CATEGORY build:FILES build:EXLIBSDIRS build:FETCHEDDIR build:REPODIR PALUDIS_TMPDIR PALUDIS_EBUILD_LOG_LEVEL PALUDIS_EBUILD_DIR ROOT PALUDIS_PACKAGE_BUILDDIR
-    PALUDIS_NO_S_WORKDIR_FALLBACK=yes
-    PALUDIS_PACKAGE_BUILDDIR=/var/tmp/paludis/build/app-terminal-tmux-1.9a
-    PALUDIS_PIPE_COMMANDS_STATUS_SUPPORTED=yes
-    PALUDIS_PIPE_COMMANDS_SUPPORTED=yes
-    PALUDIS_PIPE_COMMAND_DELIM=
-    PALUDIS_PREFIX_IMAGE_VAR=
-    PALUDIS_PROFILES_DIRS=/var/db/paludis/repositories/arbor/profiles /var/db/paludis/repositories/arbor/profiles/amd64
-    PALUDIS_PROFILE_DIR=/var/db/paludis/repositories/arbor/profiles/amd64
-    PALUDIS_PROFILE_DIRS=/var/db/paludis/repositories/arbor/profiles/amd64
-    PALUDIS_RDEPEND_DEFAULTS_TO_DEPEND=
-    PALUDIS_REDUCED_GID=443
-    PALUDIS_REDUCED_UID=103
-    PALUDIS_SAVE_BASE_VARIABLES=CONFIG_PROTECT CONFIG_PROTECT_MASK
-    PALUDIS_SAVE_GLOBAL_SCOPE_DEFAULT_SRC_COMPILE_PARAMS=declare -a DEFAULT_SRC_COMPILE_PARAMS='([0]="PREFIX=/usr/x86_64-pc-linux-gnu")'
-    PALUDIS_SAVE_GLOBAL_SCOPE_DEFAULT_SRC_CONFIGURE_OPTIONS=
-    PALUDIS_SAVE_GLOBAL_SCOPE_DEFAULT_SRC_CONFIGURE_OPTION_ENABLES=
-    PALUDIS_SAVE_GLOBAL_SCOPE_DEFAULT_SRC_CONFIGURE_OPTION_WITHS=
-    PALUDIS_SAVE_GLOBAL_SCOPE_DEFAULT_SRC_CONFIGURE_PARAMS=
-    PALUDIS_SAVE_GLOBAL_SCOPE_DEFAULT_SRC_CONFIGURE_TESTS=
-    PALUDIS_SAVE_GLOBAL_SCOPE_DEFAULT_SRC_INSTALL_EXCLUDE=
-    PALUDIS_SAVE_GLOBAL_SCOPE_DEFAULT_SRC_INSTALL_EXTRA_DOCS=
-    PALUDIS_SAVE_GLOBAL_SCOPE_DEFAULT_SRC_INSTALL_EXTRA_PREFIXES=
-    PALUDIS_SAVE_GLOBAL_SCOPE_DEFAULT_SRC_INSTALL_EXTRA_SUBDIRS=
-    PALUDIS_SAVE_GLOBAL_SCOPE_DEFAULT_SRC_INSTALL_PARAMS=declare -a DEFAULT_SRC_INSTALL_PARAMS='([0]="PREFIX=/usr/x86_64-pc-linux-gnu")'
-    PALUDIS_SAVE_GLOBAL_SCOPE_DEFAULT_SRC_PREPARE_PATCHES=
-    PALUDIS_SAVE_GLOBAL_SCOPE_DEFAULT_SRC_TEST_PARAMS=
-    PALUDIS_SAVE_GLOBAL_SCOPE_UPSTREAM_CHANGELOG=declare -- UPSTREAM_CHANGELOG="http://sourceforge.net/p/tmux/tmux-code/ci/master/tree/CHANGES"
-    PALUDIS_SAVE_GLOBAL_SCOPE_UPSTREAM_DOCUMENTATION=
-    PALUDIS_SAVE_GLOBAL_SCOPE_UPSTREAM_RELEASE_NOTES=
-    PALUDIS_SAVE_UNMODIFIABLE_VARIABLES=SLOT EAPI KEYWORDS ROOT PALUDIS_TMPDIR PALUDIS_CONFIG_DIR PALUDIS_BASHRC_FILES PALUDIS_HOOK_DIRS PALUDIS_FETCHERS_DIRS PALUDIS_SYNCERS_DIRS PALUDIS_REDUCED_UID PALUDIS_REDUCED_GID PALUDIS_EBUILD_LOG_LEVEL PALUDIS_EBUILD_DIR PALUDIS_UTILITY_PATH_SUFFIXES PALUDIS_EBUILD_MODULE_SUFFIXES PALUDIS_NON_EMPTY_VARIABLES PALUDIS_DIRECTORY_VARIABLES PALUDIS_EBUILD_MUST_NOT_SET_VARIABLES PALUDIS_SAVE_VARIABLES PALUDIS_SAVE_BASE_VARIABLES PALUDIS_DIRECTORY_IF_EXISTS_VARIABLES PALUDIS_SOURCE_MERGED_VARIABLES PALUDIS_MUST_NOT_CHANGE_VARIABLES PALUDIS_RDEPEND_DEFAULTS_TO_DEPEND ECLASSDIR ECLASSDIRS EXLIBSDIRS PALUDIS_VARIABLE PALUDIS_PROFILE_DIR PALUDIS_PROFILE_DIRS PALUDIS_LOADSAVEENV_DIR PALUDIS_BRACKET_MERGED_VARIABLES
-    PALUDIS_SAVE_VARIABLES=OPTIONS SUBOPTIONS HIDDEN_SUBOPTIONS $SUBOPTIONS
-    PALUDIS_SERIALISED_RESOLUTION_FD=7
-    PALUDIS_SHELL_OPTIONS=extglob globstar
-    PALUDIS_SOURCE_MERGED_VARIABLES=
-    PALUDIS_SYNCERS_DIRS=/etc/paludis/syncers /usr/share/paludis/syncers /usr/x86_64-pc-linux-gnu/libexec/paludis/syncers
-    PALUDIS_TEMP_DIR_VAR=TEMP
-    PALUDIS_TMPDIR=/var/tmp/paludis/build
-    PALUDIS_TRACE=
-    PALUDIS_UNPACK_FIX_PERMISSIONS=
-    PALUDIS_UNPACK_FROM_VAR=FETCHEDDIR
-    PALUDIS_USE_WITH_ENABLE_EMPTY_THIRD_ARGUMENT=yes
-    PALUDIS_UTILITY_PATH_SUFFIXES=exheres-0
-    PATH=/usr/libexec/distcc:/usr/x86_64-pc-linux-gnu/libexec/paludis/utils/exheres-0:/usr/x86_64-pc-linux-gnu/libexec/paludis/utils:/usr/bin:/usr/sbin:/bin:/sbin:/opt/bin
-    PKGMANAGER=paludis-2.4.0-git-2.4.0-12-g7c01856
-    PLATFORM=
-    PN=tmux
-    PNV=tmux-1.9a
-    PNVR=tmux-1.9a
-    PR=r0
-    PROVIDERS=
-    PV=1.9a
-    PVR=1.9a
-    PWD=/var/tmp/paludis/build/app-terminal-tmux-1.9a/work/tmux-1.9a
     REPLACING_IDS=app-terminal/tmux-1.9a:0::installed
     REPODIR=/var/db/paludis/repositories/arbor
     REPOSITORY=arbor
     ROOT=/
-    SANDBOX_BASHRC=/dev/null
-    SANDBOX_ON=1
-    SANDBOX_PREDICT=/proc/self/maps:/dev/console:/dev/random
-    SANDBOX_WRITE=/dev/shm:/dev/stdout:/dev/stderr:/dev/null:/dev/tty:/dev/pts:/var/tmp/paludis/build:/var/cache:/proc/self/attr:/proc/self/task:/selinux/context
-    SUBOPTIONS=AMD64_CPU_FEATURES ANT_DATA_TYPES ANT_SCRIPTING ANT_TASKS APACHE_MODULES ARM_CPU_FEATURES COURIER_MODULES ENCODINGS EPIPHANY_EXTENSIONS FPRINT_DRIVERS GCC_VERSION GIT_REMOTE_HELPERS GSTREAMER_PLUGINS HOSTS IM_PROTOCOLS INPUT_DRIVERS KDE_PARTS KIPI_PLUGINS KOPETE_PLUGINS LINGUAS LUA_ABIS MULTIBUILD_C NGINX_MODULES NUT_DRIVERS P2P_NETWORKS PCSC_DRIVERS PHP_EXTENSIONS PLATFORM POSTGRESQL_EXTENSIONS PROVIDERS PYTHON_ABIS RUBY_ABIS TARGETS VIDEO_DRIVERS X86_CPU_FEATURES
     TARGETS=
     TEMP=/var/tmp/paludis/build/app-terminal-tmux-1.9a/temp/
     TMPDIR=/var/tmp/paludis/build/app-terminal-tmux-1.9a/temp/
@@ -215,8 +31,48 @@ typical_env_for_cave() {
     XDG_RUNTIME_DIR=/var/tmp/paludis/build/app-terminal-tmux-1.9a/temp/
 }
 
+#### Helper function ####
+## detect install destination, includes the ROOT of the chroot, and
+## the LOCATION of the repository
+# take the destination or target repository as the parameter; else a
+# guess will be made from ${CAVE_RESOLVE_CMDLINE_make}
+detect_destination() {
+    local REPO
+
+    ## if parameter is provided, the function is called by
+    ## installed*.bash
+    REPO=$1
+
+    ## no parameter means the function is called by other *.bash
+    if [[ x$1 == "x" ]]; then
+	## in case of 
+	if [[ x${CAVE_RESOLVE_CMDLINE_make} == "xc" ]]; then
+	    pushd ${PALUDIS_CONFIG_DIR}/repositories >/dev/null
+	    for repo in installed-chroot-*.bash; do
+		REPO=${repo%.bash}
+
+		# if chroot-path is provided, it dominates
+		local REPO_ROOT=`./$repo self-invoking | sed -n -e 's/^root = // p'`
+		if [[ $CAVE_RESOLVE_CMDLINE_chroot_path == $REPO_ROOT ]]; then
+		    break
+		fi
+	    done
+	    popd >/dev/null
+	else
+	    REPO=installed
+	fi
+    fi
+
+    LOCATION=/var/db/paludis/repositories/$REPO
+    WORLD=${LOCATION}/world
+    if [[ $REPO != "installed" ]]; then
+	NAME=${REPO#installed-chroot-}
+	ROOT=/srv/linux/machine_components/systems/${NAME}
+    fi
+}
+
 #### Initialize ####
-init() {
+initialize() {
     ## set directories: all paths are relative to $PALUDIS_CONFIG_DIR
     local SCRIPT_ABSOLUTE=$(realpath $0)
     PALUDIS_CONFIG_DIR=$(realpath $(dirname $(realpath $SCRIPT_ABSOLUTE))/../../)
@@ -238,58 +94,52 @@ init() {
     source ${SCRIPT_DIR}/config
     source ${SCRIPT_DIR}/utils
 
-    ## determine install destination: slash or chroot
-    detect_destination() {
-	local SUB_REPO=$(echo ${1}- | cut -d- -f2)
-
-	if [[ x$SUB_REPO == "x" ]]; then
-	    DESTINATION=/var/db/paludis/repositories/installed/local
+    ## we need detect destination type and related configs
+    if [[ $SELF_INVOKING != "yes" ]]; then
+	if [[ $ACTION == "repositories" ]]; then
+	    detect_destination $SUB_ACTION
 	else
-	    DESTINATION=/var/db/paludis/repositories/installed/container/$SUB_REPO
+	    detect_destination
 	fi
-
-	WORLD=${DESTINATION}/world
-    }
-
-    detect_destination ${CAVE_PERFORM_CMDLINE_destination}
+    fi
     
     ## other paludis config
     SETS=$(cd ${CONFIG_DIR}/packages && find . -type f -printf '%P\n')
-    ACTIVE_SETS=$(sort ${WORLD} <(printf '%s\n' ${SETS[@]} host) |uniq -d)
+    ACTIVE_SETS=$(sort ${WORLD} <(printf '%s\n' ${SETS[@]} host) 2>/dev/null |uniq -d)
 
     ## debug
     print_debug_info() {
 	echo
+	[[ $SELF_INVOKING == "yes" ]] && echo "============ SELF INVOKING Begin =============="
 	echo "===== Host information ====="
-	echo "Paludis path:" ${PALUDIS_CONFIG_DIR}
-	echo "Config path:" ${CONFIG_DIR}
-	echo "Action:" ${ACTION}::${SUB_ACTION}
+	echo "Paludis config DIR:" ${PALUDIS_CONFIG_DIR}
+	echo "Custom config DIR (relative):" ${CONFIG_DIR}
+	echo "Action:" ${ACTION}`[[ x${SUB_ACTION} == "x" ]] || echo ::${SUB_ACTION}`
 	echo "Host:" ${HOST}
 	echo
 	echo "===== Paludis information ====="
-	echo "Destination:" ${DISTINATION}
-	echo "World:" ${WORLD}
+	echo "Destination:" ${LOCATION}
 	echo "Sets:" ${SETS[@]}
 	echo "Active sets:" ${ACTIVE_SETS[@]}
 	echo "===== End debug information ====="
+	[[ $SELF_INVOKING == "yes" ]] && echo "============ SELF INVOKING End =============="
 	echo
     }
     [[ x$PALUDIS_CLIENT == "x" ]] && print_debug_info 1>&2
 }
 
-init
+[[ x$1 == 'xself-invoking' ]] && SELF_INVOKING=yes || SELF_INVOKING=
+initialize
 
 ####### Action handlers #######
 show_general() {
-    echo root = /
     echo world = ${WORLD}
 }
 
 show_repository_defaults() {
     echo names_cache = /var/cache/paludis/names
     echo write_cache = /var/cache/paludis/metadata
-    ## 2013-11-7: shallow clone failed
-    #sync_options = --git-clone-option=--depth=1 --git-pull-option=--depth=1  --git-fetch-option=--depth=1
+    echo sync_options = --git-clone-option=--depth=1 --git-pull-option=--depth=1  --git-fetch-option=--depth=1
 }
 
 show_repositories() {
@@ -297,39 +147,30 @@ show_repositories() {
     local SUB_REPO=${1#${REPO}}
     SUB_REPO=${SUB_REPO#-}
     
-    case $REPO in
-	installed)
+    case $1 in
+	installed*)
 	    detect_destination $1
 
 	    echo format = exndbam
-	    echo location = $DESTINATION
-
-	    # TODO clean up this
-	    # multiarch
+	    echo location = $LOCATION
+	    [[ x$ROOT != "x" ]] && echo root = $ROOT
+	    [[ x$NAME != "x" ]] && echo name = $NAME
 	    echo split_debug_location = /usr/x86_64-pc-linux-gnu/lib/debug
 	    echo tool_prefix = x86_64-pc-linux-gnu-
-	    
-	    if [[ x$SUB_REPO == "x" ]]; then
-		echo
-	    else
-		echo root = /media/btrfs_raid6_MD1000_4_WD1003FBYX/linux/container/system/exherbo
-		echo name = ${1/@/-}
-	    fi
 	    ;;
-
-	binary)
+	binary*)
 	    cat <<EOF
 format = e
-sync = git+ssh://git@github.com/sunbing81/${1}.git
+sync = git+ssh://git@ikvjwd.com/sunbing81/${1}.git
 sync_options = --no-reset
 #importance = -1
 EOF
 
 	    if [[ x$HOST == xfs-3 ]]; then
 		cat <<EOF
-location = /media/btrfs_raid6_MD1000_4_WD1003FBYX/linux/paludis/repositories/$1
+location = /srv/linux/paludis/repositories/$1
 binary_destination = true
-binary_distdir = /media/btrfs_raid6_MD1000_4_WD1003FBYX/linux/paludis/distfiles
+binary_distdir = /srv/linux/paludis/distfiles
 binary_keywords_filter = amd64 ~amd64
 binary_uri_prefix = mirror://exherbo-binary/
 EOF
