@@ -4,7 +4,6 @@
 ### TODO: if cave can add an option --binary-path like --chroot-path, we can add set/repo bindist-laptop-x61
 ### TODO: or better, if there is an option --destination (so we can use 'cave resolve package --destination bindist-laptop-x61/installed-laptop-x61')
 
-#src_configure
 typical_env_for_cave() {
     ECONF_WRAPPER=try_enable_distcc append_configure_option 1 --disable-static
     EMAKE_WRAPPER=/usr/sbin/env ; try_enable_distcc
@@ -32,6 +31,19 @@ typical_env_for_cave() {
 }
 
 #### Helper function ####
+## string parser
+remove_comment_and_platform() {
+    sed -r -e '/#.*/d' -e 's/~//' -e '/^[[:blank:]]*$/d'
+}
+
+remove_custom_mark() {
+    sed -e 's/+.*//' -e 's/&.*//'
+}
+
+find_set() {
+    [[ x$1 == "xhost" ]] && echo ${CONFIG_DIR}/packages/host-specific/$HOST || echo ${CONFIG_DIR}/packages/$1
+}
+
 ## detect install destination, includes the ROOT of the chroot, and
 ## the LOCATION of the repository
 # take the destination or target repository as the parameter; else a
@@ -89,10 +101,6 @@ initialize() {
 
     ## misc
     HOST=`hostname | cut -d. -f1`
-
-    ## import pre-config and utility functions
-    source ${SCRIPT_DIR}/config
-    source ${SCRIPT_DIR}/utils
 
     ## we need detect destination type and related configs
     if [[ $SELF_INVOKING != "yes" ]]; then
@@ -185,12 +193,31 @@ EOF
 }
 
 show_platforms() {
-    echo "${PLATFORMS}"
+    cat <<EOF
+### defaults
+*/*		amd64 ~amd64
+*/*[=scm]	~amd64
+EOF
 }
 
 show_options() {
     echo "### Global options:"
-    echo "${OPTIONS}"
+    cat <<EOF
+### targets
+*/* targets: x86_64-pc-linux-gnu -i686-pc-linux-gnu
+
+### options
+*/*			-* pam systemd udev
+*/*			threads openmp
+*/*			acl xattr
+
+*/*::x11		X
+
+### suboptions
+*/*			python_abis:		-* 2.7
+*/*			build_options:		symbols=strip -recommended_tests
+*/*			linguas:		zh_CN
+EOF
 
     for set in ${ACTIVE_SETS[@]}; do
 	echo
@@ -208,6 +235,18 @@ show_package_unmask() {
 }
 
 show_mirrors() {
+    SITES=( BJTU TSU USTC HEANET NETEASE BIR )
+    BJTU=(http://mirror.bjtu.edu.cn
+	  apache cpan cran 'ctan CTAN' debian freebsd 'gentoo gentoo/distfiles' gimp gnome gnu kde 'kernel kernel/pub' 'libreoffice tdf/libreoffice')
+    TSU=( http://mirrors.tuna.tsinghua.edu.cn
+	  apache 'ctan CTAN' 'cran CRAN' 'ctan CTAN' debian freebsd 'gentoo gentoo/distfiles' gnu 'kernel kernel/pub' opensuse )
+    USTC=( http://mirrors.ustc.edu.cn
+	   'cpan CPAN' 'cran CRAN' 'ctan CTAN' debian freebsd 'gentoo gentoo/distfiles' gnome gnu kde 'kernel linux-kernel' opensuse )
+    HEANET=( http://heanet.dl.sourceforge.net sourceforge )
+    NETEASE=( http://mirrors.163.com
+	      cpan debian 'freebsd FreeBSD' 'gentoo gentoo/distfiles' 'opensuse openSUSE')
+    BIR=( http://10.2.112.3 exherbo-binary )
+
     add_mirror()
     {
 	url_base=$1

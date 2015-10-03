@@ -1,5 +1,7 @@
-### for bashrc
+#!/usr/bin/env bash
+
 has_ipv6() {
+    ## use ip -6 r to check if we have a default gateway?
     {
 	which ifconfig && ifconfig | grep '2001:da8' && return 0 || return 1
     } >/dev/null 2>&1
@@ -85,17 +87,4 @@ try_enable_distcc() {
     fi
     #EMAKE_WRAPPER="pump"
     #192.168.1.50,lzo,cpp
-}
-
-### for paludis config wrapper
-remove_comment_and_platform() {
-    sed -r -e '/#.*/d' -e 's/~//' -e '/^[[:blank:]]*$/d'
-}
-
-remove_custom_mark() {
-    sed -e 's/+.*//' -e 's/&.*//'
-}
-
-find_set() {
-    [[ x$1 == "xhost" ]] && echo ${CONFIG_DIR}/packages/host-specific/$HOST || echo ${CONFIG_DIR}/packages/$1
 }
