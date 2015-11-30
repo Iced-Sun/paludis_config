@@ -34,7 +34,7 @@ x11-apps/arandr
 sys-sound/alsa-utils
 ~media-sound/mpd		alsa ffmpeg systemd				&-*/*
 ~media-sound/ncmpcpp		taglib
-~media/mpv			alsa
+~media/mpv			alsa providers: ijg-jpeg
 	media/ffmpeg
 	media-libs/libass			fontconfig
 
@@ -58,3 +58,6 @@ app-shells/fish
 app-admin/sudo
 
         dev-scm/git     curl
+        sys-apps/systemd        libcurl
+
+        sys-apps/systemd        -libcurl ### FIXME this does not work!!!
