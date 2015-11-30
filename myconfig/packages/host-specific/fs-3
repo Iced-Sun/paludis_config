@@ -2,7 +2,8 @@
 
 net-fs/samba		acl ads async -avahi -cluster -cups gnutls ldap quotas -swat -syslog winbind
 www-servers/nginx	file-aio http nginx_modules: autoindex
-
+net-misc/openvpn	iproute2 lzo
+#sys-apps/systemd	nat
 
 
 
