@@ -1,0 +1,20 @@
+## alternatives
+virtual/awk		providers: busybox
+virtual/coreutils	providers: busybox
+virtual/grep		providers: busybox
+virtual/man		providers: busybox
+virtual/sed		providers: busybox
+
+virtual/cpio		providers: libarchive
+virtual/gzip		providers: pigz
+virtual/tar		providers: libarchive
+
+## headers
+app-arch/xz		parts: development
+sys-libs/ncurses	parts: development
+sys-libs/zlib		parts: development
+
+## options
+dev-scm/git		curl						&-*/*
+sys-apps/paludis	prebuilt-documentation search-index pbin
+sys-apps/sydbox		seccomp

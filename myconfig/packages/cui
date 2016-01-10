@@ -4,24 +4,14 @@
 ### "+"   => unmask
 ###
 
-## system set
-	dev-scm/git							&-*/*
-	sys-apps/paludis	prebuilt-documentation search-index pbin
-	sys-apps/sydbox		seccomp
-
-## virtuals
-    virtual/syslog		providers: -* systemd
-    virtual/pkg-config		providers: -* pkgconf
-    virtual/tar			providers: -* libarchive
-    virtual/cpio		providers: -* libarchive
-
 ## system app not in system set 
 sys-apps/systemd
+        sys-apps/busybox        static
 
 ## app-arch
 app-arch/p7zip
 app-arch/unrar
-app-arch/unzip
+virtual/unzip			providers: -bsdunzip unzip
 
 ## fs
 sys-fs/btrfs-progs
@@ -36,3 +26,5 @@ app-misc/mc
 sys-process/htop		cgroups
 sys-process/lsof
 
+## systemd requires elfutils, and libelf/elfutils has collision
+	dev-libs/glib		providers: -libelf elfutils

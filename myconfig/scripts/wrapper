@@ -34,7 +34,7 @@ typical_env_for_cave() {
 #### Helper function ####
 ## string parser
 remove_comment_and_platform() {
-    sed -r -e '/#.*/d' -e 's/~//' -e '/^[[:blank:]]*$/d'
+    sed -r -e 's/#.*//' -e 's/~//' -e '/^[[:blank:]]*$/d'
 }
 
 remove_custom_mark() {
@@ -112,9 +112,10 @@ initialize() {
 	fi
     fi
     
-    ## other paludis config
+    ## SETS
     SETS=$(cd ${CONFIG_DIR}/packages && find . -type f -printf '%P\n')
-    ACTIVE_SETS=$(sort ${WORLD} <(printf '%s\n' ${SETS[@]} host) 2>/dev/null |uniq -d)
+    ACTIVE_SETS=( system )
+    ACTIVE_SETS+=( $(sort ${WORLD} <(printf '%s\n' ${SETS[@]} host) 2>/dev/null |uniq -d) )
 
     ## debug
     print_debug_info() {
@@ -140,7 +141,6 @@ initialize() {
 ####### Action handlers #######
 show_general() {
     echo world = ${WORLD}
-    echo shit = ${exhost}
 }
 
 show_repository_defaults() {
@@ -205,20 +205,34 @@ EOF
 show_options() {
     echo "### Global options:"
     cat <<EOF
-## targets
-*/* targets: x86_64-pc-linux-gnu -i686-pc-linux-gnu
+## disable everything by default
+*/*			-*
+*/*			parts:		-* binaries configuration data libraries
+*/*			providers:	-*
+*/*			linguas:	-* zh_CN
 
-## options
-*/*			-* pam systemd udev
+## build related
+*/*			build_options:	symbols=strip -recommended_tests
+*/*			targets:	-* x86_64-pc-linux-gnu
+*/*			providers:	libelf
+virtual/pkg-config	providers:	pkgconf
+
+## system
+*/*			pam systemd udev
+*/*			providers:	libressl
+*/*			providers:	systemd
+
+## concurrenty/parellelism
 */*			threads openmp
+
+## filesystem attributes
 */*			acl xattr
 
-*/*::x11		X
+## language bindings
+*/*			python_abis:	-*
+*/*			lua_abis:	-*
+*/*			ruby_abis:	-*
 
-## suboptions
-*/*			python_abis:		-* 2.7
-*/*			build_options:		symbols=strip -recommended_tests
-*/*			linguas:		zh_CN
 EOF
 
     ### option is generated before chroot-path is used, hence the following has no effect; use python bindings?
@@ -229,7 +243,7 @@ EOF
 	echo 
 	echo "### Chroot options:"
 	cat <<EOF
-*/*			parts:			-* binaries libraries
+*/*			parts:		-* binaries libraries
 EOF
     fi
     

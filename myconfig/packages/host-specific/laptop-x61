@@ -1,42 +1,43 @@
-*/*			amd64_cpu_features:  sse sse2 sse3 ssse3 sse4.1
-*/*			video_drivers:       intel
-*/*::subi		build_options:      	work=preserve
-*/*::subi-hack		build_options:      	work=preserve
+*/*			amd64_cpu_features:	sse sse2 sse3 ssse3 sse4.1
+*/*			linguas:		zh_CN
+*/*			video_drivers:		intel
+*/*::subi		build_options:		work=preserve
+
+## alternatives
+	virtual/notification-daemon		providers: dunst -notification-daemon
 
 ## fs
 sys-fs/ntfs-3g_ntfsprogs
-net-fs/cifs-utils
 
 ## net
-net-misc/openvpn		lzo threads
+net-misc/openvpn				lzo threads
 net-misc/dhcpcd
 
 ## wireless
 net-wireless/iwlwifi-3945-ucode
 gnome-desktop/network-manager-applet
-        net-wireless/wpa_supplicant        dbus nl80211
+	net-wireless/wpa_supplicant		dbus nl80211
 
 ## mail
-mail-client/notmuch		emacs
+mail-client/notmuch				emacs
 net-mail/getmail
 net-mail/offlineimap
-        dev-lang/python:2.7     sqlite
+	dev-lang/python:2.7			sqlite
 app-admin/mime-support
 mail-mta/msmtp
 office-libs/wv
 
 ## X11
-x11-server/xorg-server							&xf86-video-intel
+	x11-server/xorg-server			-systemd			&xf86-video-intel
 x11-apps/arandr
 #x11-apps/xcompmgr
 
 ## media
 sys-sound/alsa-utils
-~media-sound/mpd		alsa ffmpeg systemd				&-*/*
+~media-sound/mpd		alsa ffmpeg					&-*/*
 ~media-sound/ncmpcpp		taglib
-~media/mpv			alsa providers: ijg-jpeg
-	media/ffmpeg
-	media-libs/libass			fontconfig
+~media/mpv			alsa
+	media-libs/libass	fontconfig
 
 ## misc
 #app-text/chmsee
@@ -46,18 +47,4 @@ app-shells/fish
 
 #x11-misc/synergy
 
-         sys-fs/squashfs-tools          xz
-
-         app-virtualization/qemu            amd64 gtk3 opengl usb-passthrough xattr
-
-	app-editors/emacs						&app-spell/aspell
-	app-spell/aspell						&app-dicts/aspell-en
-
-        virtual/notification-daemon     providers: dunst -notification-daemon
-
 app-admin/sudo
-
-        dev-scm/git     curl
-        sys-apps/systemd        libcurl
-
-        sys-apps/systemd        -libcurl ### FIXME this does not work!!!
