@@ -14,9 +14,13 @@ hook_run_install_pre() {
 }
 
 hook_run_install_fail() {
+    [[ "${TARGET##net-www/firefox}" == "${TARGET}" ]] && return 0
+
     swapoff /data/swapfile
 }
 
 hook_run_install_post() {
+    [[ "${TARGET##net-www/firefox}" == "${TARGET}" ]] && return 0
+
     swapoff /data/swapfile
 }
