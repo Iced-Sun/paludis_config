@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+hook_auto_names() {
+    echo install_pre install_fail install_post
+}
+
+hook_run_install_pre() {
+    [[ "${TARGET##net-www/firefox}" == "${TARGET}" ]] && return 0
+
+    source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
+
+    einfo_unhooked "Activate swapfile for firefox..."
+    swapon /data/swapfile && return 0 || return 1
+}
+
+hook_run_install_fail() {
+    swapoff /data/swapfile
+}
+
+hook_run_install_post() {
+    swapoff /data/swapfile
+}
