@@ -48,11 +48,13 @@ LDFLAGS="${MY_LDFLAGS[@]}"
 ### Advanced customization
 ## NOTE: bashrc is sourced only once in builtin_init phase when cave-perform
 
-source /etc/paludis/myconfig/scripts/utils
+if [[ x${USE_DISTCC} != "xno" ]]; then
+    source /etc/paludis/myconfig/scripts/utils
 
-ECONF_WRAPPER="wrap_ebuild_phase try_enable_distcc :WRAP_END:"
-EMAKE_WRAPPER="wrap_ebuild_phase try_enable_distcc :WRAP_END:"
-EINSTALL_WRAPPER="wrap_ebuild_phase try_enable_distcc :WRAP_END:"
+    ECONF_WRAPPER="wrap_ebuild_phase try_enable_distcc :WRAP_END:"
+    EMAKE_WRAPPER="wrap_ebuild_phase try_enable_distcc :WRAP_END:"
+    EINSTALL_WRAPPER="wrap_ebuild_phase try_enable_distcc :WRAP_END:"
+fi
 
 ## cmake.exlib uses emake, but not econf; need export the distcc environment
 ##
