@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 hook_auto_names() {
-    echo install_pre install_post
+    echo install_pre install_fail install_post
 }
 
 OLD_LD=${ROOT}/${XDG_RUNTIME_DIR:-/run}/paludis_ld_provider
@@ -11,14 +11,18 @@ hook_run_install_pre() {
 
     source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
 
-    einfo_unhooked "Setting ld to bfd to build glibc..." ${ROOT}/${XDG_RUNTIME_DIR:-/run}/paludis_ld_provider
-    eclectic ld show > ${OLD_LD}
-    eclectic ld set --force bfd
+    if [[ -e ${OLD_LD} ]]; then
+	einfo_unhooked "${OLD_LD} already exists, assume ld is bfd"
+    else
+	einfo_unhooked "Setting ld to bfd to build glibc..."
+	eclectic ld show > ${OLD_LD}
+	eclectic ld set --force bfd
+    fi
 
     return 0
 }
 
-hook_run_install_post() {
+restore_ld() {
     [[ "${TARGET##sys-libs/glibc}" == "${TARGET}" ]] && return 0
 
     source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
@@ -28,4 +32,12 @@ hook_run_install_post() {
     rm -f ${OLD_LD}
 
     return 0
+}
+
+hook_run_install_fail() {
+    restore_ld
+}
+
+hook_run_install_post() {
+    restore_ld
 }
