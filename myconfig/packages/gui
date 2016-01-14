@@ -9,10 +9,16 @@
 
 ## xorg
 x11-server/xorg-server										&-*/* xf86-input-evdev
+	x11-proto/xcb-proto		python_abis: 2.7
 x11-apps/xrdb
 x11-apps/xset
 x11-dri/mesa
 	dev-libs/libxml2		python python_abis: 2.7
+	dev-python/Mako			python_abis: 2.7
+	dev-python/beaker		python_abis: 2.7
+	dev-python/MarkupSafe		python_abis: 2.7
+	dev-python/setuptools		python_abis: 2.7
+	dev-python/certifi		python_abis: 2.7
 
 ## fonts
 fonts/terminus-font
@@ -35,7 +41,7 @@ inputmethods/fcitx-libpinyin
 
 ## text
 text-plugins/zathura-djvu
-text-plugins/zathura-pdf-poppler
+virtual/zathura-pdf			providers: zathura-pdf-poppler
 	app-text/poppler		glib cairo
 
 ## media
