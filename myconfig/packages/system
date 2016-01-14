@@ -1,20 +1,36 @@
 ## alternatives
-virtual/awk		providers: busybox
-virtual/coreutils	providers: busybox
-virtual/grep		providers: busybox
+virtual/awk		providers: gnu
+virtual/coreutils	providers: gnu
+virtual/grep		providers: gnu
 virtual/man		providers: busybox
-virtual/sed		providers: busybox
+virtual/sed		providers: gnu
 
 virtual/cpio		providers: libarchive
 virtual/gzip		providers: pigz
 virtual/tar		providers: libarchive
 
 ## headers
+app-arch/bzip2		parts: development
 app-arch/xz		parts: development
-sys-libs/ncurses	parts: development
-sys-libs/zlib		parts: development
+	dev-libs/expat		parts: development
+	dev-libs/libffi		parts: development
+	dev-libs/gmp		parts: development
+	dev-libs/mpfr		parts: development
+	dev-libs/pcre		parts: development
+	dev-libs/popt		parts: development
+	sys-apps/attr		parts: development
+	sys-apps/file		parts: development
+	sys-libs/libcap		parts: development
+	sys-libs/ncurses	parts: development
+	sys-libs/pam		parts: development
+	sys-libs/readline	parts: development
+	sys-libs/zlib		parts: development
 
 ## options
 dev-scm/git		curl						&-*/*
 sys-apps/paludis	prebuilt-documentation search-index pbin
 sys-apps/sydbox		seccomp
+
+## python dependency
+	app-doc/asciidoc	python_abis: 2.7
+	dev-util/itstool	python_abis: 2.7

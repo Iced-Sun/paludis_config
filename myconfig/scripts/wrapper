@@ -114,7 +114,7 @@ initialize() {
     
     ## SETS
     SETS=$(cd ${CONFIG_DIR}/packages && find . -type f -printf '%P\n')
-    ACTIVE_SETS=( system )
+    ACTIVE_SETS=( system x11 )
     ACTIVE_SETS+=( $(sort ${WORLD} <(printf '%s\n' ${SETS[@]} host) 2>/dev/null |uniq -d) )
 
     ## debug
