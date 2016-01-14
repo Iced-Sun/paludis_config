@@ -2,7 +2,7 @@
 
 ### default flags
 CHOST="x86_64-pc-linux-gnu"
-MY_CFLAGS=( -O3 -pipe )
+MY_CFLAGS=( `${CHOST}-gcc -march=native -E -v - </dev/null 2>&1 | sed -n -e 's/^.*- -/-/p'` -pipe -O3 )
 MY_LDFLAGS=( -Wl,-O1 -Wl,--as-needed -Wl,--sort-common )
 EXJOBS=3
 
@@ -11,16 +11,11 @@ EXTRA_ECONF=( --disable-static )
 
 ### special care
 case "${PN}" in
-    NetworkManager)
-	EXJOBS=1
+    glibc)
+	MY_CFLAGS=( -march=native -pipe -O2 )
+	USE_DISTCC=no
 	;;&
-    gtk+)
-	[[ $SLOT == 2 ]] && MY_LDFLAGS=( -Wl,-O1 )
-	;;&
-    gettext)
-	MY_LDFLAGS=( -Wl,-O1 )
-	;;&
-    zip|busybox|jpeg|git|notmuch|talloc|db|ocaml|gtk+|pinktrace)
+    notmuch|db|pinktrace|git|busybox|ocaml)
 	EXTRA_ECONF=( ${EXTRA_ECONF[@]/--disable-static/} )
 	;;&
     *)
@@ -28,13 +23,10 @@ case "${PN}" in
 esac    
 
 ### host specific flags
-## TODO how do we add  "-march=native" ?
 ## TODO use HOST from myconfig
 HOST=`hostname|cut -d. -f1`
 case "${HOST}" in
     dc-2|fs-3|gs-5)
-	### target march and host march
-	MY_CFLAGS+=( -march=core2 -msse4.1 )
 	EXJOBS=10
 	case "${PN}" in
 	    bind-tools)
@@ -44,8 +36,6 @@ case "${HOST}" in
 		;;
 	esac
 	;;&
-    laptop-x61)
-	MY_CFLAGS+=( -march=core2 -msse4.1 )
 esac
 
 ### finalize
