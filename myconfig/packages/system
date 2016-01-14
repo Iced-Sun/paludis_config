@@ -1,9 +1,9 @@
 ## alternatives
-virtual/awk		providers: gnu
-virtual/coreutils	providers: gnu
-virtual/grep		providers: gnu
+virtual/awk		providers: busybox
+virtual/coreutils	providers: busybox
+virtual/grep		providers: busybox
 virtual/man		providers: busybox
-virtual/sed		providers: gnu
+virtual/sed		providers: busybox
 
 virtual/cpio		providers: libarchive
 virtual/gzip		providers: pigz
