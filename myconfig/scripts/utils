@@ -1,9 +1,14 @@
 #!/usr/bin/env bash
 
 has_ipv6() {
-    ## use ip -6 r to check if we have a default gateway?
     {
-	which ifconfig && ifconfig | grep '2001:da8' && return 0 || return 1
+	if which ip; then
+	    ip -6 a | grep inet6 | grep globa1 && return 0
+	elif which ifconfig; then
+	    ifconfig | grep inet6 | grep global && return 0
+	fi
+
+	return 1
     } >/dev/null 2>&1
 }
 
