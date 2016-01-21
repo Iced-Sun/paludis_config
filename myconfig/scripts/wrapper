@@ -6,11 +6,6 @@
 ### TODO: or better, if there is an option --destination (so we can use 'cave resolve package --destination bindist-laptop-x61/installed-laptop-x61')
 
 typical_env_for_cave() {
-    ECONF_WRAPPER=try_enable_distcc append_configure_option 1 --disable-static
-    EMAKE_WRAPPER=/usr/sbin/env ; try_enable_distcc
-    DISTCC_DIR=/var/tmp/paludis/distcc
-    DISTCC_HOSTS=--randomize 10.2.112.2,lzo
-
     EXHERES_PHASE=configure
     FILESYSTEM_LAYOUT=cross
     HOOK=ebuild_configure_pre
@@ -23,11 +18,6 @@ typical_env_for_cave() {
     REPOSITORY=arbor
     ROOT=/
     TARGETS=
-    TEMP=/var/tmp/paludis/build/app-terminal-tmux-1.9a/temp/
-    TMPDIR=/var/tmp/paludis/build/app-terminal-tmux-1.9a/temp/
-    USER=root
-    WORK=/var/tmp/paludis/build/app-terminal-tmux-1.9a/work/tmux-1.9a
-    WORKBASE=/var/tmp/paludis/build/app-terminal-tmux-1.9a/work
     XDG_RUNTIME_DIR=/var/tmp/paludis/build/app-terminal-tmux-1.9a/temp/
 }
 
