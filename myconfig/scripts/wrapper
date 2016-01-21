@@ -42,7 +42,7 @@ remove_custom_mark() {
 }
 
 find_set() {
-    [[ x$1 == "xhost" ]] && echo ${CONFIG_DIR}/packages/host-specific/$HOST || echo ${CONFIG_DIR}/packages/$1
+    [[ x$1 == "xhost" ]] && echo ${CONFIG_DIR}/packages/hosts/$HOST || echo ${CONFIG_DIR}/packages/$1
 }
 
 ## detect install destination, includes the ROOT of the chroot, and

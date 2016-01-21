@@ -62,3 +62,6 @@ app-shells/fish
 
 ## wps requires png-1.2
 	media-libs/libpng:1.2
+
+dev-lang/clang
+	dev-lang/llvm				python_abis: 2.7
