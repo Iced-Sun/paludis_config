@@ -160,7 +160,7 @@ show_repositories() {
 	binary*)
 	    cat <<EOF
 format = e
-sync = git+ssh://git@ikvjwd.com/sunbing81/${1}.git
+sync = git+ssh://git@github.com/sunbing81/${1}.git
 sync_options = --no-reset
 #importance = -1
 EOF
