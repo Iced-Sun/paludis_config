@@ -7,3 +7,5 @@
 !/repositories/unavailable-unofficial.conf
 !/repositories/unavailable.conf
 !/repositories/installed-accounts.conf
+
+/sets/*.bash
