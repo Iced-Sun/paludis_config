@@ -33,8 +33,24 @@ remove_custom_mark() {
     sed -e 's/+.*//' -e 's/&.*//'
 }
 
+## packages/sets detection
+initialize_sets() {
+    pushd ${CONFIG_DIR}/packages >/dev/null 2>&1
+
+    GENERAL_SETS=( [0-9][0-9]-* )
+    PREDEFINED_SETS=( \?* )
+    MACHINE_SETS=( @* )
+
+    ACTIVE_GENERAL_SETS=( $(sort ${WORLD} <(printf '%s\n' ${GENERAL_SETS[@]}) 2>/dev/null |uniq -d) )
+    ACTIVE_MACHINE_SETS=( $(sort ${WORLD} <(printf '%s\n' ${MACHINE_SETS[@]} | sed -e 's/@//' -e 's/:.*//') 2>/dev/null |uniq -d) )
+
+    popd >/dev/null 2>&1
+}
+
 find_set() {
-    [[ x$1 == "xhost" ]] && echo ${CONFIG_DIR}/packages/hosts/$HOST || echo ${CONFIG_DIR}/packages/$1
+    for name in ${PREDEFINED_SETS[@]} ${GENERAL_SETS[@]} ${MACHINE_SETS}; do
+	[[ $name == *$1* ]] && echo ${CONFIG_DIR}/packages/$name
+    done
 }
 
 ## detect install destination, includes the ROOT of the chroot, and
@@ -94,6 +110,7 @@ initialize() {
 
     ## misc
     HOST=`hostname | cut -d. -f1`
+    MACHINE_ID=`cat /etc/machine-id`
 
     ## we need detect destination type and related configs
     if [[ $SELF_INVOKING != "yes" ]]; then
@@ -105,9 +122,7 @@ initialize() {
     fi
     
     ## SETS
-    SETS=$(cd ${CONFIG_DIR}/packages && find . -type f -printf '%P\n')
-    ACTIVE_SETS=( system x11 )
-    ACTIVE_SETS+=( $(sort ${WORLD} <(printf '%s\n' ${SETS[@]} host) 2>/dev/null |uniq -d) )
+    initialize_sets
 
     ## debug
     print_debug_info() {
@@ -118,11 +133,16 @@ initialize() {
 	echo "Custom config DIR (relative):" ${CONFIG_DIR}
 	echo "Action:" ${ACTION}`[[ x${SUB_ACTION} == "x" ]] || echo ::${SUB_ACTION}`
 	echo "Host:" ${HOST}
+	echo "Machine ID:" ${MACHINE_ID}
 	echo
 	echo "===== Paludis information ====="
 	echo "Destination:" ${LOCATION}
-	echo "Sets:" ${SETS[@]}
-	echo "Active sets:" ${ACTIVE_SETS[@]}
+	echo "General sets:" ${GENERAL_SETS[@]}
+	echo "Active general sets:" ${ACTIVE_GENERAL_SETS[@]}
+	echo "Machine sets:" ${MACHINE_SETS[@]}
+	echo "Active machine sets:" ${ACTIVE_MACHINE_SETS[@]}
+	echo "Predefined sets:" ${PREDEFINED_SETS[@]}
+	echo
 	echo "===== End debug information ====="
 	[[ $SELF_INVOKING == "yes" ]] && echo "============ SELF INVOKING End =============="
 	echo
@@ -238,8 +258,8 @@ EOF
 */*			parts:		-* binaries libraries
 EOF
     fi
-    
-    for set in ${ACTIVE_SETS[@]}; do
+
+    for set in ${PREDEFINED_SETS[@]} ${ACTIVE_GENERAL_SETS[@]} ${ACTIVE_MACHINE_SETS}; do
 	echo
 	echo "### Options for set --$set--"
 	cat $(find_set $set) | remove_comment_and_platform | remove_custom_mark | awk '{if (NF>1) print}'
@@ -247,7 +267,7 @@ EOF
 }
 
 show_package_unmask() {
-    for set in ${ACTIVE_SETS[@]}; do
+    for set in ${ACTIVE_GENERAL_SETS[@]} ${ACTIVE_MACHINE_SETS[@]}; do
 	echo
 	echo "### Package unmasks for set --$set--"
 	cat $(find_set $set) | remove_comment_and_platform | sed -r -n '/\+([[:punct:][:alnum:]]+)/ s/[[:blank:]]*([[:punct:][:alnum:]]+).*\+/\1/ p'
@@ -305,7 +325,7 @@ show_mirrors() {
 }
 
 show_suggestions() {
-    for set in ${ACTIVE_SETS[@]}; do
+    for set in ${ACTIVE_GENERAL_SETS[@]} ${ACTIVE_MACHINE_SETS[@]}; do
 	echo 
 	echo "### Package suggestions for set --$set--"
 	cat $(find_set $set) | remove_comment_and_platform | sed -r -n '/&/ s/[[:blank:]]*([[:punct:][:alnum:]]+).*&/\1\t/ p'
