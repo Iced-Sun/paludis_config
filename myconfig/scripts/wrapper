@@ -48,9 +48,11 @@ initialize_sets() {
 }
 
 find_set() {
-    for name in ${PREDEFINED_SETS[@]} ${GENERAL_SETS[@]} ${MACHINE_SETS}; do
-	[[ $name == *$1* ]] && echo ${CONFIG_DIR}/packages/$name
+    found=false
+    for name in ${PREDEFINED_SETS[@]} ${GENERAL_SETS[@]} ${MACHINE_SETS[@]}; do
+	[[ $name == *$1* ]] && echo ${CONFIG_DIR}/packages/$name && found=true
     done
+    [[ $found == false ]] && echo $1
 }
 
 ## detect install destination, includes the ROOT of the chroot, and
