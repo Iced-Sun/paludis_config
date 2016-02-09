@@ -336,7 +336,7 @@ show_suggestions() {
 }
 
 show_sets() {
-    cat $(find_set $1) | remove_comment_and_platform | remove_custom_mark | sed -r -n '/^[^[:blank:]]/ p'
+    cat $(find_set $1) | remove_comment_and_platform | remove_custom_mark | sed -r -n '/^[^[:blank:]]/ s/^([a-z][^[:blank:]]*).*/\* \1/ p'
 }
 
 ##### Main ####
