@@ -15,7 +15,7 @@ case "${PN}" in
 	MY_CFLAGS=( -march=native -pipe -O2 )
 	USE_DISTCC=no
 	;;&
-    notmuch|db|pinktrace|git|busybox|ocaml)
+    openjdk8|notmuch|db|pinktrace|git|busybox|ocaml)
 	EXTRA_ECONF=( ${EXTRA_ECONF[@]/--disable-static/} )
 	;;&
     *)
