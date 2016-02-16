@@ -2,7 +2,8 @@
 Description=rxvt-unicode daemon
 
 [Service]
+Environment=RXVT_SOCKET=%t/urxvtd
 ExecStart=/usr/bin/urxvtd
+ExecStartPost=/usr/bin/systemctl --user set-environment RXVT_SOCKET=%t/urxvtd
 
-[Install]
-WantedBy=graphical.target
+
