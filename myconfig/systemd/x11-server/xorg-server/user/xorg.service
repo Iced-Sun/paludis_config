@@ -1,8 +1,0 @@
-[Unit]
-Description=The X server for X.org
-
-[Service]
-ExecStart=/usr/bin/Xorg ${DISPLAY} vt7
-
-[Install]
-WantedBy=xserver.target
