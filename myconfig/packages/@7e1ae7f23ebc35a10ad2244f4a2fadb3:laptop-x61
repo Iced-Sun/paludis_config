@@ -34,7 +34,7 @@ mail-mta/msmtp
 office-libs/wv
 
 ## X11
-	x11-server/xorg-server			-systemd			&xf86-video-intel
+	x11-server/xorg-server			systemd			&xf86-video-intel
 #x11-apps/arandr
 	x11-libs/gtk+:3				gobject-introspection
 		dev-libs/atk			gobject-introspection
