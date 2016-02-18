@@ -1,0 +1,16 @@
+[Unit]
+Description=Emacs: the extensible, self-documenting text editor
+# emacs --daemon doesn't use systemd native socket passing nor inetd passing
+# simply stop the .socket unit to hack
+Conflicts=%p.socket
+
+[Service]
+Type=forking
+## emacsclient cannot read socket name from environment, for now. Stick to default one.
+#Environment=EMACS_SOCKET_NAME=%t/emacs/server
+ExecStart=/usr/bin/emacs --daemon
+ExecStop=/usr/bin/emacsclient --eval "(kill-emacs)"
+
+[Install]
+WantedBy=default.target
+

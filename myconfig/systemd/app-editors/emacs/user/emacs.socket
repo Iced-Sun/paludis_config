@@ -1,0 +1,13 @@
+[Unit]
+Description=Emacs Server Socket
+# emacs --daemon doesn't use systemd native socket passing nor inetd passing
+# simply stop the .service unit to hack
+Conflicts=%p.service
+
+[Socket]
+## emacsclient cannot read socket name from environment, for now. Stick to default one.
+#ExecStartPre=/usr/bin/systemctl --user set-environment EMACS_SOCKET_NAME=%t/emacs/server
+ListenStream=/tmp/emacs%U/server
+
+[Install]
+WantedBy=sockets.target
