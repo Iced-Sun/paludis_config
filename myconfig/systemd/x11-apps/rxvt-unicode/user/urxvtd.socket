@@ -1,0 +1,11 @@
+[Unit]
+Description=Clone of rxvt with support for unicode and xft Socket
+Conflicts=%p.service
+
+[Socket]
+Environment=RXVT_SOCKET=%t/urxvtd-%H
+ListenStream=%t/urxvtd-%H
+ExecStartPost=-/usr/x86_64-pc-linux-gnu/bin/systemctl --user set-environment RXVT_SOCKET=%t/urxvtd-%H
+
+[Install]
+WantedBy=sockets.target
