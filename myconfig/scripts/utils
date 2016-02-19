@@ -13,12 +13,7 @@ has_ipv6() {
 }
 
 is_in_2112() {
-    {
-	which ifconfig && ifconfig | grep -E '10.2.112|10.0.0|10.8.0|10.21.12' && return 0 || return 1
-	# FIXME: sydbox not allow pinging.
-	#edo test -e '/dev/sydbox/whitelist/network/connect+inet:10.2.112.0/24@1025'
-#	ping 10.2.112.1 -c 1 -W 2 -q && return 0 || return 1
-    } >/dev/null 2>&1
+    has_ipv6
 }
 
 wrap_ebuild_phase() {
@@ -86,9 +81,9 @@ try_enable_distcc() {
 	fi
 	export DISTCC_DIR="/var/tmp/paludis/distcc"
 	export EXJOBS=10
-        export DISTCC_HOSTS='--randomize 10.2.112.2,lzo'
+        export DISTCC_HOSTS='--randomize [2001:da8:201:1071:2112::],lzo'
 	
-	edo esandbox allow_net --connect "inet:10.2.112.2/24@3632"
+	edo esandbox allow_net --connect "inet6:2001:da8:201:1071:2112::/64@3632"
     fi
     #EMAKE_WRAPPER="pump"
     #192.168.1.50,lzo,cpp
