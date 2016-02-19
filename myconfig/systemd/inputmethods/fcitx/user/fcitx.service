@@ -1,0 +1,6 @@
+[Unit]
+Description=Fcitx Input Method
+
+[Service]
+ExecStart=/usr/bin/fcitx -D -r
+
