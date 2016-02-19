@@ -5,5 +5,5 @@ After=xorg@%i.socket
 
 [Service]
 SuccessExitStatus=0 1
-ExecStart=/usr/x86_64-pc-linux-gnu/bin/Xorg :%i -nolisten tcp -noreset -verbose 2 vt%i
+ExecStart=/usr/bin/Xorg :%i -nolisten tcp -noreset -verbose 2 vt%i
 

@@ -3,7 +3,7 @@ Description=Clone of rxvt with support for unicode and xft
 Conflicts=%p.socket
 
 [Service]
-ExecStart=/usr/x86_64-pc-linux-gnu/bin/urxvtd
+ExecStart=/usr/bin/urxvtd
 
 [Install]
 WantedBy=default.target

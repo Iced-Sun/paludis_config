@@ -5,7 +5,7 @@ Conflicts=%p.service
 [Socket]
 Environment=RXVT_SOCKET=%t/urxvtd-%H
 ListenStream=%t/urxvtd-%H
-ExecStartPost=-/usr/x86_64-pc-linux-gnu/bin/systemctl --user set-environment RXVT_SOCKET=%t/urxvtd-%H
+ExecStartPost=-/usr/bin/systemctl --user set-environment RXVT_SOCKET=%t/urxvtd-%H
 
 [Install]
 WantedBy=sockets.target
