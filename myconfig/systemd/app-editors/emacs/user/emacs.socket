@@ -8,6 +8,7 @@ Conflicts=%p.service
 ## emacsclient cannot read socket name from environment, for now. Stick to default one.
 #ExecStartPre=/usr/bin/systemctl --user set-environment EMACS_SOCKET_NAME=%t/emacs/server
 ListenStream=/tmp/emacs%U/server
+DirectoryMode=0700
 
 [Install]
 WantedBy=sockets.target
