@@ -6,4 +6,3 @@ After=xorg@.socket
 [Service]
 Environment=DISPLAY=:%i
 ExecStart=/usr/bin/i3
-
