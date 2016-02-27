@@ -29,6 +29,7 @@ app-arch/xz		parts: development
 ## options
 dev-scm/git		curl						&-*/*
 sys-apps/paludis	prebuilt-documentation search-index pbin
+	app-text/xmlto	providers: lynx
 sys-apps/sydbox		seccomp
 
 ## python dependency
