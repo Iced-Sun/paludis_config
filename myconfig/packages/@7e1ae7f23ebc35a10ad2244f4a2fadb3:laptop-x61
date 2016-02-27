@@ -24,23 +24,13 @@ gnome-desktop/network-manager-applet
 	gnome-desktop/gobject-introspection	python_abis: 2.7
 
 ## mail
-mail-client/notmuch				emacs
-	dev-libs/talloc				python_abis: 2.7
-net-mail/getmail
 net-mail/offlineimap				python_abis: 2.7
 	dev-lang/python:2.7			sqlite
-app-admin/mime-support
-mail-mta/msmtp
+mail-client/mu
 office-libs/wv
 
 ## X11
 	x11-server/xorg-server			systemd			&xf86-video-intel
-#x11-apps/arandr
-	x11-libs/gtk+:3				gobject-introspection
-		dev-libs/atk			gobject-introspection
-		x11-libs/pango			gobject-introspection
-		x11-libs/gdk-pixbuf		gobject-introspection
-#x11-apps/xcompmgr
 
 ## media
 sys-sound/alsa-utils
@@ -53,16 +43,14 @@ sys-sound/alsa-utils
 
 ## net
 net-www/firefox					providers: gtk3
+	dev-libs/icu				parts: development
 
 ## misc
-#app-text/chmsee
 app-admin/sudo
 app-misc/unison
 sys-devel/distcc				masquerade
 app-shells/fish
 #x11-misc/synergy
-
-	dev-libs/icu				parts: development
 
 ## wps requires png-1.2
 	media-libs/libpng:1.2
@@ -70,9 +58,18 @@ app-shells/fish
 ## python packages
 dev-python/virtualenv				python_abis: 2.7
 
+## gnupg
+	app-crypt/pinentry			gtk
+
 ## temp
 dev-lang/clang
 	dev-lang/llvm				python_abis: 2.7
 
 dev-lang/openjdk8				bootstrap
 	app-text/poppler			lcms
+
+app-cdr/dvd+rw-tools
+x11-apps/xdg-utils
+net-proxy/proxychains-ng
+fonts/awesome
+net-ftp/lftp
