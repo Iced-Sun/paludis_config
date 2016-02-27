@@ -28,3 +28,4 @@ sys-process/lsof
 
 ## systemd requires elfutils, and libelf/elfutils has collision
 	dev-libs/glib		providers: -libelf elfutils
+
