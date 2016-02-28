@@ -1,0 +1,9 @@
+[Unit]
+Description=D-Bus User Message Bus
+Documentation=man:dbus-daemon(1)
+Requires=dbus@.socket
+
+[Service]
+Environment=DISPLAY=:%i
+ExecStart=/usr/x86_64-pc-linux-gnu/bin/dbus-daemon --session --address=systemd: --nofork --nopidfile --systemd-activation
+ExecReload=/usr/x86_64-pc-linux-gnu/bin/dbus-send --print-reply --session --type=method_call --dest=org.freedesktop.DBus / org.freedesktop.DBus.ReloadConfig
