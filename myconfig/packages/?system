@@ -1,12 +1,14 @@
 ## alternatives
+# busybox
 virtual/awk		providers: busybox
 virtual/coreutils	providers: busybox
 virtual/grep		providers: busybox
 virtual/man		providers: busybox
 virtual/sed		providers: busybox
 
+# libarchive
 virtual/cpio		providers: libarchive
-virtual/gzip		providers: pigz
+virtual/gzip		providers: busybox
 virtual/tar		providers: libarchive
 
 ## headers
