@@ -1,9 +1,12 @@
 */*                     amd64_cpu_features:  mmx sse sse2 sse3 ssse3 sse4.1
 
-net-fs/samba		acl ads async -avahi -cluster -cups gnutls ldap quotas -swat -syslog winbind
-www-servers/nginx	file-aio http nginx_modules: autoindex
+net-fs/samba		acl -addc ads async -avahi -cluster -cups gnutls ldap quotas -syslog winbind -system-krb5 python_abis: 2.7
+	*/*		python_abis: 2.7
+www-servers/nginx	file-aio http nginx_modules: autoindex v2
 net-misc/openvpn	iproute2 lzo
 #sys-apps/systemd	nat
+net-firewall/nftables
 
+	dev-libs/libxml2	python
 
 
