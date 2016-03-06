@@ -11,7 +11,7 @@ EXTRA_ECONF=( --disable-static )
 
 ### special care
 case "${PN}" in
-    glibc)
+    glibc|paludis)
 	MY_CFLAGS=( -march=native -pipe -O2 )
 	USE_DISTCC=no
 	;;&
