@@ -14,6 +14,9 @@ case "${PN}" in
     glibc|paludis)
 	MY_CFLAGS=( -march=native -pipe -O2 )
 	USE_DISTCC=no
+    paludis)
+	## 'as-needed' corrupts 'print_exports' and 'strip_tar_corruption'
+	MY_LDFLAGS=(${MY_LDFLAGS[@]#-Wl,--as-needed})
 	;;&
     openjdk8|notmuch|db|pinktrace|git|busybox|ocaml)
 	EXTRA_ECONF=(${EXTRA_ECONF[@]#--disable-static})
