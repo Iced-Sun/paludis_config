@@ -39,11 +39,15 @@ case "${HOST}" in
 esac
 
 ### finalize
-x86_64_pc_linux_gnu_CFLAGS="${MY_CFLAGS[@]}"
-i686_pc_linux_gnu_CFLAGS="${MY_CFLAGS[@]}"
-x86_64_pc_linux_gnu_CXXFLAGS="${MY_CFLAGS[@]}"
-i686_pc_linux_gnu_CXXFLAGS="${MY_CFLAGS[@]}"
-LDFLAGS="${MY_LDFLAGS[@]}"
+## note: under the hood of multiarch, the final CFLAGS/CPPFLAGS is computed as
+##   computed_CFLAGS=${x86_64_pc_linux_gnu_CFLAGS:-CFLAGS}
+##   computed_CPPFLAGS=${x86_64_pc_linux_gnu_CFLAGS} ${x86_64_pc_linux_gnu_CPPFLAGS:-CPPFLAGS}
+#eval "${CHOST//-/_}_CFLAGS=\${MY_CFLAGS[@]}"
+#eval "${CHOST//-/_}_CXXFLAGS=\${MY_CFLAGS[@]}"
+#eval "${CHOST//-/_}_LDFLAGS=\${MY_LDFLAGS[@]}"
+CFLAGS=${MY_CFLAGS[@]}
+CXXFLAGS=${MY_CFLAGS[@]}
+LDFLAGS=${MY_LDFLAGS[@]}
 
 ### Advanced customization
 ## NOTE: bashrc is sourced only once in builtin_init phase when cave-perform
