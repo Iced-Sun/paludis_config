@@ -2,12 +2,12 @@
 
 ### default flags
 CHOST="x86_64-pc-linux-gnu"
-MY_CFLAGS=( `${CHOST}-gcc -march=native -E -v - </dev/null 2>&1 | sed -n -e 's/^.*- -/-/p'` -pipe -O3 )
-MY_LDFLAGS=( -Wl,-O1 -Wl,--as-needed -Wl,--sort-common )
+MY_CFLAGS=(-pipe -O3 `${CHOST}-gcc -march=native -E -v - </dev/null 2>&1 | sed -n -e 's/^.*- -/-/p'`)
+MY_LDFLAGS=(-Wl,-O1 -Wl,--as-needed -Wl,--sort-common)
 EXJOBS=3
 
 ### default custom flags
-EXTRA_ECONF=( --disable-static )
+EXTRA_ECONF=(--disable-static)
 
 ### special care
 case "${PN}" in
@@ -16,7 +16,7 @@ case "${PN}" in
 	USE_DISTCC=no
 	;;&
     openjdk8|notmuch|db|pinktrace|git|busybox|ocaml)
-	EXTRA_ECONF=( ${EXTRA_ECONF[@]/--disable-static/} )
+	EXTRA_ECONF=(${EXTRA_ECONF[@]#--disable-static})
 	;;&
     *)
 	;;
@@ -30,7 +30,7 @@ case "${HOST}" in
 	EXJOBS=10
 	case "${PN}" in
 	    bind-tools)
-		EXTRA_ECONF+=( --with-gssapi )
+		EXTRA_ECONF+=(--with-gssapi)
 		;;&
 	    *)
 		;;
