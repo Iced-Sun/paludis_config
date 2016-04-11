@@ -57,6 +57,18 @@ app-shells/fish
 
 ## python packages
 dev-python/virtualenv				python_abis: 2.7
+dev-python/pip					python_abis: 2.7
+
+## bcloud
+## TODO: collect the following dependencies as a set
+dev-python/virtualenv				python_abis: 3.5
+dev-python/pip					python_abis: 3.5
+	dev-python/setuptools			python_abis: 3.5
+		dev-python/certifi		python_abis: 3.5
+	x11-libs/libnotify			gobject-introspection
+	dev-python/dbus-python			python_abis: 3.5
+	dev-lang/python[>3]			sqlite
+	dev-python/pycrypto			python_abis: 3.5
 
 ## gnupg
 	app-crypt/pinentry			gtk
@@ -73,3 +85,4 @@ x11-apps/xdg-utils
 net-proxy/proxychains-ng
 fonts/awesome
 net-ftp/lftp
+
