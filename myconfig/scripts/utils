@@ -3,7 +3,7 @@
 has_ipv6() {
     {
 	if which ip; then
-	    ip -6 a | grep inet6 | grep globa1 && return 0
+	    ip -6 a | grep inet6 | grep global && return 0
 	elif which ifconfig; then
 	    ifconfig | grep inet6 | grep global && return 0
 	fi
@@ -80,10 +80,14 @@ try_enable_distcc() {
 	    export PATH="/usr/${CHOST}/libexec/distcc:${PATH}"
 	fi
 	export DISTCC_DIR="/var/tmp/paludis/distcc"
+
+	## TODO check if distcc is available
+	## TODO use lsdistcc to determine values
 	export EXJOBS=10
-        export DISTCC_HOSTS='--randomize [2001:da8:201:1071:2112::],lzo'
-	
-	edo esandbox allow_net --connect "inet6:2001:da8:201:1071:2112::/64@3632"
+        #export DISTCC_HOSTS='--randomize [2001:da8:201:1071:2112::],lzo'
+	export DISTCC_HOSTS='--randomize 10.2.112.3,lzo'
+	#edo esandbox allow_net --connect "inet6:2001:da8:201:1071:2112::/64@3632"
+	edo esandbox allow_net --connect "inet:10.2.112.3@3632"
     fi
     #EMAKE_WRAPPER="pump"
     #192.168.1.50,lzo,cpp
