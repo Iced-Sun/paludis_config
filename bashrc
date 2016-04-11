@@ -82,7 +82,6 @@ if [[ x${USE_DISTCC} != "xno" ]]; then
 
     ECONF_WRAPPER="wrap_ebuild_phase try_enable_distcc :WRAP_END:"
     EMAKE_WRAPPER="wrap_ebuild_phase try_enable_distcc :WRAP_END:"
-    EINSTALL_WRAPPER="wrap_ebuild_phase try_enable_distcc :WRAP_END:"
 fi
 
 ## cmake.exlib uses emake, but not econf; need export the distcc environment
