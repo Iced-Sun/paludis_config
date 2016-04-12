@@ -75,19 +75,17 @@ eval "${CHOST//-/_}_CPPLAGS="
 eval "${CHOST//-/_}_LDFLAGS=\${MY_LDFLAGS[@]}"
 
 ### Advanced customization
-## NOTE: bashrc is sourced only once in builtin_init phase when cave-perform
+## NOTE: bashrc is sourced once in builtin_init phase only when cave-perform
 
 if [[ x${USE_DISTCC} != "xno" ]]; then
+    #ECONF_WRAPPER="wrap_ebuild_phase distcc_allow_net :WRAP_END:"
+    EMAKE_WRAPPER="wrap_ebuild_phase distcc_setup_hosts distcc_allow_net :WRAP_END:"
+
+    ## in the case of cmake.exlib, src_configure will invoke ecmake()
+    ## which doesn't provide a customization point, hence it is not
+    ## possible to allow net_access in sandboxing. But this is ok, since the only thing
+    ##
+    ## A side effect of the hack is that distcc will be alway failed in src_configure phase
     source /etc/paludis/myconfig/scripts/utils
-
-    ECONF_WRAPPER="wrap_ebuild_phase try_enable_distcc :WRAP_END:"
-    EMAKE_WRAPPER="wrap_ebuild_phase try_enable_distcc :WRAP_END:"
+    distcc_setup_path
 fi
-
-## cmake.exlib uses emake, but not econf; need export the distcc environment
-##
-## the problem is that ecmake doesn't provide a customization point, and hence
-## it is not possible to allow net_access in sandboxing
-### FIXME think it through
-#[[ -n $EXHERES_PHASE ]] && try_enable_distcc
-
