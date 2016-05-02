@@ -23,31 +23,29 @@ wrap_ebuild_phase() {
     einfo_unhooked "Wrapping the ${EXHERES_PHASE} phase..."
     
     while [[ "$#" -gt 0 ]]; do
-	group=()
-	while true; do
-	    if [[ x"$1" == "x:WRAP_END:" ]]; then
-		shift
-		einfo_unhooked "  Running the wrapper ${group[@]}..."
-		"${group[@]}"
-		break
-	    elif [[ "$#" -eq 0 ]]; then
-		einfo_unhooked "  Entering the ${EXHERES_PHASE} phase..."
+	local group=()
+	if [[ "$1" == *';' ]]; then
+	    ## pre hook
+	    group+=( "${1%;}" )
+	    einfo_unhooked "  Running the wrapper ${group[@]}..."
+	    edo "${group[@]}"
+	    group=()
+	elif [[ "$#" -eq 1 ]]; then
+	    einfo_unhooked "  Entering the ${EXHERES_PHASE} phase..."
 	    
-		## FIXME shall we add CFLAGS="${CFLAGS}" CXXFLAGS="${CXXFLAGS}"
-		## LDFLAGS="${LDFLAGS}" to enforce the flags?
-		if [[ ${EXHERES_PHASE} == "configure" ]]; then
-		    einfo_unhooked "  Applying EXTRA_ECONF..."
-		    edo "${group[@]}" "${EXTRA_ECONF[@]}"
-		else
-		    edo "${group[@]}"
-		fi
-	    
-		break
+	    ## FIXME shall we add CFLAGS="${CFLAGS}" CXXFLAGS="${CXXFLAGS}"
+	    ## LDFLAGS="${LDFLAGS}" to enforce the flags?
+	    if [[ ${EXHERES_PHASE} == "configure" ]]; then
+		einfo_unhooked "  Applying EXTRA_ECONF..."
+		edo "${group[@]}" "${EXTRA_ECONF[@]}"
 	    else
-		group+=( "$1" )
-		shift
-	    fi
-	done
+		edo "${group[@]}"
+	    fi    
+	else
+	    group+=( "$1" )
+	fi
+
+	shift
     done
 }
 
@@ -77,7 +75,7 @@ distcc_setup_hosts() {
 distcc_allow_net() {
     if is_in_2112; then
 	#edo esandbox allow_net --connect "inet6:2001:da8:201:1071:2112::/64@3632"
-	edo esandbox allow_net --connect "inet:10.2.112.3@3632"
+	esandbox allow_net --connect "inet:10.2.112.3@3632"
     fi
 }
 
@@ -85,14 +83,18 @@ distcc_allow_net() {
 ## emake: SCRIPT of utils/exheres-0/emake
 ## ecmake: FUNCTION in arbor/exlib/cmake.exlib
 emake() {
-    ## NOTE this is over-killing
-    #declare -F | while read line; do edo export -f `echo "${line}" | cut -d' ' -f3`;  done
+    ## export paludis commands
+    ## NOTE this may be over-killing
+    declare -F | while read line; do export -f `echo "${line}" | cut -d' ' -f3`; done
 
-    export -f einfo_unhooked edo paludis_ecmd
+    ## export paludis utilities
+    export -f einfo_unhooked edo
+
+    ## export custom functions
     export -f wrap_ebuild_phase distcc_setup_hosts distcc_allow_net is_in_2112 has_ipv6
 
+    ## forward to the real emake
     ewarn "A wrapped version of emake is invoked..."
     /usr/${CHOST}/libexec/paludis/utils/exheres-0/emake "$@"
 }
-
 

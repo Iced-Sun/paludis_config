@@ -79,7 +79,7 @@ eval "${CHOST//-/_}_LDFLAGS=\${MY_LDFLAGS[@]}"
 
 if [[ x${USE_DISTCC} != "xno" ]]; then
     #ECONF_WRAPPER="wrap_ebuild_phase distcc_allow_net :WRAP_END:"
-    EMAKE_WRAPPER="wrap_ebuild_phase distcc_setup_hosts distcc_allow_net :WRAP_END:"
+    EMAKE_WRAPPER="wrap_ebuild_phase distcc_setup_hosts; distcc_allow_net;"
 
     ## in the case of cmake.exlib, src_configure will invoke ecmake()
     ## which doesn't provide a customization point, hence it is not
