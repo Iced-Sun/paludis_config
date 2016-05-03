@@ -2,12 +2,12 @@
 
 ### default flags
 CHOST="x86_64-pc-linux-gnu"
-MY_CFLAGS=(-pipe -O3 `${CHOST}-gcc -march=native -E -v - </dev/null 2>&1 | sed -n -e 's/^.*- -/-/p'`)
-MY_LDFLAGS=(-Wl,-O1 -Wl,--as-needed -Wl,--sort-common)
+MY_CFLAGS=( -pipe -O3 `${CHOST}-gcc -march=native -E -v - </dev/null 2>&1 | sed -n -e 's/^.*- -/-/p'` )
+MY_LDFLAGS=( -Wl,-O1 -Wl,--as-needed -Wl,--sort-common )
 EXJOBS=3
 
-### default custom flags
-EXTRA_ECONF=(--disable-static)
+### default custom flags: applied by setting ECONF_WRAPPER and EXTRA_ECONF
+EXTRA_ECONF=( --disable-static )
 
 ### special care
 case "${PN}" in
@@ -17,7 +17,7 @@ case "${PN}" in
 	## -march=native -v'
 	##
 	## throw '--param *'
-	MY_CFLAGS=(`${CHOST}-gcc -march=native -E -v - </dev/null 2>&1 | sed -n -e 's/^.*- -/-/p' | sed -e 's/--param.* //'` -pipe -O3)
+	MY_CFLAGS=( `${CHOST}-gcc -march=native -E -v - </dev/null 2>&1 | sed -n -e 's/^.*- -/-/p' | sed -e 's/--param.* //'` -pipe -O3 )
 
 	## 2. sysdeps/x86_64/multiarch/str*.c need sse4.2 to compile,
 	## and the compiling flags are "${CFLAGS} -msse4
@@ -33,10 +33,10 @@ case "${PN}" in
 	;;&
     paludis)
 	## 'as-needed' corrupts 'print_exports' and 'strip_tar_corruption'
-	MY_LDFLAGS=(${MY_LDFLAGS[@]#-Wl,--as-needed})
+	MY_LDFLAGS=( ${MY_LDFLAGS[@]#-Wl,--as-needed} )
 	;;&
     openjdk8|notmuch|db|pinktrace|git|busybox|ocaml)
-	EXTRA_ECONF=(${EXTRA_ECONF[@]#--disable-static})
+	EXTRA_ECONF=( ${EXTRA_ECONF[@]#--disable-static} )
 	;;&
     *)
 	;;
@@ -76,9 +76,9 @@ eval "${CHOST//-/_}_LDFLAGS=\${MY_LDFLAGS[@]}"
 
 ### Advanced customization
 ## NOTE: bashrc is sourced once in builtin_init phase only when cave-perform
+ECONF_WRAPPER="wrap_ebuild_phase" ## for EXTRA_ECONF
 
 if [[ x${USE_DISTCC} != "xno" ]]; then
-    #ECONF_WRAPPER="wrap_ebuild_phase distcc_allow_net :WRAP_END:"
     EMAKE_WRAPPER="wrap_ebuild_phase distcc_setup_hosts; distcc_allow_net;"
 
     ## in the case of cmake.exlib, src_configure will invoke ecmake()
