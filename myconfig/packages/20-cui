@@ -1,17 +1,16 @@
 ### <Tab> => dependency
 ### "&"   => recommendation and suggestion
 ### "~"   => unstable
-### "+"   => unmask
-###
+### "+"   => unmaks
 
-## system app not in system set 
+## system
 sys-apps/systemd
         sys-apps/busybox        static
 
 ## app-arch
 app-arch/p7zip
 app-arch/unrar
-virtual/unzip			providers: -bsdunzip unzip
+virtual/unzip			providers: unzip
 
 ## fs
 sys-fs/btrfs-progs

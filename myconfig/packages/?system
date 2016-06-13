@@ -1,19 +1,22 @@
 ## alternatives
+# gnu
+virtual/coreutils		providers: gnu				# cp --reflink
+virtual/wget			providers: gnu				# IPv6
+
 # busybox
-virtual/awk		providers: busybox
-virtual/coreutils	providers: busybox
-virtual/grep		providers: busybox
-virtual/man		providers: busybox
-virtual/sed		providers: busybox
+virtual/awk				providers: busybox
+virtual/grep			providers: busybox
+virtual/man			providers: busybox
+virtual/sed				providers: busybox
+virtual/gzip				providers: busybox
 
 # libarchive
-virtual/cpio		providers: libarchive
-virtual/gzip		providers: busybox
-virtual/tar		providers: libarchive
+virtual/cpio				providers: libarchive
+virtual/tar				providers: libarchive
 
 ## headers
-app-arch/bzip2		parts: development
-app-arch/xz		parts: development
+app-arch/bzip2			parts: development
+app-arch/xz			parts: development
 	dev-libs/expat		parts: development
 	dev-libs/libffi		parts: development
 	dev-libs/gmp		parts: development
@@ -26,14 +29,14 @@ app-arch/xz		parts: development
 	sys-libs/ncurses	parts: development
 	sys-libs/pam		parts: development
 	sys-libs/readline	parts: development
-	sys-libs/zlib		parts: development
+	sys-libs/zlib			parts: development
 
 ## options
-dev-scm/git		curl						&-*/*
-sys-apps/paludis	prebuilt-documentation search-index pbin
-	app-text/xmlto	providers: lynx
+dev-scm/git			curl						&-*/*
+sys-apps/paludis		prebuilt-documentation search-index pbin
+	app-text/xmlto		providers: lynx
 sys-apps/sydbox		seccomp
 
 ## python dependency
 	app-doc/asciidoc	python_abis: 2.7
-	dev-util/itstool	python_abis: 2.7
+	dev-util/itstool		python_abis: 2.7
