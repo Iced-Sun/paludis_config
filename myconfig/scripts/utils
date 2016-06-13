@@ -49,13 +49,14 @@ wrap_ebuild_phase() {
     done
 }
 
-distcc_setup_path() {
+distcc_setup_environ() {
     if is_in_2112; then
 	## TODO should set the distcc masquerade path for reusing
 	if [[ $PATH != "/usr/${CHOST}/libexec/distcc:"* ]]; then
 	    export PATH="/usr/${CHOST}/libexec/distcc:${PATH}"
 	fi
 	export DISTCC_DIR="/var/tmp/paludis/distcc"
+	export EXJOBS=10
     fi
 }
 
@@ -64,7 +65,6 @@ distcc_setup_hosts() {
 	if [[ x"$1" != "xnohost" ]]; then
 	    ## TODO check if distcc is available
 	    ## TODO use lsdistcc to determine values
-	    edo export EXJOBS=10
             #export DISTCC_HOSTS='--randomize [2001:da8:201:1071:2112::],lzo'
 	    edo export DISTCC_HOSTS='--randomize 10.2.112.3,lzo'
 	fi
@@ -91,6 +91,9 @@ emake() {
 	    export -f ${name}
 	fi
     done
+
+    ## FIXME for cmake
+    distcc_allow_net
 
     ## forward to the real emake
     ewarn "A wrapped version of emake is invoked..."

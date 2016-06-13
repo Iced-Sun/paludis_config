@@ -10,6 +10,7 @@ EXJOBS=3
 EXTRA_ECONF=( --disable-static )
 
 ### special care
+## TODO can we put these options to package configs?
 case "${PN}" in
     glibc)
 	## 1. it seems that glibc will sort CFLAGS, which just breaks
@@ -87,5 +88,7 @@ if [[ x${USE_DISTCC} != "xno" ]]; then
     ##
     ## A side effect of the hack is that distcc will be alway failed in src_configure phase
     source /etc/paludis/myconfig/scripts/utils
-    distcc_setup_path
+    distcc_setup_environ
 fi
+
+## FIXME mesa/xorg-server don't distribute all compiling, need digging
