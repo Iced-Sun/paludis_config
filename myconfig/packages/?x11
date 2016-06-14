@@ -1,3 +1,13 @@
+## default
+*/*::x11						X
+
 ## headers
 	dev-libs/libpthread-stubs	parts: development
 	x11-libs/libXau				parts: development
+
+## fonts
+	media-libs/freetype			harfbuzz
+	media-libs/fontconfig		&-fonts/dejavu
+
+## X
+	x11-server/xorg-server		&-*/*

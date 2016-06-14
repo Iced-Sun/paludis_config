@@ -10,10 +10,6 @@ virtual/man			providers: busybox
 virtual/sed				providers: busybox
 virtual/gzip				providers: busybox
 
-# libarchive
-virtual/cpio				providers: libarchive
-virtual/tar				providers: libarchive
-
 ## headers
 app-arch/bzip2			parts: development
 app-arch/xz			parts: development
@@ -36,7 +32,3 @@ dev-scm/git			curl						&-*/*
 sys-apps/paludis		prebuilt-documentation search-index pbin
 	app-text/xmlto		providers: lynx
 sys-apps/sydbox		seccomp
-
-## python dependency
-	app-doc/asciidoc	python_abis: 2.7
-	dev-util/itstool		python_abis: 2.7

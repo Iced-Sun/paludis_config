@@ -1,0 +1,30 @@
+## disable everything by default
+*/*					-*
+*/*					parts:				-* binaries configuration data libraries
+*/*					providers:			-*
+*/*					linguas:			-* zh zh_CN
+
+## build related
+*/*					build_options:		 symbols=strip -recommended_tests
+*/*					targets:			-* x86_64-pc-linux-gnu
+*/*					providers:			libelf		      
+virtual/pkg-config	providers:			pkgconf
+
+## system
+*/*					pam systemd udev
+*/*					providers:			libressl
+*/*					providers:			systemd
+
+## arch
+*/*					providers:			libarchive
+
+## concurrenty/parellelism
+*/*					threads openmp
+
+## filesystem attributes
+*/*					acl xattr
+
+## language bindings
+*/*					python_abis:		-*
+*/*					lua_abis:			-*
+*/*					ruby_abis:			-*

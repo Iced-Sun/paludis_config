@@ -1,5 +1,4 @@
 */*									amd64_cpu_features:	sse sse2 sse3 ssse3 sse4.1
-*/*									linguas:				zh zh_CN
 */*									video_drivers:			intel
 */*::subi							build_options:			work=preserve
 
@@ -35,11 +34,9 @@ office-libs/wv
 sys-sound/alsa-utils
 ~media-sound/mpd				alsa ffmpeg -systemd		&-*/*				# upstream systemd doesn't support user config
 ~media-sound/ncmpcpp			taglib
-~media/mpv						alsa opengl va vdpau X
-	x11-libs/libva					opengl						&x11-drivers/intel-driver x11-libs/vdpau-video
-	media/ffmpeg					va vdpau X
-	dev-python/docutils			python_abis: 2.7
-	dev-python/Pygments			python_abis: 2.7
+~media/mpv						alsa opengl X
+	dev-python/docutils			python_abis: 3.5
+		dev-python/Pygments		python_abis: 3.5
 	media-libs/libass				fontconfig
 
 ## net
@@ -58,18 +55,10 @@ app-shells/fish
 
 ## TODO: collect the following dependencies as a set
 ## virtualenv
-dev-python/virtualenv				python_abis: 2.7
-dev-python/pip					python_abis: 2.7
-
-## virtualenv
 dev-python/virtualenv				python_abis: 3.5
 dev-python/pip					python_abis: 3.5
 	dev-python/setuptools			python_abis: 3.5
 		dev-python/certifi			python_abis: 3.5
-	x11-libs/libnotify				gobject-introspection
-	dev-python/dbus-python		python_abis: 3.5
-	dev-lang/python[>3]			sqlite
-	dev-python/pycrypto			python_abis: 3.5
 
 ## gnupg
 	app-crypt/pinentry				gtk
@@ -78,9 +67,9 @@ dev-python/pip					python_abis: 3.5
 app-editors/emacs					dbus
 
 dev-lang/clang
-	dev-lang/llvm					python_abis: 2.7
+	dev-lang/llvm					python_abis: 3.5
 
-dev-lang/openjdk8					bootstrap
+#dev-lang/openjdk8					bootstrap
 	app-text/poppler				lcms
 
 x11-apps/xdg-utils
