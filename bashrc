@@ -70,4 +70,4 @@ if [[ x${USE_DISTCC} != "xno" ]]; then
     distcc_setup_environ
 fi
 
-## FIXME mesa/xorg-server/mpv don't distribute all compiling, need digging
+## FIXME mesa/xorg-server/mpv/boost don't distribute all compiling, need digging
