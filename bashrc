@@ -47,14 +47,8 @@ esac
 ### finalize
 
 ## note: under the hood of multiarch, the final CFLAGS/CPPFLAGS is computed as
-##   computed_CFLAGS=${x86_64_pc_linux_gnu_CFLAGS:-CFLAGS}
-##   computed_CPPFLAGS=${x86_64_pc_linux_gnu_CFLAGS} ${x86_64_pc_linux_gnu_CPPFLAGS:-CPPFLAGS}
-#CFLAGS=${MY_CFLAGS[@]}
-#CXXFLAGS=${MY_CFLAGS[@]}
-#LDFLAGS=${MY_LDFLAGS[@]}
-
-## note 2016-04-11: things changed now
 ##   computed_CFLAGS=${x86_64_pc_linux_gnu_CFLAGS:=-march=native -O2 -pipe}
+##   computed_CPPFLAGS=${x86_64_pc_linux_gnu_CFLAGS} ${x86_64_pc_linux_gnu_CPPFLAGS:-CPPFLAGS}
 eval "${CHOST//-/_}_CFLAGS=\${MY_CFLAGS[@]}"
 eval "${CHOST//-/_}_CXXFLAGS=\${MY_CFLAGS[@]}"
 eval "${CHOST//-/_}_CPPLAGS="
