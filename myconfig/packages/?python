@@ -1,3 +1,2 @@
-	app-doc/asciidoc		python_abis: 2.7
-	dev-util/itstool			python_abis: 3.5				# required by gtk-doc-autotools, which is required by glib
-		dev-libs/libxml2	python python_abis: 3.5
+app-doc/asciidoc		python_abis: 2.7
+

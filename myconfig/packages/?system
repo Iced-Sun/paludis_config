@@ -1,14 +1,17 @@
 ## alternatives
 # gnu
-virtual/coreutils		providers: gnu				# cp --reflink
-virtual/wget			providers: gnu				# IPv6
+virtual/coreutils		providers: gnu	# cp --reflink
+virtual/wget			providers: gnu	# IPv6
 
 # busybox
-virtual/awk				providers: busybox
+virtual/awk			providers: busybox
 virtual/grep			providers: busybox
 virtual/man			providers: busybox
-virtual/sed				providers: busybox
-virtual/gzip				providers: busybox
+virtual/sed			providers: busybox
+virtual/gzip			providers: busybox
+
+# system
+virtual/pkg-config		providers: pkgconf
 
 ## headers
 app-arch/bzip2			parts: development
@@ -25,10 +28,10 @@ app-arch/xz			parts: development
 	sys-libs/ncurses	parts: development
 	sys-libs/pam		parts: development
 	sys-libs/readline	parts: development
-	sys-libs/zlib			parts: development
+	sys-libs/zlib		parts: development
 
 ## options
 dev-scm/git			curl						&-*/*
 sys-apps/paludis		prebuilt-documentation search-index pbin
 	app-text/xmlto		providers: lynx
-sys-apps/sydbox		seccomp
+sys-apps/sydbox			seccomp

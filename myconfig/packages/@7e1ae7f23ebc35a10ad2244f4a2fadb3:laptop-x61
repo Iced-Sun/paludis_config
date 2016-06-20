@@ -1,23 +1,23 @@
-*/*									amd64_cpu_features:	sse sse2 sse3 ssse3 sse4.1
-*/*									video_drivers:			intel
-*/*::subi							build_options:			work=preserve
+*/*						amd64_cpu_features:	sse sse2 sse3 ssse3 sse4.1
+*/*						video_drivers:		intel
+*/*::subi					build_options:		work=preserve
 
 ## alternatives
 	virtual/notification-daemon		providers: dunst -notification-daemon
-	virtual/dhcp-client				providers: dhcpcd
+	virtual/dhcp-client			providers: dhcpcd
 
 ## fs
 sys-fs/ntfs-3g_ntfsprogs
 
 ## net
-net-misc/openvpn					lzo threads
+net-misc/openvpn				lzo threads
 
 ## wireless
 net-wireless/iwlwifi-3945-ucode
 gnome-desktop/network-manager-applet
-	net-wireless/wpa_supplicant	dbus nl80211
-	net-apps/NetworkManager		wifi compat-libs providers: nss
-		dev-libs/nspr				parts: development
+	net-wireless/wpa_supplicant		dbus nl80211
+	net-apps/NetworkManager			wifi compat-libs providers: nss
+		dev-libs/nspr			parts: development
 	gnome-bindings/pygobject		python_abis: 2.7
 	gnome-desktop/gobject-introspection	python_abis: 2.7
 
@@ -32,21 +32,25 @@ office-libs/wv
 
 ## media
 sys-sound/alsa-utils
-~media-sound/mpd				alsa ffmpeg -systemd		&-*/*				# upstream systemd doesn't support user config
-~media-sound/ncmpcpp			taglib
-~media/mpv						alsa opengl X
+# upstream systemd doesn't support user config
+~media-sound/mpd				alsa ffmpeg -systemd			&-*/*
+~media-sound/ncmpcpp				taglib
+~media/mpv					alsa opengl X
 	dev-python/docutils			python_abis: 3.5
 		dev-python/Pygments		python_abis: 3.5
-	media-libs/libass				fontconfig
+			dev-python/beaker	python_abis: 3.5
+	media-libs/libass			fontconfig
 
 ## net
 net-www/firefox					providers: gtk3
-	dev-libs/icu						parts: development
+	dev-libs/icu				parts: development
+	dev-lang/python:2.7			sqlite
+	dev-python/pip				python_abis: 2.7
 
 ## misc
 app-admin/sudo
 app-misc/unison
-sys-devel/distcc					masquerade
+sys-devel/distcc				masquerade
 app-shells/fish
 #x11-misc/synergy
 
@@ -58,23 +62,22 @@ app-shells/fish
 dev-python/virtualenv				python_abis: 3.5
 dev-python/pip					python_abis: 3.5
 	dev-python/setuptools			python_abis: 3.5
-		dev-python/certifi			python_abis: 3.5
+		dev-python/certifi		python_abis: 3.5
 
 ## gnupg
-	app-crypt/pinentry				gtk
+	app-crypt/pinentry			gtk
 
 ## temp
-app-editors/emacs					dbus
+app-editors/emacs				dbus
 
 dev-lang/clang
-	dev-lang/llvm					python_abis: 3.5
+	dev-lang/llvm				python_abis: 3.5
 
-#dev-lang/openjdk8					bootstrap
-	app-text/poppler				lcms
+#dev-lang/openjdk8				bootstrap
+	app-text/poppler			lcms
 
 x11-apps/xdg-utils
 net-proxy/proxychains-ng
 fonts/awesome
 net-ftp/lftp
 
-	dev-python/freetype-py		python_abis: 3.5

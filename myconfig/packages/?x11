@@ -1,13 +1,18 @@
 ## default
-*/*::x11						X
+*/*::x11					X
 
 ## headers
-	dev-libs/libpthread-stubs	parts: development
-	x11-libs/libXau				parts: development
+dev-libs/libpthread-stubs			parts: development
+x11-libs/libXau					parts: development
 
 ## fonts
-	media-libs/freetype			harfbuzz
-	media-libs/fontconfig		&-fonts/dejavu
+media-libs/freetype				harfbuzz
 
 ## X
-	x11-server/xorg-server		&-*/*
+x11-server/xorg-server							&-*/*
+x11-dri/mesa
+	dev-python/Mako				python_abis: 2.7
+		dev-python/beaker		python_abis: 2.7
+		dev-python/MarkupSafe		python_abis: 2.7
+		dev-python/setuptools		python_abis: 2.7
+			dev-python/certifi	python_abis: 2.7
