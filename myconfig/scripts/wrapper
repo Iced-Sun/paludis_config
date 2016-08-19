@@ -217,38 +217,6 @@ EOF
 }
 
 show_options() {
-    echo "### Global options:"
-    cat <<EOF
-## disable everything by default
-*/*			-*
-*/*			parts:		-* binaries configuration data libraries
-*/*			providers:	-*
-*/*			linguas:	-* zh_CN
-
-## build related
-*/*			build_options:	symbols=strip -recommended_tests
-*/*			targets:	-* x86_64-pc-linux-gnu
-*/*			providers:	libelf
-virtual/pkg-config	providers:	pkgconf
-
-## system
-*/*			pam systemd udev
-*/*			providers:	libressl
-*/*			providers:	systemd
-
-## concurrenty/parellelism
-*/*			threads openmp
-
-## filesystem attributes
-*/*			acl xattr
-
-## language bindings
-*/*			python_abis:	-*
-*/*			lua_abis:	-*
-*/*			ruby_abis:	-*
-
-EOF
-
     ### option is generated before chroot-path is used, hence the following has no effect; use python bindings?
     #echo $LOCATION 1>&2
     #env 1>&2
@@ -328,7 +296,7 @@ show_mirrors() {
 }
 
 show_suggestions() {
-    for set in ${ACTIVE_GENERAL_SETS[@]} ${ACTIVE_MACHINE_SETS[@]}; do
+    for set in ${PREDEFINED_SETS[@]} ${ACTIVE_GENERAL_SETS[@]} ${ACTIVE_MACHINE_SETS[@]}; do
 	echo 
 	echo "### Package suggestions for set --$set--"
 	cat $(find_set $set) | remove_comment_and_platform | sed -r -n '/&/ s/[[:blank:]]*([[:punct:][:alnum:]]+).*&/\1\t/ p'

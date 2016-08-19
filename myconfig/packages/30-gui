@@ -1,35 +1,23 @@
 ## defaults
-*/*			providers:	jpeg-turbo
-*/*			providers:	ffmpeg
-*/*::x11		X
+*/*					providers:	jpeg-turbo
+*/*					providers:	ffmpeg
 
 ## sys-apps
 	net-misc/openssh		X
 	sys-apps/dbus			X
 
 ## xorg
-x11-server/xorg-server										&-*/* xf86-input-evdev
-	x11-proto/xcb-proto		python_abis: 2.7
+x11-server/xorg-server							&x11-drivers/xf86-input-libinput
 x11-apps/xrdb
 x11-apps/xset
 x11-dri/mesa
-	dev-libs/libxml2		python python_abis: 2.7
-	dev-python/Mako			python_abis: 2.7
-	dev-python/beaker		python_abis: 2.7
-	dev-python/MarkupSafe		python_abis: 2.7
-	dev-python/setuptools		python_abis: 2.7
-	dev-python/certifi		python_abis: 2.7
 
 ## fonts
 fonts/terminus-font
-fonts/wqy-bitmapfont
-fonts/wqy-microhei
-	media-libs/freetype		harfbuzz
 
 ## X session
-x11-wm/i3											&i3lock i3status dmenu
+x11-wm/i3								&x11-plugins/i3status x11-misc/dmenu
 x11-apps/i3lock
-x11-plugins/i3status
 x11-apps/rxvt-unicode			perl xft xim
 gnome-desktop/gnome-icon-theme
 gnome-desktop/gnome-icon-theme-symbolic
@@ -50,8 +38,11 @@ media-gfx/sxiv				gif
 	media-libs/imlib2		X
 
 ## editor && IDE
-app-editors/emacs			X freetype jpeg png tiff xpm xim gtk3			&app-spell/aspell
+app-editors/emacs			X freetype jpeg png tiff xpm xim providers: gtk3	&app-spell/aspell
 	app-spell/aspell									&app-dicts/aspell-en
-
+	
 ## www
 net-plugins/adobe-flash
+
+## decent font
+fonts/noto

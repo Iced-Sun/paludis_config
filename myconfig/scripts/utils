@@ -3,7 +3,7 @@
 has_ipv6() {
     {
 	if which ip; then
-	    ip -6 a | grep inet6 | grep globa1 && return 0
+	    ip -6 a | grep inet6 | grep global && return 0
 	elif which ifconfig; then
 	    ifconfig | grep inet6 | grep global && return 0
 	fi
@@ -16,75 +16,86 @@ is_in_2112() {
     has_ipv6
 }
 
+## NOTE this is best done in hooks, but ebuild_configure_pre and
+## src_configure are executed in different context; we need to inject
+## enable_distcc into src_configure directly
 wrap_ebuild_phase() {
     einfo_unhooked "Wrapping the ${EXHERES_PHASE} phase..."
-    
+
+    local group=()
     while [[ "$#" -gt 0 ]]; do
-	group=()
-	while true; do
-	    if [[ x"$1" == "x:WRAP_END:" ]]; then
-		shift
-		einfo_unhooked "  Running the wrapper ${group[@]}..."
-		"${group[@]}"
-		break
-	    elif [[ "$#" -eq 0 ]]; then
-		einfo_unhooked "  Entering the ${EXHERES_PHASE} phase..."
-	    
-		## FIXME shall we add CFLAGS="${CFLAGS}" CXXFLAGS="${CXXFLAGS}"
-		## LDFLAGS="${LDFLAGS}" to enforce the flags?
-		if [[ ${EXHERES_PHASE} == "configure" ]]; then
-		    einfo_unhooked "  Applying EXTRA_ECONF..."
-		    edo "${group[@]}" "${EXTRA_ECONF[@]}"
-		else
-		    edo "${group[@]}"
-		fi
-	    
-		break
+	if [[ "$1" == *';' ]]; then
+	    ## pre hook
+	    group+=( "${1%;}" )
+	    einfo_unhooked "  Running the pre-${EXHERES_PHASE} hook ${group[@]}..."
+	    "${group[@]}"
+	    group=()
+	elif [[ "$#" -eq 1 ]]; then
+	    group+=( "$1" )
+
+	    einfo_unhooked "  Entering the ${EXHERES_PHASE} phase..."
+
+	    if [[ ${EXHERES_PHASE} == "configure" ]]; then
+		einfo_unhooked "  Applying EXTRA_ECONF..."
+		edo "${group[@]}" "${EXTRA_ECONF[@]}"
 	    else
-		group+=( "$1" )
-		shift
-	    fi
-	done
+		edo "${group[@]}"
+	    fi    
+	else
+	    group+=( "$1" )
+	fi
+
+	shift
     done
 }
 
-## econf, einstall are functions defined in exheres-0/build_functions.bash,
-## hence the functions defined here are visible for them.
-##
-## On the other hand, emake is a command as utils/exheres-0/emake, hence functions here
-## are not visible for it.
-##
-## Use a dangerous and fragile hack to work it aroud!!!
-emake() {
-    ewarn "A hijacked version of emake is invoked! Be sure you know what is happening!"
-    
-    source "${PALUDIS_EBUILD_DIR}"/die_functions.bash
-
-    PALUDIS_JOBS_ARGS=
-    if [[ -n "${PALUDIS_JOBS_VAR}" ]] && [[ -n "${!PALUDIS_JOBS_VAR}" ]] ; then
-	PALUDIS_JOBS_ARGS="-j${!PALUDIS_JOBS_VAR}"
-    fi
-
-    echo ${EMAKE_WRAPPER} ${MAKE:-make} ${PALUDIS_JOBS_ARGS} ${MAKEOPTS} "$@" 1>&2
-    ${EMAKE_WRAPPER} ${MAKE:-make} ${PALUDIS_JOBS_ARGS} ${MAKEOPTS} "$@"
-    ret=$?
-    [[ 0 != $ret ]] && paludis_die_or_error "emake returned error $ret"
-    
-    return $ret
-}
-
-try_enable_distcc() {
-    ## FIXME should split to setup_env & sandbox allow_net
+distcc_setup_environ() {
     if is_in_2112; then
+	## TODO should set the distcc masquerade path for reusing
 	if [[ $PATH != "/usr/${CHOST}/libexec/distcc:"* ]]; then
 	    export PATH="/usr/${CHOST}/libexec/distcc:${PATH}"
 	fi
 	export DISTCC_DIR="/var/tmp/paludis/distcc"
 	export EXJOBS=10
-        export DISTCC_HOSTS='--randomize [2001:da8:201:1071:2112::],lzo'
-	
-	edo esandbox allow_net --connect "inet6:2001:da8:201:1071:2112::/64@3632"
     fi
-    #EMAKE_WRAPPER="pump"
-    #192.168.1.50,lzo,cpp
+}
+
+distcc_setup_hosts() {
+    if is_in_2112; then
+	if [[ x"$1" != "xnohost" ]]; then
+	    ## TODO check if distcc is available
+	    ## TODO use lsdistcc to determine values
+            #export DISTCC_HOSTS='--randomize [2001:da8:201:1071:2112::],lzo'
+	    edo export DISTCC_HOSTS='--randomize 10.2.112.3,lzo'
+	fi
+    fi
+}
+
+distcc_allow_net() {
+    if is_in_2112; then
+	#edo esandbox allow_net --connect "inet6:2001:da8:201:1071:2112::/64@3632"
+	edo esandbox allow_net --connect "inet:10.2.112.3@3632"
+    fi
+}
+
+## econf: FUNCTION in exheres-0/build_functions.bash
+## emake: SCRIPT of utils/exheres-0/emake
+## ecmake: FUNCTION in arbor/exlib/cmake.exlib
+emake() {
+    ## export functions for subshells later
+    for name in `declare -F | cut -d' ' -f3`; do
+	if [[ "${name}" == "emagicdocs" || "${name}" == "exparam_internal" ]]; then
+	    ## skip those require `shopt -s extglob`
+	    continue
+	else
+	    export -f ${name}
+	fi
+    done
+
+    ## FIXME for cmake
+    distcc_allow_net
+
+    ## forward to the real emake
+    ewarn "A wrapped version of emake is invoked..."
+    /usr/${CHOST}/libexec/paludis/utils/exheres-0/emake "$@"
 }

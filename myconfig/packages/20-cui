@@ -1,17 +1,17 @@
 ### <Tab> => dependency
 ### "&"   => recommendation and suggestion
 ### "~"   => unstable
-### "+"   => unmask
-###
+### "+"   => unmaks
 
-## system app not in system set 
+## system
+dev-util/ketchup
+sys-apps/busybox        static
 sys-apps/systemd
-        sys-apps/busybox        static
 
 ## app-arch
 app-arch/p7zip
 app-arch/unrar
-virtual/unzip			providers: -bsdunzip unzip
+virtual/unzip		providers: unzip
 
 ## fs
 sys-fs/btrfs-progs
@@ -23,9 +23,10 @@ app-editors/emacs
 ## miscs
 app-terminal/tmux
 app-misc/mc
-sys-process/htop		cgroups
+sys-process/htop	cgroups
 sys-process/lsof
 
 ## systemd requires elfutils, and libelf/elfutils has collision
-	dev-libs/glib		providers: -libelf elfutils
+	dev-libs/glib	providers: -libelf elfutils			&-gnome-desktop/dconf
+
 
