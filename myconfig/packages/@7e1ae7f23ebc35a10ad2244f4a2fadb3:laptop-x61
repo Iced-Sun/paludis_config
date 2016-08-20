@@ -51,7 +51,6 @@ net-www/firefox					providers: gtk3
 app-admin/sudo
 app-misc/unison
 sys-devel/distcc				masquerade
-app-shells/fish
 #x11-misc/synergy
 
 ## wps requires png-1.2

@@ -21,8 +21,9 @@ net-fs/cifs-utils
 app-editors/emacs
 
 ## miscs
-app-terminal/tmux
 app-misc/mc
+app-shells/fish
+app-terminal/tmux
 sys-process/htop	cgroups
 sys-process/lsof
 
