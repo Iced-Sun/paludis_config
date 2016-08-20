@@ -16,8 +16,9 @@ x11-dri/mesa
 fonts/terminus-font
 
 ## X session
-x11-wm/i3								&x11-plugins/i3status x11-misc/dmenu
+x11-wm/i3								&x11-plugins/i3status
 x11-apps/i3lock
+x11-misc/rofi				i3
 x11-apps/rxvt-unicode			perl xft xim
 gnome-desktop/gnome-icon-theme
 gnome-desktop/gnome-icon-theme-symbolic
@@ -41,8 +42,5 @@ media-gfx/sxiv				gif
 app-editors/emacs			X freetype jpeg png tiff xpm xim providers: gtk3	&app-spell/aspell
 	app-spell/aspell									&app-dicts/aspell-en
 	
-## www
-net-plugins/adobe-flash
-
 ## decent font
 fonts/noto
