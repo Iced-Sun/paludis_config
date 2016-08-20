@@ -55,10 +55,18 @@ eval "${CHOST//-/_}_CPPLAGS="
 eval "${CHOST//-/_}_LDFLAGS=\${MY_LDFLAGS[@]}"
 
 ### Advanced customization
-## NOTE: bashrc is sourced once in builtin_init phase only when cave-perform
-ECONF_WRAPPER="wrap_ebuild_phase" ## for EXTRA_ECONF
+## NOTE: bashrc is sourced once in builtin_init phase only when
+## cave-perform
+source ${PALUDIS_CONFIG_DIR}/myconfig/scripts/utils
 
+## to apply EXTRA_ECONF
+ECONF_WRAPPER="wrap_ebuild_phase"
+
+## FIXME we just need another round to make distcc work again.
+USE_DISTCC=no
 if [[ x${USE_DISTCC} != "xno" ]]; then
+    source ${PALUDIS_CONFIG_DIR}/myconfig/scripts/distcc
+    
     EMAKE_WRAPPER="wrap_ebuild_phase distcc_setup_hosts; distcc_allow_net;"
 
     ## in the case of cmake.exlib, src_configure will invoke ecmake()
@@ -66,7 +74,6 @@ if [[ x${USE_DISTCC} != "xno" ]]; then
     ## possible to allow net_access in sandboxing. But this is ok, since the only thing
     ##
     ## A side effect of the hack is that distcc will be alway failed in src_configure phase
-    source /etc/paludis/myconfig/scripts/utils
     distcc_setup_environ
 fi
 

@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+## distcc support
+
+distcc_setup_environ() {
+    if is_in_2112; then
+	## TODO should set the distcc masquerade path for reusing
+	if [[ $PATH != "/usr/${CHOST}/libexec/distcc:"* ]]; then
+	    export PATH="/usr/${CHOST}/libexec/distcc:${PATH}"
+	fi
+	export DISTCC_DIR="/var/tmp/paludis/distcc"
+	export EXJOBS=10
+    fi
+}
+
+distcc_setup_hosts() {
+    if is_in_2112; then
+	if [[ x"$1" != "xnohost" ]]; then
+	    ## TODO check if distcc is available
+	    ## TODO use lsdistcc to determine values
+            #export DISTCC_HOSTS='--randomize [2001:da8:201:1071:2112::],lzo'
+	    edo export DISTCC_HOSTS='--randomize 10.2.112.3,lzo'
+	fi
+    fi
+}
+
+distcc_allow_net() {
+    if is_in_2112; then
+	#edo esandbox allow_net --connect "inet6:2001:da8:201:1071:2112::/64@3632"
+	edo esandbox allow_net --connect "inet:10.2.112.3@3632"
+    fi
+}
+
+## econf: FUNCTION in exheres-0/build_functions.bash
+## emake: SCRIPT of utils/exheres-0/emake
+## ecmake: FUNCTION in arbor/exlib/cmake.exlib
+emake() {
+    ## export functions for subshells later
+    for name in `declare -F | cut -d' ' -f3`; do
+        export -f ${name}
+    done
+
+    ## FIXME for cmake
+    distcc_allow_net
+
+    ## forward to the real emake
+    ewarn "A wrapped version of emake is invoked..."
+    source /usr/${CHOST}/libexec/paludis/utils/exheres-0/emake "$@"
+}
