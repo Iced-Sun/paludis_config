@@ -56,13 +56,6 @@ sys-devel/distcc				masquerade
 ## wps requires png-1.2
 	media-libs/libpng:1.2
 
-## TODO: collect the following dependencies as a set
-## virtualenv
-dev-python/virtualenv				python_abis: 3.5
-dev-python/pip					python_abis: 3.5
-	dev-python/setuptools			python_abis: 3.5
-		dev-python/certifi		python_abis: 3.5
-
 ## gnupg
 	app-crypt/pinentry			gtk
 
@@ -70,13 +63,25 @@ dev-python/pip					python_abis: 3.5
 app-editors/emacs				dbus
 
 dev-lang/clang
-	dev-lang/llvm				python_abis: 3.5
 
 #dev-lang/openjdk8				bootstrap
 	app-text/poppler			lcms
 
 x11-apps/xdg-utils
 net-proxy/proxychains-ng
-fonts/awesome
 net-ftp/lftp
 
+dev-python/virtualenv
+
+compositor/sway					-grab
+	sys-libs/wlc				X
+	x11-server/xorg-server			xwayland
+
+app-virtualization/qemu				x86 amd64 gtk3 
+
+	+sys-devel/gcc:6
+	+sys-libs/libatomic:6
+	+sys-libs/libstdc++:6
+	+sys-libs/libgcc:6
+
+dev-lang/node
