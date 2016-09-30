@@ -30,7 +30,7 @@ esac
 
 ### host specific flags
 ## TODO use HOST from myconfig
-HOST=`hostname|cut -d. -f1`
+HOST=`hostname | cut -d. -f1`
 case "${HOST}" in
     dc-2|fs-3|gs-5)
 	EXJOBS=10
@@ -57,6 +57,9 @@ eval "${CHOST//-/_}_LDFLAGS=\${MY_LDFLAGS[@]}"
 ### Advanced customization
 ## NOTE: bashrc is sourced once in builtin_init phase only when
 ## cave-perform
+if [[ ${PALUDIS_ACTION} == "sync" ]]; then
+    return
+fi
 source ${PALUDIS_CONFIG_DIR}/myconfig/scripts/utils
 
 ## to apply EXTRA_ECONF
