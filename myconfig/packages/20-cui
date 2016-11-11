@@ -28,6 +28,6 @@ sys-process/htop	cgroups
 sys-process/lsof
 
 ## systemd requires elfutils, and libelf/elfutils has collision
-	dev-libs/glib	providers: -libelf elfutils			&-gnome-desktop/dconf
+	dev-libs/glib	&-gnome-desktop/dconf
 
 

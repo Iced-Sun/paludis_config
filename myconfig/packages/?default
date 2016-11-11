@@ -1,5 +1,4 @@
 ### Gobal defaults
-
 ## disable everything by default
 */*			-*
 */*			parts:		-* binaries configuration data libraries
@@ -10,12 +9,14 @@
 */*			build_options:	symbols=strip -recommended_tests
 */*			targets:	-* x86_64-pc-linux-gnu
 
-
 ## system
 */*			pam systemd udev
 */*			providers:	libressl
 */*			providers:	systemd
 */*			providers:	libelf
+## systemd requires elfutils, and libelf/elfutils has collision
+	dev-libs/glib		providers:	-libelf elfutils
+	sys-apps/iproute2	providers:	-libelf elfutils
 
 ## arch
 */*			providers:	libarchive

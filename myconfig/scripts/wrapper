@@ -246,11 +246,17 @@ show_package_unmask() {
 }
 
 show_mirrors() {
+    ## order matters!
     SITES=( BJTU TSU USTC HEANET NETEASE BIR )
-    BJTU=(http://mirror.bjtu.edu.cn
+
+    ## full speed
+    ## BJTU seems stopped sync upstream since 2016-06
+    BJTU=(http://debian.bjtu.edu.cn
 	  apache cpan cran 'ctan CTAN' debian freebsd 'gentoo gentoo/distfiles' gimp gnome gnu kde 'kernel kernel/pub' 'libreoffice tdf/libreoffice')
+    ## comprehensive sites, aggressive sync, moderate speed (500kB/s)
     TSU=( http://mirrors.tuna.tsinghua.edu.cn
 	  apache 'ctan CTAN' 'cran CRAN' 'ctan CTAN' debian freebsd 'gentoo gentoo/distfiles' gnu 'kernel kernel/pub' opensuse )
+    ## comprehensive sites, moderate sync, moderate speed (500kB/s)
     USTC=( http://mirrors.ustc.edu.cn
 	   'cpan CPAN' 'cran CRAN' 'ctan CTAN' debian freebsd 'gentoo gentoo/distfiles' gnome gnu kde 'kernel linux-kernel' opensuse )
     HEANET=( http://heanet.dl.sourceforge.net sourceforge )

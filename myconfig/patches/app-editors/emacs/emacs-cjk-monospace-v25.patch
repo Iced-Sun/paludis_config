@@ -1,6 +1,6 @@
---- a/src/xftfont.c	2015-04-02 15:23:06.000000000 +0800
-+++ b/src/xftfont.c	2015-09-12 22:03:56.516187608 +0800
-@@ -59,6 +59,8 @@
+--- emacs-25.1/src/xftfont.c.orig	2016-11-12 00:13:12.832024769 +0800
++++ emacs-25.1/src/xftfont.c	2016-11-12 00:13:12.802025914 +0800
+@@ -53,6 +53,8 @@
    FT_Matrix matrix;
    Display *display;
    XftFont *xftfont;
@@ -9,7 +9,7 @@
    unsigned x_display_id;
  };
  
-@@ -132,6 +134,86 @@
+@@ -125,6 +127,86 @@
      }
  }
  
@@ -96,11 +96,11 @@
  
  struct font_driver xftfont_driver;
  
-@@ -420,6 +502,14 @@
+@@ -391,6 +473,15 @@
        XftTextExtents8 (display, xftfont, ascii_printable + 1, 94, &extents);
        font->average_width = (font->space_width + extents.xOff) / 95;
      }
-+
++  
 +  /* to fix CJK double width alignment issue.
 +     pass the pointer to struct frame to every xftfont_info structure,
 +     we can not get it in "xftfont_text_extents". */
@@ -108,17 +108,19 @@
 +  /* mark it is CJK font or not when font opened,
 +     avoid calling "xftfont_is_cjk_font" many times. */
 +  xftfont_info->is_cjk = xftfont_is_cjk_font(xftfont_info);
++
    unblock_input ();
  
    font->ascent = xftfont->ascent;
-@@ -587,16 +677,25 @@
+@@ -564,15 +655,23 @@
  {
    struct xftfont_info *xftfont_info = (struct xftfont_info *) font;
    XGlyphInfo extents;
+-
 +  int cjk_padding = 0;
 +  int l_padding = 0;
 +  int r_padding = 0;
- 
++ 
    block_input ();
    XftGlyphExtents (xftfont_info->display, xftfont_info->xftfont, code, nglyphs,
  		   &extents);
@@ -128,19 +130,17 @@
 +  l_padding = cjk_padding >> 1; /* get half */
 +  r_padding = cjk_padding - l_padding; /* may not divided by 2 exactly */ 
    unblock_input ();
-+  
-   if (metrics)
-     {
--      metrics->lbearing = - extents.x;
--      metrics->rbearing = - extents.x + extents.width;
--      metrics->width = extents.xOff;
-+      metrics->lbearing = - extents.x - l_padding;
-+      metrics->rbearing = - extents.x + extents.width + r_padding;
-+      metrics->width = extents.xOff + cjk_padding;
-       metrics->ascent = extents.y;
-       metrics->descent = extents.height - extents.y;
-     }
-@@ -658,9 +757,27 @@
+ 
+-  metrics->lbearing = - extents.x;
+-  metrics->rbearing = - extents.x + extents.width;
+-  metrics->width = extents.xOff;
++  metrics->lbearing = - extents.x - l_padding;
++  metrics->rbearing = - extents.x + extents.width + r_padding;
++  metrics->width = extents.xOff + cjk_padding;
+   metrics->ascent = extents.y;
+   metrics->descent = extents.height - extents.y;
+ }
+@@ -650,9 +749,27 @@
      for (i = 0; i < len; i++)
        XftDrawGlyphs (xft_draw, &fg, xftfont_info->xftfont,
  		     x + i, y, code + i, 1);
@@ -148,25 +148,25 @@
 -    XftDrawGlyphs (xft_draw, &fg, xftfont_info->xftfont,
 -		   x, y, code, len);
 +  else {
-+      int default_width = xftfont_get_default_width(xftfont_info);
-+      if(!xftfont_info->is_cjk || default_width == -1) /* not cjk or default not monospace */ 
-+        XftDrawGlyphs (xft_draw, &fg, xftfont_info->xftfont, x, y, code, len);
-+      else /* draw CJK glyphs one by one and adjust the offset */
-+         for (i = 0; i < len; i++) {
-+           int cjk_padding = 0;
-+           int offset = 0;
-+           int half_width_cjk = 0;
-+           XGlyphInfo extents;
-+           XftGlyphExtents (xftfont_info->display, xftfont_info->xftfont, code+i, 1,
-+                            &extents);
-+           cjk_padding = xftfont_get_cjk_padding(default_width,extents.xOff, &half_width_cjk);
-+           if(cjk_padding) 
-+             offset = default_width * i * (half_width_cjk ? 1 : 2) + (cjk_padding>>1);
-+           else
-+             offset = extents.xOff * i; 
-+           XftDrawGlyphs (xft_draw, &fg, xftfont_info->xftfont,
-+                            x+offset, y, code+i, 1);
-+         }
++    int default_width = xftfont_get_default_width(xftfont_info);
++    if(!xftfont_info->is_cjk || default_width == -1) /* not cjk or default not monospace */
++      XftDrawGlyphs (xft_draw, &fg, xftfont_info->xftfont, x, y, code, len);
++    else /* draw CJK glyphs one by one and adjust the offset */
++      for (i = 0; i < len; i++) {
++	int cjk_padding = 0;
++	int offset = 0;
++	int half_width_cjk = 0;
++	XGlyphInfo extents;
++	XftGlyphExtents (xftfont_info->display, xftfont_info->xftfont, code+i, 1,
++			 &extents);
++	cjk_padding = xftfont_get_cjk_padding(default_width,extents.xOff, &half_width_cjk);
++	if(cjk_padding) 
++	  offset = default_width * i * (half_width_cjk ? 1 : 2) + (cjk_padding>>1);
++	else
++	  offset = extents.xOff * i; 
++	XftDrawGlyphs (xft_draw, &fg, xftfont_info->xftfont,
++		       x+offset, y, code+i, 1);
++      }
 +  }
    unblock_input ();
  

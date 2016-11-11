@@ -12,7 +12,7 @@ EXTRA_ECONF=( --disable-static )
 ### special care
 ## TODO can we put these options to package configs?
 case "${PN}" in
-    glibc)
+    glibc|mupdf)
 	## just don't bother
 	MY_CFLAGS=( -march=native -pipe -O3 )
 	USE_DISTCC=no
@@ -80,4 +80,4 @@ if [[ x${USE_DISTCC} != "xno" ]]; then
     distcc_setup_environ
 fi
 
-## FIXME mesa/xorg-server/mpv/boost don't distribute all compiling, need digging
+## FIXME valgrind/lftp/mesa/xorg-server/mpv/boost don't distribute all compiling, need digging

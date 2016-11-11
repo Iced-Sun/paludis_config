@@ -1,4 +1,7 @@
 ## alternatives
+# arch
+# fixme pbzip2 cannot be used as the alternative of bzip2 in the system set
+
 # gnu
 virtual/coreutils		providers: gnu	# cp --reflink
 virtual/wget			providers: gnu	# IPv6
@@ -34,4 +37,5 @@ app-arch/xz			parts: development
 dev-scm/git			curl						&-*/*
 sys-apps/paludis		prebuilt-documentation search-index pbin
 	app-text/xmlto		providers: lynx
+	app-arch/libarchive	providers: libxml2
 sys-apps/sydbox			seccomp
