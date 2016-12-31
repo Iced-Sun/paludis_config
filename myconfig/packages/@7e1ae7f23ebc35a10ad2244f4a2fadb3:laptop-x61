@@ -83,3 +83,8 @@ dev-lang/node
 
 ## gtk-doc-autotools require libxml2[python]
 	dev-libs/libxml2			python
+
+
+	virtual/kerberos			providers: heimdal
+
+	sys-boot/grub				-efi mkfont
