@@ -1,0 +1,96 @@
+*/*						targets:		i686-pc-linux-gnu
+*/*						amd64_cpu_features:	sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3
+*/*						x86_cpu_features:	sse sse2 sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3
+*/*						video_drivers:		intel
+*/*::subi					build_options:		work=preserve
+
+## wayland
+*/*						wayland
+
+## alternatives
+	virtual/notification-daemon		providers: dunst -notification-daemon
+	virtual/dhcp-client			providers: dhcpcd
+
+## fs
+sys-fs/ntfs-3g_ntfsprogs
+
+## net
+net-misc/openvpn				lzo threads
+
+## wireless
+#net-wireless/iwlwifi-3945-ucode
+gnome-desktop/network-manager-applet
+	net-wireless/wpa_supplicant		dbus nl80211
+	net-apps/NetworkManager			wifi compat-libs providers: nss
+		dev-libs/nspr			parts: development
+	gnome-bindings/pygobject:3		python_abis: 2.7 -3.6
+	gnome-desktop/gobject-introspection	python_abis: 2.7 -3.6
+
+## mail
+#net-mail/offlineimap				python_abis: 2.7
+	dev-lang/python:2.7			sqlite
+	dev-python/six				python_abis: 2.7 -3.6
+#mail-client/mu
+#office-libs/wv
+
+## X11
+	x11-server/xorg-server			systemd
+
+## media
+sys-sound/alsa-utils
+# upstream systemd doesn't support user config
+#~media-sound/mpd				alsa ffmpeg -systemd			&-*/*
+#~media-sound/ncmpcpp				taglib
+~media/mpv					alsa opengl X
+	media-libs/libass			fontconfig
+
+## net
+#net-www/firefox					providers: gtk3
+#	dev-libs/icu				parts: development
+#	dev-lang/python:2.7			sqlite
+#	dev-python/pip				python_abis: 2.7
+
+## misc
+app-admin/sudo
+#app-misc/unison
+#sys-devel/distcc				masquerade
+
+## wps requires png-1.2
+	media-libs/libpng:1.2
+
+## gnupg
+	app-crypt/pinentry			gtk
+
+## temp
+app-editors/emacs				dbus
+	+app-editors/emacs[=25.1.50]
+
+#dev-lang/openjdk8				bootstrap
+	app-text/poppler			lcms
+
+#x11-apps/xdg-utils
+net-proxy/proxychains-ng
+net-ftp/lftp
+
+#dev-python/virtualenv
+
+compositor/sway					-grab
+	sys-libs/wlc				X
+	x11-server/xorg-server			xwayland
+
+#app-virtualization/qemu				x86 amd64 gtk3 
+
+	+sys-devel/gcc:6
+	+sys-libs/libatomic:6
+	+sys-libs/libstdc++:6
+	+sys-libs/libgcc:6
+
+#dev-lang/node
+
+## gtk-doc-autotools require libxml2[python]
+	dev-libs/libxml2			python
+
+
+	virtual/kerberos			providers: heimdal
+
+	sys-boot/grub				efi -mkfont
