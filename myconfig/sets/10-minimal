@@ -1,2 +1,7 @@
-sys-apps/systemd
+### A minimal configuration for container usage ##
+
+## well, you need a shell
 app-shells/bash
+
+## and you need a baby-sitter
+sys-apps/systemd
