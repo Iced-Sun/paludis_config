@@ -37,7 +37,7 @@ remove_custom_mark() {
 
 ## packages/sets detection
 initialize_sets() {
-    pushd ${CONFIG_DIR}/packages >/dev/null 2>&1
+    pushd ${CONFIG_DIR}/sets >/dev/null 2>&1
 
     GENERAL_SETS=( [0-9][0-9]-* )
     PREDEFINED_SETS=( \?* )
@@ -52,7 +52,7 @@ initialize_sets() {
 find_set() {
     found=false
     for name in ${PREDEFINED_SETS[@]} ${GENERAL_SETS[@]} ${MACHINE_SETS[@]}; do
-	[[ $name == *$1* ]] && echo ${CONFIG_DIR}/packages/$name && found=true
+	[[ $name == *$1* ]] && echo ${CONFIG_DIR}/sets/$name && found=true
     done
     [[ $found == false ]] && echo $1
 }
