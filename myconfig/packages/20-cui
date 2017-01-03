@@ -29,5 +29,3 @@ sys-process/lsof
 
 ## systemd requires elfutils, and libelf/elfutils has collision
 	dev-libs/glib	&-gnome-desktop/dconf
-
-
