@@ -12,8 +12,9 @@ x11-apps/xrdb
 x11-apps/xset
 x11-dri/mesa
 
-## fonts
+## decent fonts
 fonts/terminus-font
+fonts/noto
 
 ## X session
 x11-wm/i3								&x11-plugins/i3status
@@ -42,5 +43,3 @@ media-gfx/sxiv				gif
 app-editors/emacs			X freetype jpeg png tiff xpm xim providers: gtk3	&app-spell/aspell
 	app-spell/aspell									&app-dicts/aspell-en
 	
-## decent font
-fonts/noto
