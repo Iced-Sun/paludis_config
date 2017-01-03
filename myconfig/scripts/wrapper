@@ -23,7 +23,7 @@ typical_env_for_cave() {
     XDG_RUNTIME_DIR=/var/tmp/paludis/build/app-terminal-tmux-1.9a/temp/
 }
 
-#### Helper function ####
+#### Helper functions ####
 ## string parser
 remove_comment_and_platform() {
     sed -r -e 's/#.*//' -e 's/~//' -e '/^[[:blank:]]*$/d'
@@ -62,7 +62,7 @@ find_set() {
 detect_destination() {
     local REPO
 
-    ## if parameter is provided, the function is called by
+    ## if a parameter is provided, the function is called by
     ## installed*.bash
     REPO=$1
 
@@ -153,8 +153,65 @@ initialize() {
 }
 
 ####### Action handlers #######
+## general configs
 show_general() {
     echo world = ${WORLD}
+}
+
+show_mirrors() {
+    ## order matters!
+    SITES=( BJTU TSU USTC HEANET NETEASE BIR )
+
+    ## full speed
+    ## BJTU seems stopped sync upstream since 2016-06
+    BJTU=(http://debian.bjtu.edu.cn
+	  apache cpan cran 'ctan CTAN' debian freebsd 'gentoo gentoo/distfiles' gimp gnome gnu kde 'kernel kernel/pub' 'libreoffice tdf/libreoffice')
+    ## comprehensive sites, aggressive sync, moderate speed (500kB/s)
+    TSU=( http://mirrors.tuna.tsinghua.edu.cn
+	  apache 'ctan CTAN' 'cran CRAN' 'ctan CTAN' debian freebsd 'gentoo gentoo/distfiles' gnu 'kernel kernel/pub' opensuse )
+    ## comprehensive sites, moderate sync, moderate speed (500kB/s)
+    USTC=( http://mirrors.ustc.edu.cn
+	   'cpan CPAN' 'cran CRAN' 'ctan CTAN' debian freebsd 'gentoo gentoo/distfiles' gnome gnu kde 'kernel linux-kernel' opensuse )
+    HEANET=( http://heanet.dl.sourceforge.net sourceforge )
+    NETEASE=( http://mirrors.163.com
+	      cpan debian 'freebsd FreeBSD' 'gentoo gentoo/distfiles' 'opensuse openSUSE')
+    BIR=( http://10.2.112.3 exherbo-binary )
+
+    add_mirror()
+    {
+	url_base=$1
+	set -- $2
+
+	url="$url_base/${2:-$1}"
+	name=$1
+
+	num=${#MIRRORS[@]}
+	for ((i=0; i<$num; i++)); do
+	    set -- ${MIRRORS[i]}
+	    if [[ $name == $1 ]]; then
+		MIRRORS[i]+=" $url"
+		return 0
+	    fi
+	done
+	MIRRORS+=( "$name $url" )
+	return 0
+    }
+
+    local MIRRORS=()
+    for site in ${SITES[@]}; do
+	eval site=\( \${${site}[@]} \)
+	set -- ${site[@]}
+	local url_base=$1
+	shift
+	while [[ $# -gt 0 ]]; do
+	    add_mirror "$url_base" "$1"
+	    shift
+	done
+    done
+
+    for m in "${MIRRORS[@]}"; do
+	echo ${m}
+    done
 }
 
 show_repository_defaults() {
@@ -208,6 +265,7 @@ EOF
     esac
 }
 
+## packages related configs
 show_platforms() {
     cat <<EOF
 ### defaults
@@ -242,62 +300,6 @@ show_package_unmask() {
 	echo "### Package unmasks for set --$set--"
 	cat $(find_set $set) | remove_comment_and_platform | sed -n 's/^[[:blank:]]*+\([[:alnum:]]\+\)/\1/ p'
 
-    done
-}
-
-show_mirrors() {
-    ## order matters!
-    SITES=( BJTU TSU USTC HEANET NETEASE BIR )
-
-    ## full speed
-    ## BJTU seems stopped sync upstream since 2016-06
-    BJTU=(http://debian.bjtu.edu.cn
-	  apache cpan cran 'ctan CTAN' debian freebsd 'gentoo gentoo/distfiles' gimp gnome gnu kde 'kernel kernel/pub' 'libreoffice tdf/libreoffice')
-    ## comprehensive sites, aggressive sync, moderate speed (500kB/s)
-    TSU=( http://mirrors.tuna.tsinghua.edu.cn
-	  apache 'ctan CTAN' 'cran CRAN' 'ctan CTAN' debian freebsd 'gentoo gentoo/distfiles' gnu 'kernel kernel/pub' opensuse )
-    ## comprehensive sites, moderate sync, moderate speed (500kB/s)
-    USTC=( http://mirrors.ustc.edu.cn
-	   'cpan CPAN' 'cran CRAN' 'ctan CTAN' debian freebsd 'gentoo gentoo/distfiles' gnome gnu kde 'kernel linux-kernel' opensuse )
-    HEANET=( http://heanet.dl.sourceforge.net sourceforge )
-    NETEASE=( http://mirrors.163.com
-	      cpan debian 'freebsd FreeBSD' 'gentoo gentoo/distfiles' 'opensuse openSUSE')
-    BIR=( http://10.2.112.3 exherbo-binary )
-
-    add_mirror()
-    {
-	url_base=$1
-	set -- $2
-    
-	url="$url_base/${2:-$1}"
-	name=$1
-
-	num=${#MIRRORS[@]}
-	for ((i=0; i<$num; i++)); do
-	    set -- ${MIRRORS[i]}
-	    if [[ $name == $1 ]]; then
-		MIRRORS[i]+=" $url"
-		return 0
-	    fi
-	done
-	MIRRORS+=( "$name $url" )
-	return 0
-    }
-
-    local MIRRORS=()
-    for site in ${SITES[@]}; do
-	eval site=\( \${${site}[@]} \)
-	set -- ${site[@]}
-	local url_base=$1
-	shift
-	while [[ $# -gt 0 ]]; do
-	    add_mirror "$url_base" "$1"
-	    shift
-	done
-    done
-
-    for m in "${MIRRORS[@]}"; do
-	echo ${m}
     done
 }
 
