@@ -41,4 +41,4 @@ its options as =systemd xwayland providers: libressl -openssl=.
 
 : +x11-server/xorg-server[=1.19.0-r1]		systemd xwayland providers: libressl -openssl		&xf86-input-libinput
 
-
+* TODO config including support
