@@ -1,0 +1,44 @@
+* Package configuration specification
+
+The package configuration set files are placed under
+=${PALUDIS_CONFIG_DIR}/myconfig/packages=. The filename convention is:
+1. A file whose name starts with a =@= is a machine specific set,
+   which should include machine related package configuration (mostly
+   hardware), such as cpu features, video drivers, firmwares, etc.).
+
+   The configurations in a machine set file will appear at the end of
+   the paludis configs, i.e., it has the highest priority and will
+   overwrite other configurations.
+
+   The machine set filename will have the format of
+   =@${machine_id}:${hostname}=. The paludis installed world file
+   should have a line of =${machine_id}=.
+
+2. A file whose name starts with a =?= is a weak configuration set,
+   which only provides package options or/and suggestions. It should
+   not be added to the paludis installed world file.
+
+3. The name of all other files should have the format of
+   =${order}-${name}=. The paludis configuration will be combined by
+   order of the =${order}= variable. The paludis installed world file
+   should contains lines of =${name}= (without =${order}=).
+
+The package configuration spec is:
+1. Each line configurates a package;
+2. A line starting with =<TAB>= indicates dependency, i.e., the
+   package will not be included in the corresponding /set/;
+3. A package spec starts with =~= will unmask an unstable mask;
+4. A package spec starts with =+= will unmask a repository mask;
+5. Any word after the leading package spec is the /options/
+   configuration, with the exception of the package spec starting with
+   =&= at the end of the line (see below);
+6. A package spec starting with =&= at the end of the line will be
+   included in the /suggestion/ configuration.
+
+For example, the following line will unmask =xorg-server-1.19.0-r1=,
+add it to a set, take the =xf86-input-libinput= suggestion, configure
+its options as =systemd xwayland providers: libressl -openssl=.
+
+: +x11-server/xorg-server[=1.19.0-r1]		systemd xwayland providers: libressl -openssl		&xf86-input-libinput
+
+
