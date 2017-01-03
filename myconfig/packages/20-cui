@@ -1,7 +1,7 @@
-### <Tab> => dependency
-### "&"   => recommendation and suggestion
-### "~"   => unstable
-### "+"   => unmaks
+### <Tab> => indicate dependency
+### "&"   => pull in recommendation and suggestion
+### "~"   => unmask an unstable package
+### "+"   => unmask a masked package
 
 ## system
 dev-util/ketchup
