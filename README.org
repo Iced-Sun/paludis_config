@@ -7,16 +7,18 @@ The package configuration set files are placed under
    hardware), such as cpu features, video drivers, firmwares, etc.).
 
    The configurations in a machine set file will appear at the end of
-   the paludis configs, i.e., it has the highest priority and will
-   overwrite other configurations.
+   the paludis configurations, i.e., it has the highest priority and
+   will overwrite other configurations.
 
    The machine set filename will have the format of
    =@${machine_id}:${hostname}=. The paludis installed world file
    should have a line of =${machine_id}=.
 
 2. A file whose name starts with a =?= is a weak configuration set,
-   which only provides package options or/and suggestions. It should
-   not be added to the paludis installed world file.
+   which only provides predefined package options or/and
+   suggestions. It should not be added to the paludis installed world
+   file. The configuration will be included in the front of the
+   paludis configurations.
 
 3. The name of all other files should have the format of
    =${order}-${name}=. The paludis configuration will be combined by
