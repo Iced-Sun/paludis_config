@@ -1,14 +1,11 @@
+### Default x11 configuration ###
+
 ## default
 */*::x11					X
 
 ## headers
 #dev-libs/libpthread-stubs			parts: development
 #x11-libs/libXau				parts: development
-
-## fonts
-media-libs/freetype				harfbuzz
-	x11-libs/harfbuzz
-		dev-libs/icu			parts: development
 
 ## X
 x11-server/xorg-server							&-*/*

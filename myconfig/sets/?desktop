@@ -1,0 +1,5 @@
+### Default GUI configuration indepent on x11, wayland ##
+
+media-libs/freetype				harfbuzz
+	x11-libs/harfbuzz
+		dev-libs/icu			parts: development

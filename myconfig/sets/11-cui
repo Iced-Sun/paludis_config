@@ -1,3 +1,5 @@
+### Basic console applications ###
+
 ## system
 dev-util/ketchup
 sys-apps/busybox        static
@@ -16,6 +18,7 @@ net-fs/cifs-utils
 app-editors/emacs
 
 ## miscs
+app-admin/sudo
 app-misc/mc
 app-shells/fish
 app-terminal/tmux
@@ -24,3 +27,6 @@ sys-process/lsof
 
 ## systemd requires elfutils, and libelf/elfutils has collision
 	dev-libs/glib	&-gnome-desktop/dconf
+
+## net
+net-proxy/proxychains-ng

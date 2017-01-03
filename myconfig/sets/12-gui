@@ -1,26 +1,14 @@
+### Basic graphic applications ###
+
 ## defaults
 */*					providers:	jpeg-turbo
 */*					providers:	ffmpeg
-
-## sys-apps
-	net-misc/openssh		X
-	sys-apps/dbus			X
-
-## xorg
-x11-server/xorg-server							&x11-drivers/xf86-input-libinput
-x11-apps/xrdb
-x11-apps/xset
-x11-dri/mesa
 
 ## decent fonts
 fonts/terminus-font
 fonts/noto
 
-## X session
-x11-wm/i3								&x11-plugins/i3status
-x11-apps/i3lock
-x11-misc/rofi				i3
-x11-apps/rxvt-unicode			perl xft xim
+## icon-theme
 gnome-desktop/gnome-icon-theme
 gnome-desktop/gnome-icon-theme-symbolic
 

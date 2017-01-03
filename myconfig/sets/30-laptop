@@ -1,5 +1,5 @@
-## wireless
-#net-wireless/iwlwifi-3945-ucode
+### Packages for a laptop ###
+
 gnome-desktop/network-manager-applet
 	net-wireless/wpa_supplicant		dbus nl80211
 	net-apps/NetworkManager			wifi compat-libs providers: nss

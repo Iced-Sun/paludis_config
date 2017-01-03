@@ -18,7 +18,7 @@
 	dev-libs/glib		providers:	-libelf elfutils
 	sys-apps/iproute2	providers:	-libelf elfutils
 
-## arch
+## archives
 */*			providers:	libarchive
 
 ## concurrenty/parellelism
