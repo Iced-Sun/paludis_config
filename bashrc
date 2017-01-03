@@ -24,6 +24,13 @@ case "${PN}" in
     openjdk8|notmuch|db|pinktrace|git|busybox|ocaml)
 	EXTRA_ECONF=( ${EXTRA_ECONF[@]#--disable-static} )
 	;;&
+    sway)
+        EXJOBS=1
+        ;;&
+    efibootmgr)
+	MY_CFLAGS+=( -D_GNU_SOURCE )
+	MY_LDFLAGS+=( -Wl,-z,muldefs )
+	;;&
     *)
 	;;
 esac    
