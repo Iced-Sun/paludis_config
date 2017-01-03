@@ -26,8 +26,8 @@ typical_env_for_cave() {
 #### Helper functions ####
 ## string parser
 remove_comment_and_platform() {
-    # removes comments('#'), platform unmask('~'), and blank lines 
-    sed -r -e 's/#.*//' -e 's/~//' -e '/^[[:blank:]]*$/d'
+    # removes comments('#'), platform unmask('~'), blank lines and require lines('@require')
+    sed -r -e 's/#.*//' -e 's/~//' -e '/^[[:blank:]]*$/d' -e '/^@require.*/d'
 }
 
 remove_custom_mark() {
@@ -45,6 +45,18 @@ initialize_sets() {
 
     ACTIVE_GENERAL_SETS=( $(sort ${WORLD} <(printf '%s\n' ${GENERAL_SETS[@]} | sed -e 's/[0-9][0-9]-//') 2>/dev/null |uniq -d) )
     ACTIVE_MACHINE_SETS=( $(sort ${WORLD} <(printf '%s\n' ${MACHINE_SETS[@]} | sed -e 's/@//' -e 's/:.*//') 2>/dev/null |uniq -d) )
+    ACTIVE_SETS=( )
+
+    ## generate ACTIVE_SETS
+    for set in ${ACTIVE_GENERAL_SETS[@]} ${ACTIVE_MACHINE_SETS[@]}; do
+	## collect required sets
+	for included in $(cat ../../$(find_set $set) | sed -n 's/@require// p'); do
+	    ## if it has not already been collected
+	    [[ " ${ACTIVE_SETS[@]} " =~ " $included " ]] || ACTIVE_SETS+=( $included )
+	done
+	## collect explicit set
+	ACTIVE_SETS+=( $set )
+    done
 
     popd >/dev/null 2>&1
 }
@@ -141,11 +153,12 @@ initialize() {
 	echo
 	echo "===== Paludis information ====="
 	echo "Destination:" ${LOCATION}
+	echo "Predefined sets:" ${PREDEFINED_SETS[@]}
 	echo "General sets:" ${GENERAL_SETS[@]}
 	echo "Active general sets:" ${ACTIVE_GENERAL_SETS[@]}
 	echo "Machine sets:" ${MACHINE_SETS[@]}
 	echo "Active machine sets:" ${ACTIVE_MACHINE_SETS[@]}
-	echo "Predefined sets:" ${PREDEFINED_SETS[@]}
+	echo "ALL active sets:" ${ACTIVE_SETS[@]}
 	echo
 	echo "===== End debug information ====="
 	[[ $SELF_INVOKING == "yes" ]] && echo "============ SELF INVOKING End =============="
@@ -276,6 +289,10 @@ show_platforms() {
 EOF
 }
 
+show_sets() {
+    cat $(find_set $1) | remove_comment_and_platform | remove_custom_mark | sed -r -n '/^[^[:blank:]]/ s/^([a-z][^[:blank:]]*).*/\* \1/ p'
+}
+
 show_options() {
     ### option is generated before chroot-path is used, hence the following has no effect; use python bindings?
     #echo $LOCATION 1>&2
@@ -289,30 +306,27 @@ show_options() {
 EOF
     fi
 
-    for set in ${PREDEFINED_SETS[@]} ${ACTIVE_GENERAL_SETS[@]} ${ACTIVE_MACHINE_SETS}; do
+    ## PREDEFINED_SETS should be taken account in when generating options
+    for set in ${PREDEFINED_SETS[@]} ${ACTIVE_SETS[@]}; do
 	echo
 	echo "### Options for set --$set--"
 	cat $(find_set $set) | remove_comment_and_platform | remove_custom_mark
     done
 }
 
-show_sets() {
-    cat $(find_set $1) | remove_comment_and_platform | remove_custom_mark | sed -r -n '/^[^[:blank:]]/ s/^([a-z][^[:blank:]]*).*/\* \1/ p'
-}
-
-show_package_unmask() {
-    for set in ${ACTIVE_GENERAL_SETS[@]} ${ACTIVE_MACHINE_SETS[@]}; do
-	echo
-	echo "### Package unmasks for set --$set--"
-	cat $(find_set $set) | sed -n 's/^[[:blank:]]*+// p' | sed -r -e 's/^([a-z][^[:blank:]]*).*/\1/'
-    done
-}
-
 show_suggestions() {
-    for set in ${PREDEFINED_SETS[@]} ${ACTIVE_GENERAL_SETS[@]} ${ACTIVE_MACHINE_SETS[@]}; do
+    for set in ${PREDEFINED_SETS[@]} ${ACTIVE_SETS[@]}; do
 	echo 
 	echo "### Package suggestions for set --$set--"
 	cat $(find_set $set) | remove_comment_and_platform | sed -r -n '/&/ s/[[:blank:]]*([[:punct:][:alnum:]]+).*&/\1\t/ p'
+    done
+}
+
+show_package_unmask() {
+    for set in ${ACTIVE_SETS[@]}; do
+	echo
+	echo "### Package unmasks for set --$set--"
+	cat $(find_set $set) | sed -n 's/^[[:blank:]]*+// p' | sed -r -e 's/^([a-z][^[:blank:]]*).*/\1/'
     done
 }
 
@@ -332,5 +346,6 @@ else
 fi
 
 #### Finalize ####
+echo
 popd >/dev/null
 
