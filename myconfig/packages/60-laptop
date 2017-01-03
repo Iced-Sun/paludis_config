@@ -1,0 +1,8 @@
+## wireless
+#net-wireless/iwlwifi-3945-ucode
+gnome-desktop/network-manager-applet
+	net-wireless/wpa_supplicant		dbus nl80211
+	net-apps/NetworkManager			wifi compat-libs providers: nss
+		dev-libs/nspr			parts: development
+	gnome-bindings/pygobject:3		python_abis: 2.7 -3.6
+	gnome-desktop/gobject-introspection	python_abis: 2.7 -3.6

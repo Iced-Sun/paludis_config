@@ -1,0 +1,52 @@
+### General desktop packages ###
+
+## alternatives
+	virtual/notification-daemon		providers: dunst -notification-daemon
+	virtual/dhcp-client			providers: dhcpcd
+
+## fs
+sys-fs/ntfs-3g_ntfsprogs
+
+## net
+net-misc/openvpn				lzo threads
+
+## mail
+#net-mail/offlineimap				python_abis: 2.7
+	dev-lang/python:2.7			sqlite
+	dev-python/six				python_abis: 2.7 -3.6
+#mail-client/mu
+#office-libs/wv
+
+## X11
+	x11-server/xorg-server			systemd
+
+## media
+sys-sound/alsa-utils
+# upstream systemd doesn't support user config
+#~media-sound/mpd				alsa ffmpeg -systemd			&-*/*
+#~media-sound/ncmpcpp				taglib
+~media/mpv					alsa opengl X
+	media-libs/libass			fontconfig
+
+## net
+#net-www/firefox					providers: gtk3
+#	dev-libs/icu				parts: development
+#	dev-lang/python:2.7			sqlite
+#	dev-python/pip				python_abis: 2.7
+
+## wps requires png-1.2
+	media-libs/libpng:1.2
+
+## misc
+app-admin/sudo
+#app-misc/unison
+#sys-devel/distcc				masquerade
+
+
+## gnupg
+	app-crypt/pinentry			gtk
+
+#x11-apps/xdg-utils
+net-proxy/proxychains-ng
+net-ftp/lftp
+

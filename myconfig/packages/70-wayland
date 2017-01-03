@@ -1,0 +1,10 @@
+### Wayland support ###
+
+## general options
+*/*						wayland
+
+## my favorite window manager
+compositor/sway					-grab
+	sys-libs/wlc				X
+	x11-server/xorg-server			xwayland
+
