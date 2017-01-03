@@ -304,8 +304,7 @@ show_package_unmask() {
     for set in ${ACTIVE_GENERAL_SETS[@]} ${ACTIVE_MACHINE_SETS[@]}; do
 	echo
 	echo "### Package unmasks for set --$set--"
-	cat $(find_set $set) | remove_comment_and_platform | sed -n 's/^[[:blank:]]*+\([[:alnum:]]\+\)/\1/ p'
-
+	cat $(find_set $set) | sed -n 's/^[[:blank:]]*+// p' | sed -r -e 's/^([a-z][^[:blank:]]*).*/\1/'
     done
 }
 
