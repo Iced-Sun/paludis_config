@@ -40,6 +40,5 @@ media-gfx/sxiv				gif
 	media-libs/imlib2		X
 
 ## editor && IDE
-app-editors/emacs			X freetype jpeg png tiff xpm xim providers: gtk3	&app-spell/aspell
-	app-spell/aspell									&app-dicts/aspell-en
+app-editors/emacs			X freetype jpeg png tiff xpm xim providers: gtk3
 	
