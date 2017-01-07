@@ -8,5 +8,5 @@
 */*		x86_cpu_features:	sse sse2 sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3
 */*		video_drivers:		intel
 
-## wireless
-net-wireless/iwlwifi-8000-ucode
+## firmware
++firmware/linux-firmware[=scm]
