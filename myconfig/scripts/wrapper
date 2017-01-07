@@ -31,8 +31,8 @@ remove_comment_and_platform() {
 }
 
 remove_custom_mark() {
-    # remove mask unmask('+'), and suggestion taken('&')
-    sed -e 's/^[[:blank:]]*+\([[:alnum:]]\+\)/\1/' -e 's/&.*//'
+    # remove user mask('-'), mask unmask('+'), and suggestion taken('&')
+    sed -e 's/^[[:blank:]]*[+-]\([[:alnum:]]\+\)/\1/' -e 's/&.*//'
 }
 
 ## packages/sets detection
@@ -335,6 +335,14 @@ show_suggestions() {
 	echo 
 	echo "### Package suggestions for set --$set--"
 	cat ${SETS_DIR}/$set | remove_comment_and_platform | sed -r -n '/&/ s/[[:blank:]]*([[:punct:][:alnum:]]+).*&/\1\t/ p'
+    done
+}
+
+show_package_mask() {
+    for set in ${ACTIVE_SETS[@]}; do
+	echo
+	echo "### Package unmasks for set --$set--"
+	cat ${SETS_DIR}/$set | sed -n 's/^[[:blank:]]*-// p' | sed -r -e 's/^([a-z][^[:blank:]]*).*/\1/'
     done
 }
 
