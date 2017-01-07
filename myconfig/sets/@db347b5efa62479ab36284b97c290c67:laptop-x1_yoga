@@ -10,3 +10,8 @@
 
 ## firmware
 +firmware/linux-firmware[=scm]
+
+## my favorite window manager
+compositor/sway				-grab
+	sys-libs/wlc			X
+-compositor/sway[=scm]
