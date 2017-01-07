@@ -136,14 +136,12 @@ initialize() {
     MACHINE_ID=`cat /etc/machine-id`
 
     ## we need detect destination type and related configs
-    if [[ $SELF_INVOKING != "yes" ]]; then
-	if [[ $ACTION == "repositories" ]]; then
-	    detect_destination $SUB_ACTION
-	else
-	    detect_destination
-	fi
+    if [[ $ACTION == "repositories" ]]; then
+	detect_destination $SUB_ACTION
+    else
+	detect_destination
     fi
-    
+
     ## SETS
     initialize_sets
 
@@ -172,6 +170,8 @@ EOF
 	[[ $SELF_INVOKING == "yes" ]] && echo "============ SELF INVOKING End =============="
 	echo
     }
+
+    ## print the debug info if not invoked by paludis
     [[ x$PALUDIS_CLIENT == "x" ]] && print_debug_info 1>&2
 }
 
@@ -363,7 +363,7 @@ if [[ -d ${CONFIG_DIR} ]]; then
     if type show_${ACTION} >/dev/null 2>&1; then
 	show_${ACTION} ${SUB_ACTION}
     else
-	echo "Not supported action: " ${ACTION} 1>&2
+	[[ $SELF_INVOKING == 'yes' ]] || echo "Not supported action: " ${ACTION} 1>&2
     fi
 else
     echo "The configuration path does not exist."
