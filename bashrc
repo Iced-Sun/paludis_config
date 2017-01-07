@@ -64,9 +64,7 @@ eval "${CHOST//-/_}_LDFLAGS=\${MY_LDFLAGS[@]}"
 ### Advanced customization
 ## NOTE: bashrc is sourced once in builtin_init phase only when
 ## cave-perform
-if [[ ${PALUDIS_ACTION} == "sync" ]]; then
-    return
-fi
+[[ ${PALUDIS_ACTION} == "sync" ]] && return
 source ${PALUDIS_CONFIG_DIR}/myconfig/scripts/utils
 
 ## to apply EXTRA_ECONF
