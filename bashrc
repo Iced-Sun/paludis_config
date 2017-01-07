@@ -41,7 +41,6 @@ esac
 HOST=`hostname | cut -d. -f1`
 case "${HOST}" in
     dc-2|fs-3|gs-5)
-	EXJOBS=10
 	case "${PN}" in
 	    bind-tools)
 		EXTRA_ECONF+=(--with-gssapi)
