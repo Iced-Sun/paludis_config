@@ -95,7 +95,9 @@ detect_destination() {
 		REPO=${repo%.bash}
 
 		# if chroot-path is provided, it dominates
-		local REPO_ROOT=`./$repo self-invoking | sed -n -e 's/^root = // p'`
+		## TODO this is broken now, since 'self-invoking' is very confusing
+		return 1
+		#local REPO_ROOT=`./$repo self-invoking | sed -n -e 's/^root = // p'`
 		if [[ $CAVE_RESOLVE_CMDLINE_chroot_path == $REPO_ROOT ]]; then
 		    break
 		fi
@@ -147,9 +149,8 @@ initialize() {
 
     ## debug
     print_debug_info() {
-	echo
-	[[ $SELF_INVOKING == "yes" ]] && echo "============ SELF INVOKING Begin =============="
 	cat <<EOF
+
 ===== Host information =====
 Paludis config DIR:		${PALUDIS_CONFIG_DIR}
 Custom config DIR (relative):	${CONFIG_DIR}
@@ -165,10 +166,8 @@ Machine sets:  			${MACHINE_SETS[@]}
 
 Active sets:			${ACTIVE_SETS[@]}
 ===== End debug information =====
-EOF
 
-	[[ $SELF_INVOKING == "yes" ]] && echo "============ SELF INVOKING End =============="
-	echo
+EOF
     }
 
     ## print the debug info if not invoked by paludis
@@ -355,7 +354,7 @@ show_package_unmask() {
 }
 
 ##### Main ####
-[[ x$1 == 'xself-invoking' ]] && SELF_INVOKING=yes || SELF_INVOKING=
+## initialize all necessary variable
 initialize
 
 ##### Dispatcher ####
