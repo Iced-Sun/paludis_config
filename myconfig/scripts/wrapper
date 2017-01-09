@@ -411,6 +411,9 @@ show_bashrc_line() {
 show_bashrc() {
     local name
 
+    ## avoid surprises in `set -- $line` due to globbing
+    set -f
+
     ## TODO: support cross-target CFLAGS/LDFLAGS
     for set in ${PREDEFINED_SETS[@]} ${ACTIVE_SETS[@]}; do
 	if [[ x$PALUDIS_CLIENT == "x" ]]; then
@@ -427,16 +430,21 @@ show_bashrc() {
 		show_bashrc_line "$@"
 	    done
 	else
-	    ## TODO: support SLOT/PV/REPOSITORY
-	    cat ${SETS_DIR}/$set | sed -r -n "s|^[[:blank:]]*@${CATEGORY}/${PN}[[:blank:]]*|| p" | while read line; do
+	    cat ${SETS_DIR}/$set | sed -r -n 's|^[[:blank:]]*@(.*/.*)|\1| p' | while read line; do
 		set -- $line
-		show_bashrc_line "$@"
+		## TODO: support SLOT/PV/REPOSITORY -- more spec handling
+		## match global spec or current spec
+		if [[ $1 == '*/*' || $1 == ${CATEGORY}/${PN} ]]; then
+		    shift
+		    show_bashrc_line "$@"
+		fi
+	    #cat ${SETS_DIR}/$set | sed -r -n "s|^[[:blank:]]*@${CATEGORY}/${PN}[[:blank:]]*|| p" | while read line; do
 	    done
-
-		#show_bashrc_line "$line"
-	    #done
 	fi
     done
+
+    ## restore
+    set +f
 }
 
 ## the direct call dispatcher

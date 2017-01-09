@@ -4,7 +4,6 @@
 CHOST="x86_64-pc-linux-gnu"
 ## TODO support cross compile i686_pc_linux_gnu_CFLAGS
 CFLAGS="-pipe -O3 `${CHOST}-gcc -march=native -E -v - </dev/null 2>&1 | sed -n -e 's/^.*- -/-/p'`"
-LDFLAGS="-Wl,-O1 -Wl,--as-needed -Wl,--sort-common"
 EXJOBS=$((`cat /proc/cpuinfo | grep processor | wc -l`+2))
 
 ### default custom flags: applied by setting ECONF_WRAPPER and EXTRA_ECONF

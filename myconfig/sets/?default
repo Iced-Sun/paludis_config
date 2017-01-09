@@ -9,6 +9,9 @@
 */*			build_options:	symbols=strip -recommended_tests
 */*			targets:	-* x86_64-pc-linux-gnu
 
+## bashrc
+@*/*			LDFLAGS:	-Wl,-O1 -Wl,--as-needed -Wl,--sort-common
+
 ## system
 */*			pam systemd udev
 */*			providers:	libressl
