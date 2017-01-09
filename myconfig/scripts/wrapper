@@ -192,6 +192,7 @@ EOF
 
     ## print the debug info if not invoked by paludis
     [[ x$PALUDIS_CLIENT == "x" ]] && print_debug_info 1>&2
+
 }
 
 ####### Action handlers #######
@@ -324,7 +325,7 @@ show_sets() {
 	echo
     done
 
-    ## self
+    ## the requried set
     cat ${SETS_DIR}/${SETS[$1]} | remove_comment_and_platform | remove_custom_mark | sed -r -n '/^[^[:blank:]]/ s/^([a-z][^[:blank:]]*).*/\* \1/ p'
 }
 
