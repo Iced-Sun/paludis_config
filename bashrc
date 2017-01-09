@@ -8,7 +8,6 @@ LDFLAGS="-Wl,-O1 -Wl,--as-needed -Wl,--sort-common"
 EXJOBS=$((`cat /proc/cpuinfo | grep processor | wc -l`+2))
 
 ### default custom flags: applied by setting ECONF_WRAPPER and EXTRA_ECONF
-## TODO EXTRA_ECONF is not an array anymore, check if wrap_ebuild_phase is still valid
 EXTRA_ECONF="--disable-static"
 
 ### special care
@@ -35,7 +34,10 @@ case "${PN}" in
 	;;&
     *)
 	;;
-esac    
+esac
+
+## import per-package bashrc configuration
+source <(${PALUDIS_CONFIG_DIR}/myconfig/scripts/wrapper bashrc)
 
 ### host specific flags
 ## TODO use HOST from myconfig

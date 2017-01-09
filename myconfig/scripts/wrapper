@@ -122,10 +122,8 @@ initialize() {
     HOST=`hostname | cut -d. -f1`
     MACHINE_ID=`cat /etc/machine-id`
 
-    ## create default paludis configurations if not called by paludis
-    if [[ x$PALUDIS_CLIENT == "x" ]]; then
-	PALUDIS_CONFIG_DIR=/etc/paludis
-    fi
+    ## PALUDIS_CONFIG_DIR may be unset even in cave
+    PALUDIS_CONFIG_DIR=${PALUDIS_CONFIG_DIR:=/etc/paludis}
 
     ## required by determining the actions
     local INVOKER_FULL_PATH=`realpath -s $0`
@@ -388,7 +386,6 @@ show_bashrc_line() {
     shift
 
     ### TODO check ill-formed flags
-    ## a safeguard line
 
     ## apply the flag contents
     if [[ $1 != "^"* && $1 != "$"* ]]; then
@@ -414,37 +411,41 @@ show_bashrc_line() {
 show_bashrc() {
     local name
 
-    ## TODO: support SLOT/PV/REPOSITORY
     ## TODO: support cross-target CFLAGS/LDFLAGS
     for set in ${PREDEFINED_SETS[@]} ${ACTIVE_SETS[@]}; do
 	if [[ x$PALUDIS_CLIENT == "x" ]]; then
+	    ## not called by paludis
 	    echo
 	    echo "### bashrc configuration for set --$set--"
 
 	    cat ${SETS_DIR}/$set | sed -r -n 's|^[[:blank:]]*@(.*/.*)|\1| p' | while read line; do
 		set -- $line
+		## the package name
 		echo $1:
+		## bashrc config
 		shift
 		show_bashrc_line "$@"
 	    done
 	else
-	    cat ${SETS_DIR}/$set | sed -r -n 's|^[[:blank:]]*@(.*/.*)|\1| p' | while read line; do
+	    ## TODO: support SLOT/PV/REPOSITORY
+	    cat ${SETS_DIR}/$set | sed -r -n "s|^[[:blank:]]*@${CATEGORY}/${PN}[[:blank:]]*|| p" | while read line; do
 		set -- $line
-		shift
 		show_bashrc_line "$@"
 	    done
-	    #cat ${SETS_DIR}/$set | sed -r -n "s|^[[:blank:]]*@${CATEGORY}/${PN}[[:blank:]]*|| p" | while read line; do
+
 		#show_bashrc_line "$line"
 	    #done
 	fi
     done
 }
 
+## the direct call dispatcher
 show_wrapper() {
     if type show_$1 >/dev/null 2>&1; then
 	show_$1
     else
 	echo "A direct call to the wrapper need a supported explicit action"
+	echo "    Action: $1"
     fi
 }
 
