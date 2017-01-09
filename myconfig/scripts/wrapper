@@ -2,8 +2,6 @@
 
 ## FIXME move the hard-coded config outwards
 
-### TODO: source bashrc for CHOST
-### TODO: support bashrc
 ### TODO: if cave can add an option --binary-path like --chroot-path, we can add set/repo bindist-laptop-x61
 ### TODO: or better, if there is an option --destination (so we can use 'cave resolve package --destination bindist-laptop-x61/installed-laptop-x61')
 
