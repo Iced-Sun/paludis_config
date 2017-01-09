@@ -26,8 +26,8 @@ typical_env_for_cave() {
 #### Helper functions ####
 ## string parser
 remove_comment_and_platform() {
-    # removes comments('#'), platform unmask('~'), blank lines and require lines('@require')
-    sed -r -e 's/#.*//' -e 's/~//' -e '/^[[:blank:]]*$/d' -e '/^@require.*/d'
+    # removes comments('#'), platform unmask('~'), blank lines, require lines('@require') and bashrc modification lines('@*/*')
+    sed -r -e 's/#.*//' -e 's/~//' -e '/^[[:blank:]]*$/d' -e '/^@.*/d'
 }
 
 remove_custom_mark() {
@@ -376,14 +376,85 @@ show_package_unmask() {
 ##### Main ####
 ## initialize all necessary variable
 initialize
+## the per-package bashrc processing
+show_bashrc_line() {
+    ## malformed bashrc line
+    if [[ $1 != *: ]]; then
+	echo "A bash variable is supposed to have a ending colon"
+	echo "    $line"
+	return
+    fi
+
+    ## extract the flag name
+    name=${1%:}
+    shift
+
+    ### TODO check ill-formed flags
+    ## a safeguard line
 
 ##### Dispatcher ####
 if [[ -d ${CONFIG_DIR} ]]; then
     if type show_${ACTION} >/dev/null 2>&1; then
 	show_${ACTION} ${SUB_ACTION}
+    ## apply the flag contents
+    if [[ $1 != "^"* && $1 != "$"* ]]; then
+	## a plain assignment
+	echo "$name=\"$@\""
     else
 	[[ $SELF_INVOKING == 'yes' ]] || echo "Not supported action: " ${ACTION} 1>&2
+	## flags add/remove
+	while [[ $# -gt 0 ]]; do
+	    if [[ $1 == "^"* ]]; then
+		echo "$name+=\" ${1#^}\""
+	    elif [[ $1 == "$"* ]]; then
+		echo "$name=\"\${$name/${1#$}/}\""
+	    else
+		echo "A modifying action requires all flags are add/remove"
+		echo "    $1"
+	    fi
+	    shift
+	done
     fi
+    echo
+}
+
+show_bashrc() {
+    local name
+
+    ## TODO: support SLOT/PV/REPOSITORY
+    ## TODO: support cross-target CFLAGS/LDFLAGS
+    for set in ${PREDEFINED_SETS[@]} ${ACTIVE_SETS[@]}; do
+	if [[ x$PALUDIS_CLIENT == "x" ]]; then
+	    echo
+	    echo "### bashrc configuration for set --$set--"
+
+	    cat ${SETS_DIR}/$set | sed -r -n 's|^[[:blank:]]*@(.*/.*)|\1| p' | while read line; do
+		set -- $line
+		echo $1:
+		shift
+		show_bashrc_line "$@"
+	    done
+	else
+	    cat ${SETS_DIR}/$set | sed -r -n 's|^[[:blank:]]*@(.*/.*)|\1| p' | while read line; do
+		set -- $line
+		shift
+		show_bashrc_line "$@"
+	    done
+	    #cat ${SETS_DIR}/$set | sed -r -n "s|^[[:blank:]]*@${CATEGORY}/${PN}[[:blank:]]*|| p" | while read line; do
+		#show_bashrc_line "$line"
+	    #done
+	fi
+    done
+}
+
+show_wrapper() {
+    if type show_$1 >/dev/null 2>&1; then
+	show_$1
+    else
+	echo "A direct call to the wrapper need a supported explicit action"
+    fi
+}
+
 else
     echo "The configuration path does not exist."
 fi
