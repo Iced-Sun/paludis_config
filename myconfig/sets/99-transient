@@ -9,3 +9,5 @@
 	+sys-libs/libatomic:6
 	+sys-libs/libstdc++:6
 	+sys-libs/libgcc:6
+@sys-boot/efibootmgr				CFLAGS: ^-D_GNU_SOURCE
+@sys-boot/efibootmgr				LDFLAGS: ^-Wl,-z,muldefs

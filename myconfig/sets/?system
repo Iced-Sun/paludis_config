@@ -1,4 +1,8 @@
 ## alternatives
+# system
+@sys-libs/glibc			CFLAGS: -march=native -pipe -O2
+@sys-libs/glibc			DISTCC: no
+
 # archives
 # fixme pbzip2 cannot be used as the alternative of bzip2 in the system set
 
@@ -36,6 +40,9 @@ app-arch/xz			parts: development
 ## options
 dev-scm/git			curl						&-*/*
 sys-apps/paludis		prebuilt-documentation search-index pbin
+## 'as-needed' corrupts 'print_exports' and 'strip_tar_corruption'
+@sys-apps/paludis		LDFLAGS: $-Wl,--as-needed
 	app-text/xmlto		providers: lynx
 	app-arch/libarchive	providers: libxml2
 sys-apps/sydbox			seccomp
+

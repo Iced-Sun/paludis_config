@@ -15,3 +15,4 @@
 compositor/sway				-grab
 	sys-libs/wlc			X
 -compositor/sway[=scm]
+@compositor/sway			EXJOBS: 1
