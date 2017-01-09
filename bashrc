@@ -4,9 +4,7 @@
 CHOST="x86_64-pc-linux-gnu"
 
 ## import per-package bashrc configuration
-${PALUDIS_CONFIG_DIR}/myconfig/scripts/wrapper bashrc
 source <(${PALUDIS_CONFIG_DIR}/myconfig/scripts/wrapper bashrc)
-env |sort -h
 
 ### TODO support cross compile i686_pc_linux_gnu_CFLAGS
 ### TODO the expansion should be in wrapper
