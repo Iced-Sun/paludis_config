@@ -118,33 +118,47 @@ detect_destination() {
 
 #### Initialize ####
 initialize() {
-    ## set directories: all paths are relative to $PALUDIS_CONFIG_DIR
-    local SCRIPT_ABSOLUTE=$(realpath $0)
-    PALUDIS_CONFIG_DIR=$(realpath $(dirname $(realpath $SCRIPT_ABSOLUTE))/../../)
-    local SCRIPT_DIR=$(realpath $(dirname ${SCRIPT_ABSOLUTE}) --relative-base=${PALUDIS_CONFIG_DIR})
-    CONFIG_DIR=$(dirname ${SCRIPT_DIR})
-    SETS_DIR=${CONFIG_DIR}/sets
-
-    ## determine actions
-    local INVOKER=$(realpath -s $(realpath $(dirname $0))/$(basename $0) --relative-base=${PALUDIS_CONFIG_DIR})
-    ACTION=$(echo ${INVOKER%.bash}/ | cut -d/ -f1)
-    SUB_ACTION=$(echo ${INVOKER%.bash}/ | cut -d/ -f2)
-
-    ## change PWD asap
-    pushd $PALUDIS_CONFIG_DIR >/dev/null
-
-    ## misc
+    ## host information
     HOST=`hostname | cut -d. -f1`
     MACHINE_ID=`cat /etc/machine-id`
 
-    ## we need detect destination type and related configs
+    ## create default paludis configurations if not called by paludis
+    if [[ x$PALUDIS_CLIENT == "x" ]]; then
+	PALUDIS_CONFIG_DIR=/etc/paludis
+    fi
+
+    ## required by determining the actions
+    local INVOKER_FULL_PATH=`realpath -s $0`
+
+    ## if called for paludis: general.bash, options.bash, sets/*.bash, etc..
+    # necessary condition: the script is placed in PALUDIS_CONFIG_DIR
+    local INVOKER=${INVOKER_FULL_PATH#$PALUDIS_CONFIG_DIR/}
+    local INVOKER_DIRNAME=`dirname $INVOKER`
+    local INVOKER_BASENAME=`basename $INVOKER`
+    ## enforce the check if is called for paludis
+    if [[ " sets repositories " =~ " $INVOKER_DIRNAME " ]]; then
+	ACTION=$INVOKER_DIRNAME
+	SUB_ACTION=${INVOKER_BASENAME%.bash}
+    elif [[ "." == $INVOKER_DIRNAME ]]; then
+	ACTION=${INVOKER_BASENAME%.bash}
+    else
+	## this means a foreign call
+	ACTION=${INVOKER_BASENAME}
+    fi
+
+    ## gather destination
     if [[ $ACTION == "repositories" ]]; then
 	detect_destination $SUB_ACTION
     else
 	detect_destination
     fi
 
-    ## SETS
+    ## required by custom configuration processing: that IS sets
+    local SCRIPT_FULL_PATH=`realpath $0`
+    local CONFIG_DIR=`realpath $(dirname ${SCRIPT_FULL_PATH})/..`
+    SETS_DIR=${CONFIG_DIR}/sets
+
+    ## gather sets
     initialize_sets
 
     ## debug
@@ -152,19 +166,21 @@ initialize() {
 	cat <<EOF
 
 ===== Host information =====
-Paludis config DIR:		${PALUDIS_CONFIG_DIR}
-Custom config DIR (relative):	${CONFIG_DIR}
-Action/Configuration:		${ACTION}$([[ x${SUB_ACTION} == "x" ]] || echo ::${SUB_ACTION}).conf
 Host:				${HOST}
 Machine ID:			${MACHINE_ID}
 
 ===== Paludis information =====
+Paludis config DIR:		${PALUDIS_CONFIG_DIR}
 Destination:			${LOCATION}
 Predefined weak sets:		${PREDEFINED_SETS[@]}
 General sets:			${GENERAL_SETS[@]}
 Machine sets:  			${MACHINE_SETS[@]}
 
+===== Custom configurations =====
+Custom config DIR (relative):	${CONFIG_DIR}
+Action/Configuration:		${ACTION}$([[ x${SUB_ACTION} == "x" ]] || echo ::${SUB_ACTION}).conf
 Active sets:			${ACTIVE_SETS[@]}
+
 ===== End debug information =====
 
 EOF
