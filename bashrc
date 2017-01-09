@@ -2,18 +2,14 @@
 
 ### default flags
 CHOST="x86_64-pc-linux-gnu"
-## TODO support cross compile i686_pc_linux_gnu_CFLAGS
-CFLAGS="-pipe -O3 `${CHOST}-gcc -march=native -E -v - </dev/null 2>&1 | sed -n -e 's/^.*- -/-/p'`"
-EXJOBS=$((`cat /proc/cpuinfo | grep processor | wc -l`+2))
-
-### default custom flags: applied by setting ECONF_WRAPPER and EXTRA_ECONF
-EXTRA_ECONF="--disable-static"
 
 ## import per-package bashrc configuration
+${PALUDIS_CONFIG_DIR}/myconfig/scripts/wrapper bashrc
 source <(${PALUDIS_CONFIG_DIR}/myconfig/scripts/wrapper bashrc)
+env |sort -h
 
-## TODO the expansion should be in wrapper
-
+### TODO support cross compile i686_pc_linux_gnu_CFLAGS
+### TODO the expansion should be in wrapper
 ## note: under the hood of multiarch, the final CFLAGS/CPPFLAGS is computed as
 ##   computed_CFLAGS=${x86_64_pc_linux_gnu_CFLAGS:=-march=native -O2 -pipe}
 ##   computed_CPPFLAGS=${x86_64_pc_linux_gnu_CFLAGS} ${x86_64_pc_linux_gnu_CPPFLAGS:-CPPFLAGS}
@@ -26,6 +22,8 @@ eval "${CHOST//-/_}_LDFLAGS=\${LDFLAGS}"
 ## NOTE: bashrc is sourced once in builtin_init phase only when
 ## cave-perform
 [[ ${PALUDIS_ACTION} == "sync" ]] && return
+
+## import helper functions
 source ${PALUDIS_CONFIG_DIR}/myconfig/scripts/utils
 
 ## to apply EXTRA_ECONF
