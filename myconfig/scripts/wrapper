@@ -136,7 +136,11 @@ initialize() {
     local INVOKER_DIRNAME=`dirname $INVOKER`
     local INVOKER_BASENAME=`basename $INVOKER`
     ## enforce the check if is called for paludis
-    if [[ " sets repositories " =~ " $INVOKER_DIRNAME " ]]; then
+    if [[ "wrapper" == "$INVOKER_BASENAME" ]]; then
+	## TODO what if we do `wrapper sets some-set`???
+	ACTION=wrapper
+	SUB_ACTION=$1
+    elif [[ " sets repositories " =~ " $INVOKER_DIRNAME " ]]; then
 	ACTION=$INVOKER_DIRNAME
 	SUB_ACTION=${INVOKER_BASENAME%.bash}
     elif [[ "." == $INVOKER_DIRNAME ]]; then
