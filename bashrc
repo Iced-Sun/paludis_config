@@ -3,34 +3,35 @@
 ### default flags
 CHOST="x86_64-pc-linux-gnu"
 ## TODO support cross compile i686_pc_linux_gnu_CFLAGS
-MY_CFLAGS=( -pipe -O3 `${CHOST}-gcc -march=native -E -v - </dev/null 2>&1 | sed -n -e 's/^.*- -/-/p'` )
-MY_LDFLAGS=( -Wl,-O1 -Wl,--as-needed -Wl,--sort-common )
+CFLAGS="-pipe -O3 `${CHOST}-gcc -march=native -E -v - </dev/null 2>&1 | sed -n -e 's/^.*- -/-/p'`"
+LDFLAGS="-Wl,-O1 -Wl,--as-needed -Wl,--sort-common"
 EXJOBS=$((`cat /proc/cpuinfo | grep processor | wc -l`+2))
 
 ### default custom flags: applied by setting ECONF_WRAPPER and EXTRA_ECONF
-EXTRA_ECONF=( --disable-static )
+## TODO EXTRA_ECONF is not an array anymore, check if wrap_ebuild_phase is still valid
+EXTRA_ECONF="--disable-static"
 
 ### special care
 ## TODO can we put these options to package configs?
 case "${PN}" in
     glibc|mupdf)
 	## just don't bother
-	MY_CFLAGS=( -march=native -pipe -O3 )
+	CFLAGS="-march=native -pipe -O3"
 	USE_DISTCC=no
 	;;&
     paludis)
 	## 'as-needed' corrupts 'print_exports' and 'strip_tar_corruption'
-	MY_LDFLAGS=( ${MY_LDFLAGS[@]#-Wl,--as-needed} )
+	LDFLAGS=${LDFLAGS#-Wl,--as-needed}
 	;;&
     openjdk8|notmuch|db|pinktrace|git|busybox|ocaml)
-	EXTRA_ECONF=( ${EXTRA_ECONF[@]#--disable-static} )
+	EXTRA_ECONF=${EXTRA_ECONF/--disable-static/}
 	;;&
     sway)
         EXJOBS=1
         ;;&
     efibootmgr)
-	MY_CFLAGS+=( -D_GNU_SOURCE )
-	MY_LDFLAGS+=( -Wl,-z,muldefs )
+	CFLAGS+=" -D_GNU_SOURCE"
+	LDFLAGS+=" -Wl,-z,muldefs"
 	;;&
     *)
 	;;
@@ -43,7 +44,7 @@ case "${HOST}" in
     dc-2|fs-3|gs-5)
 	case "${PN}" in
 	    bind-tools)
-		EXTRA_ECONF+=(--with-gssapi)
+		EXTRA_ECONF+=" --with-gssapi"
 		;;&
 	    *)
 		;;
@@ -53,13 +54,15 @@ esac
 
 ### finalize
 
+## TODO the expansion should be in wrapper
+
 ## note: under the hood of multiarch, the final CFLAGS/CPPFLAGS is computed as
 ##   computed_CFLAGS=${x86_64_pc_linux_gnu_CFLAGS:=-march=native -O2 -pipe}
 ##   computed_CPPFLAGS=${x86_64_pc_linux_gnu_CFLAGS} ${x86_64_pc_linux_gnu_CPPFLAGS:-CPPFLAGS}
-eval "${CHOST//-/_}_CFLAGS=\${MY_CFLAGS[@]}"
-eval "${CHOST//-/_}_CXXFLAGS=\${MY_CFLAGS[@]}"
+eval "${CHOST//-/_}_CFLAGS=\${CFLAGS}"
+eval "${CHOST//-/_}_CXXFLAGS=\${CFLAGS}"
 eval "${CHOST//-/_}_CPPLAGS="
-eval "${CHOST//-/_}_LDFLAGS=\${MY_LDFLAGS[@]}"
+eval "${CHOST//-/_}_LDFLAGS=\${LDFLAGS}"
 
 ### Advanced customization
 ## NOTE: bashrc is sourced once in builtin_init phase only when
