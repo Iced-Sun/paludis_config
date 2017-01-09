@@ -374,9 +374,6 @@ show_package_unmask() {
     done
 }
 
-##### Main ####
-## initialize all necessary variable
-initialize
 ## the per-package bashrc processing
 show_bashrc_line() {
     ## malformed bashrc line
@@ -393,16 +390,11 @@ show_bashrc_line() {
     ### TODO check ill-formed flags
     ## a safeguard line
 
-##### Dispatcher ####
-if [[ -d ${CONFIG_DIR} ]]; then
-    if type show_${ACTION} >/dev/null 2>&1; then
-	show_${ACTION} ${SUB_ACTION}
     ## apply the flag contents
     if [[ $1 != "^"* && $1 != "$"* ]]; then
 	## a plain assignment
 	echo "$name=\"$@\""
     else
-	[[ $SELF_INVOKING == 'yes' ]] || echo "Not supported action: " ${ACTION} 1>&2
 	## flags add/remove
 	while [[ $# -gt 0 ]]; do
 	    if [[ $1 == "^"* ]]; then
@@ -456,11 +448,13 @@ show_wrapper() {
     fi
 }
 
-else
-    echo "The configuration path does not exist."
-fi
+##### Main ####
 
-#### Finalize ####
-echo
-popd >/dev/null
+initialize "$@"
+
+if type show_${ACTION} >/dev/null 2>&1; then
+    show_${ACTION} ${SUB_ACTION}
+else
+    echo "Not supported action: " ${ACTION} 1>&2
+fi
 
