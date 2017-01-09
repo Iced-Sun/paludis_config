@@ -4,7 +4,7 @@
 @require	transient
 
 */*		targets:		i686-pc-linux-gnu
-*/*		amd64_cpu_features:	sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3
+*/*		amd64_cpu_features:	         sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3
 */*		x86_cpu_features:	sse sse2 sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3
 */*		video_drivers:		intel
 
