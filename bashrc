@@ -13,23 +13,6 @@ EXTRA_ECONF="--disable-static"
 ## import per-package bashrc configuration
 source <(${PALUDIS_CONFIG_DIR}/myconfig/scripts/wrapper bashrc)
 
-### host specific flags
-## TODO use HOST from myconfig
-HOST=`hostname | cut -d. -f1`
-case "${HOST}" in
-    dc-2|fs-3|gs-5)
-	case "${PN}" in
-	    bind-tools)
-		EXTRA_ECONF+=" --with-gssapi"
-		;;&
-	    *)
-		;;
-	esac
-	;;&
-esac
-
-### finalize
-
 ## TODO the expansion should be in wrapper
 
 ## note: under the hood of multiarch, the final CFLAGS/CPPFLAGS is computed as
