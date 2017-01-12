@@ -1,9 +1,0 @@
-[Unit]
-Description=Fcitx Input Method at display %i
-Requires=xorg@.socket
-After=xorg@.socket
-
-[Service]
-Environment=DISPLAY=:%i
-ExecStart=/usr/bin/fcitx -D -r
-
