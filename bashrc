@@ -1,9 +1,14 @@
 #!/bin/bash
 
+### forget about sync
+## cave-perform
+## NOTE: bashrc is sourced once in builtin_init phase only when
+[[ ${PALUDIS_ACTION} == "sync" ]] && return
+
 ### default flags
 CHOST="x86_64-pc-linux-gnu"
 
-## import per-package bashrc configuration
+### import per-package bashrc configuration
 source <(${PALUDIS_CONFIG_DIR}/myconfig/scripts/wrapper bashrc)
 
 ### TODO support cross compile i686_pc_linux_gnu_CFLAGS
@@ -17,10 +22,6 @@ eval "${CHOST//-/_}_CPPLAGS="
 eval "${CHOST//-/_}_LDFLAGS=\${LDFLAGS}"
 
 ### Advanced customization
-## NOTE: bashrc is sourced once in builtin_init phase only when
-## cave-perform
-[[ ${PALUDIS_ACTION} == "sync" ]] && return
-
 ## import helper functions
 source ${PALUDIS_CONFIG_DIR}/myconfig/scripts/utils
 
