@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 hook_auto_names() {
     echo merger_install_pre
@@ -9,26 +9,33 @@ hook_run_merger_install_pre() {
 
     source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
 
-    UNITDIR=/etc/paludis/myconfig/systemd/${CATEGORY}/${PN}
-    [[ -d ${UNITDIR} ]] || return 0
+    FILES=/etc/paludis/myconfig/systemd/${CATEGORY}/${PN}
+    [[ -d ${FILES} ]] || return 0
     
-    pushd ${UNITDIR} >/dev/null
-    UNITS=( `find . -type f \( -name '*.service' -o -name '*.target' -o -name '*.timer' -o -name '*.socket' \) -printf '%P\n'` )
+    pushd ${FILES} >/dev/null
+    UNITS=( `find . -type f -regextype posix-extended -regex '.*\.(service|target|timer|socket|conf)' -printf '%P\n'` )
     popd >/dev/null
 
-    TARGET=$(basename $(dirname $(echo ${IMAGE}/usr/*/bin)))
-    
-    for UNIT in ${UNITS[@]}; do
-	if [[ -f "${IMAGE}/usr/${TARGET}/lib/systemd/${UNIT}" ]]; then
-	    ewarn_unhooked "The systemd unit ${UNIT} is already shipped with ${PN}."
-	    ewarn "Will overwrite them..."
+    ## multiarch
+    TARGETS=( `for dir in ${IMAGE}/usr/*/bin; do echo $(basename $(dirname $dir)); done` )
+
+    for unit in ${UNITS[@]}; do
+	if [[ -f "${IMAGE}/usr/${TARGET}/lib/systemd/$unit" ]]; then
+	    ewarn_unhooked "The systemd unit $unit is already shipped with ${PN}."
+
+	    unit_old=$unit
+	    unit=${unit%.*}.1.${unit##*.}
+
+	    ewarn "Will rename the $unit_old to $unit..."
 	fi
 
-	einfo_unhooked "Installing ${UNIT}..."
-	install -m 644 -D ${UNITDIR}/${UNIT} "${IMAGE}/usr/${TARGET}/lib/systemd/${UNIT}"
+	for target in ${TARGETS[@]}; do
+	    einfo_unhooked "Installing systemd component \"$unit\" to target \"$target\"..."
+	    install -m 644 -D ${FILES}/$unit "${IMAGE}/usr/$target/lib/systemd/$unit"
 
-	einfo_unhooked "Patching ${UNIT} with multiarch paths..."
-	sed -i "${IMAGE}/usr/${TARGET}/lib/systemd/${UNIT}" -e "s|/usr/bin|/usr/${TARGET}/bin|"
+	    einfo_unhooked "Patching ${UNIT} with multiarch paths..."
+	    sed -i "${IMAGE}/usr/$target/lib/systemd/$unit" -e "s|/usr/bin|/usr/$target/bin|"
+	done
     done
 
     return 0
