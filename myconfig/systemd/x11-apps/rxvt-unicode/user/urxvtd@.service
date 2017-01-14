@@ -1,8 +1,0 @@
-[Unit]
-Description=Clone of rxvt with support for unicode and xft
-Conflicts=%p@.socket
-
-[Service]
-Environment=DISPLAY=:%i
-ExecStart=/usr/x86_64-pc-linux-gnu/bin/urxvtd -o
-

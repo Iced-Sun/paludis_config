@@ -3,8 +3,10 @@ Description=GnuPG private key agent
 IgnoreOnIsolate=true
 
 [Service]
+Environment=GNUPGHOME=%h/.config/gnupg
 Type=forking
-ExecStart=/usr/x86_64-pc-linux-gnu/bin/gpg-agent --daemon
+ExecStart=/usr/bin/gpg-agent --daemon
+ExecStartPost=-/usr/bin/systemctl --user set-environment GNUPGHOME=%h/.config/gnupg
 Restart=on-abort
 
 [Install]

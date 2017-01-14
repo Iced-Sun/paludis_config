@@ -1,0 +1,8 @@
+[Unit]
+Description=Socket for X.org
+
+[Socket]
+ListenStream=/tmp/.X11-unix/X0
+ExecStartPost=-/usr/bin/systemctl --user set-environment DISPLAY=:0
+
+

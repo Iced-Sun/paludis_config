@@ -7,6 +7,7 @@ Environment=TMUX_TMPDIR=%t
 ExecStart=/usr/bin/tmux new-session -t %i -d
 ExecStartPost=-/usr/bin/systemctl --user set-environment TMUX_TMPDIR=%t
 ExecStop=/usr/bin/tmux kill-session -t %i
+ExecStopPost=-/usr/bin/systemctl --user set-environment TMUX_TMPDIR=
 
 [Install]
 WantedBy=default.target

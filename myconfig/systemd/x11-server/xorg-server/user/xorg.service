@@ -1,0 +1,8 @@
+[Unit]
+Description=The X server for X.org
+Requires=xorg.socket
+After=xorg.socket
+
+[Service]
+SuccessExitStatus=0 1
+ExecStart=/usr/x86_64-pc-linux-gnu/bin/Xorg -nolisten tcp -noreset -verbose 2 vt${XDG_VTNR} -keeptty

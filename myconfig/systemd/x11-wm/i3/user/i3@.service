@@ -1,8 +1,0 @@
-[Unit]
-Description=i3 tiling window manager at display %i
-Requires=xorg@.socket
-After=xorg@.socket
-
-[Service]
-Environment=DISPLAY=:%i
-ExecStart=/usr/bin/i3

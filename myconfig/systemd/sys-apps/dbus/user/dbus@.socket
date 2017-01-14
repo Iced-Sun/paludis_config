@@ -1,6 +1,0 @@
-[Unit]
-Description=D-Bus User Message Bus Socket at display %i
-
-[Socket]
-ListenStream=%t/bus-%i
-ExecStartPost=-/usr/x86_64-pc-linux-gnu/bin/systemctl --user set-environment DBUS_SESSION_BUS_ADDRESS=unix:path=%t/bus-%i
