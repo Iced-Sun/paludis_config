@@ -16,3 +16,9 @@ compositor/sway				-grab
 	sys-libs/wlc			X
 -compositor/sway[=scm]
 @compositor/sway			EXJOBS: 1
+
+## bluetooth
+net-wireless/blueman
+	gnome-bindings/pygobject	cairo
+	x11-libs/libnotify		gobject-introspection
+
