@@ -8,7 +8,7 @@
 #x11-libs/libXau				parts: development
 
 ## X
-x11-server/xorg-server							&-*/*
+x11-server/xorg-server				&-*/*
 x11-dri/mesa
 	dev-python/Mako				python_abis: 2.7
 		dev-python/beaker		python_abis: 2.7
