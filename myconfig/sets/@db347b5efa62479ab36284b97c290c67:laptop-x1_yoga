@@ -22,3 +22,13 @@ net-wireless/blueman
 	gnome-bindings/pygobject	cairo
 	x11-libs/libnotify		gobject-introspection
 
+## touchscreen and pen
+	sys-libs/libinput		wacom
+
+## EFI
+sys-apps/systemd			efi
+
+## hardware ability
+media/mpv				va
+	media/ffmpeg			va
+	x11-libs/libva			opengl		&x11-drivers/intel-driver
