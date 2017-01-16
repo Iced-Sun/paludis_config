@@ -22,6 +22,7 @@ virtual/pkg-config		providers: pkgconf
 
 ## headers
 app-arch/bzip2			parts: development
+app-arch/lz4			parts: development
 app-arch/xz			parts: development
 	dev-libs/expat		parts: development
 	dev-libs/libffi		parts: development

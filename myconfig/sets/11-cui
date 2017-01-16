@@ -3,7 +3,7 @@
 ## system
 dev-util/ketchup
 sys-apps/busybox        static
-sys-apps/systemd
+sys-apps/systemd	lz4			&sys-boot/dracut
 
 ## app-arch
 app-arch/p7zip
