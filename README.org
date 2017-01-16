@@ -1,46 +1,72 @@
 * Package configuration specification
 
+** set file
 The package configuration set files are placed under
-=${PALUDIS_CONFIG_DIR}/myconfig/packages=. The filename convention is:
-1. A file whose name starts with a =@= is a machine specific set,
-   which should include machine related package configuration (mostly
-   hardware), such as cpu features, video drivers, firmwares, etc.).
+=${PALUDIS_CONFIG_DIR}/myconfig/packages=.
+
+1. =@<machine-id>:<hostname>=
+
+   A machine specific set which include machine related package
+   configuration (mostly hardware), such as cpu features, video
+   drivers, firmwares, etc.).
 
    The configurations in a machine set file will appear at the end of
    the paludis configurations, i.e., it has the highest priority and
    will overwrite other configurations.
 
-   The machine set filename will have the format of
-   =@${machine_id}:${hostname}=. The paludis installed world file
-   should have a line of =${machine_id}=.
+2. =?<default>=
 
-2. A file whose name starts with a =?= is a weak configuration set,
-   which only provides predefined package options or/and
-   suggestions. It should not be added to the paludis installed world
-   file. The configuration will be included in the front of the
-   paludis configurations.
+   A weak configuration set which only provides predefined package
+   options or/and suggestions.
 
-3. The name of all other files should have the format of
-   =${order}-${name}=. The paludis configuration will be combined by
-   order of the =${order}= variable. The paludis installed world file
-   should contains lines of =${name}= (without =${order}=).
+   It would not be added to the paludis installed world file. The
+   configuration will be included in the front of the paludis
+   configurations.
 
-The package configuration spec is:
-1. Each line configurates a package;
-2. A line starting with =<TAB>= indicates dependency, i.e., the
-   package will not be included in the corresponding /set/;
-3. A package spec starts with =~= will unmask an unstable mask;
-4. A package spec starts with =+= will unmask a repository mask;
-5. Any word after the leading package spec is the /options/
+3. =<order>-<name>=
+
+   Just an ordinary set with priority =<order>=.
+
+** set file contents
+
+1. Each line configurates a package.
+
+2. Marks before any package spec at the start of a line will have
+   special meanings:
+
+   | =<TAB>=    | dependency        |
+   | =+=        | repository unmask |
+   | =~=        | unstable unmask   |
+   | =-=        | user mask         |
+   | =@requrie= | set inclusion     |
+   | =@=        | /bashrc/ config   |
+
+3. Any word after the leading package spec is the /options/
    configuration, with the exception of the package spec starting with
-   =&= at the end of the line (see below);
-6. A package spec starting with =&= at the end of the line will be
+   =&= at the end of the line (see below).
+
+4. A package spec starting with =&= at the end of the line will be
    included in the /suggestion/ configuration.
 
-For example, the following line will unmask =xorg-server-1.19.0-r1=,
-add it to a set, take the =xf86-input-libinput= suggestion, configure
-its options as =systemd xwayland providers: libressl -openssl=.
+5. Each /bashrc/ configuration line must specify only one parameter,
+   with the following marks supported:
 
-: +x11-server/xorg-server[=1.19.0-r1]		systemd xwayland providers: libressl -openssl		&xf86-input-libinput
+   | =<no-mark>= | overwrite bashrc parameter   |
+   | =^=         | insert into bashrc parameter |
+   | =$=         | remove from bashrc parameter |
 
-* TODO config including support
+In the following example, the first line will unmask
+=xorg-server-1.19.0-r1=, add it to a set, take the
+=xf86-input-libinput= suggestion, configure its options as =systemd
+xwayland providers: libressl -openssl=.
+
+The second line will remove the =-ffast-math= CFLAGS and then insert a
+=-O2= CFLAGS.
+
+The third line just set EXJOBS as 1.
+
+#+BEGIN_EXAMPLE
++x11-server/xorg-server[=1.19.0-r1]		systemd xwayland providers: libressl -openssl		&xf86-input-libinput
+@x11-server/xorg-server				CFLAGS: $-ffastmath ^-O2
+@x11-server/xorg-server				EXJOBS: 1
+#+END_EXAMPLE
