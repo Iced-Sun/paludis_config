@@ -37,7 +37,7 @@ wrap_ebuild_phase() {
 
 	    if [[ ${EXHERES_PHASE} == "configure" ]]; then
 		einfo_unhooked "  Applying EXTRA_ECONF..."
-		edo "${group[@]}" "${EXTRA_ECONF}"
+		edo "${group[@]}" ${EXTRA_ECONF}
 	    else
 		edo "${group[@]}"
 	    fi    
