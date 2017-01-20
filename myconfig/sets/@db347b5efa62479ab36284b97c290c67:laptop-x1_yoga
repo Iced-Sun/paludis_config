@@ -32,3 +32,7 @@ sys-apps/systemd			efi
 media/mpv				va
 	media/ffmpeg			va
 	x11-libs/libva			opengl		&x11-drivers/intel-driver
+## gnupg
+app-crypt/gnupg
+	app-crypt/pinentry		gtk keyring
+
