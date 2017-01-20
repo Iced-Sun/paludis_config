@@ -32,6 +32,14 @@ sys-apps/systemd			efi
 media/mpv				va
 	media/ffmpeg			va
 	x11-libs/libva			opengl		&x11-drivers/intel-driver
+
+## postgres
+dev-db/postgresql			readline
+
+## java
+@dev-lang/openjdk8			EXTRA_ECONF: $--disable-static
+@dev-lang/openjdk8			EXTRA_ECONF: ^--with-jobs=1
+
 ## gnupg
 app-crypt/gnupg
 	app-crypt/pinentry		gtk keyring
