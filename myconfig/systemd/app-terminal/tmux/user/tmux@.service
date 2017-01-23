@@ -5,9 +5,8 @@ Description=tmux: terminal multiplexer for session %i
 Type=forking
 Environment=TMUX_TMPDIR=%t
 ExecStart=/usr/bin/tmux new-session -t %i -d
-ExecStartPost=-/usr/bin/systemctl --user set-environment TMUX_TMPDIR=%t
+ExecStartPost=-/usr/bin/systemctl --user import-environment TMUX_TMPDIR
 ExecStop=/usr/bin/tmux kill-session -t %i
-ExecStopPost=-/usr/bin/systemctl --user set-environment TMUX_TMPDIR=
 
 [Install]
 WantedBy=default.target

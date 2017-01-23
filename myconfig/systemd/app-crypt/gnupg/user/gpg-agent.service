@@ -6,7 +6,7 @@ IgnoreOnIsolate=true
 Environment=GNUPGHOME=%h/.config/gnupg
 Type=forking
 ExecStart=/usr/bin/gpg-agent --daemon
-ExecStartPost=-/usr/bin/systemctl --user set-environment GNUPGHOME=%h/.config/gnupg
+ExecStartPost=-/usr/bin/systemctl --user import-environment GNUPGHOME
 Restart=on-abort
 
 [Install]
