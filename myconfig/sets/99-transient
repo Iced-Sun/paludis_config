@@ -1,4 +1,4 @@
-*/*::subi					build_options:		work=preserve
+*/*::subi					BUILD_OPTIONS:		work=preserve
 
 ## gtk-doc-autotools require libxml2[python]
 	dev-libs/libxml2			python

@@ -1,16 +1,16 @@
 ### General desktop packages ###
 
 ## alternatives
-	virtual/notification-daemon		providers: dunst -notification-daemon
-	virtual/dhcp-client			providers: dhcpcd
+	virtual/notification-daemon		PROVIDERS: dunst -notification-daemon
+	virtual/dhcp-client			PROVIDERS: dhcpcd
 
 ## net
 net-misc/openvpn				lzo threads
 
 ## mail
-#net-mail/offlineimap				python_abis: 2.7
+#net-mail/offlineimap				PYTHON_ABIS: 2.7
 	dev-lang/python:2.7			sqlite
-	dev-python/six				python_abis: 2.7 -3.6
+	dev-python/six				PYTHON_ABIS: 2.7 -3.6
 #mail-client/mu
 #office-libs/wv
 
@@ -23,10 +23,10 @@ sys-sound/alsa-utils
 
 ## net
 net-ftp/lftp
-#net-www/firefox					providers: gtk3
-#	dev-libs/icu				parts: development
+#net-www/firefox					PROVIDERS: gtk3
+#	dev-libs/icu				PARTS: development
 #	dev-lang/python:2.7			sqlite
-#	dev-python/pip				python_abis: 2.7
+#	dev-python/pip				PYTHON_ABIS: 2.7
 
 ## wps requires png-1.2
 media-libs/libpng:1.2

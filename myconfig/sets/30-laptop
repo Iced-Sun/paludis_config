@@ -3,8 +3,8 @@
 gnome-desktop/network-manager-applet
 	net-wireless/wpa_supplicant		dbus nl80211
 	net-apps/NetworkManager			wifi compat-libs providers: nss
-		dev-libs/nspr			parts: development
+		dev-libs/nspr			PARTS: development
 
 ## nm-applet password prompt
 gnome-desktop/gnome-keyring
-	gnome-desktop/gcr			python_abis: 2.7
+	gnome-desktop/gcr			PYTHON_ABIS: 2.7

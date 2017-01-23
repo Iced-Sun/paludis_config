@@ -2,4 +2,4 @@
 
 media-libs/freetype				harfbuzz
 	x11-libs/harfbuzz
-		dev-libs/icu			parts: development
+		dev-libs/icu			PARTS: development

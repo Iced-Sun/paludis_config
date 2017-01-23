@@ -1,5 +1,5 @@
-*/*		amd64_cpu_features:	sse sse2 sse3 ssse3 sse4.1
-*/*		video_drivers:		intel
+*/*		AMD64_CPU_FEATURES:	sse sse2 sse3 ssse3 sse4.1
+*/*		VIDEO_DRIVERS:		intel
 
 ## wireless
 net-wireless/iwlwifi-3945-ucode

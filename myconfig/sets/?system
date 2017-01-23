@@ -7,43 +7,43 @@
 # fixme pbzip2 cannot be used as the alternative of bzip2 in the system set
 
 # gnu
-virtual/coreutils		providers: gnu	# cp --reflink
-virtual/wget			providers: gnu	# IPv6
+virtual/coreutils		PROVIDERS: gnu	# cp --reflink
+virtual/wget			PROVIDERS: gnu	# IPv6
 
 # busybox
-virtual/awk			providers: busybox
-virtual/grep			providers: busybox
-virtual/man			providers: busybox
-virtual/sed			providers: busybox
-virtual/gzip			providers: busybox
+virtual/awk			PROVIDERS: busybox
+virtual/grep			PROVIDERS: busybox
+virtual/man			PROVIDERS: busybox
+virtual/sed			PROVIDERS: busybox
+virtual/gzip			PROVIDERS: busybox
 
 # system
-virtual/pkg-config		providers: pkgconf
+virtual/pkg-config		PROVIDERS: pkgconf
 
 ## headers
-app-arch/bzip2			parts: development
-app-arch/lz4			parts: development
-app-arch/xz			parts: development
-	dev-libs/expat		parts: development
-	dev-libs/libffi		parts: development
-	dev-libs/gmp		parts: development
-	dev-libs/mpfr		parts: development
-	dev-libs/pcre		parts: development
-	dev-libs/popt		parts: development
-	sys-apps/attr		parts: development
-	sys-apps/file		parts: development
-	sys-libs/libcap		parts: development
-	sys-libs/ncurses	parts: development
-	sys-libs/pam		parts: development
-	sys-libs/readline	parts: development
-	sys-libs/zlib		parts: development
+app-arch/bzip2			PARTS: development
+app-arch/lz4			PARTS: development
+app-arch/xz			PARTS: development
+	dev-libs/expat		PARTS: development
+	dev-libs/libffi		PARTS: development
+	dev-libs/gmp		PARTS: development
+	dev-libs/mpfr		PARTS: development
+	dev-libs/pcre		PARTS: development
+	dev-libs/popt		PARTS: development
+	sys-apps/attr		PARTS: development
+	sys-apps/file		PARTS: development
+	sys-libs/libcap		PARTS: development
+	sys-libs/ncurses	PARTS: development
+	sys-libs/pam		PARTS: development
+	sys-libs/readline	PARTS: development
+	sys-libs/zlib		PARTS: development
 
 ## options
 dev-scm/git			curl						&-*/*
 sys-apps/paludis		prebuilt-documentation search-index pbin
 ## 'as-needed' corrupts 'print_exports' and 'strip_tar_corruption'
 @sys-apps/paludis		LDFLAGS: $-Wl,--as-needed
-	app-text/xmlto		providers: lynx
-	app-arch/libarchive	providers: libxml2
+	app-text/xmlto		PROVIDERS: lynx
+	app-arch/libarchive	PROVIDERS: libxml2
 sys-apps/sydbox			seccomp
 

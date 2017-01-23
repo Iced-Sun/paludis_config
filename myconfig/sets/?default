@@ -1,13 +1,13 @@
 ### Gobal defaults
 ## disable everything by default
 */*			-*
-*/*			parts:		-* binaries configuration data libraries
-*/*			providers:	-*
-*/*			linguas:	-* zh zh_CN
+*/*			PARTS:		-* binaries configuration data libraries
+*/*			PROVIDERS:	-*
+*/*			LINGUAS:	-* zh zh_CN
 
 ## build related
-*/*			build_options:	symbols=strip -recommended_tests
-*/*			targets:	-* x86_64-pc-linux-gnu
+*/*			BUILD_OPTIONS:	symbols=strip -recommended_tests
+*/*			TARGETS:	-* x86_64-pc-linux-gnu
 
 ## bashrc
 @*/*			CFLAGS:		"-pipe -O3 `${CHOST}-gcc -march=native -E -v - </dev/null 2>&1 | sed -n -e 's/^.*- -/-/p'`"
@@ -17,15 +17,15 @@
 
 ## system
 */*			pam systemd udev
-*/*			providers:	libressl
-*/*			providers:	systemd
-*/*			providers:	libelf
+*/*			PROVIDERS:	libressl
+*/*			PROVIDERS:	systemd
+*/*			PROVIDERS:	libelf
 ## systemd requires elfutils, and libelf/elfutils has collision
-	dev-libs/glib		providers:	-libelf elfutils
-	sys-apps/iproute2	providers:	-libelf elfutils
+	dev-libs/glib		PROVIDERS:	-libelf elfutils
+	sys-apps/iproute2	PROVIDERS:	-libelf elfutils
 
 ## archives
-*/*			providers:	libarchive
+*/*			PROVIDERS:	libarchive
 
 ## concurrenty/parellelism
 */*			threads openmp
@@ -34,6 +34,6 @@
 */*			acl xattr
 
 ## language bindings
-*/*			python_abis:	-* 3.6
-*/*			lua_abis:	-*
-*/*			ruby_abis:	-*
+*/*			PYTHON_ABIS:	-* 3.6
+*/*			LUA_ABIS:	-*
+*/*			RUBY_ABIS:	-*

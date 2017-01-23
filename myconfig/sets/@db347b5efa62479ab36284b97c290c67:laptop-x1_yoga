@@ -3,10 +3,10 @@
 @require	wayland	x11
 @require	transient
 
-*/*		targets:		i686-pc-linux-gnu
-*/*		amd64_cpu_features:	         sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3
-*/*		x86_cpu_features:	sse sse2 sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3
-*/*		video_drivers:		intel
+*/*		TARGETS:		i686-pc-linux-gnu
+*/*		AMD64_CPU_FEATURES:	         sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3
+*/*		X86_CPU_FEATURES:	sse sse2 sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3
+*/*		VIDEO_DRIVERS:		intel
 
 ## firmware
 +firmware/linux-firmware[=scm]

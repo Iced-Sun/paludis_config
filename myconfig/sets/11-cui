@@ -8,7 +8,7 @@ sys-apps/systemd	lz4			&sys-boot/dracut
 ## app-arch
 app-arch/p7zip
 app-arch/unrar
-virtual/unzip		providers: unzip
+virtual/unzip		PROVIDERS: unzip
 
 ## fs
 sys-fs/btrfs-progs

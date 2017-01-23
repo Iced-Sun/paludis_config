@@ -1,8 +1,8 @@
 ### Basic graphic applications ###
 
 ## defaults
-*/*					providers:	jpeg-turbo
-*/*					providers:	ffmpeg
+*/*					PROVIDERS:	jpeg-turbo
+*/*					PROVIDERS:	ffmpeg
 
 ## decent fonts
 fonts/terminus-font
@@ -19,7 +19,7 @@ inputmethods/fcitx-libpinyin
 
 ## text
 text-plugins/zathura-djvu
-virtual/zathura-pdf			providers: zathura-pdf-poppler
+virtual/zathura-pdf			PROVIDERS: zathura-pdf-poppler
 	app-text/poppler		glib cairo
 
 ## media
