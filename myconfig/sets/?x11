@@ -4,7 +4,7 @@
 */*::x11					X
 
 ## headers
-#dev-libs/libpthread-stubs			PARTS: development
+dev-libs/libpthread-stubs			PARTS: development
 #x11-libs/libXau				PARTS: development
 
 ## X
