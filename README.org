@@ -69,12 +69,13 @@ The second line will remove the =-ffast-math= CFLAGS and then insert a
 
 The third line just set EXJOBS to 1.
 
-The last line tells paludis that glibc require ld.bfd to build.
+The last line tells paludis that glibc require ld.bfd to build (which
+will not work, though).
 
 #+BEGIN_EXAMPLE
-+x11-server/xorg-server[=1.19.0-r1]		systemd xwayland providers: libressl -openssl		&xf86-input-libinput
++x11-server/xorg-server[=1.19.0-r1]		systemd xwayland PROVIDERS: libressl -openssl		&xf86-input-libinput
 @x11-server/xorg-server				CFLAGS: $-ffastmath ^-O2
 @x11-server/xorg-server				EXJOBS: 1
 
-@sys-libs/glibc					ALTERNATIVE: gcc 5.1
+@sys-libs/glibc					ALTERNATIVE: ld bfd
 #+END_EXAMPLE
