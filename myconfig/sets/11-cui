@@ -23,6 +23,7 @@ app-misc/mc
 app-shells/fish
 app-terminal/tmux
 sys-process/htop	cgroups
+	@dev-util/strace	LDFLAGS: ^-fuse-ld=bfd
 sys-process/lsof
 
 ## systemd requires elfutils, and libelf/elfutils has collision
