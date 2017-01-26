@@ -4,7 +4,6 @@
 	dev-libs/libxml2			python
 
 ## transient unmasks
-	+app-editors/emacs[=25.1.50]		dbus
 	+sys-devel/gcc:6
 	+sys-libs/libatomic:6
 	+sys-libs/libstdc++:6
@@ -18,3 +17,6 @@
 
 @sys-boot/efibootmgr				CFLAGS: ^-D_GNU_SOURCE
 @sys-boot/efibootmgr				LDFLAGS: ^-Wl,-z,muldefs
+
+## notifications
+	app-editors/emacs			dbus
