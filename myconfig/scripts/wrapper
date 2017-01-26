@@ -386,7 +386,10 @@ show_bashrc_line() {
     ### TODO check ill-formed flags
 
     ## apply the flag contents
-    if [[ $1 != "^"* && $1 != "$"* ]]; then
+    if [[ $name == "ALTERNATIVE" ]]; then
+	## alternative
+	[[ `eclectic $1 show` == $2 ]] && echo '# will not update alternative' || eclectic $1 script --sh $2
+    elif [[ $1 != "^"* && $1 != "$"* ]]; then
 	## a plain assignment
 	[[ $1 == '"'* ]] && echo "$name=$@" || echo "$name=\"$@\""
     else
