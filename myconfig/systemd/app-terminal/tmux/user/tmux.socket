@@ -1,0 +1,14 @@
+[Unit]
+Description=tmux: A terminal multiplexer Socket
+Documentation=man:tmux(1)
+Conflicts=%p.service
+
+[Socket]
+ListenStream=%t/%p-%U/default
+ExecStartPost=-/usr/bin/systemctl --user set-environment TMUX_TMPDIR=%t
+SocketMode=0770
+DirectoryMode=0700
+
+[Install]
+WantedBy=sockets.target
+

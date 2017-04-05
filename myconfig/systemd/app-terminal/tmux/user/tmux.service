@@ -1,0 +1,9 @@
+[Unit]
+Description=tmux: A terminal multiplexer
+Documentation=man:tmux(1)
+Conflicts=%p.socket
+
+[Service]
+Type=forking
+ExecStart=/usr/bin/tmux -f ${XDG_CONFIG_HOME}/tmux/config new-session -d -s %u@%H
+ExecStop=/usr/bin/tmux kill-server
