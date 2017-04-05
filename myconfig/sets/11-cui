@@ -22,12 +22,11 @@ app-admin/sudo
 app-misc/mc
 app-shells/fish
 app-terminal/tmux
-sys-process/htop	cgroups
+sys-process/htop	cgroups			&dev-util/strace sys-process/lsof
 	@dev-util/strace	LDFLAGS: ^-fuse-ld=bfd
-sys-process/lsof
 
-## systemd requires elfutils, and libelf/elfutils has collision
-	dev-libs/glib	&-gnome-desktop/dconf
+## we don't need other GNOME bundles
+	dev-libs/glib	&-gnome-desktop/dconf -gnome-desktop/gvfs
 
 ## net
 net-proxy/proxychains-ng
