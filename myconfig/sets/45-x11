@@ -15,3 +15,8 @@ x11-wm/i3								&x11-plugins/i3status
 x11-apps/i3lock
 x11-misc/rofi				i3
 x11-apps/rxvt-unicode			perl xft xim
+
+## apps dedicated for X
+app-editors/emacs			X freetype jpeg png tiff xpm xim providers: gtk3
+media-gfx/sxiv				gif
+	media-libs/imlib2		X
