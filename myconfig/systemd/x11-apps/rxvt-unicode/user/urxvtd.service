@@ -1,9 +1,6 @@
 [Unit]
-Description=Clone of rxvt with support for unicode and xft
-Conflicts=%p.socket
+Description=Urxvt Terminal Daemon
+Requires=urxvtd.socket
 
 [Service]
-ExecStart=/usr/bin/urxvtd
-
-[Install]
-WantedBy=default.target
+ExecStart=/usr/bin/urxvtd -q
