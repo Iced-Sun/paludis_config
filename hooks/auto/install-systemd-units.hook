@@ -13,7 +13,7 @@ hook_run_merger_install_pre() {
     [[ -d ${FILES} ]] || return 0
     
     pushd ${FILES} >/dev/null
-    UNITS=( `find . -type f -regextype posix-extended -regex '.*\.(service|target|timer|socket|conf)' -printf '%P\n'` )
+    UNITS=( `find . -regextype posix-extended -regex '.*\.(service|target|timer|socket|conf)' -printf '%P\n'` )
     popd >/dev/null
 
     ## multiarch
@@ -30,6 +30,14 @@ hook_run_merger_install_pre() {
 	fi
 
 	for target in ${TARGETS[@]}; do
+            if [[ -L ${FILES}/$unit ]]; then
+                 einfo_unhooked "Installing symbolic link \"$unit\"..."
+                 local dest=`dirname "${IMAGE}/usr/$target/lib/systemd/$unit"`
+                 mkdir -p $dest
+		 cp -d ${FILES}/$unit $dest
+                 continue
+            fi
+
 	    einfo_unhooked "Installing systemd component \"$unit\" to target \"$target\"..."
 	    install -m 644 -D ${FILES}/$unit "${IMAGE}/usr/$target/lib/systemd/$unit"
 
