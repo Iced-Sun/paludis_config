@@ -1,0 +1,9 @@
+[Unit]
+Description=X resource database at DISPLAY :%i
+Requires=X@.target
+After=X@.target
+
+[Service]
+Environment=DISPLAY=:%i
+Type=oneshot
+ExecStart=-/usr/bin/xrdb -merge ${XDG_CONFIG_HOME}/X11/Xresources
