@@ -8,10 +8,10 @@
 net-misc/openvpn				lzo threads
 
 ## mail
-#net-mail/offlineimap				PYTHON_ABIS: 2.7
+net-mail/offlineimap				PYTHON_ABIS: 2.7
 	dev-lang/python:2.7			sqlite
-	dev-python/six				PYTHON_ABIS: 2.7 -3.6
-#mail-client/mu
+	dev-python/six				PYTHON_ABIS: 2.7
+mail-client/mu
 #office-libs/wv
 
 ## media
