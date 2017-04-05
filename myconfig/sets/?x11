@@ -16,3 +16,6 @@ x11-dri/mesa
 		dev-python/MarkupSafe		PYTHON_ABIS: 2.7
 		dev-python/setuptools		PYTHON_ABIS: 2.7
 			dev-python/certifi	PYTHON_ABIS: 2.7
+			dev-python/appdirs	PYTHON_ABIS: 2.7
+			dev-python/packaging	PYTHON_ABIS: 2.7
+				dev-python/pyparsing	PYTHON_ABIS: 2.7
