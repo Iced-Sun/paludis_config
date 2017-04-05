@@ -1,0 +1,10 @@
+[Unit]
+Description=Unison @ %i.prf
+
+[Service]
+Environment=UNISON=/home/subi/.config/unison
+Type=oneshot
+ExecStart=/usr/bin/unison %i
+IOSchedulingClass=idle
+CPUSchedulingPolicy=idle
+KillSignal=SIGKILL

@@ -1,0 +1,10 @@
+[Unit]
+Description=Unison
+StopWhenUnneeded=yes
+
+[Timer]
+OnActiveSec=30min
+OnUnitInactiveSec=30min
+
+[Install]
+WantedBy=timers.target
