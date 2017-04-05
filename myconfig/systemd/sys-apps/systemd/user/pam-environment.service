@@ -1,0 +1,10 @@
+[Unit]
+Description=Import PAM environment
+DefaultDependencies=no
+
+[Service]
+EnvironmentFile=-/etc/environment
+ExecStart=-/usr/bin/bash -c "/usr/bin/systemctl --user import-environment `cat /etc/environment | grep -v '#' | cut -d= -f1`"
+
+[Install]
+WantedBy=environment.target

@@ -1,0 +1,8 @@
+[Unit]
+Description=Environment
+Requires=dbus.socket
+Before=basic.target
+IgnoreOnIsolate=true
+
+[Install]
+WantedBy=default.target
