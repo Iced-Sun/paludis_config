@@ -28,6 +28,11 @@ remove_comment_and_platform() {
     sed -r -e 's/#.*//' -e 's/~//' -e '/^[[:blank:]]*$/d' -e '/^[[:blank:]]*@.*/d'
 }
 
+remove_user_mask_spec() {
+    # remove spec with user mask('-')
+    sed -r -e 's/^[[:blank:]]*-.*//'
+}
+
 remove_custom_mark() {
     # remove user mask('-'), mask unmask('+'), and suggestion taken('&')
     sed -e 's/^[[:blank:]]*[+-]\([[:alnum:]]\+\)/\1/' -e 's/&.*//'
@@ -322,7 +327,7 @@ show_sets() {
     done
 
     ## the requried set
-    cat ${SETS_DIR}/${SETS[$1]} | remove_comment_and_platform | remove_custom_mark | sed -r -n '/^[^[:blank:]]/ s/^([a-z][^[:blank:]]*).*/\* \1/ p'
+    cat ${SETS_DIR}/${SETS[$1]} | remove_comment_and_platform | remove_user_mask_spec | remove_custom_mark | sed -r -n '/^[^[:blank:]]/ s/^([a-z][^[:blank:]]*).*/\* \1/ p'
 }
 
 show_options() {
