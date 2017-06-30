@@ -8,10 +8,6 @@
 fonts/terminus-font
 fonts/noto
 
-## icon-theme
-gnome-desktop/gnome-icon-theme
-gnome-desktop/gnome-icon-theme-symbolic
-
 ## i18n
 inputmethods/fcitx			classic-ui gtk3
 inputmethods/fcitx-configtool		gtk3
