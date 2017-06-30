@@ -21,6 +21,7 @@ app-editors/emacs
 app-admin/sudo
 app-misc/mc
 app-shells/fish
+	dev-libs/pcre2	PARTS: development
 app-terminal/tmux
 sys-process/htop	cgroups			&dev-util/strace sys-process/lsof
 	@dev-util/strace	LDFLAGS: ^-fuse-ld=bfd
