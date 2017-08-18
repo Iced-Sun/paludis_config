@@ -10,6 +10,7 @@
 
 ## firmware
 +firmware/linux-firmware[=scm]
+firmware/intel-microcode
 
 ## my favorite window manager
 compositor/sway				-grab
@@ -19,28 +20,53 @@ compositor/sway				-grab
 
 ## bluetooth
 net-wireless/blueman
+	net-wireless/bluez		obex
 	gnome-bindings/pygobject	cairo
 	x11-libs/libnotify		gobject-introspection
 
 ## touchscreen and pen
 	sys-libs/libinput		wacom
 
-## EFI
+## EFI and boot
 sys-apps/systemd			efi
+sys-boot/grub				efi
+	@sys-boot/grub			CFLAGS: -O2 -pipe
+	@sys-boot/grub			LDFLAGS: -Wl,-O1
 
 ## hardware ability
 media/mpv				va
 	media/ffmpeg			va
 	x11-libs/libva			opengl		&x11-drivers/intel-driver
 
+## fs
+sys-fs/ntfs-3g_ntfsprogs
+sys-fs/dosfstools
+
 ## postgres
-dev-db/postgresql			readline
+dev-db/postgresql			readline	postgresql_extensions: file_fdw
 
 ## java
+dev-lang/openjdk8
+	app-text/poppler		lcms
 @dev-lang/openjdk8			EXTRA_ECONF: $--disable-static
 @dev-lang/openjdk8			EXTRA_ECONF: ^--with-jobs=1
 
 ## gnupg
 app-crypt/gnupg
 	app-crypt/pinentry		gtk keyring
+
+## nodejs
+dev-lang/node
+
+## for taskjuggler
+dev-lang/ruby
+
+## virtualization
+app-virtualization/qemu			amd64 gtk3 lz
+
+## systemd-nspawn
+sys-apps/systemd			nat
+
+## pptp
+net-apps/pptpclient
 

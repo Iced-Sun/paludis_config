@@ -46,4 +46,3 @@ sys-apps/paludis		prebuilt-documentation search-index pbin
 	app-text/xmlto		PROVIDERS: lynx
 	app-arch/libarchive	PROVIDERS: libxml2
 sys-apps/sydbox			seccomp
-

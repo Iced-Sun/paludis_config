@@ -4,6 +4,9 @@
 	virtual/notification-daemon		PROVIDERS: dunst -notification-daemon
 	virtual/dhcp-client			PROVIDERS: dhcpcd
 
+## desktop
+x11-apps/xdg-utils
+
 ## net
 net-misc/openvpn				lzo threads
 
@@ -16,6 +19,7 @@ mail-client/mu
 
 ## media
 sys-sound/alsa-utils
+media-sound/apulse
 ~media-sound/mpd				alsa ffmpeg -systemd			&-*/* # upstream systemd doesn't support user config
 ~media-sound/ncmpcpp				taglib
 ~media/mpv					alsa opengl X
