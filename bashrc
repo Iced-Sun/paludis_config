@@ -8,18 +8,8 @@
 ### default flags
 CHOST="x86_64-pc-linux-gnu"
 
-### import per-package bashrc configuration
+### import global&per-package bashrc configuration
 source <(${PALUDIS_CONFIG_DIR}/myconfig/scripts/wrapper bashrc)
-
-### TODO support cross compile i686_pc_linux_gnu_CFLAGS
-### TODO the expansion should be in wrapper
-## note: under the hood of multiarch, the final CFLAGS/CPPFLAGS is computed as
-##   computed_CFLAGS=${x86_64_pc_linux_gnu_CFLAGS:=-march=native -O2 -pipe}
-##   computed_CPPFLAGS=${x86_64_pc_linux_gnu_CFLAGS} ${x86_64_pc_linux_gnu_CPPFLAGS:-CPPFLAGS}
-eval "${CHOST//-/_}_CFLAGS=\${CFLAGS}"
-eval "${CHOST//-/_}_CXXFLAGS=\${CFLAGS}"
-eval "${CHOST//-/_}_CPPLAGS="
-eval "${CHOST//-/_}_LDFLAGS=\${LDFLAGS}"
 
 ### Advanced customization
 ## import helper functions
@@ -29,8 +19,7 @@ source ${PALUDIS_CONFIG_DIR}/myconfig/scripts/utils
 ECONF_WRAPPER="wrap_ebuild_phase"
 
 ## FIXME we just need another round to make distcc work again.
-USE_DISTCC=no
-if [[ x${USE_DISTCC} != "xno" ]]; then
+if [[ x${MY__USE_DISTCC} != "xno" ]]; then
     source ${PALUDIS_CONFIG_DIR}/myconfig/scripts/distcc
     
     EMAKE_WRAPPER="wrap_ebuild_phase distcc_setup_hosts; distcc_allow_net;"

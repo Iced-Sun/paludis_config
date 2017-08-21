@@ -1,4 +1,13 @@
-### Gobal defaults
+### bashrc and other build options
+@*/*			CFLAGS:			"-flto -pipe -O3"
+@*/*			LDFLAGS:		-flto -Wl,-O1 -Wl,--as-needed -Wl,--sort-common
+@*/*			EXJOBS:			"$((`cat /proc/cpuinfo | grep processor | wc -l`+2))"
+## custom bashrc variabls
+@*/*			MY__CFLAGS_MARCH:	"-march=native"
+@*/*			MY__EXTRA_ECONF:	--disable-static
+@*/*			MY__USE_DISTCC:		no
+
+### Global option defaults
 ## disable everything by default
 */*			-*
 */*			PARTS:		-* binaries configuration data libraries
@@ -8,12 +17,6 @@
 ## build related
 */*			BUILD_OPTIONS:	symbols=strip -recommended_tests
 */*			TARGETS:	-* x86_64-pc-linux-gnu
-
-## bashrc
-@*/*			CFLAGS:		"-pipe -O3 `${CHOST}-gcc -march=native -E -v - </dev/null 2>&1 | sed -n -e 's/^.*- -/-/p'`"
-@*/*			LDFLAGS:	-Wl,-O1 -Wl,--as-needed -Wl,--sort-common
-@*/*			EXJOBS:		"$((`cat /proc/cpuinfo | grep processor | wc -l`+2))"
-@*/*			EXTRA_ECONF:	--disable-static
 
 ## system
 */*			pam systemd udev

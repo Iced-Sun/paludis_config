@@ -420,33 +420,30 @@ show_bashrc() {
     ## avoid surprises in `set -- $line` due to globbing
     set -f
 
-    ## TODO: support cross-target CFLAGS/LDFLAGS
+    ## read configuration and extract those for bashrc
     for set in ${PREDEFINED_SETS[@]} ${ACTIVE_SETS[@]}; do
-	if [[ x$PALUDIS_CLIENT == "x" ]]; then
-	    ## not called by paludis
-	    echo
-	    echo "### bashrc configuration for set --$set--"
+	cat ${SETS_DIR}/$set | sed -r -n 's|^[[:blank:]]*@(.*/.*)|\1| p' | while read line; do
+	    ## for convenient access
+	    set -- $line
 
-	    cat ${SETS_DIR}/$set | sed -r -n 's|^[[:blank:]]*@(.*/.*)|\1| p' | while read line; do
-		set -- $line
-		## the package name
-		echo $1:
-		## bashrc config
-		shift
-		show_bashrc_line "$@"
-	    done
-	else
-	    cat ${SETS_DIR}/$set | sed -r -n 's|^[[:blank:]]*@(.*/.*)|\1| p' | while read line; do
-		set -- $line
-		## TODO: support SLOT/PV/REPOSITORY -- more spec handling
-		## match global spec or current spec
-		if [[ $1 == '*/*' || $1 == ${CATEGORY}/${PN} ]]; then
-		    shift
-		    show_bashrc_line "$@"
-		fi
+	    ## extra information if not called by paludis
+	    [[ x$PALUDIS_CLIENT == "x" ]] && echo && echo "### bashrc configuration for set --$set--" && echo $1:
+
+	    ## print if not called by paludis or matches global spec or current spec
+	    ## TODO: support SLOT/PV/REPOSITORY -- more spec handling
+	    [[ x$PALUDIS_CLIENT == "x" || $1 == '*/*' || $1 == ${CATEGORY}/${PN} ]] && shift && show_bashrc_line "$@"
+
 	    #cat ${SETS_DIR}/$set | sed -r -n "s|^[[:blank:]]*@${CATEGORY}/${PN}[[:blank:]]*|| p" | while read line; do
-	    done
-	fi
+	done
+    done
+
+    ## generate CFLAGS/LDFLAGS for different targets
+    for TARGET in x86_64-pc-linux-gnu i686-pc-linux-gnu; do
+	_TARGET=${TARGET//-/_}
+	echo ${_TARGET}_CFLAGS=\${MY__${_TARGET}_CFLAGS:-\$CFLAGS}
+	echo ${_TARGET}_CFLAGS="\"\${${_TARGET}_CFLAGS} \$([[ x\${MY__USE_DISTCC} = xno ]] && echo \"\${MY__CFLAGS_MARCH}\" || echo \"\$(${TARGET}-gcc \${MY__CFLAGS_MARCH} -E -v - </dev/null 2>&1 | sed -n -e 's/^.*- -/-/p')\")\""
+	echo ${_TARGET}_CXXFLAGS=\${${_TARGET}_CFLAGS}
+	echo ${_TARGET}_LDFLAGS=\${MY__${_TARGET}_LDFLAGS:-\$LDFLAGS}
     done
 
     ## restore
