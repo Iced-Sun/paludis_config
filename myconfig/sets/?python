@@ -1,1 +1,2 @@
+# asciidoc support python:2.7 only
 app-doc/asciidoc		PYTHON_ABIS: 2.7

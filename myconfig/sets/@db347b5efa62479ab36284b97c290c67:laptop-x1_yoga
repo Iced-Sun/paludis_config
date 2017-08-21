@@ -29,9 +29,11 @@ net-wireless/blueman
 
 ## EFI and boot
 sys-apps/systemd			efi
-sys-boot/grub				efi
+#sys-boot/grub				efi
 	@sys-boot/grub			CFLAGS: -O2 -pipe
 	@sys-boot/grub			LDFLAGS: -Wl,-O1
+	@sys-boot/efibootmgr		CFLAGS: ^-D_GNU_SOURCE
+	@sys-boot/efibootmgr		LDFLAGS: ^-Wl,-z,muldefs
 
 ## hardware ability
 media/mpv				va
@@ -62,11 +64,10 @@ dev-lang/node
 dev-lang/ruby
 
 ## virtualization
-app-virtualization/qemu			amd64 gtk3 lz
+#app-virtualization/qemu			amd64 gtk3 lz
 
 ## systemd-nspawn
 sys-apps/systemd			nat
 
 ## pptp
 net-apps/pptpclient
-

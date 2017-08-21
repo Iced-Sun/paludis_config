@@ -4,19 +4,6 @@
 	dev-libs/libxml2			python
 
 ## transient unmasks
-	+sys-devel/gcc:6
-	+sys-libs/libatomic:6
-	+sys-libs/libstdc++:6
-	+sys-libs/libgcc:6
-
-	inputmethods/ibus			gobject-introspection gtk providers: gtk2 gtk3
-		x11-libs/gtk+:3			gobject-introspection
-			dev-libs/atk		gobject-introspection
-			x11-libs/pango		gobject-introspection
-			x11-libs/gdk-pixbuf	gobject-introspection
-
-@sys-boot/efibootmgr				CFLAGS: ^-D_GNU_SOURCE
-@sys-boot/efibootmgr				LDFLAGS: ^-Wl,-z,muldefs
 
 ## notifications
 	app-editors/emacs			dbus

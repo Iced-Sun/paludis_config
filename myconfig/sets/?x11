@@ -10,12 +10,3 @@ dev-libs/libpthread-stubs			PARTS: development
 ## X
 x11-server/xorg-server				&-*/*
 x11-dri/mesa
-	dev-python/Mako				PYTHON_ABIS: 2.7
-		dev-python/beaker		PYTHON_ABIS: 2.7
-			dev-python/funcsigs	PYTHON_ABIS: 2.7
-		dev-python/MarkupSafe		PYTHON_ABIS: 2.7
-		dev-python/setuptools		PYTHON_ABIS: 2.7
-			dev-python/certifi	PYTHON_ABIS: 2.7
-			dev-python/appdirs	PYTHON_ABIS: 2.7
-			dev-python/packaging	PYTHON_ABIS: 2.7
-				dev-python/pyparsing	PYTHON_ABIS: 2.7
