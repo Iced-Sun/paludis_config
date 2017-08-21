@@ -5,22 +5,6 @@
 ### TODO: if cave can add an option --binary-path like --chroot-path, we can add set/repo bindist-laptop-x61
 ### TODO: or better, if there is an option --destination (so we can use 'cave resolve package --destination bindist-laptop-x61/installed-laptop-x61')
 
-typical_env_for_cave() {
-    EXHERES_PHASE=configure
-    FILESYSTEM_LAYOUT=cross
-    HOOK=ebuild_configure_pre
-
-    PALUDIS_BASHRC_FILES=/etc/paludis/bashrc
-    PALUDIS_CLIENT=CAVE
-    PALUDIS_CONFIG_DIR=/etc/paludis/
-    REPLACING_IDS=app-terminal/tmux-1.9a:0::installed
-    REPODIR=/var/db/paludis/repositories/arbor
-    REPOSITORY=arbor
-    ROOT=/
-    TARGETS=
-    XDG_RUNTIME_DIR=/var/tmp/paludis/build/app-terminal-tmux-1.9a/temp/
-}
-
 #### Helper functions ####
 ## string parser
 remove_comment_and_platform() {
