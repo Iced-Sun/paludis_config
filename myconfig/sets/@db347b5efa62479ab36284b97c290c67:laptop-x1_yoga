@@ -23,7 +23,8 @@ net-wireless/blueman
 	net-wireless/bluez		obex
 	gnome-bindings/pygobject	cairo
 	x11-libs/libnotify		gobject-introspection
-
+	x11-libs/gtk+:3			gobject-introspection
+		dev-libs/atk		gobject-introspection
 ## touchscreen and pen
 	sys-libs/libinput		wacom
 
@@ -50,6 +51,8 @@ dev-db/postgresql			readline	postgresql_extensions: file_fdw
 ## java
 dev-lang/openjdk8
 	app-text/poppler		lcms
+	app-misc/ca-certificates	ca-trust
+	virtual/sed			PROVIDERS: -busybox gnu # busybox sed breaks the compilation
 @dev-lang/openjdk8			EXTRA_ECONF: $--disable-static
 @dev-lang/openjdk8			EXTRA_ECONF: ^--with-jobs=1
 
@@ -59,6 +62,7 @@ app-crypt/gnupg
 
 ## nodejs
 dev-lang/node
+	net-libs/nghttp2		utils
 
 ## for taskjuggler
 dev-lang/ruby
