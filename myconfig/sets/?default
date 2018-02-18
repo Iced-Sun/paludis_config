@@ -1,6 +1,6 @@
 ### bashrc and other build options
-@*/*			CFLAGS:			"-pipe -O3 -flto -fuse-linker-plugin"
-@*/*			LDFLAGS:		-Wl,-O1 -Wl,--as-needed -Wl,--sort-common -flto -fuse-linker-plugin
+@*/*			CFLAGS:			"-pipe -O3 -flto"
+@*/*			LDFLAGS:		-Wl,-O1 -Wl,--as-needed -Wl,--sort-common -Wl,-flto
 @*/*			EXJOBS:			"$((`cat /proc/cpuinfo | grep processor | wc -l`+2))"
 ## custom bashrc variabls
 @*/*			MY__CFLAGS_MARCH:	"-march=native"

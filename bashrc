@@ -12,6 +12,7 @@
 
 ### default flags
 CHOST="x86_64-pc-linux-gnu"
+CROSS_COMPILE_TOOLS+=" AR:gcc-ar RANLIB:gcc-ranlib" # for LTO
 
 ### import global&per-package bashrc configuration
 source <(${PALUDIS_CONFIG_DIR}/myconfig/scripts/wrapper bashrc)
