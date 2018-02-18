@@ -25,6 +25,8 @@ net-wireless/blueman
 	x11-libs/libnotify		gobject-introspection
 	x11-libs/gtk+:3			gobject-introspection
 		dev-libs/atk		gobject-introspection
+		x11-libs/pango		gobject-introspection
+		x11-libs/gdk-pixbuf	gobject-introspection
 ## touchscreen and pen
 	sys-libs/libinput		wacom
 
@@ -49,12 +51,11 @@ sys-fs/dosfstools
 dev-db/postgresql			readline	postgresql_extensions: file_fdw
 
 ## java
-dev-lang/openjdk8
-	app-text/poppler		lcms
+virtual/jdk
+	net-print/cups-filters
+		app-text/poppler	lcms
 	app-misc/ca-certificates	ca-trust
 	virtual/sed			PROVIDERS: -busybox gnu # busybox sed breaks the compilation
-@dev-lang/openjdk8			EXTRA_ECONF: $--disable-static
-@dev-lang/openjdk8			EXTRA_ECONF: ^--with-jobs=1
 
 ## gnupg
 app-crypt/gnupg
