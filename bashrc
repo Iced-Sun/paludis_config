@@ -2,9 +2,8 @@
 
 ## TODOs
 # 1. support alternatives per-package
-# 2. support LTO (ar/nm/ranlib)
-# 3. redo distcc
-# 4. for raspipy/ga
+# 2. redo distcc
+# 3. for raspipy/ga
 
 ### forget about sync
 ## cave-perform
