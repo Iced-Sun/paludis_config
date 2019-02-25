@@ -3,3 +3,9 @@
 media-libs/freetype				harfbuzz
 	x11-libs/harfbuzz
 		dev-libs/icu			PARTS: development
+
+gnome-desktop/librsvg
+	dev-lang/rust				internal-llvm
+	# internal llvm hates LTO
+		@dev-lang/rust				CFLAGS:	$-flto
+		@dev-lang/rust				LDFLAGS: $"-Wl,-flto"
