@@ -19,9 +19,13 @@ mail-client/mu
 
 ## media
 sys-sound/alsa-utils
+	@sys-sound/alsa-lib			CFLAGS: $-flto
+	@sys-sound/alsa-lib			LDFLAGS: $"-Wl,-flto"
 media-sound/apulse
 ~media-sound/mpd				alsa ffmpeg -systemd			&-*/* # upstream systemd doesn't support user config
 ~media-sound/ncmpcpp				taglib
+	@dev-python/numpy			CFLAGS: $-flto
+	@dev-python/numpy			LDFLAGS: $"-Wl,-flto"
 ~media/mpv					alsa opengl X
 	media-libs/libass			fontconfig
 
