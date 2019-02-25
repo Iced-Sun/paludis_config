@@ -5,6 +5,8 @@ x11-server/xorg-server			systemd				&x11-drivers/xf86-input-libinput
 x11-apps/xrdb
 x11-apps/xset
 x11-dri/mesa
+	@x11-dri/mesa			CFLAGS:	$-flto
+	@x11-dri/mesa			LDFLAGS: $"-Wl,-flto"
 
 ## X support
 	net-misc/openssh		X

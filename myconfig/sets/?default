@@ -26,6 +26,8 @@
 ## systemd requires elfutils, and libelf/elfutils has collision
 	dev-libs/glib		PROVIDERS:	-libelf elfutils
 	sys-apps/iproute2	PROVIDERS:	-libelf elfutils
+		@dev-util/elfutils	CFLAGS:	$-flto
+		@dev-util/elfutils	LDFLAGS: $"-Wl,-flto"
 
 ## archives
 */*			PROVIDERS:	libarchive
