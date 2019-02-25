@@ -15,7 +15,6 @@ firmware/intel-microcode
 ## my favorite window manager
 compositor/sway				-grab
 	sys-libs/wlc			X
--compositor/sway[=scm]
 @compositor/sway			EXJOBS: 1
 
 ## bluetooth
@@ -27,11 +26,13 @@ net-wireless/blueman
 		dev-libs/atk		gobject-introspection
 		x11-libs/pango		gobject-introspection
 		x11-libs/gdk-pixbuf	gobject-introspection
+
 ## touchscreen and pen
 	sys-libs/libinput		wacom
 
 ## EFI and boot
 sys-apps/systemd			efi
+
 #sys-boot/grub				efi
 	@sys-boot/grub			CFLAGS: -O2 -pipe
 	@sys-boot/grub			LDFLAGS: -Wl,-O1
@@ -40,6 +41,7 @@ sys-apps/systemd			efi
 
 ## hardware ability
 media/mpv				va
+	# ffmpeg needs its own configure options for PIC and LTO (--enable-pic --enable-lto), have to modify the exlib directly
 	media/ffmpeg			va
 	x11-libs/libva			opengl		&x11-drivers/intel-driver
 
@@ -48,10 +50,10 @@ sys-fs/ntfs-3g_ntfsprogs
 sys-fs/dosfstools
 
 ## postgres
-dev-db/postgresql			readline	postgresql_extensions: file_fdw
+dev-db/postgresql			readline	postgresql_extensions: file_fdw pgcrypto uuid-ossp
 
 ## java
-virtual/jdk
+virtual/jdk				PROVIDERS: openjdk-bin
 	net-print/cups-filters
 		app-text/poppler	lcms
 	app-misc/ca-certificates	ca-trust
@@ -62,7 +64,7 @@ app-crypt/gnupg
 	app-crypt/pinentry		gtk keyring
 
 ## nodejs
-dev-lang/node
+dev-lang/node				bundled-openssl
 	net-libs/nghttp2		utils
 
 ## for taskjuggler
@@ -76,3 +78,16 @@ sys-apps/systemd			nat
 
 ## pptp
 net-apps/pptpclient
+
+## printing
+	net-print/hplip				-gui dbus scanner snmp
+
+## libgsrvg
+	dev-lang/llvm			static
+
+## machinectl import-*
+sys-apps/systemd			importd libcurl gcrypt
+	virtual/tar			providers: gnu -libarchive # machined pull-tar require gnu tar
+
+## jdee requires python[readline]
+	dev-lang/python			readline

@@ -1,21 +1,40 @@
-## alternatives
+## build options
 # system
 @sys-libs/glibc			CFLAGS: -march=native -pipe -O2
 @sys-libs/glibc			DISTCC: no
+# LTO breaks cave on error messages
+@sys-apps/paludis		CFLAGS:	$-flto
+@sys-apps/paludis		LDFLAGS: $"-Wl,-flto"
+# LTO breaks the following builds since it uses ${target}-*
+@sys-devel/gcc			CFLAGS:	$-flto
+@sys-devel/gcc			LDFLAGS: $"-Wl,-flto"
+@dev-lang/perl		     	CFLAGS:	$-flto
+@dev-lang/perl		     	LDFLAGS: $"-Wl,-flto"
+@sys-apps/busybox	     	CFLAGS:	$-flto
+@sys-apps/busybox	     	LDFLAGS: $"-Wl,-flto"
+# AR/NM/RANLIB libtool????
+@sys-apps/sydbox		CFLAGS:	$-flto
+@sys-apps/sydbox		LDFLAGS: $"-Wl,-flto"
+@sys-libs/wayland		CFLAGS:	$-flto
+@sys-libs/wayland		LDFLAGS: $"-Wl,-flto"
+@x11-libs/gtk+			CFLAGS:	$-flto
+@x11-libs/gtk+			LDFLAGS: $"-Wl,-flto"
+	dev-libs/at-spi2-core	PROVIDERS: dbus-daemon
+# LTO breaks some symbols in libgcc_s.so, libstdc++.so
+@sys-libs/libgcc		CFLAGS:	$-flto
+@sys-libs/libgcc		LDFLAGS: $"-Wl,-flto"
+@sys-libs/libstdc++		CFLAGS:	$-flto
+@sys-libs/libstdc++		LDFLAGS: $"-Wl,-flto"
 
+## alternatives
 # archives
 # fixme pbzip2 cannot be used as the alternative of bzip2 in the system set
 
 # gnu
-virtual/coreutils		PROVIDERS: gnu	# cp --reflink
-virtual/wget			PROVIDERS: gnu	# IPv6
-
-# busybox
-virtual/awk			PROVIDERS: busybox
-virtual/grep			PROVIDERS: busybox
-virtual/man			PROVIDERS: busybox
-virtual/sed			PROVIDERS: busybox
-virtual/gzip			PROVIDERS: busybox
+virtual/*			PROVIDERS: -* gnu
+virtual/man			PROVIDERS: -* man
+virtual/gzip			PROVIDERS: -* pigz
+virtual/cpio			PROVIDERS: -* libarchive
 
 # system
 virtual/pkg-config		PROVIDERS: pkgconf
