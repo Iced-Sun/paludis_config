@@ -22,8 +22,7 @@ app-misc/mc
 app-shells/fish
 	dev-libs/pcre2	PARTS: development
 app-terminal/tmux
-sys-process/htop	cgroups			&dev-util/strace sys-process/lsof
-	@dev-util/strace	LDFLAGS: ^-fuse-ld=bfd
+sys-process/htop	cgroups			&-dev-util/strace sys-process/lsof
 
 ## we don't need other GNOME bundles
 	dev-libs/glib	&-gnome-desktop/dconf -gnome-desktop/gvfs
