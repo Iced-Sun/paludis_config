@@ -14,7 +14,6 @@ inputmethods/fcitx-configtool		gtk3
 inputmethods/fcitx-libpinyin
 
 ## text
-text-plugins/zathura-djvu
 virtual/zathura-pdf			PROVIDERS: zathura-pdf-poppler
 	app-text/poppler		glib cairo
 
