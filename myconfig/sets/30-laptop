@@ -1,8 +1,7 @@
 ### Packages for a laptop ###
 
 gnome-desktop/network-manager-applet
-	net-wireless/wpa_supplicant		dbus nl80211
-	net-apps/NetworkManager			wifi compat-libs PROVIDERS: nss internal
+	net-apps/NetworkManager			wifi compat-libs PROVIDERS: nss internal iwd
 		dev-libs/nspr			PARTS: development
 
 ## nm-applet password prompt
