@@ -6,4 +6,4 @@ gnome-desktop/network-manager-applet
 
 ## nm-applet password prompt
 gnome-desktop/gnome-keyring
-	gnome-desktop/gcr			PYTHON_ABIS: 2.7
+	gnome-desktop/gcr			gobject-introspection PYTHON_ABIS: 2.7
