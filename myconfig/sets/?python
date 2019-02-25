@@ -1,2 +1,5 @@
 # asciidoc support python:2.7 only
 app-doc/asciidoc		PYTHON_ABIS: 2.7
+
+# python:3.7 pulls in pytest
+dev-lang/python:3.7		sqlite
