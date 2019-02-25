@@ -26,6 +26,7 @@ media-sound/apulse
 ~media-sound/ncmpcpp				taglib
 	@dev-python/numpy			CFLAGS: $-flto
 	@dev-python/numpy			LDFLAGS: $"-Wl,-flto"
+		virtual/blas			PROVIDERS: OpenBLAS
 ~media/mpv					alsa opengl X
 	media-libs/libass			fontconfig
 
@@ -38,5 +39,3 @@ net-ftp/lftp
 
 ## wps requires png-1.2
 media-libs/libpng:1.2
-
-
