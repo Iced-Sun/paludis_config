@@ -82,9 +82,6 @@ net-apps/pptpclient
 ## printing
 	net-print/hplip				-gui dbus scanner snmp
 
-## libgsrvg
-	dev-lang/llvm			static
-
 ## machinectl import-*
 sys-apps/systemd			importd libcurl gcrypt
 	virtual/tar			providers: gnu -libarchive # machined pull-tar require gnu tar

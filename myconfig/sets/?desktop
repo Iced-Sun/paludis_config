@@ -5,7 +5,8 @@ media-libs/freetype				harfbuzz
 		dev-libs/icu			PARTS: development
 
 gnome-desktop/librsvg
-	dev-lang/rust				internal-llvm
-	# internal llvm hates LTO
-		@dev-lang/rust				CFLAGS:	$-flto
-		@dev-lang/rust				LDFLAGS: $"-Wl,-flto"
+	dev-lang/rust
+		dev-lang/llvm			PYTHON_ABIS: 2.7
+	@dev-lang/rust				CFLAGS:	$-flto
+	@dev-lang/rust				LDFLAGS: $"-Wl,-flto"
+
