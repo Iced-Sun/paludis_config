@@ -13,9 +13,8 @@
 firmware/intel-microcode
 
 ## my favorite window manager
-compositor/sway				-grab
-	sys-libs/wlc			X
-@compositor/sway			EXJOBS: 1
+compositor/sway				grab tray xwayland
+	sys-libs/wlroots		xwayland X
 
 ## bluetooth
 net-wireless/blueman
@@ -57,30 +56,19 @@ virtual/jdk				PROVIDERS: openjdk-bin
 	net-print/cups-filters
 		app-text/poppler	lcms
 	app-misc/ca-certificates	ca-trust
-	virtual/sed			PROVIDERS: -busybox gnu # busybox sed breaks the compilation
 
 ## gnupg
 app-crypt/gnupg
 	app-crypt/pinentry		gtk keyring
 
 ## nodejs
-dev-lang/node				bundled-openssl
+dev-lang/node				bundled-openssl # node loves openssl, but we have only libressl
 	net-libs/nghttp2		utils
 
-## for taskjuggler
-dev-lang/ruby
-
 ## virtualization
-#app-virtualization/qemu			amd64 gtk3 lz
-
-## systemd-nspawn
-sys-apps/systemd			nat
-
-## pptp
-net-apps/pptpclient
-
-## printing
-	net-print/hplip				-gui dbus scanner snmp
+#app-virtualization/qemu			amd64 gtk3
+	@app-virtualization/qemu		CFLAGS: $-flto 
+	@app-virtualization/qemu		LDFLAGS: $"-Wl,-flto"
 
 ## machinectl import-*
 sys-apps/systemd			importd libcurl gcrypt
@@ -88,3 +76,6 @@ sys-apps/systemd			importd libcurl gcrypt
 
 ## jdee requires python[readline]
 	dev-lang/python			readline
+
+## office
+app-office/wps-office

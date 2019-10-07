@@ -7,15 +7,11 @@
 ## desktop
 x11-apps/xdg-utils
 
-## net
-net-misc/openvpn				lzo threads PROVIDERS: iproute2
-
 ## mail
 net-mail/offlineimap				PYTHON_ABIS: 2.7
 	dev-lang/python:2.7			sqlite
 	dev-python/six				PYTHON_ABIS: 2.7
 mail-client/mu
-#office-libs/wv
 
 ## media
 sys-sound/alsa-utils
@@ -24,18 +20,9 @@ sys-sound/alsa-utils
 media-sound/apulse
 ~media-sound/mpd				alsa ffmpeg -systemd			&-*/* # upstream systemd doesn't support user config
 ~media-sound/ncmpcpp				taglib
-	@dev-python/numpy			CFLAGS: $-flto
-	@dev-python/numpy			LDFLAGS: $"-Wl,-flto"
-		virtual/blas			PROVIDERS: OpenBLAS
 ~media/mpv					alsa opengl X
 	media-libs/libass			fontconfig
 
 ## net
 net-ftp/lftp
-#net-www/firefox					PROVIDERS: gtk3
-#	dev-libs/icu				PARTS: development
-#	dev-lang/python:2.7			sqlite
-#	dev-python/pip				PYTHON_ABIS: 2.7
 
-## wps requires png-1.2
-media-libs/libpng:1.2

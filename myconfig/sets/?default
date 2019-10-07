@@ -40,6 +40,6 @@
 
 ## language bindings
 */*			PYTHON_ABIS:	-* 3.7
-*/*			VALA_ABIS:	-* 0.42
+*/*			VALA_ABIS:	-* 0.46
 */*			LUA_ABIS:	-*
 */*			RUBY_ABIS:	-*

@@ -6,7 +6,6 @@ media-libs/freetype				harfbuzz
 
 gnome-desktop/librsvg
 	dev-lang/rust
-		dev-lang/llvm			PYTHON_ABIS: 2.7
 	@dev-lang/rust				CFLAGS:	$-flto
 	@dev-lang/rust				LDFLAGS: $"-Wl,-flto"
 

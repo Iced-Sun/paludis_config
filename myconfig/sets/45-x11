@@ -2,6 +2,8 @@
 
 ## xorg-server
 x11-server/xorg-server			systemd				&x11-drivers/xf86-input-libinput
+	@x11-server/xorg-server		CFLAGS:	$-flto
+	@x11-server/xorg-server		LDFLAGS: $"-Wl,-flto"
 x11-apps/xrdb
 x11-apps/xset
 x11-dri/mesa
