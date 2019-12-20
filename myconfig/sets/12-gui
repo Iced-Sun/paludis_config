@@ -7,6 +7,7 @@
 ## decent fonts
 fonts/terminus-font
 fonts/noto
+fonts/Sarasa-Gothic
 
 ## i18n
 inputmethods/fcitx			classic-ui gtk3
@@ -15,7 +16,7 @@ inputmethods/fcitx-libpinyin
 
 ## text
 virtual/zathura-pdf			PROVIDERS: zathura-pdf-poppler
-	app-text/poppler		glib cairo
+	app-text/poppler		glib cairo boost
 
 ## media
 media/mpv
