@@ -5,7 +5,8 @@ media-libs/freetype				harfbuzz
 		dev-libs/icu			PARTS: development
 
 gnome-desktop/librsvg
-	dev-lang/rust
+	# bootstrap rust requires +internal-llvm
+	dev-lang/rust				-internal-llvm
 	@dev-lang/rust				CFLAGS:	$-flto
 	@dev-lang/rust				LDFLAGS: $"-Wl,-flto"
 
