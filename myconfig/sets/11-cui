@@ -1,4 +1,4 @@
-### Basic console applications ###
+### Essential console applications ###
 
 ## system
 dev-util/ketchup
@@ -8,10 +8,6 @@ sys-apps/systemd	lz4			&sys-boot/dracut
 ## app-arch
 app-arch/p7zip
 virtual/unzip		PROVIDERS: unzip
-
-## fs
-sys-fs/btrfs-progs
-net-fs/cifs-utils
 
 ## editors
 app-editors/emacs
@@ -26,6 +22,3 @@ sys-process/htop	cgroups			&-dev-util/strace sys-process/lsof
 
 ## we don't need other GNOME bundles
 	dev-libs/glib	&-gnome-desktop/dconf -gnome-desktop/gvfs
-
-## net
-net-proxy/proxychains-ng
