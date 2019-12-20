@@ -1,3 +1,4 @@
-### minimal applications for container usage ##
+### Essential applications for chroot/container environment ##
 app-shells/bash
-sys-apps/systemd
+sys-apps/net-tools
+sys-apps/iproute2
