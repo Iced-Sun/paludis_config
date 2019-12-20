@@ -26,3 +26,5 @@ media-sound/apulse
 ## net
 net-ftp/lftp
 
+## crypt
+gnome-desktop/seahorse
