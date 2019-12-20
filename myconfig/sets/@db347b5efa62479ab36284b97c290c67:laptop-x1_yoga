@@ -3,7 +3,7 @@
 @require	wayland	x11
 @require	transient
 
-*/*		TARGETS:		i686-pc-linux-gnu
+#*/*		TARGETS:		i686-pc-linux-gnu
 */*		AMD64_CPU_FEATURES:	         sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3
 */*		X86_CPU_FEATURES:	sse sse2 sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3
 */*		VIDEO_DRIVERS:		intel
@@ -17,7 +17,7 @@ compositor/sway				grab tray xwayland
 	sys-libs/wlroots		xwayland X
 
 ## bluetooth
-net-wireless/blueman
+#net-wireless/blueman
 	net-wireless/bluez		obex
 	gnome-bindings/pygobject	cairo
 	x11-libs/libnotify		gobject-introspection
