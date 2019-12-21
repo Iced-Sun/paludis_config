@@ -8,9 +8,7 @@
 x11-apps/xdg-utils
 
 ## mail
-net-mail/offlineimap				PYTHON_ABIS: 2.7
-	dev-lang/python:2.7			sqlite
-	dev-python/six				PYTHON_ABIS: 2.7
+net-mail/isync
 mail-client/mu
 
 ## media
