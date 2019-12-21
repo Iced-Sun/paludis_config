@@ -21,8 +21,8 @@ media-sound/apulse
 ~media/mpv					alsa opengl X
 	media-libs/libass			fontconfig
 
-## net
-net-ftp/lftp
-
-## crypt
+## key & password management
+gnome-desktop/gnome-keyring
 gnome-desktop/seahorse
+	gnome-desktop/gcr			vapi gobject-introspection
+		dev-libs/libsecret		vapi gobject-introspection

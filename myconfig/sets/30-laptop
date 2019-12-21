@@ -4,6 +4,3 @@ gnome-desktop/network-manager-applet
 	net-apps/NetworkManager			wifi compat-libs PROVIDERS: nss internal iwd
 		dev-libs/nspr			PARTS: development
 
-## nm-applet password prompt
-gnome-desktop/gnome-keyring
-	gnome-desktop/gcr			gobject-introspection PYTHON_ABIS: 2.7
