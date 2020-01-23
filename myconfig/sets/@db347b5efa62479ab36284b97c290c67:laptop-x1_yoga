@@ -42,6 +42,7 @@ sys-apps/systemd			efi
 media/mpv				va
 	# ffmpeg needs its own configure options for PIC and LTO (--enable-pic --enable-lto), have to modify the exlib directly
 	media/ffmpeg			va
+	@media/ffmpeg			MY__EXTRA_CONF: --enable-pic --enable-lto # no effect since ffmpeg doesn't use econf()
 	x11-libs/libva			opengl		&x11-drivers/intel-driver
 
 ## fs
