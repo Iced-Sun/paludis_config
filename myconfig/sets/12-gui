@@ -13,6 +13,8 @@ fonts/Sarasa-Gothic
 inputmethods/fcitx			classic-ui gtk3
 inputmethods/fcitx-configtool		gtk3
 inputmethods/fcitx-libpinyin
+	# exherbo-alternative assumes sys-libs/db have static libraries installed
+	@sys-libs/db			MY__EXTRA_ECONF:
 
 ## text
 virtual/zathura-pdf			PROVIDERS: zathura-pdf-poppler
