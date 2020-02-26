@@ -8,8 +8,6 @@ gnome-desktop/librsvg
 	# bootstrap rust requires +internal-llvm
 	dev-lang/rust				-internal-llvm
 		dev-lang/llvm			polly
-		@dev-lang/llvm			CFLAGS:	$-flto
-		@dev-lang/llvm			LDFLAGS: $"-Wl,-flto"
-	@dev-lang/rust				CFLAGS:	$-flto
-	@dev-lang/rust				LDFLAGS: $"-Wl,-flto"
+
+
 

@@ -14,7 +14,7 @@ firmware/intel-microcode
 
 ## my favorite window manager
 compositor/sway				grab tray xwayland
-	sys-libs/wlroots		xwayland X
+	sys-libs/wlroots		xwayland X caps providers: systemd-logind
 
 ## bluetooth
 #net-wireless/blueman

@@ -22,3 +22,8 @@ virtual/zathura-pdf			PROVIDERS: zathura-pdf-poppler
 
 ## media
 media/mpv
+
+## terminal emulator
+app-terminal/alacritty
+	@app-terminal/alacritty		CFLAGS: $-flto
+	@app-terminal/alacritty		LDFLAGS: $-Wl,-lto

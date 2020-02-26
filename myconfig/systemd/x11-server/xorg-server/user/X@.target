@@ -1,5 +1,0 @@
-[Unit]
-Description=sync-point for X (Xorg, Xwayland) target at DISPLAY :%i
-Requires=basic.target
-RefuseManualStart=yes
-StopWhenUnneeded=yes

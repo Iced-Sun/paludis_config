@@ -1,9 +1,0 @@
-[Unit]
-Description=i3 tiling window manager at DISPLAY %i
-Requires=X@.target
-After=X@.target
-
-[Service]
-Environment=DISPLAY=:%i
-ExecStart=/usr/bin/i3
-
