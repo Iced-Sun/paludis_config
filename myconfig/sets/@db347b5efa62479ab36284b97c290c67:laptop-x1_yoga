@@ -47,7 +47,6 @@ virtual/jdk				PROVIDERS: openjdk-bin
 
 ## gnupg
 app-crypt/gnupg
-	app-crypt/pinentry		gtk keyring
 
 ## nodejs
 dev-lang/node				bundled-openssl # node loves openssl, but we have only libressl
