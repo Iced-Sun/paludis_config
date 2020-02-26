@@ -1,0 +1,18 @@
+## headers
+app-arch/bzip2			PARTS: development
+app-arch/lz4			PARTS: development
+app-arch/xz			PARTS: development
+	dev-libs/expat		PARTS: development
+	dev-libs/libffi		PARTS: development
+	dev-libs/gmp		PARTS: development
+	dev-libs/mpfr		PARTS: development
+	dev-libs/pcre		PARTS: development
+	dev-libs/popt		PARTS: development
+	sys-apps/attr		PARTS: development
+	sys-apps/file		PARTS: development
+	sys-libs/libcap		PARTS: development
+	sys-libs/ncurses	PARTS: development
+	sys-libs/pam		PARTS: development
+	sys-libs/readline	PARTS: development
+	sys-libs/zlib		PARTS: development
+dev-libs/libpthread-stubs	PARTS: development

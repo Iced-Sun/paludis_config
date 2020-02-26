@@ -3,18 +3,30 @@
 ## defaults
 */*					PROVIDERS:	jpeg-turbo
 */*					PROVIDERS:	ffmpeg
+*/*					wayland xwayland
+*/*::x11				X
 
 ## decent fonts
 fonts/terminus-font
 fonts/noto
 fonts/Sarasa-Gothic
 
+## render/compositor/display server/window manager
+compositor/sway				grab tray
+	sys-libs/wlroots		caps
+	x11-server/xorg-server		&-*/*
+	x11-plugins/i3status
+	x11-dri/mesa
+
+## apps dedicated for X
+app-editors/emacs			X freetype jpeg png tiff xpm xim providers: gtk3
+media-gfx/sxiv				gif
+	media-libs/imlib2		X
+
 ## i18n
 inputmethods/fcitx			classic-ui gtk3
 inputmethods/fcitx-configtool		gtk3
 inputmethods/fcitx-libpinyin
-	# exherbo-alternative assumes sys-libs/db have static libraries installed
-	@sys-libs/db			MY__EXTRA_ECONF:
 
 ## text
 virtual/zathura-pdf			PROVIDERS: zathura-pdf-poppler
@@ -25,5 +37,8 @@ media/mpv
 
 ## terminal emulator
 app-terminal/alacritty
-	@app-terminal/alacritty		CFLAGS: $-flto
-	@app-terminal/alacritty		LDFLAGS: $-Wl,-lto
+
+
+
+
+

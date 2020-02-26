@@ -1,9 +1,5 @@
 ### General desktop packages ###
 
-## alternatives
-	virtual/notification-daemon		PROVIDERS: dunst -notification-daemon
-	virtual/dhcp-client			PROVIDERS: dhcpcd
-
 ## desktop
 x11-apps/xdg-utils
 
@@ -13,16 +9,13 @@ mail-client/mu					emasc
 
 ## media
 sys-sound/alsa-utils
-	@sys-sound/alsa-lib			CFLAGS: $-flto
-	@sys-sound/alsa-lib			LDFLAGS: $"-Wl,-flto"
 media-sound/apulse
-~media-sound/mpd				alsa ffmpeg -systemd			&-*/* # upstream systemd doesn't support user config
+# upstream systemd doesn't support user config
+~media-sound/mpd				alsa ffmpeg -systemd		&-*/* 
 ~media-sound/ncmpcpp				taglib
-~media/mpv					alsa opengl X
+~media/mpv					alsa opengl
 	media-libs/libass			fontconfig
 
 ## key & password management
 gnome-desktop/gnome-keyring
-gnome-desktop/seahorse
-	gnome-desktop/gcr			vapi gobject-introspection
-		dev-libs/libsecret		vapi gobject-introspection
+

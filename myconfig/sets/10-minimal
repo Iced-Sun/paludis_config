@@ -1,4 +1,4 @@
-### Essential applications for chroot/container environment ##
+### Essential applications for chroot/container environment ###
 app-shells/bash
 sys-apps/net-tools
 sys-apps/iproute2

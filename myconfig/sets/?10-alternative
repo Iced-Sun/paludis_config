@@ -1,0 +1,17 @@
+## archives
+# fixme pbzip2 cannot be used as the alternative of bzip2 in the system set
+virtual/gzip			PROVIDERS: -* pigz
+
+## coreutils
+virtual/man			PROVIDERS: -* man
+
+## system
+virtual/pkg-config		PROVIDERS: pkgconf
+
+
+## misc
+app-text/xmlto			PROVIDERS: lynx
+app-arch/libarchive		PROVIDERS: libxml2
+dev-libs/at-spi2-core		PROVIDERS: dbus-daemon
+virtual/notification-daemon	PROVIDERS: mako
+virtual/kerberos		PROVIDERS: heimdal

@@ -1,5 +1,0 @@
-### Default wayland support ###
-
-## general options
-*/*						wayland
-	x11-server/xorg-server			xwayland

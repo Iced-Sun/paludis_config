@@ -1,6 +1,4 @@
 ### Packages for a laptop ###
-
-gnome-desktop/network-manager-applet
-	net-apps/NetworkManager			wifi compat-libs PROVIDERS: nss internal iwd
-		dev-libs/nspr			PARTS: development
+net-apps/NetworkManager	wifi compat-libs PROVIDERS: nss internal iwd
+	dev-libs/nspr	PARTS: development
 

@@ -1,5 +1,3 @@
-### Default GUI configuration indepent on x11, wayland ##
-
 media-libs/freetype				harfbuzz
 	x11-libs/harfbuzz
 		dev-libs/icu			PARTS: development
@@ -8,6 +6,8 @@ gnome-desktop/librsvg
 	# bootstrap rust requires +internal-llvm
 	dev-lang/rust				-internal-llvm
 		dev-lang/llvm			polly
+
+dev-lang/python:3.7				sqlite
 
 
 

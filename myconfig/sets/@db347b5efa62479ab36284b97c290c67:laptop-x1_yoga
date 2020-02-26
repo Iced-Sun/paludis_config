@@ -1,6 +1,5 @@
 @require	cui gui
 @require	desktop laptop
-@require	wayland	x11
 @require	transient
 
 #*/*		TARGETS:		i686-pc-linux-gnu
@@ -12,13 +11,9 @@
 +firmware/linux-firmware[=scm]
 firmware/intel-microcode
 
-## my favorite window manager
-compositor/sway				grab tray xwayland
-	sys-libs/wlroots		xwayland X caps providers: systemd-logind
-
 ## bluetooth
 #net-wireless/blueman
-	net-wireless/bluez		obex
+	net-wireless/bluez		obex alsa mesh
 	gnome-bindings/pygobject	cairo
 	x11-libs/libnotify		gobject-introspection
 	x11-libs/gtk+:3			gobject-introspection
@@ -32,18 +27,10 @@ compositor/sway				grab tray xwayland
 ## EFI and boot
 sys-apps/systemd			efi
 
-#sys-boot/grub				efi
-	@sys-boot/grub			CFLAGS: -O2 -pipe
-	@sys-boot/grub			LDFLAGS: -Wl,-O1
-	@sys-boot/efibootmgr		CFLAGS: ^-D_GNU_SOURCE
-	@sys-boot/efibootmgr		LDFLAGS: ^-Wl,-z,muldefs
-
 ## hardware ability
 media/mpv				va
-	# ffmpeg needs its own configure options for PIC and LTO (--enable-pic --enable-lto), have to modify the exlib directly
 	media/ffmpeg			va
-	@media/ffmpeg			MY__EXTRA_CONF: --enable-pic --enable-lto # no effect since ffmpeg doesn't use econf()
-	x11-libs/libva			opengl		&x11-drivers/intel-driver
+	x11-libs/libva			opengl		&x11-drivers/intel-media-driver
 
 ## fs
 sys-fs/ntfs-3g_ntfsprogs
@@ -68,12 +55,11 @@ dev-lang/node				bundled-openssl # node loves openssl, but we have only libressl
 
 ## virtualization
 #app-virtualization/qemu			amd64 gtk3
-	@app-virtualization/qemu		CFLAGS: $-flto 
-	@app-virtualization/qemu		LDFLAGS: $"-Wl,-flto"
 
 ## machinectl import-*
 sys-apps/systemd			importd libcurl gcrypt
-	virtual/tar			providers: gnu -libarchive # machined pull-tar require gnu tar
+	 # machined pull-tar require gnu tar
+	virtual/tar			providers: gnu -libarchive
 
 ## jdee requires python[readline]
 	dev-lang/python			readline

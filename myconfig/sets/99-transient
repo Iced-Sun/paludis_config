@@ -8,3 +8,4 @@
 ## notifications
 	app-editors/emacs			dbus
 
+	mail-mta/msmtp				PROVIDERS: gnutls
