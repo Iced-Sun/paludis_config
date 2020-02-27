@@ -21,7 +21,7 @@
 @x11-libs/gtk+			LDFLAGS: $"-Wl,-flto"
 
 # ffmpeg needs its own configure options for PIC and LTO (--enable-pic --enable-lto), have to modify the exlib directly
-@media/ffmpeg			MY__EXTRA_CONF: --enable-pic --enable-lto # no effect since ffmpeg doesn't use econf()
+@media/ffmpeg			MY__EXTRA_ECONF: --enable-pic --enable-lto # no effect since ffmpeg doesn't use econf()
 	
 # LTO breaks some symbols in libgcc_s.so, libstdc++.so
 @sys-libs/libgcc		CFLAGS:	$-flto
