@@ -34,8 +34,6 @@
 @dev-lang/llvm			LDFLAGS: $"-Wl,-flto"
 @dev-lang/rust			CFLAGS:	$-flto
 @dev-lang/rust			LDFLAGS: $-Wl,-flto
-
-# broken anyway
 @dev-util/elfutils		CFLAGS:	$-flto
 @dev-util/elfutils		LDFLAGS: $"-Wl,-flto"
 @x11-server/xorg-server		CFLAGS:	$-flto
@@ -48,6 +46,8 @@
 @sys-sound/alsa-lib		LDFLAGS: $"-Wl,-flto"
 @app-virtualization/qemu	CFLAGS: $-flto 
 @app-virtualization/qemu	LDFLAGS: $"-Wl,-flto"
+@sys-libs/libcap		CFLAGS: $-flto
+@sys-libs/libcap		LDFLAGS: $-Wl,-flto
 
 ### general
 ## system

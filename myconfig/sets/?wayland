@@ -1,0 +1,8 @@
+*/*					wayland xwayland
+
+sys-libs/wlroots			X
+	x11-dri/mesa			X
+		dev-libs/libglvnd	X
+	x11-server/xorg-server		&-*/*
+		dev-libs/libepoxy	X
+	x11-libs/libxkbcommon		X

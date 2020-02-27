@@ -1,13 +1,15 @@
-## archives
+## prefex busybox and libarchive
+virtual/*			PROVIDERS: -* busybox libarchive
+
 # fixme pbzip2 cannot be used as the alternative of bzip2 in the system set
 virtual/gzip			PROVIDERS: -* pigz
+virtual/cpio			PROVIDERS: -* busybox
 
 ## coreutils
 virtual/man			PROVIDERS: -* man
 
 ## system
 virtual/pkg-config		PROVIDERS: pkgconf
-
 
 ## misc
 app-text/xmlto			PROVIDERS: lynx

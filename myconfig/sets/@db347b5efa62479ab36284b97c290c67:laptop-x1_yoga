@@ -30,7 +30,7 @@ sys-apps/systemd			efi
 ## hardware ability
 media/mpv				va
 	media/ffmpeg			va
-	x11-libs/libva			opengl		&x11-drivers/intel-media-driver
+	x11-libs/libva			X opengl	&x11-drivers/intel-media-driver
 
 ## fs
 sys-fs/ntfs-3g_ntfsprogs
@@ -47,6 +47,7 @@ virtual/jdk				PROVIDERS: openjdk-bin
 
 ## gnupg
 app-crypt/gnupg
+	app-crypt/pinentry		keyring
 
 ## nodejs
 dev-lang/node				bundled-openssl # node loves openssl, but we have only libressl
@@ -58,7 +59,7 @@ dev-lang/node				bundled-openssl # node loves openssl, but we have only libressl
 ## machinectl import-*
 sys-apps/systemd			importd libcurl gcrypt
 	 # machined pull-tar require gnu tar
-	virtual/tar			providers: gnu -libarchive
+	virtual/tar			providers: -* gnu
 
 ## jdee requires python[readline]
 	dev-lang/python			readline

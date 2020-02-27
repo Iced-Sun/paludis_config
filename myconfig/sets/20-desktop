@@ -5,17 +5,26 @@ x11-apps/xdg-utils
 
 ## mail
 net-mail/isync
-mail-client/mu					emasc
+mail-client/mu				emasc
 
 ## media
 sys-sound/alsa-utils
 media-sound/apulse
 # upstream systemd doesn't support user config
-~media-sound/mpd				alsa ffmpeg -systemd		&-*/* 
-~media-sound/ncmpcpp				taglib
-~media/mpv					alsa opengl
-	media-libs/libass			fontconfig
+~media-sound/mpd			alsa ffmpeg -systemd		&-*/* 
+~media-sound/ncmpcpp			taglib
+~media/mpv				alsa opengl
+	media-libs/libass		fontconfig
+media-gfx/sxiv				gif
+	media-libs/imlib2		X
 
 ## key & password management
-gnome-desktop/gnome-keyring
+#gnome-desktop/gnome-keyring
 
+## text
+virtual/zathura-pdf			PROVIDERS: zathura-pdf-poppler
+	app-text/poppler		glib cairo boost
+
+## firefox require 'gdk_x11_display_get_type' symbol
+	x11-libs/gtk+			X
+		x11-libs/cairo		X

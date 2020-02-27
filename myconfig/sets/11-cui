@@ -12,7 +12,7 @@ dev-scm/git		curl			&-*/*
 
 ## app-arch
 app-arch/p7zip
-virtual/unzip		PROVIDERS: unzip
+virtual/unzip
 
 ## editors
 app-editors/emacs

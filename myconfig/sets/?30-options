@@ -7,7 +7,4 @@ gnome-desktop/librsvg
 	dev-lang/rust				-internal-llvm
 		dev-lang/llvm			polly
 
-dev-lang/python:3.7				sqlite
-
-
 
