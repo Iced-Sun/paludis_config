@@ -18,9 +18,6 @@ media-sound/apulse
 media-gfx/sxiv				gif
 	media-libs/imlib2		X
 
-## key & password management
-#gnome-desktop/gnome-keyring
-
 ## text
 virtual/zathura-pdf			PROVIDERS: zathura-pdf-poppler
 	app-text/poppler		glib cairo boost

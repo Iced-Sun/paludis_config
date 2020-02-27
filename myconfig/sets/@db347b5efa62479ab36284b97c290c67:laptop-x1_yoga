@@ -66,3 +66,7 @@ sys-apps/systemd			importd libcurl gcrypt
 
 ## office
 app-office/wps-office
+
+## datagrip requires: key & password management
+gnome-desktop/gnome-keyring
+	gnome-desktop/gcr		gobject-introspection
