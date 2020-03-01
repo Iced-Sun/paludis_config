@@ -66,6 +66,8 @@ sys-apps/systemd			importd libcurl gcrypt
 
 ## office
 app-office/wps-office
+app-office/gnucash			gnucash dbi
+	dev-libs/libdbi-drivers		sqlite
 
 ## datagrip requires: key & password management
 gnome-desktop/gnome-keyring

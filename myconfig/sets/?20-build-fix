@@ -48,6 +48,8 @@
 @app-virtualization/qemu	LDFLAGS: $"-Wl,-flto"
 @sys-libs/libcap		CFLAGS: $-flto
 @sys-libs/libcap		LDFLAGS: $-Wl,-flto
+@net-libs/webkit		CFLAGS: $-flto
+@net-libs/webkit		LDFLAGS: $-Wl,-flto
 
 ### general
 ## system
