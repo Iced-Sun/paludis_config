@@ -5,6 +5,9 @@ virtual/*			PROVIDERS: -* busybox libarchive
 virtual/gzip			PROVIDERS: -* pigz
 virtual/cpio			PROVIDERS: -* busybox
 
+# busybox wget doesn't support https
+virtual/wget			PROVIDERS: -* gnu
+
 ## coreutils
 virtual/man			PROVIDERS: -* man
 

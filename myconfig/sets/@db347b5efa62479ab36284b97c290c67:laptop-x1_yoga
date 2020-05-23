@@ -67,8 +67,14 @@ sys-apps/systemd			importd libcurl gcrypt
 ## office
 app-office/wps-office
 app-office/gnucash			gnucash dbi
+	dev-cpp/gtest			googlemock
 	dev-libs/libdbi-drivers		sqlite
 
 ## datagrip requires: key & password management
 gnome-desktop/gnome-keyring
 	gnome-desktop/gcr		gobject-introspection
+
+## misc
+net-proxy/proxychains-ng
+net-misc/onedrive
+app-misc/xstow

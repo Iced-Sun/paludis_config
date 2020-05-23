@@ -13,6 +13,11 @@ fonts/Sarasa-Gothic
 compositor/sway				grab tray
 	sys-libs/wlroots		caps
 x11-plugins/i3status
+wayland-apps/wofi
+wayland-apps/wdisplays
+wayland-apps/swayidle
+# for root access
+x11-apps/xhost
 
 ## apps dedicated for X
 app-editors/emacs			X freetype jpeg png tiff xpm xim providers: gtk3
