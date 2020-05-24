@@ -51,15 +51,17 @@ initialize_sets() {
 
     ### TODO check if machine set is machine_id/hostname of the current host
     ## generate installed sets
-    ACTIVE_SETS=()
-    for set in `cat ${WORLD}`; do
-	## collect included sets
-	for included in $(cat ${SETS[$set]} | sed -n 's/@require// p'); do
-	    [[ " ${ACTIVE_SETS[@]} " =~ " ${SETS[$included]} " ]] || ACTIVE_SETS+=( ${SETS[$included]} )
+    if [[ -e ${WORLD} ]]; then
+	ACTIVE_SETS=()
+	for set in `cat ${WORLD}`; do
+	    ## collect included sets
+	    for included in $(cat ${SETS[$set]} | sed -n 's/@require// p'); do
+		[[ " ${ACTIVE_SETS[@]} " =~ " ${SETS[$included]} " ]] || ACTIVE_SETS+=( ${SETS[$included]} )
+	    done
+	    ## collect explicit set
+	    [[ " ${ACTIVE_SETS[@]} " =~ " ${SETS[$set]} " ]] || ACTIVE_SETS+=( ${SETS[$set]} )
 	done
-	## collect explicit set
-	[[ " ${ACTIVE_SETS[@]} " =~ " ${SETS[$set]} " ]] || ACTIVE_SETS+=( ${SETS[$set]} )
-    done
+    fi
 
     popd >/dev/null 2>&1
 }
@@ -137,9 +139,39 @@ initialize() {
 	ACTION=${INVOKER_BASENAME}
     fi
 
+    ## find CHOST and TARGETS
+    local SCRIPT_FULL_PATH=`realpath $0`
+    local CONFIG_DIR=`realpath $(dirname ${SCRIPT_FULL_PATH})/..`
+    SETS_DIR=${CONFIG_DIR}/sets
+    initialize_sets    
+    CHOST=
+    TARGETS=
+    set -f
+    eval $(
+	for set in ${PREDEFINED_SETS[@]} ${GENERAL_SETS[@]} ${MACHINE_SETS[@]}; do
+	    cat ${SETS_DIR}/$set | sed -r -e 's/#.*//' | grep '*/*' | grep -E 'CHOST|TARGETS' | while read line; do
+		## for convenient access
+		set -- $line
+		[[ $1 == '@*/*' || $1 == '*/*' ]] && shift && show_bashrc_line "$@" | sed -e 's/TARGETS="/TARGETS+=" /'
+	    done
+	done
+	)
+    set +f
+
     ## gather destination
     if [[ $ACTION == "repositories" ]]; then
-	detect_destination $SUB_ACTION
+	if [[ ${SUB_ACTION} == 'installed' ]]; then
+	    # host root install
+	    detect_destination installed
+	elif [[ $TARGETS == *${SUB_ACTION}* ]]; then
+	    # cross-install
+	    detect_destination installed
+	elif true; then
+	    # chroot-install
+	    true
+	else
+	    echo 'Unsupported action: $ACTION $SUB_ACTION'
+	fi
     else
 	detect_destination
     fi
@@ -251,20 +283,16 @@ show_repository_defaults() {
 }
 
 show_repositories() {
-    local REPO=${1%%-*}
-    local SUB_REPO=${1#${REPO}}
-    SUB_REPO=${SUB_REPO#-}
-    
+    ## generate repository.conf
     case $1 in
-	installed*)
-	    detect_destination $1
-
-	    echo format = exndbam
-	    echo location = $LOCATION
-	    [[ x$ROOT != "x" ]] && echo root = $ROOT
-	    [[ x$NAME != "x" ]] && echo name = $NAME
-	    echo split_debug_location = /usr/x86_64-pc-linux-gnu/lib/debug
-	    echo tool_prefix = x86_64-pc-linux-gnu-
+	installed)
+	    cat <<EOF
+format = exndbam
+location = \${root}/var/db/paludis/repositories/installed
+name = installed
+split_debug_location = /usr/${CHOST}/lib/debug
+tool_prefix = ${CHOST}-
+EOF
 	    ;;
 	binary*)
 	    cat <<EOF
@@ -290,7 +318,19 @@ EOF
 	    fi
 	    ;;
 	*)
-	    echo "Unsupported repository" 1>&2
+	    if [[ ${TARGETS} == *"$1"* ]]; then
+		## cross-installed
+		cat <<EOF
+format = exndbam
+location = \${root}/var/db/paludis/repositories/cross-installed/$1
+name = $1
+split_debug_location = /usr/$1/lib/debug
+tool_prefix = $1-
+cross_compile_host = $1
+EOF
+	    else
+		echo "Unsupported repository" 1>&2
+	    fi
 	    ;;
     esac
 }
@@ -424,7 +464,8 @@ show_bashrc() {
     done
 
     ## generate CFLAGS/LDFLAGS for different targets
-    for TARGET in x86_64-pc-linux-gnu i686-pc-linux-gnu armv6-unknown-linux-gnueabi armv6-unknown-linux-gnueabihf armv6-unknown-linux-musleabi armv6-unknown-linux-musleabihf; do
+    for TARGET in ${TARGETS[@]}; do
+	[[ $TARGET == '-*' ]] && continue
 	_TARGET=${TARGET//-/_}
 	echo ${_TARGET}_CFLAGS=\${MY__${_TARGET}_CFLAGS:-\$CFLAGS}
 	echo ${_TARGET}_CFLAGS="\"\${${_TARGET}_CFLAGS} \$([[ x\${MY__USE_DISTCC} = xno ]] && echo \"\${MY__CFLAGS_MARCH}\" || echo \"\$(${TARGET}-gcc \${MY__CFLAGS_MARCH} -E -v - </dev/null 2>&1 | sed -n -e 's/^.*- -/-/p')\")\""

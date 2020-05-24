@@ -3,9 +3,8 @@
 ## gtk-doc-autotools require libxml2[python]
 	dev-libs/libxml2			python
 
-## transient unmasks
-
 ## notifications
 	app-editors/emacs			dbus
 
-	mail-mta/msmtp				PROVIDERS: gnutls
+## ARM
+*/*			TARGETS:	armv6-unknown-linux-gnueabi armv6-unknown-linux-gnueabihf armv6-unknown-linux-musleabi armv6-unknown-linux-musleabihf

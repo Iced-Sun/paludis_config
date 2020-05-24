@@ -11,7 +11,6 @@
 [[ ${PALUDIS_ACTION} == "sync" ]] && return
 
 ### default flags
-CHOST="x86_64-pc-linux-gnu"
 CROSS_COMPILE_TOOLS+=" AR:gcc-ar RANLIB:gcc-ranlib NM:gcc-nm" # for LTO
 
 ### import global&per-package bashrc configuration

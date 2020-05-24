@@ -1,4 +1,7 @@
 ### build options (bashrc)
+## CHOST
+@*/*			CHOST:			x86_64-pc-linux-gnu
+
 ## enable LTO
 @*/*			CFLAGS:			-pipe -O3 -flto
 @*/*			LDFLAGS:		-Wl,-O1 -Wl,--as-needed -Wl,--sort-common -Wl,-flto
