@@ -1,31 +1,35 @@
 * Package configuration specification
 
 ** set file
-The package configuration set files are placed under
+
+The package configuration set files are located in
 =${PALUDIS_CONFIG_DIR}/myconfig/packages=.
 
 1. =@<machine-id>:<hostname>=
 
-   A machine specific set which include machine related package
-   configuration (mostly hardware), such as cpu features, video
-   drivers, firmwares, etc.).
+   A specific set which includes package configuration for a specific
+   machine (mostly hardware), such as cpu features, video drivers,
+   firmwares, etc.).
 
-   The configurations in a machine set file will appear at the end of
-   the paludis configurations, i.e., it has the highest priority and
-   will overwrite other configurations.
+   The configurations are appended in the end of the paludis
+   configurations, i.e., it has the highest priority and will
+   overwrite other configurations.
 
-2. =?<default>=
+2. =<order>-<name>=
 
-   A weak configuration set which only provides predefined package
-   options or/and suggestions.
+   An ordinary set includes general package presettings. Large =order=
+   takes priorites.
 
-   It would not be added to the paludis installed world file. The
-   configuration will be included in the front of the paludis
+   Both the machine set and the ordinary set can pull in packages as
+   the world dependecy (paludis installed world file).
+
+3. =?<default>=
+
+   A weak configuration set defines package options or/and
+   suggestions, without pulling packages as the world dependency.
+
+   The configuration will be prepend to the front of the paludis
    configurations.
-
-3. =<order>-<name>=
-
-   Just an ordinary set with priority =<order>=.
 
 ** set file contents
 
