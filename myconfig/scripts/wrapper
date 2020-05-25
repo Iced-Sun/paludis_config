@@ -1,499 +1,61 @@
 #!/bin/bash
 
-## FIXME move the hard-coded config outwards
+init_action() {
+	## determine the invoking role of the script
+  local INVOKER_FULL_PATH=`realpath -s $0`
+	local INVOKER=${INVOKER_FULL_PATH#$PALUDIS_CONFIG_DIR/}
+	local INVOKER_DIRNAME=`dirname $INVOKER`
+	local INVOKER_BASENAME=`basename $INVOKER`
 
-### TODO: if cave can add an option --binary-path like --chroot-path, we can add set/repo bindist-laptop-x61
-### TODO: or better, if there is an option --destination (so we can use 'cave resolve package --destination bindist-laptop-x61/installed-laptop-x61')
-###
-### TODO: support cross-installed repositories
-
-#### Helper functions ####
-## string parser
-remove_comment_and_platform() {
-    # removes comments('#'), platform unmask('~'), blank lines, require lines('@require') and bashrc modification lines('@*/*')
-    sed -r -e 's/#.*//' -e 's/~//' -e '/^[[:blank:]]*$/d' -e '/^[[:blank:]]*@.*/d'
-}
-
-remove_user_mask_spec() {
-    # remove spec with user mask('-')
-    sed -r -e 's/^[[:blank:]]*-.*//'
-}
-
-remove_custom_mark() {
-    # remove user mask('-'), mask unmask('+'), and suggestion taken('&')
-    sed -e 's/^[[:blank:]]*[+-]\([[:alnum:]]\+\)/\1/' -e 's/&.*//'
-}
-
-## packages/sets detection
-initialize_sets() {
-    pushd ${SETS_DIR} >/dev/null 2>&1
-
-    ## populate defined sets
-    PREDEFINED_SETS=( \?* )
-    GENERAL_SETS=( [0-9][0-9]-* )
-    MACHINE_SETS=( @* )
-
-    ## generate the short name (in WORLD) -> long name (in SETS) map
-    declare -g -A SETS
-    for set in ${GENERAL_SETS[@]}; do
-	## fullname key
-	SETS[$set]=$set
-	## stripped-name key
-	SETS[${set#[0-9][0-9]-}]=$set
-    done
-
-    for set in ${MACHINE_SETS[@]}; do
-	## machine_id key
-	SETS[`echo $set | sed -r -e 's/@(.*):.*/\1/'`]=$set
-	## TODO hostname key
-	## TODO fullname key
-    done
-
-    ### TODO check if machine set is machine_id/hostname of the current host
-    ## generate installed sets
-    if [[ -e ${WORLD} ]]; then
-	ACTIVE_SETS=()
-	for set in `cat ${WORLD}`; do
-	    ## collect included sets
-	    for included in $(cat ${SETS[$set]} | sed -n 's/@require// p'); do
-		[[ " ${ACTIVE_SETS[@]} " =~ " ${SETS[$included]} " ]] || ACTIVE_SETS+=( ${SETS[$included]} )
-	    done
-	    ## collect explicit set
-	    [[ " ${ACTIVE_SETS[@]} " =~ " ${SETS[$set]} " ]] || ACTIVE_SETS+=( ${SETS[$set]} )
-	done
-    fi
-
-    popd >/dev/null 2>&1
-}
-
-## detect install destination, includes the ROOT of the chroot, and
-## the LOCATION of the repository
-# take the destination or target repository as the parameter; else a
-# guess will be made from ${CAVE_RESOLVE_CMDLINE_make}
-detect_destination() {
-    local REPO
-
-    ## if a parameter is provided, the function is called by
-    ## installed*.bash
-    REPO=$1
-
-    ## no parameter means the function is called by other *.bash
-    if [[ x$1 == "x" ]]; then
-	## in case of 
-	if [[ x${CAVE_RESOLVE_CMDLINE_make} == "xc" ]]; then
-	    pushd ${PALUDIS_CONFIG_DIR}/repositories >/dev/null
-	    for repo in installed-chroot-*.bash; do
-		REPO=${repo%.bash}
-
-		# if chroot-path is provided, it dominates
-		## TODO this is broken now, since 'self-invoking' is very confusing
-		return 1
-		#local REPO_ROOT=`./$repo self-invoking | sed -n -e 's/^root = // p'`
-		if [[ $CAVE_RESOLVE_CMDLINE_chroot_path == $REPO_ROOT ]]; then
-		    break
-		fi
-	    done
-	    popd >/dev/null
-	else
-	    REPO=installed
+	## generate ACTION, SUB_ACTION
+  if [[ "wrapper" == "$INVOKER_BASENAME" ]]; then
+		# directly call the script itself
+		ACTION=wrapper
+		SUB_ACTION=$1
+  elif [[ " sets repositories " =~ " $INVOKER_DIRNAME " ]]; then
+		# called by sets/*.bash, repositories/*.bash
+		ACTION=$INVOKER_DIRNAME
+		SUB_ACTION=${INVOKER_BASENAME%.bash}
+  elif [[ "." == $INVOKER_DIRNAME ]]; then
+		# called by *.bash
+		ACTION=${INVOKER_BASENAME%.bash}
+  else
+		## this should not happen
+		ACTION=${INVOKER_BASENAME}
 	fi
-    fi
-
-    LOCATION=/var/db/paludis/repositories/$REPO
-    WORLD=${LOCATION}/world
-    if [[ $REPO != "installed" ]]; then
-	NAME=${REPO#installed-chroot-}
-	ROOT=/srv/linux/machine_components/systems/${NAME}
-    fi
 }
 
-#### Initialize ####
-initialize() {
-    ## host information
-    HOST=`hostname | cut -d. -f1`
-    MACHINE_ID=`cat /etc/machine-id`
-
-    ## PALUDIS_CONFIG_DIR may be unset even in cave
-    PALUDIS_CONFIG_DIR=${PALUDIS_CONFIG_DIR:=/etc/paludis}
-
-    ## required by determining the actions
-    local INVOKER_FULL_PATH=`realpath -s $0`
-
-    ## if called for paludis: general.bash, options.bash, sets/*.bash, etc..
-    # necessary condition: the script is placed in PALUDIS_CONFIG_DIR
-    local INVOKER=${INVOKER_FULL_PATH#$PALUDIS_CONFIG_DIR/}
-    local INVOKER_DIRNAME=`dirname $INVOKER`
-    local INVOKER_BASENAME=`basename $INVOKER`
-    ## enforce the check if is called for paludis
-    if [[ "wrapper" == "$INVOKER_BASENAME" ]]; then
-	## TODO what if we do `wrapper sets some-set`???
-	ACTION=wrapper
-	SUB_ACTION=$1
-    elif [[ " sets repositories " =~ " $INVOKER_DIRNAME " ]]; then
-	ACTION=$INVOKER_DIRNAME
-	SUB_ACTION=${INVOKER_BASENAME%.bash}
-    elif [[ "." == $INVOKER_DIRNAME ]]; then
-	ACTION=${INVOKER_BASENAME%.bash}
-    else
-	## this means a foreign call
-	ACTION=${INVOKER_BASENAME}
-    fi
-
-    ## find CHOST and TARGETS
-    local SCRIPT_FULL_PATH=`realpath $0`
-    local CONFIG_DIR=`realpath $(dirname ${SCRIPT_FULL_PATH})/..`
-    SETS_DIR=${CONFIG_DIR}/sets
-    initialize_sets    
-    CHOST=
-    TARGETS=
-    set -f
-    eval $(
-	for set in ${PREDEFINED_SETS[@]} ${GENERAL_SETS[@]} ${MACHINE_SETS[@]}; do
-	    cat ${SETS_DIR}/$set | sed -r -e 's/#.*//' | grep '*/*' | grep -E 'CHOST|TARGETS' | while read line; do
-		## for convenient access
-		set -- $line
-		[[ $1 == '@*/*' || $1 == '*/*' ]] && shift && show_bashrc_line "$@" | sed -e 's/TARGETS="/TARGETS+=" /'
-	    done
-	done
-	)
-    set +f
-
-    ## gather destination
-    if [[ $ACTION == "repositories" ]]; then
-	if [[ ${SUB_ACTION} == 'installed' ]]; then
-	    # host root install
-	    detect_destination installed
-	elif [[ $TARGETS == *${SUB_ACTION}* ]]; then
-	    # cross-install
-	    detect_destination installed
-	elif true; then
-	    # chroot-install
-	    true
-	else
-	    echo 'Unsupported action: $ACTION $SUB_ACTION'
-	fi
-    else
-	detect_destination
-    fi
-
-    ## required by custom configuration processing: that IS sets
-    local SCRIPT_FULL_PATH=`realpath $0`
-    local CONFIG_DIR=`realpath $(dirname ${SCRIPT_FULL_PATH})/..`
-    SETS_DIR=${CONFIG_DIR}/sets
-
-    ## gather sets
-    initialize_sets
-
-    ## debug
-    print_debug_info() {
+print_debug_info() {
 	cat <<EOF
 
-===== Host information =====
+===== Host =====
 Host:				${HOST}
 Machine ID:			${MACHINE_ID}
 
-===== Paludis information =====
+===== Paludis =====
 Paludis config DIR:		${PALUDIS_CONFIG_DIR}
 Destination:			${LOCATION}
 Predefined weak sets:		${PREDEFINED_SETS[@]}
 General sets:			${GENERAL_SETS[@]}
 Machine sets:  			${MACHINE_SETS[@]}
 
-===== Custom configurations =====
+===== Configurations =====
 Custom config DIR (relative):	${CONFIG_DIR}
 Action/Configuration:		${ACTION}$([[ x${SUB_ACTION} == "x" ]] || echo ::${SUB_ACTION}).conf
 Active sets:			${ACTIVE_SETS[@]}
 
-===== End debug information =====
+===== End =====
 
 EOF
-    }
-
-    ## print the debug info if not invoked by paludis
-    [[ x$PALUDIS_CLIENT == "x" ]] && print_debug_info 1>&2
-
 }
 
-####### Action handlers #######
-## general configs
-show_general() {
-    echo world = ${WORLD}
-}
+## global environments
+HOST=$(hostname | cut -d. -f1)
+MACHINE_ID=$(cat /etc/machine-id)
+PALUDIS_CONFIG_DIR=${PALUDIS_CONFIG_DIR:=/etc/paludis}
 
-show_mirrors() {
-    ## order matters!
-    SITES=( BJTU TSU USTC HEANET NETEASE BIR )
+## initialization
+init_action
 
-    ## full speed
-    ## BJTU seems stopped sync upstream since 2016-06
-    BJTU=(http://debian.bjtu.edu.cn
-	  apache cpan cran 'ctan CTAN' debian freebsd 'gentoo gentoo/distfiles' gimp gnome gnu kde 'kernel kernel/pub' 'libreoffice tdf/libreoffice')
-    ## comprehensive sites, aggressive sync, moderate speed (500kB/s)
-    TSU=( http://mirrors.tuna.tsinghua.edu.cn
-	  apache 'ctan CTAN' 'cran CRAN' 'ctan CTAN' debian freebsd 'gentoo gentoo/distfiles' gnu 'kernel kernel/pub' opensuse )
-    ## comprehensive sites, moderate sync, moderate speed (500kB/s)
-    USTC=( http://mirrors.ustc.edu.cn
-	   'cpan CPAN' 'cran CRAN' 'ctan CTAN' debian freebsd 'gentoo gentoo/distfiles' gnome gnu kde 'kernel linux-kernel' opensuse )
-    HEANET=( http://heanet.dl.sourceforge.net sourceforge )
-    NETEASE=( http://mirrors.163.com
-	      cpan debian 'freebsd FreeBSD' 'gentoo gentoo/distfiles' 'opensuse openSUSE')
-    BIR=( http://10.2.112.3 exherbo-binary )
-
-    add_mirror()
-    {
-	url_base=$1
-	set -- $2
-
-	url="$url_base/${2:-$1}"
-	name=$1
-
-	num=${#MIRRORS[@]}
-	for ((i=0; i<$num; i++)); do
-	    set -- ${MIRRORS[i]}
-	    if [[ $name == $1 ]]; then
-		MIRRORS[i]+=" $url"
-		return 0
-	    fi
-	done
-	MIRRORS+=( "$name $url" )
-	return 0
-    }
-
-    local MIRRORS=()
-    for site in ${SITES[@]}; do
-	eval site=\( \${${site}[@]} \)
-	set -- ${site[@]}
-	local url_base=$1
-	shift
-	while [[ $# -gt 0 ]]; do
-	    add_mirror "$url_base" "$1"
-	    shift
-	done
-    done
-
-    for m in "${MIRRORS[@]}"; do
-	echo ${m}
-    done
-}
-
-show_repository_defaults() {
-    echo names_cache = /var/cache/paludis/names
-    echo write_cache = /var/cache/paludis/metadata
-    echo sync_options = --git-clone-option=--depth=1 --git-pull-option=--depth=1  --git-fetch-option=--depth=1
-}
-
-show_repositories() {
-    ## generate repository.conf
-    case $1 in
-	installed)
-	    cat <<EOF
-format = exndbam
-location = \${root}/var/db/paludis/repositories/installed
-name = installed
-split_debug_location = /usr/${CHOST}/lib/debug
-tool_prefix = ${CHOST}-
-EOF
-	    ;;
-	binary*)
-	    cat <<EOF
-format = e
-sync = git+ssh://git@github.com/sunbing81/${1}.git
-sync_options = --no-reset
-#importance = -1
-EOF
-
-	    if [[ x$HOST == xfs-3 ]]; then
-		cat <<EOF
-location = /srv/linux/paludis/repositories/$1
-binary_destination = true
-binary_distdir = /srv/linux/paludis/distfiles
-binary_keywords_filter = amd64 ~amd64
-binary_uri_prefix = mirror://exherbo-binary/
-
-split_debug_location = /usr/x86_64-pc-linux-gnu/lib/debug
-tool_prefix = x86_64-pc-linux-gnu-
-EOF
-	    else
-		echo location = ${root}/var/db/paludis/repositories/$1
-	    fi
-	    ;;
-	*)
-	    if [[ ${TARGETS} == *"$1"* ]]; then
-		## cross-installed
-		cat <<EOF
-format = exndbam
-location = \${root}/var/db/paludis/repositories/cross-installed/$1
-name = $1
-split_debug_location = /usr/$1/lib/debug
-tool_prefix = $1-
-cross_compile_host = $1
-EOF
-	    else
-		echo "Unsupported repository" 1>&2
-	    fi
-	    ;;
-    esac
-}
-
-## packages related configs
-show_platforms() {
-    cat <<EOF
-### defaults
-*/*		amd64 ~amd64
-*/*[=scm]	~amd64
-EOF
-}
-
-show_sets() {
-    ## set has its own way to handle requires
-    for included in `cat ${SETS_DIR}/${SETS[$1]} | sed -n 's/@require// p'`; do
-	echo "## === Required set $included ==="
-	cat ${SETS_DIR}/${SETS[$included]} | remove_comment_and_platform | remove_custom_mark | sed -r -n '/^[^[:blank:]]/ s/^([a-z][^[:blank:]]*).*/\* \1/ p'
-	echo
-    done
-
-    ## the requried set
-    cat ${SETS_DIR}/${SETS[$1]} | remove_comment_and_platform | remove_user_mask_spec | remove_custom_mark | sed -r -n '/^[^[:blank:]]/ s/^([a-z][^[:blank:]]*).*/\* \1/ p'
-}
-
-show_options() {
-    ### option is generated before chroot-path is used, hence the following has no effect; use python bindings?
-    #echo $LOCATION 1>&2
-    #env 1>&2
-    ## if ROOT is set, then it is a chroot
-    if [[ x$ROOT != "x" && $ROOT != "/" ]]; then
-	echo 
-	echo "### Chroot options:"
-	cat <<EOF
-*/*			parts:		-* binaries libraries
-EOF
-    fi
-
-    ## PREDEFINED_SETS should be taken account in when generating options
-    for set in ${PREDEFINED_SETS[@]} ${ACTIVE_SETS[@]}; do
-	echo
-	echo "### Options for set --$set--"
-	cat ${SETS_DIR}/$set | remove_comment_and_platform | remove_custom_mark
-    done
-}
-
-show_suggestions() {
-    for set in ${PREDEFINED_SETS[@]} ${ACTIVE_SETS[@]}; do
-	echo 
-	echo "### Package suggestions for set --$set--"
-	cat ${SETS_DIR}/$set | remove_comment_and_platform | sed -r -n '/&/ s/[[:blank:]]*([[:punct:][:alnum:]]+).*&/\1\t/ p'
-    done
-}
-
-show_package_mask() {
-    for set in ${ACTIVE_SETS[@]}; do
-	echo
-	echo "### Package unmasks for set --$set--"
-	cat ${SETS_DIR}/$set | sed -n 's/^[[:blank:]]*-// p' | sed -r -e 's/^([a-z][^[:blank:]]*).*/\1/'
-    done
-}
-
-show_package_unmask() {
-    for set in ${ACTIVE_SETS[@]}; do
-	echo
-	echo "### Package unmasks for set --$set--"
-	cat ${SETS_DIR}/$set | sed -n 's/^[[:blank:]]*+// p' | sed -r -e 's/^([a-z][^[:blank:]]*).*/\1/'
-    done
-}
-
-## the per-package bashrc processing
-show_bashrc_line() {
-    ## malformed bashrc line
-    if [[ $1 != *: ]]; then
-	echo "A bash variable is supposed to have a ending colon"
-	echo "    $line"
-	return
-    fi
-
-    ## extract the flag name
-    name=${1%:}
-    shift
-
-    ### TODO check ill-formed flags
-
-    ## apply the flag contents
-    if [[ $name == "ALTERNATIVE" ]]; then
-	## alternative
-	[[ `eclectic $1 show` == $2 ]] && echo '# will not update alternative' || eclectic $1 script --sh $2
-    elif [[ $1 != "^"* && $1 != "$"* ]]; then
-	## a plain assignment
-	[[ $1 == '"'* ]] && echo "$name=$@" || echo "$name=\"$@\""
-    else
-	## flags add/remove
-	while [[ $# -gt 0 ]]; do
-	    if [[ $1 == "^"* ]]; then
-		echo "$name+=\" ${1#^}\""
-	    elif [[ $1 == "$"* ]]; then
-		echo "$name=\"\${$name/${1#$}/}\""
-	    else
-		echo "A modifying action requires all flags are add/remove"
-		echo "    $1"
-	    fi
-	    shift
-	done
-    fi
-    echo
-}
-
-show_bashrc() {
-    local name
-
-    ## avoid surprises in `set -- $line` due to globbing
-    set -f
-
-    ## read configuration and extract those for bashrc
-    for set in ${PREDEFINED_SETS[@]} ${ACTIVE_SETS[@]}; do
-	cat ${SETS_DIR}/$set | sed -r -n 's|^[[:blank:]]*@(.*/.*)|\1| p' | while read line; do
-	    ## for convenient access
-	    set -- $line
-
-	    ## extra information if not called by paludis
-	    [[ x$PALUDIS_CLIENT == "x" ]] && echo && echo "### bashrc configuration for set --$set--" && echo $1:
-
-	    ## print if not called by paludis or matches global spec or current spec
-	    ## TODO: support SLOT/PV/REPOSITORY -- more spec handling
-	    [[ x$PALUDIS_CLIENT == "x" || $1 == '*/*' || $1 == ${CATEGORY}/${PN} ]] && shift && show_bashrc_line "$@"
-
-	    #cat ${SETS_DIR}/$set | sed -r -n "s|^[[:blank:]]*@${CATEGORY}/${PN}[[:blank:]]*|| p" | while read line; do
-	done
-    done
-
-    ## generate CFLAGS/LDFLAGS for different targets
-    for TARGET in ${TARGETS[@]}; do
-	[[ $TARGET == '-*' ]] && continue
-	_TARGET=${TARGET//-/_}
-	echo ${_TARGET}_CFLAGS=\${MY__${_TARGET}_CFLAGS:-\$CFLAGS}
-	echo ${_TARGET}_CFLAGS="\"\${${_TARGET}_CFLAGS} \$([[ x\${MY__USE_DISTCC} = xno ]] && echo \"\${MY__CFLAGS_MARCH}\" || echo \"\$(${TARGET}-gcc \${MY__CFLAGS_MARCH} -E -v - </dev/null 2>&1 | sed -n -e 's/^.*- -/-/p')\")\""
-	echo ${_TARGET}_CXXFLAGS=\${${_TARGET}_CFLAGS}
-	echo ${_TARGET}_LDFLAGS=\${MY__${_TARGET}_LDFLAGS:-\$LDFLAGS}
-    done
-
-    ## restore
-    set +f
-}
-
-## the direct call dispatcher
-show_wrapper() {
-    if type show_$1 >/dev/null 2>&1; then
-	show_$1
-    else
-	echo "A direct call to the wrapper need a supported explicit action"
-	echo "    Action: $1"
-    fi
-}
-
-##### Main ####
-
-initialize "$@"
-
-if type show_${ACTION} >/dev/null 2>&1; then
-    show_${ACTION} ${SUB_ACTION}
-else
-    echo "Not supported action: " ${ACTION} 1>&2
-fi
-
+## if the caller is not paludis, print debug info
+[[ x$PALUDIS_CLIENT == "x" ]] && print_debug_info 1>&2
