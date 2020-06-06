@@ -1,0 +1,5 @@
+cat <<EOF
+## defaults
+*/*		amd64 ~amd64
+*/*[=scm]	~amd64
+EOF

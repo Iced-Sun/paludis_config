@@ -1,5 +1,8 @@
 #!/bin/bash
 
+WRAPPER_FULL_PATH=`realpath $0`
+SCRIPT_FULL_PATH=`dirname ${WRAPPER_FULL_PATH}`
+
 init_action() {
 	## determine the invoking role of the script
   local INVOKER_FULL_PATH=`realpath -s $0`
@@ -44,8 +47,7 @@ Custom config DIR (relative):	${CONFIG_DIR}
 Action/Configuration:		${ACTION}$([[ x${SUB_ACTION} == "x" ]] || echo ::${SUB_ACTION}).conf
 Active sets:			${ACTIVE_SETS[@]}
 
-===== End =====
-
+===== Output =====
 EOF
 }
 
@@ -59,3 +61,10 @@ init_action
 
 ## if the caller is not paludis, print debug info
 [[ x$PALUDIS_CLIENT == "x" ]] && print_debug_info 1>&2
+
+## the real job
+if [[ -f ${SCRIPT_FULL_PATH}/action/${ACTION} ]]; then
+	${SCRIPT_FULL_PATH}/action/${ACTION} ${SUB_ACTION}
+else
+	echo "Not supported action: " ${ACTION} 1>&2
+fi
