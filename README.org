@@ -7,38 +7,36 @@ The package configuration set files are located in
 
 1. =@<machine-id>:<hostname>=
 
-   A specific set which includes package configuration for a specific
-   machine (mostly hardware), such as cpu features, video drivers,
-   firmwares, etc.).
+   A specific set which includes package configuration for a specific machine
+   (mostly hardware), such as cpu features, video drivers, firmwares, etc.).
 
-   The configurations are appended in the end of the paludis
-   configurations, i.e., it has the highest priority and will
-   overwrite other configurations.
+   The configurations are appended in the end of the paludis configurations,
+   i.e., it has the highest priority and will overwrite other configurations.
 
 2. =<order>-<name>=
 
-   An ordinary set includes general package presettings. Large =order=
-   takes priorites.
+   An ordinary set includes general package presettings. Large =order= takes
+   priorites.
 
-   Both the machine set and the ordinary set can pull in packages as
-   the world dependecy (paludis installed world file).
+   Both the machine set and the ordinary set can pull in packages as the world
+   dependecy (paludis installed world file).
 
 3. =?<default>=
 
-   A weak configuration set defines package options or/and
-   suggestions, without pulling packages as the world dependency.
+   A weak configuration set defines package options or/and suggestions, without
+   pulling packages as the world dependency.
 
    The configuration will be prepend to the front of the paludis
    configurations.
 
 ** set file contents
 
-Each line contains two parts: an (optionally marked) package spec, and
-one or more configuration parts separated by special marks.
+Each line contains two parts: an (optionally marked) package spec, and one or
+more configuration parts separated by special marks.
 
-1. A line starting with a paludis valid spec (=category/package=) pull
-   in a world dependency on the package. Optionally, a leading mark
-   could be applied for special purposes:
+1. A line starting with a paludis valid spec (=category/package=) pull in a
+   world dependency on the package. Optionally, a leading mark could be applied
+   for special purposes:
 
    | Mark       | Configuration          |
    |------------+------------------------|
@@ -47,20 +45,20 @@ one or more configuration parts separated by special marks.
    | =~=        | unstable unmask        |
    | =-=        | user mask              |
 
-   =<TAB>= denotes the package is dependency, hence the package will
-   not be part of world file. Any package in weak configuration
-   (=?<default>=) is treated as a =<TAB>= is always applied.
+   =<TAB>= denotes the package is dependency, hence the package will not be
+   part of world file. Any package in weak configuration (=?<default>=) is
+   treated as a =<TAB>= is always applied.
 
    =+, ~, -= simply masks/unmasks a package.
 
-2. The configuration part immediate follows a package spec without any
-   marks defines an /options/ configuration.
+2. The configuration part immediate follows a package spec without any marks
+   defines an /options/ configuration.
 
 3. A configuration part starting with =&= defines the /suggestion taking/
    configuration.
 
-If a line starts with a =@= mark, it defines a bashrc configuration
-for a package, or a set inclusion.
+If a line starts with a =@= mark, it defines a bashrc configuration for a
+package, or a set inclusion.
 
 | Mark       | Configuration          |
 |------------+------------------------|
@@ -69,31 +67,29 @@ for a package, or a set inclusion.
 
 1. =@require= pulls in the configurations from the following sets.
 
-2. =@= defines environment variabls for building (as in bashrc). Each
-   line must specify only one pair of a variable (e.g., CFLAGS,
-   EXJOBS, CHOST, etc.) and its value, with the following marks
-   supported:
+2. =@= defines environment variabls for building (as in bashrc). Each line must
+   specify only one pair of a variable (e.g., CFLAGS, EXJOBS, CHOST, etc.) and
+   its value, with the following marks supported:
 
    | =<no-mark>= | overwrite bashrc parameter   |
    | =^=         | insert into bashrc parameter |
    | =$=         | remove from bashrc parameter |
 
-   Additionally, if the variable is "ALTERNATIVE", then the line
-   configures the eclectic alternatives.
+   Additionally, if the variable is "ALTERNATIVE", then the line configures the
+   eclectic alternatives.
 
 *** Examples
 
-In the following example, the first line unmasks
-=xorg-server-1.19.0-r1=, adds it to a set, takes the
-=xf86-input-libinput= suggestion, and configures its options as
-=systemd xwayland providers: libressl -openssl=.
+In the following example, the first line unmasks =xorg-server-1.19.0-r1=, adds
+it to a set, takes the =xf86-input-libinput= suggestion, and configures its
+options as =systemd xwayland providers: libressl -openssl=.
 
-The second line will remove the =-ffast-math= CFLAGS and then insert a
-=-O2= CFLAGS.
+The second line will remove the =-ffast-math= CFLAGS and then insert a =-O2=
+CFLAGS.
 
 The third line sets EXJOBS to 1.
 
-The last line tells paludis that glibc require ld.bfd to build.
+The last line tells paludis that glibc require =ld.bfd= to build.
 
 #+BEGIN_EXAMPLE
 +x11-server/xorg-server[=1.19.0-r1]		systemd xwayland PROVIDERS: libressl -openssl		&xf86-input-libinput
