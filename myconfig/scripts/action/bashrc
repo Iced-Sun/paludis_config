@@ -44,7 +44,7 @@ if [[ $1 == 'gen-env' ]]; then
 		cat ${SETS_DIR}/$set | sed -r -e 's/#.*//' | grep '*/*' | grep -E 'CHOST|TARGETS' | while read line; do
 			## for convenient access
 			set -- $line
-			[[ $1 == '@*/*' || $1 == '*/*' ]] && shift && show_bashrc_line "$@" | sed -e 's/-\*//' | sed -e 's/TARGETS="/TARGETS+=" /'
+			[[ $1 == '@*/*' || $1 == '*/*' ]] && shift && show_bashrc_line "$@" | sed -e 's/"//g' | sed -e 's/-\*//' | sed -e 's/TARGETS=/TARGETS+= /'
 		done
 	done
 else
