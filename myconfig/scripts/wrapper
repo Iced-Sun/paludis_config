@@ -128,8 +128,7 @@ done < <(source ${SCRIPT_FULL_PATH}/action/bashrc gen-env)
 
 ## the real job
 if [[ -f ${SCRIPT_FULL_PATH}/action/${ACTION} ]]; then
-	#${SCRIPT_FULL_PATH}/action/${ACTION} ${SUB_ACTION}
-	source ${SCRIPT_FULL_PATH}/action/${ACTION}
+	source ${SCRIPT_FULL_PATH}/action/${ACTION} ${SUB_ACTION}
 else
 	echo "Not supported action: " ${ACTION} 1>&2
 fi
