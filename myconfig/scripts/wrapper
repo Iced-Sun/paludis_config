@@ -112,17 +112,23 @@ EOF
 }
 
 ## initialization
-# pass commandline options
+# detect the invoker role: shouldpass commandline options
 detect_action "$@"
+
+# find sets
 detect_sets
-source ${SCRIPT_FULL_PATH}/action/bashrc gen-env
+
+# generate CHOST, TARGETS
+while read line; do
+	declare "$line"
+done < <(source ${SCRIPT_FULL_PATH}/action/bashrc gen-env)
 
 ## if the caller is not paludis, print debug info
 [[ x$PALUDIS_CLIENT == "x" ]] && print_debug_info 1>&2
 
 ## the real job
 if [[ -f ${SCRIPT_FULL_PATH}/action/${ACTION} ]]; then
-  #${SCRIPT_FULL_PATH}/action/${ACTION} ${SUB_ACTION}
+	#${SCRIPT_FULL_PATH}/action/${ACTION} ${SUB_ACTION}
 	source ${SCRIPT_FULL_PATH}/action/${ACTION}
 else
 	echo "Not supported action: " ${ACTION} 1>&2
