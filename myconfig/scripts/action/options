@@ -1,0 +1,20 @@
+### option is generated before chroot-path is used, hence the following has no effect; use python bindings?
+
+#echo $LOCATION 1>&2
+#env 1>&2
+
+## if ROOT is set, then it is a chroot
+if [[ x$ROOT != "x" && $ROOT != "/" ]]; then
+	echo
+	echo "### Chroot options:"
+	cat <<EOF
+*/*			parts:		-* binaries libraries
+EOF
+fi
+
+## WEAK_SETS should be taken account in when generating options
+for set in ${WEAK_SETS[@]} ${ACTIVE_SETS[@]}; do
+	>&2 echo
+	>@2 echo "### Options for set --$set--"
+	cat ${SETS_DIR}/$set | remove_comment_and_platform | remove_custom_mark
+done
