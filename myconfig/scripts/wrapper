@@ -26,68 +26,70 @@ source ${SCRIPT_FULL_PATH}/utils.sh
 ## environment detection
 detect_action() {
 	## determine the invoking role of the script
-  local INVOKER_FULL_PATH=`realpath -s $0`
+	local INVOKER_FULL_PATH=`realpath -s $0`
 	local INVOKER=${INVOKER_FULL_PATH#$PALUDIS_CONFIG_DIR/}
 	local INVOKER_DIRNAME=`dirname $INVOKER`
 	local INVOKER_BASENAME=`basename $INVOKER`
 
 	## generate ACTION, SUB_ACTION
-  if [[ "wrapper" == "$INVOKER_BASENAME" ]]; then
+	if [[ "wrapper" == "$INVOKER_BASENAME" ]]; then
 		# a directly call to the script
 		#ACTION=wrapper
 		ACTION=$1
-  elif [[ " sets repositories " =~ " $INVOKER_DIRNAME " ]]; then
+	elif [[ " sets repositories " =~ " $INVOKER_DIRNAME " ]]; then
 		# called by sets/*.bash, repositories/*.bash
 		ACTION=$INVOKER_DIRNAME
 		SUB_ACTION=${INVOKER_BASENAME%.bash}
-  elif [[ "." == $INVOKER_DIRNAME ]]; then
+	elif [[ "." == $INVOKER_DIRNAME ]]; then
 		# called by *.bash
 		ACTION=${INVOKER_BASENAME%.bash}
-  else
+	else
 		## this should not happen
 		ACTION=${INVOKER_BASENAME}
 	fi
 }
 
 detect_sets() {
-  pushd ${SETS_DIR} >/dev/null 2>&1
+	pushd ${SETS_DIR} >/dev/null 2>&1
 
-  ## populate defined sets
-  export WEAK_SETS=( \?* )
-  GENERAL_SETS=( [0-9][0-9]-* )
-  MACHINE_SETS=( @* )
+	## populate defined sets
+	export WEAK_SETS=( \?* )
+	GENERAL_SETS=( [0-9][0-9]-* )
+	MACHINE_SETS=( @* )
 
-  ## generate the short name (in WORLD) -> long name (in SETS) map
-  declare -g -A SETS
-  for set in ${GENERAL_SETS[@]}; do
+	## generate the short name (in WORLD) -> long name (in SETS) map
+	declare -g -A SETS
+	for set in ${GENERAL_SETS[@]}; do
 		## fullname key
 		SETS[$set]=$set
 		## stripped-name key
 		SETS[${set#[0-9][0-9]-}]=$set
-  done
+	done
 
-  for set in ${MACHINE_SETS[@]}; do
+	for set in ${MACHINE_SETS[@]}; do
 		## machine_id key
 		SETS[`echo $set | sed -r -e 's/@(.*):.*/\1/'`]=$set
 		## TODO hostname key
 		## TODO fullname key
-  done
+	done
 
-  ### TODO check if machine set is machine_id/hostname of the current host
-  ## generate installed sets
-  if [[ -e ${WORLD} ]]; then
+	### TODO check if machine set is machine_id/hostname of the current host
+	## generate installed sets
+	## get around the '${root}'
+	eval local WORLD=${WORLD}
+	if [[ -e ${WORLD} ]]; then
 		ACTIVE_SETS=()
 		for set in `cat ${WORLD}`; do
-	    ## collect included sets
-	    for included in $(cat ${SETS[$set]} | sed -n 's/@require// p'); do
+			## collect included sets
+			for included in $(cat ${SETS[$set]} | sed -n 's/@require// p'); do
 				[[ " ${ACTIVE_SETS[@]} " =~ " ${SETS[$included]} " ]] || ACTIVE_SETS+=( ${SETS[$included]} )
-	    done
-	    ## collect explicit set
-	    [[ " ${ACTIVE_SETS[@]} " =~ " ${SETS[$set]} " ]] || ACTIVE_SETS+=( ${SETS[$set]} )
+			done
+			## collect explicit set
+			[[ " ${ACTIVE_SETS[@]} " =~ " ${SETS[$set]} " ]] || ACTIVE_SETS+=( ${SETS[$set]} )
 		done
-  fi
+	fi
 
-  popd >/dev/null 2>&1
+	popd >/dev/null 2>&1
 }
 
 ## utility functions
