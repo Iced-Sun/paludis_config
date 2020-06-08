@@ -1,8 +1,8 @@
 show_bashrc_line() {
     ## malformed bashrc line
     if [[ $1 != *: ]]; then
-			echo "A bash variable is supposed to have a ending colon"
-			echo "    $line"
+			>&2 echo "A bash variable is supposed to have a ending colon"
+			>&2 echo "    $line"
 			return
     fi
 
@@ -27,13 +27,12 @@ show_bashrc_line() {
 				elif [[ $1 == "$"* ]]; then
 					echo "$name=\"\${$name/${1#$}/}\""
 				else
-					echo "A modifying action requires all flags are add/remove"
-					echo "    $1"
+					>&2 echo "A modifying action requires all flags are add/remove"
+					>&2 echo "    $1"
 				fi
 				shift
 			done
     fi
-    echo
 }
 
 ## avoid surprises in `set -- $line` due to globbing
