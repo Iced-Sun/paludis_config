@@ -1,0 +1,6 @@
+echo "### Package suggestions"
+for set in ${PREDEFINED_SETS[@]} ${ACTIVE_SETS[@]}; do
+	echo "##  --$set--"
+	cat ${SETS_DIR}/$set | remove_comment_and_platform | sed -r -n '/&/ s/[[:blank:]]*([[:punct:][:alnum:]]+).*&/\1\t/ p'
+	echo
+done

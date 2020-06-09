@@ -1,8 +1,8 @@
  ## set has its own way to handle requires
 for included in `cat ${SETS_DIR}/${SETS[$1]} | sed -n 's/@require// p'`; do
-	>&2 echo "## === Required set $included ==="
+	echo "## === Required set $included ==="
 	cat ${SETS_DIR}/${SETS[$included]} | remove_comment_and_platform | remove_custom_mark | sed -r -n '/^[^[:blank:]]/ s/^([a-z][^[:blank:]]*).*/\* \1/ p'
- 	>&2 echo
+ 	echo
 done
 
 ## the requried set

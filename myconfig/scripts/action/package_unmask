@@ -1,0 +1,6 @@
+echo "### Package unmasks"
+for set in ${ACTIVE_SETS[@]}; do
+	echo "##  --$set--"
+	cat ${SETS_DIR}/$set | sed -n 's/^[[:blank:]]*+// p' | sed -r -e 's/^([a-z][^[:blank:]]*).*/\1/'
+	echo
+done
