@@ -13,7 +13,7 @@ mail-mta/msmtp				PROVIDERS: gnutls
 sys-sound/alsa-utils
 media-sound/apulse
 # upstream systemd doesn't support user config
-~media-sound/mpd			alsa ffmpeg -systemd		&-*/* 
+~media-sound/mpd			alsa ffmpeg -systemd		&-*/*
 ~media-sound/ncmpcpp			taglib
 ~media/mpv				alsa opengl
 	media-libs/libass		fontconfig
