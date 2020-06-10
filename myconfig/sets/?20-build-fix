@@ -22,7 +22,7 @@
 
 # ffmpeg needs its own configure options for PIC and LTO (--enable-pic --enable-lto), have to modify the exlib directly
 @media/ffmpeg			MY__EXTRA_ECONF: --enable-pic --enable-lto # no effect since ffmpeg doesn't use econf()
-	
+
 # LTO breaks some symbols in libgcc_s.so, libstdc++.so
 @sys-libs/libgcc		CFLAGS:	$-flto
 @sys-libs/libgcc		LDFLAGS: $"-Wl,-flto"
@@ -44,12 +44,14 @@
 @app-terminal/alacritty		LDFLAGS: $-Wl,-lto
 @sys-sound/alsa-lib		CFLAGS: $-flto
 @sys-sound/alsa-lib		LDFLAGS: $"-Wl,-flto"
-@app-virtualization/qemu	CFLAGS: $-flto 
+@app-virtualization/qemu	CFLAGS: $-flto
 @app-virtualization/qemu	LDFLAGS: $"-Wl,-flto"
 @sys-libs/libcap		CFLAGS: $-flto
 @sys-libs/libcap		LDFLAGS: $-Wl,-flto
 @net-libs/webkit		CFLAGS: $-flto
 @net-libs/webkit		LDFLAGS: $-Wl,-flto
+@app-office/gnucash		CFLAGS: $-flto
+@app-office/gnucash		LDFLAGS: $-Wl,-flto
 
 ### general
 ## system
