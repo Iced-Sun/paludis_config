@@ -20,7 +20,7 @@ wayland-apps/swayidle
 x11-apps/xhost
 
 ## apps dedicated for X
-app-editors/emacs			X freetype jpeg png tiff xpm xim providers: gtk3
+app-editors/emacs			X cairo harfbuzz freetype jpeg png tiff xpm xim providers: gtk3
 
 ## i18n
 inputmethods/fcitx			classic-ui gtk3
