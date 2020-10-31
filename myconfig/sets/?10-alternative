@@ -1,12 +1,11 @@
-## prefex busybox and libarchive
-virtual/*			PROVIDERS: -* busybox libarchive
+## prefex gnu and libarchive
+virtual/*			PROVIDERS: -* gnu libarchive
 
-# fixme pbzip2 cannot be used as the alternative of bzip2 in the system set
+# specialist
 virtual/gzip			PROVIDERS: -* pigz
-virtual/cpio			PROVIDERS: -* busybox
-
-# busybox wget doesn't support https
-virtual/wget			PROVIDERS: -* gnu
+virtual/cpio			PROVIDERS: -* libarchive
+virtual/unzip				PROVIDERS: -* unzip
+# fixme: pbzip2 cannot be used as the alternative of bzip2 in the system set
 
 ## coreutils
 virtual/man			PROVIDERS: -* man
