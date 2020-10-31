@@ -56,6 +56,8 @@
 @net-libs/webkit		LDFLAGS: $-Wl,-flto
 @app-office/gnucash		CFLAGS: $-flto
 @app-office/gnucash		LDFLAGS: $-Wl,-flto
+@x11-libs/qtbase		CFLAGS: $-flto
+@x11-libs/qtbase		LDFLAGS: $-Wl,-flto
 
 ### general
 ## system
@@ -74,5 +76,3 @@
 ## broken otherwise
 @sys-boot/efibootmgr		CFLAGS: ^-D_GNU_SOURCE
 @sys-boot/efibootmgr		LDFLAGS: ^-Wl,-z,muldefs
-
-

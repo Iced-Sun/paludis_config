@@ -8,7 +8,8 @@
 */*		VIDEO_DRIVERS:		intel
 
 ## firmware
-+firmware/linux-firmware[=scm]
+#+firmware/linux-firmware[=scm]
+firmware/linux-firmware
 firmware/intel-microcode
 
 ## bluetooth
@@ -20,6 +21,7 @@ firmware/intel-microcode
 		dev-libs/atk		gobject-introspection
 		x11-libs/pango		gobject-introspection
 		x11-libs/gdk-pixbuf	gobject-introspection
+		x11-libs/harfbuzz	gobject-introspection
 
 ## touchscreen and pen
 	sys-libs/libinput		wacom
@@ -78,3 +80,7 @@ gnome-desktop/gnome-keyring
 net-proxy/proxychains-ng
 net-misc/onedrive
 app-misc/xstow
+
+## wireguard
+net/wireguard-tools			PROVIDERS: -* nftables
+

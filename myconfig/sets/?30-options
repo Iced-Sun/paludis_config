@@ -1,3 +1,5 @@
+sys-devel/gcc					zstd
+
 media-libs/freetype				harfbuzz
 	x11-libs/harfbuzz
 		dev-libs/icu			PARTS: development
@@ -6,5 +8,4 @@ gnome-desktop/librsvg
 	# bootstrap rust requires +internal-llvm
 	dev-lang/rust				-internal-llvm
 		dev-lang/llvm			polly
-
 
