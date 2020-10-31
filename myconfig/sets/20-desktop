@@ -7,7 +7,7 @@ virtual/notification-daemon
 ## mail
 net-mail/isync
 mail-client/mu				emacs
-mail-mta/msmtp				PROVIDERS: gnutls
+mail-mta/msmtp
 
 ## media
 sys-sound/alsa-utils

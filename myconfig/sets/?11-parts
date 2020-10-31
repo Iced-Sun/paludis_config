@@ -16,3 +16,4 @@ app-arch/xz			PARTS: development
 	sys-libs/readline	PARTS: development
 	sys-libs/zlib		PARTS: development
 dev-libs/libpthread-stubs	PARTS: development
+dev-libs/openssl		PARTS: development

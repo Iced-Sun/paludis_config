@@ -32,7 +32,7 @@
 */*			threads openmp
 
 ## alternatives
-*/*			PROVIDERS: libressl
+*/*			PROVIDERS: openssl
 */*			PROVIDERS: systemd systemd-logind
 */*			PROVIDERS: elfutils
 
