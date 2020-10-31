@@ -40,7 +40,7 @@
 */*			acl xattr
 
 ## language bindings
-*/*			PYTHON_ABIS:	-* 3.7
-*/*			VALA_ABIS:	-* 0.46
+*/*			PYTHON_ABIS:	-* 3.8
+*/*			VALA_ABIS:	-*
 */*			LUA_ABIS:	-*
 */*			RUBY_ABIS:	-*

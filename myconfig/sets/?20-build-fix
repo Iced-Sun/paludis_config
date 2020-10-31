@@ -29,6 +29,10 @@
 @sys-libs/libstdc++		CFLAGS:	$-flto
 @sys-libs/libstdc++		LDFLAGS: $"-Wl,-flto"
 
+# LTO breaks conftest on endianess
+@dev-lang/python:3.8		CFLAGS: $-flto
+@dev-lang/python:3.8		LDFLAGS: $-Wl,-flto
+
 # LTO breaks the building
 @dev-lang/llvm			CFLAGS:	$-flto
 @dev-lang/llvm			LDFLAGS: $"-Wl,-flto"
