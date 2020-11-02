@@ -52,7 +52,7 @@ app-crypt/gnupg
 	app-crypt/pinentry		keyring
 
 ## nodejs
-dev-lang/node				bundled-openssl # node loves openssl, but we have only libressl
+dev-lang/node
 	net-libs/nghttp2		utils
 
 ## virtualization

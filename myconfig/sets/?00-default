@@ -33,6 +33,7 @@
 
 ## alternatives
 */*			PROVIDERS: openssl
+sys-apps/systemd	openssl
 */*			PROVIDERS: systemd systemd-logind
 */*			PROVIDERS: elfutils
 
