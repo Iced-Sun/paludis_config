@@ -80,6 +80,11 @@ detect_sets() {
 	if [[ -e ${WORLD} ]]; then
 		ACTIVE_SETS=()
 		for set in `cat ${WORLD}`; do
+			if [[ -z ${SETS[$set]} ]]; then
+				echo "The set <${set}> is not registered, skipping..."
+				continue
+			fi
+
 			## collect included sets
 			for included in $(cat ${SETS[$set]} | sed -n 's/@require// p'); do
 				[[ " ${ACTIVE_SETS[@]} " =~ " ${SETS[$included]} " ]] || ACTIVE_SETS+=( ${SETS[$included]} )
