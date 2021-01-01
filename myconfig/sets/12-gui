@@ -11,7 +11,7 @@ fonts/Sarasa-Gothic
 
 ## render/compositor/display server/window manager
 compositor/sway				grab tray
-	sys-libs/wlroots		caps
+	sys-libs/wlroots		caps libseat
 x11-plugins/i3status
 wayland-apps/wofi
 wayland-apps/wdisplays
