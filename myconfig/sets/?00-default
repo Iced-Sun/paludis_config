@@ -31,6 +31,9 @@
 ## concurrenty/parellelism
 */*			threads openmp
 
+## compression
+*/*			zstd
+
 ## alternatives
 */*			PROVIDERS: openssl
 sys-apps/systemd	openssl
