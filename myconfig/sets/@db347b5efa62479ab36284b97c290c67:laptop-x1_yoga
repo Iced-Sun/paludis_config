@@ -38,7 +38,7 @@ sys-fs/ntfs-3g_ntfsprogs
 sys-fs/dosfstools
 
 ## postgres
-dev-db/postgresql			readline	postgresql_extensions: file_fdw pgcrypto uuid-ossp
+dev-db/postgresql			readline
 
 ## java
 virtual/jdk				PROVIDERS: openjdk-bin
@@ -48,7 +48,7 @@ virtual/jdk				PROVIDERS: openjdk-bin
 
 ## gnupg
 app-crypt/gnupg
-	app-crypt/pinentry		keyring
+	app-crypt/pinentry		keyring emacs
 
 ## nodejs
 dev-lang/node
