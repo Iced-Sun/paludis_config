@@ -29,9 +29,9 @@
 @sys-libs/libstdc++		CFLAGS:	$-flto
 @sys-libs/libstdc++		LDFLAGS: $"-Wl,-flto"
 
-# LTO breaks conftest on endianess
-@dev-lang/python:3.8		CFLAGS: $-flto
-@dev-lang/python:3.8		LDFLAGS: $-Wl,-flto
+# LTO breaks conftest on endianess: python:3.8
+@dev-lang/python		CFLAGS: $-flto
+@dev-lang/python		LDFLAGS: $-Wl,-flto
 
 # LTO breaks the building
 @dev-lang/llvm			CFLAGS:	$-flto
@@ -58,6 +58,10 @@
 @app-office/gnucash		LDFLAGS: $-Wl,-flto
 @x11-libs/qtbase		CFLAGS: $-flto
 @x11-libs/qtbase		LDFLAGS: $-Wl,-flto
+@sys-libs/libgomp		CFLAGS: $-flto
+@sys-libs/libgomp		LDFLAGS: $-Wl,-flto
+@dev-util/valgrind		CFLAGS: $-flto
+@dev-util/valgrind		LDFLAGS: $-Wl,-flto
 
 ### general
 ## system
