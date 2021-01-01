@@ -1,7 +1,6 @@
 ### Essential console applications ###
 
 ## system
-dev-util/ketchup
 sys-apps/busybox        static
 sys-apps/systemd	lz4			&sys-boot/dracut
 sys-apps/paludis	prebuilt-documentation search-index pbin

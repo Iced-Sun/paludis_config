@@ -8,7 +8,6 @@
 */*		VIDEO_DRIVERS:		intel
 
 ## firmware
-#+firmware/linux-firmware[=scm]
 firmware/linux-firmware
 firmware/intel-microcode
 
