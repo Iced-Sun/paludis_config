@@ -62,6 +62,8 @@
 @sys-libs/libgomp		LDFLAGS: $-Wl,-flto
 @dev-util/valgrind		CFLAGS: $-flto
 @dev-util/valgrind		LDFLAGS: $-Wl,-flto
+@dev-libs/libaio		CFLAGS: $-flto
+@dev-libs/libaio		LDFLAGS: $-Wl,-flto
 
 ### general
 ## system
