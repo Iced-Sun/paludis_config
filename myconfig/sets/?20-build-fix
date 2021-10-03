@@ -64,6 +64,10 @@
 @dev-util/valgrind		LDFLAGS: $-Wl,-flto
 @dev-libs/libaio		CFLAGS: $-flto
 @dev-libs/libaio		LDFLAGS: $-Wl,-flto
+@dev-libs/libbsd		CFLAGS: $-flto
+@dev-libs/libbsd		LDFLAGS: $-Wl,-flto
+@dev-lang/node		CFLAGS: $-flto
+@dev-lang/node		LDFLAGS: $-Wl,-flto
 
 ### general
 ## system

@@ -12,12 +12,17 @@ fonts/Sarasa-Gothic
 ## render/compositor/display server/window manager
 compositor/sway				grab tray
 	sys-libs/wlroots		caps libseat
-x11-plugins/i3status
-wayland-apps/wofi
-wayland-apps/wdisplays
-wayland-apps/swayidle
+
 # for root access
 x11-apps/xhost
+
+# utilities
+x11-plugins/i3status
+wayland-apps/wofi
+#wayland-apps/wdisplays
+wayland-apps/swayidle
+wayland-apps/swaylock
+wayland-apps/foot
 
 ## apps dedicated for X
 app-editors/emacs			X cairo harfbuzz freetype jpeg png tiff xpm xim providers: gtk3
@@ -27,5 +32,4 @@ inputmethods/fcitx			classic-ui gtk3
 inputmethods/fcitx-configtool		gtk3
 inputmethods/fcitx-libpinyin
 
-## terminal emulator
-app-terminal/alacritty
+

@@ -5,7 +5,7 @@
 #*/*		TARGETS:		i686-pc-linux-gnu
 */*		AMD64_CPU_FEATURES:	         sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3
 */*		X86_CPU_FEATURES:	sse sse2 sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3
-*/*		VIDEO_DRIVERS:		intel
+*/*		VIDEO_DRIVERS:		-* intel
 
 ## firmware
 firmware/linux-firmware
@@ -39,6 +39,7 @@ sys-fs/dosfstools
 
 ## postgres
 dev-db/postgresql			readline
+	dev-db/postgresql-client	pgdump readline ssl
 
 ## java
 virtual/jdk				PROVIDERS: openjdk-bin
@@ -48,7 +49,7 @@ virtual/jdk				PROVIDERS: openjdk-bin
 
 ## gnupg
 app-crypt/gnupg
-	app-crypt/pinentry		keyring emacs
+	app-crypt/pinentry		keyring emacs gnome
 
 ## nodejs
 dev-lang/node
@@ -83,3 +84,12 @@ app-misc/xstow
 ## wireguard
 net/wireguard-tools			PROVIDERS: -* nftables
 
+## docker-compose
+	dev-lang/python			sqlite
+
+## feishu
+net-print/cups
+
+## docker
+app-virtualization/moby
+app-virtualization/docker-cli

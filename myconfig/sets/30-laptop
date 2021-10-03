@@ -1,3 +1,4 @@
 ### Packages for a laptop ###
-net-apps/NetworkManager	wifi compat-libs PROVIDERS: nss internal iwd
-	dev-libs/nspr	PARTS: development
+net-wireless/iwd
+net-wireless/wireless-regdb
+
