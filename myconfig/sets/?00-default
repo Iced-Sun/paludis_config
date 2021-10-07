@@ -44,7 +44,7 @@ sys-apps/systemd	openssl
 */*			acl xattr
 
 ## language bindings
-*/*			PYTHON_ABIS:	-* 3.8
+*/*			PYTHON_ABIS:	-* 3.9
 */*			VALA_ABIS:	-*
 */*			LUA_ABIS:	-*
 */*			RUBY_ABIS:	-*

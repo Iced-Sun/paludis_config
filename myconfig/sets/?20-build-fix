@@ -66,8 +66,10 @@
 @dev-libs/libaio		LDFLAGS: $-Wl,-flto
 @dev-libs/libbsd		CFLAGS: $-flto
 @dev-libs/libbsd		LDFLAGS: $-Wl,-flto
-@dev-lang/node		CFLAGS: $-flto
-@dev-lang/node		LDFLAGS: $-Wl,-flto
+@dev-lang/node			CFLAGS: $-flto
+@dev-lang/node			LDFLAGS: $-Wl,-flto
+@dev-libs/spidermonkey		CFLAGS: $-flto
+@dev-libs/spidermonkey		LDFLAGS: $-Wl,-flto
 
 ### general
 ## system
@@ -86,3 +88,10 @@
 ## broken otherwise
 @sys-boot/efibootmgr		CFLAGS: ^-D_GNU_SOURCE
 @sys-boot/efibootmgr		LDFLAGS: ^-Wl,-z,muldefs
+
+## broken fcitx-chinese-addon (iostreams)
+@dev-libs/boost			CFLAGS: $-flto
+@dev-libs/boost			LDFLAGS: $-Wl,-flto
+@inputmethods/libime		CFLAGS: $-flto
+@inputmethods/libime		LDFLAGS: $-Wl,-flto
+

@@ -93,3 +93,12 @@ net-print/cups
 ## docker
 app-virtualization/moby
 app-virtualization/docker-cli
+
+## baidunetdisk
+x11-libs/libXScrnSaver
+
+## firefox
+dev-libs/dbus-glib
+
+## pipewire
+media/pipewire				alsa bluetooth -camera -aptx -echo-cancel-webrtc -fdk-aac -ffmpeg -gstreamer -ldac -pulseaudio

@@ -28,8 +28,11 @@ wayland-apps/foot
 app-editors/emacs			X cairo harfbuzz freetype jpeg png tiff xpm xim providers: gtk3
 
 ## i18n
-inputmethods/fcitx			classic-ui gtk3
-inputmethods/fcitx-configtool		gtk3
-inputmethods/fcitx-libpinyin
+inputmethods/fcitx			X dbus providers: systemd
+inputmethods/fcitx-configtool		qt
+inputmethods/fcitx-gtk			gtk3
+inputmethods/fcitx-qt			qt5
+inputmethods/fcitx-chinese-addons	gui
 
-
+## gtk-theme
+gnome-desktop/gsettings-desktop-schemas
