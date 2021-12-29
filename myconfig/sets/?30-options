@@ -5,5 +5,6 @@ media-libs/freetype				harfbuzz
 gnome-desktop/librsvg
 	# bootstrap rust requires +internal-llvm
 	dev-lang/rust				-internal-llvm
-		dev-lang/llvm			polly
 
+dev-lang/clang					polly
+	dev-lang/llvm				polly
