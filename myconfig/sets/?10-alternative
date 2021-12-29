@@ -4,7 +4,7 @@ virtual/*			PROVIDERS: -* gnu libarchive
 # specialist
 virtual/gzip			PROVIDERS: -* pigz
 virtual/cpio			PROVIDERS: -* libarchive
-virtual/unzip				PROVIDERS: -* unzip
+virtual/unzip			PROVIDERS: -* unzip
 # fixme: pbzip2 cannot be used as the alternative of bzip2 in the system set
 
 ## coreutils

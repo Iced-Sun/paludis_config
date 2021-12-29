@@ -12,7 +12,7 @@ firmware/linux-firmware
 firmware/intel-microcode
 
 ## bluetooth
-#net-wireless/blueman
+net-wireless/blueman
 	net-wireless/bluez		obex alsa mesh
 	gnome-bindings/pygobject	cairo
 	x11-libs/libnotify		gobject-introspection
@@ -60,8 +60,6 @@ dev-lang/node
 
 ## machinectl import-*
 sys-apps/systemd			importd libcurl gcrypt
-	 # machined pull-tar require gnu tar
-	virtual/tar			providers: -* gnu
 
 ## jdee requires python[readline]
 	dev-lang/python			readline
@@ -101,4 +99,7 @@ x11-libs/libXScrnSaver
 dev-libs/dbus-glib
 
 ## pipewire
-media/pipewire				alsa bluetooth -camera -aptx -echo-cancel-webrtc -fdk-aac -ffmpeg -gstreamer -ldac -pulseaudio
+media/pipewire				alsa bluetooth dbus -camera -aptx -echo-cancel-webrtc -fdk-aac -ffmpeg -gstreamer -ldac pulseaudio
+	sys-sound/alsa-plugins		pulseaudio
+	media-sound/pulseaudio		bluetooth
+media/wireplumber			lua_abis: 5.4

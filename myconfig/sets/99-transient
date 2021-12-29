@@ -7,4 +7,15 @@
 	app-editors/emacs			dbus
 
 ## ARM
-*/*			TARGETS:	armv6-unknown-linux-gnueabi armv6-unknown-linux-gnueabihf armv6-unknown-linux-musleabi armv6-unknown-linux-musleabihf
+#*/*			TARGETS:	armv6-unknown-linux-gnueabi armv6-unknown-linux-gnueabihf armv6-unknown-linux-musleabi armv6-unknown-linux-musleabihf
+
+#net-scanner/nmap	gtk
+
+## qemu
+#app-virtualization/qemu		amd64 gtk3 jemalloc aarch64 arm
+#	dev-python/Sphinx	providers: graphicsmagick
+
+# build-fix
+net-libs/webkit opengl X
+	media-plugins/gst-plugins-base	X GSTREAMER_PLUGINS: opengl
+	dev-libs/at-spi2-core		X
