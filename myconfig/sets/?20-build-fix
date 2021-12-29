@@ -1,97 +1,66 @@
+### System packages: be conservative
+@sys-boot/grub			CFLAGS: -pipe -O2
+@sys-boot/grub			LDFLAGS: -Wl,-O1
+@sys-libs/glibc			CFLAGS: -march=native -pipe -O2
+@sys-libs/glibc			DISTCC: no
+@sys-devel/gcc			CFLAGS: -march=native -pipe -O2
+@sys-devel/gcc			LDFLAGS: -Wl,-O1
+@sys-libs/libgcc		CFLAGS: -march=native -pipe -O2
+@sys-libs/libgcc		LDFLAGS: -Wl,-O1
+@sys-libs/libstdc++		CFLAGS: -march=native -pipe -O2
+@sys-libs/libstdc++		LDFLAGS: -Wl,-O1
+
 ### LTO breaks quite a few packages, so disable LTO for them
-
-# LTO breaks cave on error messages
-@sys-apps/paludis		CFLAGS:	$-flto
-@sys-apps/paludis		LDFLAGS: $"-Wl,-flto"
-
-# LTO breaks the following builds since it uses ${target}-*
-@sys-devel/gcc			CFLAGS:	$-flto
-@sys-devel/gcc			LDFLAGS: $"-Wl,-flto"
-@dev-lang/perl		     	CFLAGS:	$-flto
-@dev-lang/perl		     	LDFLAGS: $"-Wl,-flto"
-@sys-apps/busybox	     	CFLAGS:	$-flto
-@sys-apps/busybox	     	LDFLAGS: $"-Wl,-flto"
-
-# AR/NM/RANLIB libtool????
-@sys-apps/sydbox		CFLAGS:	$-flto
-@sys-apps/sydbox		LDFLAGS: $"-Wl,-flto"
-@sys-libs/wayland		CFLAGS:	$-flto
-@sys-libs/wayland		LDFLAGS: $"-Wl,-flto"
-@x11-libs/gtk+			CFLAGS:	$-flto
-@x11-libs/gtk+			LDFLAGS: $"-Wl,-flto"
-
-# ffmpeg needs its own configure options for PIC and LTO (--enable-pic --enable-lto), have to modify the exlib directly
+### https://github.com/InBetweenNames/gentooLTO/blob/master/sys-config/ltoize/files/package.cflags/lto.conf
+## ffmpeg needs its own options (--enable-pic --enable-lto); have to modify the exlib directly
 @media/ffmpeg			MY__EXTRA_ECONF: --enable-pic --enable-lto # no effect since ffmpeg doesn't use econf()
 
-# LTO breaks some symbols in libgcc_s.so, libstdc++.so
-@sys-libs/libgcc		CFLAGS:	$-flto
-@sys-libs/libgcc		LDFLAGS: $"-Wl,-flto"
-@sys-libs/libstdc++		CFLAGS:	$-flto
-@sys-libs/libstdc++		LDFLAGS: $"-Wl,-flto"
-
-# LTO breaks conftest on endianess: python:3.8
-@dev-lang/python		CFLAGS: $-flto
-@dev-lang/python		LDFLAGS: $-Wl,-flto
-
-# LTO breaks the building
-@dev-lang/llvm			CFLAGS:	$-flto
-@dev-lang/llvm			LDFLAGS: $"-Wl,-flto"
-@dev-lang/rust			CFLAGS:	$-flto
-@dev-lang/rust			LDFLAGS: $-Wl,-flto
-@dev-util/elfutils		CFLAGS:	$-flto
-@dev-util/elfutils		LDFLAGS: $"-Wl,-flto"
-@x11-server/xorg-server		CFLAGS:	$-flto
-@x11-server/xorg-server		LDFLAGS: $"-Wl,-flto"
-@x11-dri/mesa			CFLAGS:	$-flto
-@x11-dri/mesa			LDFLAGS: $"-Wl,-flto"
-@app-terminal/alacritty		CFLAGS: $-flto
-@app-terminal/alacritty		LDFLAGS: $-Wl,-lto
-@sys-sound/alsa-lib		CFLAGS: $-flto
-@sys-sound/alsa-lib		LDFLAGS: $"-Wl,-flto"
-@app-virtualization/qemu	CFLAGS: $-flto
-@app-virtualization/qemu	LDFLAGS: $"-Wl,-flto"
-@sys-libs/libcap		CFLAGS: $-flto
-@sys-libs/libcap		LDFLAGS: $-Wl,-flto
-@net-libs/webkit		CFLAGS: $-flto
-@net-libs/webkit		LDFLAGS: $-Wl,-flto
-@app-office/gnucash		CFLAGS: $-flto
-@app-office/gnucash		LDFLAGS: $-Wl,-flto
-@x11-libs/qtbase		CFLAGS: $-flto
-@x11-libs/qtbase		LDFLAGS: $-Wl,-flto
+## -flto-partition=none workaround won't work
 @sys-libs/libgomp		CFLAGS: $-flto
 @sys-libs/libgomp		LDFLAGS: $-Wl,-flto
-@dev-util/valgrind		CFLAGS: $-flto
-@dev-util/valgrind		LDFLAGS: $-Wl,-flto
+@x11-libs/qtbase		CFLAGS: $-flto
+@x11-libs/qtbase		LDFLAGS: $-Wl,-flto
 @dev-libs/libaio		CFLAGS: $-flto
 @dev-libs/libaio		LDFLAGS: $-Wl,-flto
 @dev-libs/libbsd		CFLAGS: $-flto
 @dev-libs/libbsd		LDFLAGS: $-Wl,-flto
+
+## -ffat-lto-objects: Packages which require fat LTO objects in order to build (TESTING: STRIP_MASK) or which others depend on non-LTO symbols
+@dev-lang/perl		     	CFLAGS:	^-ffat-lto-objects
+@dev-lang/python	     	CFLAGS:	^-ffat-lto-objects
+
+## build segfault
+@net-libs/webkit		CFLAGS: $-flto
+@net-libs/webkit		LDFLAGS: $-Wl,-flto
+@dev-lang/ruby			CFLAGS: $-flto
+@dev-lang/ruby			LDFLAGS: $-Wl,-flto
+
+## undefined reference
+@sys-apps/sydbox		CFLAGS:	$-flto
+@sys-apps/sydbox		LDFLAGS: $-Wl,-flto
+@dev-util/valgrind		CFLAGS: $-flto
+@dev-util/valgrind		LDFLAGS: $-Wl,-flto
 @dev-lang/node			CFLAGS: $-flto
 @dev-lang/node			LDFLAGS: $-Wl,-flto
+
+## rust related
 @dev-libs/spidermonkey		CFLAGS: $-flto
 @dev-libs/spidermonkey		LDFLAGS: $-Wl,-flto
 
-### general
-## system
-# fragile packages
-@sys-libs/glibc			CFLAGS: -march=native -pipe -O2
-@sys-libs/glibc			DISTCC: no
-@sys-boot/grub			CFLAGS: -O2 -pipe
-@sys-boot/grub			LDFLAGS: -Wl,-O1
+## -flto-partition=none workarounds
+@sys-sound/alsa-lib		CFLAGS: ^-flto-partition=none
 
+## Packages which can be built with LTO but leads to problems/crashes/segfaults
+@sys-apps/paludis		CFLAGS:	$-flto
+@sys-apps/paludis		LDFLAGS: $"-Wl,-flto"
+
+### general
 ## 'as-needed' corrupts 'print_exports' and 'strip_tar_corruption'
 @sys-apps/paludis		LDFLAGS: $-Wl,--as-needed
 
 ## exherbo-alternative assumes sys-libs/db have static libraries installed
-@sys-libs/db			MY__EXTRA_ECONF:
+@sys-libs/db			MY__EXTRA_ECONF: $--disable-static
+@dev-libs/isl			MY__EXTRA_ECONF: $--disable-static
 
 ## broken otherwise
-@sys-boot/efibootmgr		CFLAGS: ^-D_GNU_SOURCE
-@sys-boot/efibootmgr		LDFLAGS: ^-Wl,-z,muldefs
-
-## broken fcitx-chinese-addon (iostreams)
-@dev-libs/boost			CFLAGS: $-flto
-@dev-libs/boost			LDFLAGS: $-Wl,-flto
-@inputmethods/libime		CFLAGS: $-flto
-@inputmethods/libime		LDFLAGS: $-Wl,-flto
-
+@x11-server/xorg-server		CFLAGS: ^-Wno-error=array-bounds

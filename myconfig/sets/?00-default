@@ -2,9 +2,32 @@
 ## CHOST
 @*/*			CHOST:			x86_64-pc-linux-gnu
 
-## enable LTO
-@*/*			CFLAGS:			-pipe -O3 -flto
-@*/*			LDFLAGS:		-Wl,-O1 -Wl,--as-needed -Wl,--sort-common -Wl,-flto
+## CFLAGS and LDFLAGS
+@*/*			CFLAGS:			-pipe -O3
+@*/*			LDFLAGS:		-Wl,-O1 -Wl,--as-needed -Wl,--sort-common
+
+## LTO
+@*/*			CFLAGS:			^-flto
+@*/*			LDFLAGS:		^-Wl,-flto
+
+## Graphite
+sys-devel/gcc		graphite
+@*/*			CFLAGS:			^-fgraphite-identity ^-floop-nest-optimize
+
+## IPAPTA
+@*/*			CFLAGS:			^-fipa-pta
+
+## SEMINTERPOS
+@*/*			CFLAGS:			^-fno-semantic-interposition
+
+## SAFEST_FAST_MATH
+@*/*			CFLAGS:			^-fno-math-errno ^-fno-trapping-math
+
+## DEVIRTLTO
+@*/*			CFLAGS:			^-fdevirtualize-at-ltrans
+
+## NOPLT
+@*/*			CFLAGS:			^-fno-plt
 
 ## parallel building
 @*/*			EXJOBS:			"$((`cat /proc/cpuinfo | grep processor | wc -l`+2))"
