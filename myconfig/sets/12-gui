@@ -30,6 +30,8 @@ app-editors/emacs			X cairo harfbuzz freetype jpeg png tiff xpm xim providers: g
 ## i18n
 inputmethods/fcitx			X dbus providers: systemd
 inputmethods/fcitx-configtool		qt
+	x11-libs/qtbase			gui sql sqlite
+	x11-libs/qttools		gui
 inputmethods/fcitx-gtk			gtk3
 inputmethods/fcitx-qt			qt5
 inputmethods/fcitx-chinese-addons	gui

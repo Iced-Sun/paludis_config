@@ -21,6 +21,7 @@ media-gfx/imv				png jpeg tiff svg
 ## text
 virtual/zathura-pdf			PROVIDERS: zathura-pdf-poppler
 	app-text/poppler		glib cairo boost
+		dev-libs/nspr		parts: development
 
 ## firefox require 'gdk_x11_display_get_type' symbol
 	x11-libs/gtk+			X
