@@ -47,7 +47,7 @@ TSU=( http://mirrors.tuna.tsinghua.edu.cn apache 'cpan CPAN' 'ctan CTAN' debian 
 USTC=( http://mirrors.ustc.edu.cn apache 'cpan CPAN' 'ctan CTAN' debian 'gentoo gentoo/distfiles' gnome gnu kde 'kernel kernel.org' postgresql 'videolan videolan-ftp' mariadb )
 
 ALIYUN=( https://mirrors.aliyun.com apache 'cpan CPAN' 'ctan CTAN' debian 'gentoo gentoo/distfiles' mariadb )
-HUAWEI=( https://mirrors.huaweicloud.com apache 'ctan CTAN' debian gnu mysql openbsd 'ruby ruby/ruby' mariadb )
+HUAWEI=( https://mirrors.huaweicloud.com apache 'ctan CTAN' debian gnu mysql 'ruby ruby/ruby' mariadb )
 NETEASE=( http://mirrors.cn99.com cpan debian 'gentoo gentoo/distfiles' mysql )
 TENCENT=( https://mirrors.cloud.tencent.com apache 'cpan CPAN' 'ctan CTAN' debian gnu libreoffice mysql openbsd postgresql qt 'videolan videolan-ftp' mariadb )
 
