@@ -29,7 +29,7 @@ net-wireless/blueman
 sys-apps/systemd			efi
 
 ## hardware ability
-media/mpv				va
+media/mpv				va pipewire
 	media/ffmpeg			va
 	x11-libs/libva			X opengl	&x11-drivers/intel-media-driver
 
