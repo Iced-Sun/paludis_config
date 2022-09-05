@@ -3,39 +3,32 @@
 @*/*			CHOST:			x86_64-pc-linux-gnu
 
 ## CFLAGS and LDFLAGS
-@*/*			CFLAGS:			-pipe -O3
+# basic
+@*/*			CFLAGS:			-O3 -march=native -pipe
 @*/*			LDFLAGS:		-Wl,-O1 -Wl,--as-needed -Wl,--sort-common
 
-## LTO
+## Optimization
+# Vectorization
+@*/*			CFLAGS:			^-ftree-vectorize
+
+# LTO
 @*/*			CFLAGS:			^-flto
-@*/*			LDFLAGS:		^-Wl,-flto
 
-## Graphite
-sys-devel/gcc		graphite
-@*/*			CFLAGS:			^-fgraphite-identity ^-floop-nest-optimize
-
-## IPAPTA
-@*/*			CFLAGS:			^-fipa-pta
-
-## SEMINTERPOS
-@*/*			CFLAGS:			^-fno-semantic-interposition
-
-## SAFEST_FAST_MATH
+# SAFEST_FAST_MATH
 @*/*			CFLAGS:			^-fno-math-errno ^-fno-trapping-math
 
-## DEVIRTLTO
-@*/*			CFLAGS:			^-fdevirtualize-at-ltrans
-
-## NOPLT
+# NO-PLT
 @*/*			CFLAGS:			^-fno-plt
+
+# No semantic interposition: https://maskray.me/blog/2021-05-09-fno-semantic-interposition
+@dev-lang/python	CFLAGS:			^-fno-semantic-interposition
+@dev-python/Cython	CFLAGS:			^-fno-semantic-interposition
 
 ## parallel building
 @*/*			EXJOBS:			"$((`cat /proc/cpuinfo | grep processor | wc -l`+2))"
 
 ## custom options
-@*/*			MY__CFLAGS_MARCH:	-march=native
 @*/*			MY__EXTRA_ECONF:	--disable-static
-@*/*			MY__USE_DISTCC:		no
 
 ### global/system option defaults
 ## disable everything by default

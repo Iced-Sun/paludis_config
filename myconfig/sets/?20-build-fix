@@ -1,66 +1,36 @@
-### System packages: be conservative
-@sys-boot/grub			CFLAGS: -pipe -O2
+### System packages & toolchain: be very conservative
+@sys-boot/grub			CFLAGS: -O2 -march=native -pipe
 @sys-boot/grub			LDFLAGS: -Wl,-O1
-@sys-libs/glibc			CFLAGS: -march=native -pipe -O2
-@sys-libs/glibc			DISTCC: no
-@sys-devel/gcc			CFLAGS: -march=native -pipe -O2
-@sys-devel/gcc			LDFLAGS: -Wl,-O1
-@sys-libs/libgcc		CFLAGS: -march=native -pipe -O2
-@sys-libs/libgcc		LDFLAGS: -Wl,-O1
-@sys-libs/libstdc++		CFLAGS: -march=native -pipe -O2
-@sys-libs/libstdc++		LDFLAGS: -Wl,-O1
 
-### LTO breaks quite a few packages, so disable LTO for them
-### https://github.com/InBetweenNames/gentooLTO/blob/master/sys-config/ltoize/files/package.cflags/lto.conf
+### LTO breaks quite a few packages
+## GCC itself should be compiled without LTO, or it breaks the building or even causes runtime segfaults.
+@sys-devel/gcc			CFLAGS: $-flto
+
 ## ffmpeg needs its own options (--enable-pic --enable-lto); have to modify the exlib directly
-@media/ffmpeg			MY__EXTRA_ECONF: --enable-pic --enable-lto # no effect since ffmpeg doesn't use econf()
+# no effect since ffmpeg doesn't use econf()
+#@media/ffmpeg			MY__EXTRA_ECONF: --enable-pic --enable-lto
 
-## -flto-partition=none workaround won't work
+## configuring failure
+# Guessing byte order ... unknown
+@dev-lang/perl		     	CFLAGS: $-flto
+# checking whether float word ordering is bigendian... unknown
+@dev-lang/python	     	CFLAGS: $-flto
+@dev-lang/python		MY__EXTRA_ECONF: --with-lto
+
+## building failure
+#@x11-libs/qtbase		CFLAGS: $-flto
+
+## linking failure
+@x11-server/xorg-server		CFLAGS: $-flto
+
+# Error: invalid attempt to declare external version name as default in symbol
+@sys-libs/libgcc		CFLAGS: $-flto
+@sys-libs/libstdc++		CFLAGS: $-flto
 @sys-libs/libgomp		CFLAGS: $-flto
-@sys-libs/libgomp		LDFLAGS: $-Wl,-flto
-@x11-libs/qtbase		CFLAGS: $-flto
-@x11-libs/qtbase		LDFLAGS: $-Wl,-flto
-@dev-libs/libaio		CFLAGS: $-flto
-@dev-libs/libaio		LDFLAGS: $-Wl,-flto
-@dev-libs/libbsd		CFLAGS: $-flto
-@dev-libs/libbsd		LDFLAGS: $-Wl,-flto
 
-## -ffat-lto-objects: Packages which require fat LTO objects in order to build (TESTING: STRIP_MASK) or which others depend on non-LTO symbols
-@dev-lang/perl		     	CFLAGS:	^-ffat-lto-objects
-@dev-lang/python	     	CFLAGS:	^-ffat-lto-objects
-
-## build segfault
-@net-libs/webkit		CFLAGS: $-flto
-@net-libs/webkit		LDFLAGS: $-Wl,-flto
-@dev-lang/ruby			CFLAGS: $-flto
-@dev-lang/ruby			LDFLAGS: $-Wl,-flto
-
-## undefined reference
-@sys-apps/sydbox		CFLAGS:	$-flto
-@sys-apps/sydbox		LDFLAGS: $-Wl,-flto
-@dev-util/valgrind		CFLAGS: $-flto
-@dev-util/valgrind		LDFLAGS: $-Wl,-flto
+# undefined reference
 @dev-lang/node			CFLAGS: $-flto
-@dev-lang/node			LDFLAGS: $-Wl,-flto
-
-## rust related
-@dev-libs/spidermonkey		CFLAGS: $-flto
-@dev-libs/spidermonkey		LDFLAGS: $-Wl,-flto
-
-## -flto-partition=none workarounds
-@sys-sound/alsa-lib		CFLAGS: ^-flto-partition=none
-
-## Packages which can be built with LTO but leads to problems/crashes/segfaults
-@sys-apps/paludis		CFLAGS:	$-flto
-@sys-apps/paludis		LDFLAGS: $"-Wl,-flto"
 
 ### general
-## 'as-needed' corrupts 'print_exports' and 'strip_tar_corruption'
-@sys-apps/paludis		LDFLAGS: $-Wl,--as-needed
 
-## exherbo-alternative assumes sys-libs/db have static libraries installed
-@sys-libs/db			MY__EXTRA_ECONF: $--disable-static
-@dev-libs/isl			MY__EXTRA_ECONF: $--disable-static
 
-## broken otherwise
-@x11-server/xorg-server		CFLAGS: ^-Wno-error=array-bounds

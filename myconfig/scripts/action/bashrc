@@ -70,7 +70,6 @@ else
 		[[ $TARGET == '-*' ]] && continue
 		_TARGET=${TARGET//-/_}
 		echo ${_TARGET}_CFLAGS=\${MY__${_TARGET}_CFLAGS:-\$CFLAGS}
-		echo ${_TARGET}_CFLAGS="\"\${${_TARGET}_CFLAGS} \$([[ x\${MY__USE_DISTCC} = xno ]] && echo \"\${MY__CFLAGS_MARCH}\" || echo \"\$(${TARGET}-gcc \${MY__CFLAGS_MARCH} -E -v - </dev/null 2>&1 | sed -n -e 's/^.*- -/-/p')\")\""
 		echo ${_TARGET}_CXXFLAGS=\${${_TARGET}_CFLAGS}
 		echo ${_TARGET}_LDFLAGS=\${MY__${_TARGET}_LDFLAGS:-\$LDFLAGS}
 	done
