@@ -17,9 +17,6 @@
 @dev-lang/python	     	CFLAGS: $-flto
 @dev-lang/python		MY__EXTRA_ECONF: --with-lto
 
-## building failure
-#@x11-libs/qtbase		CFLAGS: $-flto
-
 ## linking failure
 @x11-server/xorg-server		CFLAGS: $-flto
 
@@ -27,10 +24,21 @@
 @sys-libs/libgcc		CFLAGS: $-flto
 @sys-libs/libstdc++		CFLAGS: $-flto
 @sys-libs/libgomp		CFLAGS: $-flto
+@x11-libs/qtbase		CFLAGS: $-flto
+@sys-sound/alsa-lib		CFLAGS: $-flto
 
 # undefined reference
 @dev-lang/node			CFLAGS: $-flto
+@dev-lang/rust			CFLAGS: $-flto
+
+# broken rust build
+@dev-lang/llvm			CFLAGS: $-flto
+
+# runtime segfault
+@sys-apps/paludis		CFLAGS: $-flto
+@app-office/gnucash		CFLAGS: $-flto
 
 ### general
-
+# cannot find luac.o
+@dev-lang/lua			LDFLAGS: -Wl,-O1
 
