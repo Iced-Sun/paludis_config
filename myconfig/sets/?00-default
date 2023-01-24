@@ -8,9 +8,6 @@
 @*/*			LDFLAGS:		-Wl,-O1 -Wl,--as-needed -Wl,--sort-common
 
 ## Optimization
-# Vectorization
-@*/*			CFLAGS:			^-ftree-vectorize
-
 # LTO
 @*/*			CFLAGS:			^-flto
 
