@@ -2,7 +2,7 @@
 
 ## system
 sys-apps/busybox        static
-sys-apps/systemd	lz4			&sys-boot/dracut
+sys-apps/systemd	lz4 openssl		&sys-boot/dracut
 sys-apps/paludis	prebuilt-documentation search-index pbin
 	sys-apps/sydbox	seccomp
 		dev-libs/pinktrace	pvm
