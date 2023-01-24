@@ -15,7 +15,7 @@ app-arch/p7zip
 virtual/unzip
 
 ## editors
-app-editors/emacs
+app-editors/emacs	modules
 
 ## miscs
 app-admin/sudo
