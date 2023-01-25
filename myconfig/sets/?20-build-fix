@@ -12,9 +12,9 @@
 
 ## configuring failure
 # Guessing byte order ... unknown
-@dev-lang/perl		     	CFLAGS: $-flto
+@dev-lang/perl			CFLAGS: $-flto
 # checking whether float word ordering is bigendian... unknown
-@dev-lang/python	     	CFLAGS: $-flto
+@dev-lang/python		CFLAGS: $-flto
 @dev-lang/python		MY__EXTRA_ECONF: --with-lto
 
 ## linking failure
@@ -34,11 +34,12 @@
 # broken rust build
 @dev-lang/llvm			CFLAGS: $-flto
 
-# runtime segfault
+## runtime segfault
 @sys-apps/paludis		CFLAGS: $-flto
 @app-office/gnucash		CFLAGS: $-flto
+@dev-lang/ruby			CFLAGS: $-flto
+
+## never finish the building
+@dev-lang/clang			CFLAGS: $-flto
 
 ### general
-# cannot find luac.o
-@dev-lang/lua			LDFLAGS: -Wl,-O1
-
