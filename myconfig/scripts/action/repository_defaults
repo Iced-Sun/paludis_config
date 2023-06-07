@@ -1,6 +1,0 @@
-## cave just cannot find repository_defaults.bash...
-cat <<EOF
-names_cache = \${root}/var/cache/paludis/names
-write_cache = \${root}/var/cache/paludis/metadata
-sync_options = --git-clone-option=--depth=1 --git-pull-option=--depth=1 --git-fetch-option=--depth=1
-EOF

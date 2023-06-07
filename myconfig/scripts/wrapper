@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 ## global environments
 # used in machine set
@@ -8,137 +8,14 @@ MACHINE_ID=$(cat /etc/machine-id)
 # PALUDIS_CONFIG_DIR may be unset even in cave
 PALUDIS_CONFIG_DIR=${PALUDIS_CONFIG_DIR:=/etc/paludis}
 
-# /etc/paludis/myconfig/scripts/wrapper
-WRAPPER_FULL_PATH=`realpath $0`
 # /etc/paludis/myconfig/scripts
-SCRIPT_FULL_PATH=`dirname ${WRAPPER_FULL_PATH}`
-# /etc/paludis/myconfig
-CONFIG_DIR=`realpath $(dirname ${SCRIPT_FULL_PATH})`
-# /etc/paludis/myconfig/sets
-SETS_DIR=${CONFIG_DIR}/sets
+SCRIPT_FULL_PATH=$(dirname $(realpath $0))
 
-# temporay measure
-WORLD='${root}/var/db/paludis/repositories/installed/world'
-
-## include utility functions
-source ${SCRIPT_FULL_PATH}/utils.sh
-
-## environment detection
-detect_action() {
-	## determine the invoking role of the script
-	local INVOKER_FULL_PATH=`realpath -s $0`
-	local INVOKER=${INVOKER_FULL_PATH#$PALUDIS_CONFIG_DIR/}
-	local INVOKER_DIRNAME=`dirname $INVOKER`
-	local INVOKER_BASENAME=`basename $INVOKER`
-
-	## generate ACTION, SUB_ACTION
-	if [[ "wrapper" == "$INVOKER_BASENAME" ]]; then
-		# a directly call to the script
-		#ACTION=wrapper
-		ACTION=$1
-	elif [[ " sets repositories " =~ " $INVOKER_DIRNAME " ]]; then
-		# called by sets/*.bash, repositories/*.bash
-		ACTION=$INVOKER_DIRNAME
-		SUB_ACTION=${INVOKER_BASENAME%.bash}
-	elif [[ "." == $INVOKER_DIRNAME ]]; then
-		# called by *.bash
-		ACTION=${INVOKER_BASENAME%.bash}
-	else
-		## this should not happen
-		ACTION=${INVOKER_BASENAME}
-	fi
-}
-
-detect_sets() {
-	pushd ${SETS_DIR} >/dev/null 2>&1
-
-	## populate defined sets
-	export WEAK_SETS=( \?* )
-	GENERAL_SETS=( [0-9][0-9]-* )
-	MACHINE_SETS=( @* )
-
-	## generate the short name (in WORLD) -> long name (in SETS) map
-	declare -g -A SETS
-	for set in ${GENERAL_SETS[@]}; do
-		## fullname key
-		SETS[$set]=$set
-		## stripped-name key
-		SETS[${set#[0-9][0-9]-}]=$set
-	done
-
-	for set in ${MACHINE_SETS[@]}; do
-		## machine_id key
-		SETS[`echo $set | sed -r -e 's/@(.*):.*/\1/'`]=$set
-		## TODO hostname key
-		## TODO fullname key
-	done
-
-	### TODO check if machine set is machine_id/hostname of the current host
-	## generate installed sets
-	## get around the '${root}'
-	eval local WORLD=${WORLD}
-	if [[ -e ${WORLD} ]]; then
-		ACTIVE_SETS=()
-		for set in `cat ${WORLD}`; do
-			if [[ -z ${SETS[$set]} ]]; then
-				echo "The set <${set}> is not registered, skipping..."
-				continue
-			fi
-
-			## collect included sets
-			for included in $(cat ${SETS[$set]} | sed -n 's/@require// p'); do
-				[[ " ${ACTIVE_SETS[@]} " =~ " ${SETS[$included]} " ]] || ACTIVE_SETS+=( ${SETS[$included]} )
-			done
-			## collect explicit set
-			[[ " ${ACTIVE_SETS[@]} " =~ " ${SETS[$set]} " ]] || ACTIVE_SETS+=( ${SETS[$set]} )
-		done
-	fi
-
-	popd >/dev/null 2>&1
-}
-
-## utility functions
-print_debug_info() {
-	cat <<EOF
-
-===== Host =====
-Host:				${HOST}
-Machine ID:			${MACHINE_ID}
-
-===== Paludis =====
-Paludis config DIR:		${PALUDIS_CONFIG_DIR}
-Destination:			${LOCATION}
-Weak sets:			${WEAK_SETS[@]}
-General sets:			${GENERAL_SETS[@]}
-Machine sets:  			${MACHINE_SETS[@]}
-
-===== Configurations =====
-Custom config DIR (relative):	${CONFIG_DIR}
-Action/Configuration:		${ACTION}$([[ x${SUB_ACTION} == "x" ]] || echo ::${SUB_ACTION}).conf
-Active sets:			${ACTIVE_SETS[@]}
-
-===== Output =====
-EOF
-}
-
-## initialization
-# detect the invoker role: shouldpass commandline options
-detect_action "$@"
-
-# find sets
-detect_sets
-
-# generate CHOST, TARGETS
-while read line; do
-	declare "$line"
-done < <(source ${SCRIPT_FULL_PATH}/action/bashrc gen-env)
-
-## if the caller is not paludis, print debug info
-[[ x$PALUDIS_CLIENT == "x" ]] && print_debug_info 1>&2
-
-## the real job
-if [[ -f ${SCRIPT_FULL_PATH}/action/${ACTION} ]]; then
-	source ${SCRIPT_FULL_PATH}/action/${ACTION} ${SUB_ACTION}
+# pass the script name along with the arguments
+if [[ "$0" == *wrapper ]]; then
+	# invoked as ./wrapper <action>
+	${SCRIPT_FULL_PATH}/invoker.py "$@"
 else
-	echo "Not supported action: " ${ACTION} 1>&2
+	# invoked as <action>.bash
+	${SCRIPT_FULL_PATH}/invoker.py "$0" "$@"
 fi
