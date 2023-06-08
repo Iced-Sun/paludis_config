@@ -1,29 +1,6 @@
 import os, re
 from pathlib import Path
-
-class Action_handler:
-    def __init__(self, script_path: Path):
-        if script_path.is_absolute():
-            script_path = script_path.relative_to('/etc/paludis')
-            pass
-
-        script_path_parts = script_path.parts
-        self._action = Path(script_path_parts[0]).stem
-        self._sub_action = Path(script_path_parts[1]).stem if len(script_path_parts) == 2 else None
-        pass
-    pass
-
-class General_handler(Action_handler):
-    script_path_pattern = re.compile('^(/etc/paludis/)?general(.bash)?$')
-
-    def __init__(self, script_path):
-        super().__init__(script_path)
-        pass
-
-    @property
-    def configuration(self) -> str:
-        return 'world = $root/var/db/paludis/repositories/installed/world'
-    pass
+from action.action_handler import Action_handler
 
 class Repository_handler(Action_handler):
     script_path_pattern = re.compile('^(/etc/paludis/)?repositories/(.+)(.bash)?$')

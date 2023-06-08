@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-from action import General_handler, Repository_handler
+from action.general_handler import General_handler
+from action.repositories_handler import Repository_handler
 
 import sys
 from pathlib import Path
 
+import action.mirrors
 # the first argument is always the script itself
 if len(sys.argv) > 1:
     # <action>.bash or <action>
