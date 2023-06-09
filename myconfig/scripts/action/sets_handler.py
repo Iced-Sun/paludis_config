@@ -11,6 +11,12 @@ class Sets_handler(Action_handler):
 
     @property
     def configuration(self) -> str:
-        return '\n'.join(f'* {spec["spec"]}' for spec in self._parsed_spec if spec['mark'] is not None and spec['type'] == 'package')
+        return '\n'.join(
+            f'* {spec["spec"]}'
+            for spec in self._parsed_spec
+            if spec['mark'] != '@'
+            and spec['type'] == 'package'
+            and spec['is_dependecy'] is False
+        )
 
     pass
