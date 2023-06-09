@@ -1,13 +1,5 @@
 #!/usr/bin/env bash
 
-## global environments
-# used in machine set
-HOST=$(hostname | cut -d. -f1)
-# used in machine set
-MACHINE_ID=$(cat /etc/machine-id)
-# PALUDIS_CONFIG_DIR may be unset even in cave
-PALUDIS_CONFIG_DIR=${PALUDIS_CONFIG_DIR:=/etc/paludis}
-
 # /etc/paludis/myconfig/scripts
 SCRIPT_FULL_PATH=$(dirname $(realpath $0))
 
