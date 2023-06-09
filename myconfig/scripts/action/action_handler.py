@@ -33,10 +33,10 @@ class Action_handler:
         self._sub_action = Path(script_path_parts[1]).stem if len(script_path_parts) == 2 else None
 
         ## parse our own set spec
-        self._parse_sets()
+        self._generate_active_sets()
         pass
 
-    def _parse_sets(self):
+    def _generate_active_sets(self):
         self._machine_sets = sorted(self._set_path.glob('@*'))
         self._general_sets = sorted(self._set_path.glob('[0-9][0-9]-*'))
         self._weak_sets = sorted(self._set_path.glob('[?]*'))
@@ -81,8 +81,40 @@ class Action_handler:
                 pass
             pass
 
-        # 2.
-        print(self._active_sets)
+        # 2. pull dependecy sets by '@require set' from seen active sets
+        sets = []
+        # gather dependent sets
+        for s in self._active_sets:
+            # only world sets can pull dependencies
+            if s['pulled_by'] != 'world':
+                continue
+
+            with s['path'].open() as f:
+                for line in f.read().splitlines():
+                    require_match = re.match('^@require\s+(.+)$', line)
+                    if require_match:
+                        sets += require_match.group(1).split(' ')
+                        pass
+                    pass
+                pass
+
+            pass
+
+        # insert the dependecy sets
+        for s in sets:
+            if next((_ for _ in self._active_sets if _['name'] == s), None) is not None:
+                continue
+
+            self._active_sets += [{
+                'name': s,
+                # use next() to find exactly one general set
+                'path': next(_ for _ in self._general_sets if _.match(f'*/[0-9][0-9]-{s}')),
+                'type': 'general-set',
+                'pulled_by': 'dependecy'
+            }]
+            pass
+
+        # end of self._generate_active_sets()
         pass
 
     # end of class Action_handler
