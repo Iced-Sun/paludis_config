@@ -135,18 +135,32 @@ class Action_handler:
                         continue
 
                     # split the line to parts
-                    m = re.match('^(\t+)?([+-])?(.+)(.+)?(#.*)?$', line)
-                    tabs = m.group(1)
-                    mark = m.group(2)
-                    spec = m.group(3)
-                    options = m.group(4)
+                    m = re.match('^(?P<leading_tabs>\t+)?(?P<mark>[@+-])?(?P<spec>\S+)(?P<options_tabs>\t+)?(?P<options>.+)?$', line)
+                    line_spec = {
+                        'spec': m.group('spec'),
+                        'mark': m.group('mark'),
+                        'type': 'package' if '/' in m.group('spec') else 'set',
+                        'is_dependecy': m.group('leading_tabs') is not None,
+                        'options': m.group('options')
+                    }
 
-                    self._parsed_spec.append({
-                        'spec': spec,
-                        'mark': mark,
-                        'type': 'package' if '/' in spec else 'set',
-                        'is_dependecy': tabs is not None
-                    })
+                    # parse the options
+                    if line_spec['options'] is not None:
+                        if line_spec['mark'] == '@':
+                            # the build options
+                            pass
+                        else:
+                            # the package options
+                            om = re.match('^(?P<options>[^&]+)(\s+&)?(?P<suggestions>[^&]*)?$', line_spec['options'])
+                            line_spec['options'] = {
+                                'options': om.group('options'),
+                                'suggestions': om.group('suggestions')
+                            }
+                            pass
+                        pass
+
+                    # insert the spec
+                    self._parsed_spec.append(line_spec)
 
     # end of class Action_handler
     pass
