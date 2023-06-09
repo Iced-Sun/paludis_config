@@ -10,6 +10,7 @@ from action.package_mask_handler import Package_mask_handler
 from action.package_unmask_handler import Package_unmask_handler
 
 from action.suggestions_handler import Suggestions_handler
+from action.options_handler import Options_handler
 
 import sys
 from pathlib import Path
@@ -21,7 +22,7 @@ if len(sys.argv) > 1:
     pass
 
 handled = False
-for Handler in Platforms_handler, General_handler, Mirrors_handler, Repository_handler, Sets_handler, Package_mask_handler, Package_unmask_handler, Suggestions_handler:
+for Handler in Platforms_handler, General_handler, Mirrors_handler, Repository_handler, Sets_handler, Package_mask_handler, Package_unmask_handler, Suggestions_handler, Options_handler:
     if Handler.script_path_pattern.match(str(script_path)):
         print(Handler(script_path).configuration)
         handled = True
