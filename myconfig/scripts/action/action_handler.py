@@ -125,13 +125,10 @@ class Action_handler:
         self._parsed_spec = []
 
         for s in self._active_sets:
-            if s['name'] != 'toolchain':
-                continue
-
             with s['path'].open() as f:
                 for line in f.read().splitlines():
-                    # skip a comment line
-                    if re.match('^\s*#.*$', line):
+                    # skip a comment or blank line
+                    if re.match('^\s*#.*$|^\s*$', line):
                         continue
 
                     # split the line to parts
@@ -151,10 +148,10 @@ class Action_handler:
                             pass
                         else:
                             # the package options
-                            om = re.match('^(?P<options>[^&]+)(\s+&)?(?P<suggestions>[^&]*)?$', line_spec['options'])
+                            om = re.match('^(?P<options>[^&]+)?(\s*)?(?P<suggestions>&.+)?$', line_spec['options'])
                             line_spec['options'] = {
                                 'options': om.group('options'),
-                                'suggestions': om.group('suggestions')
+                                'suggestions': om.group('suggestions')[1:] if om.group('suggestions') is not None else None
                             }
                             pass
                         pass
