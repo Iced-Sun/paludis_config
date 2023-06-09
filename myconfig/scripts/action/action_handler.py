@@ -34,6 +34,8 @@ class Action_handler:
 
         ## parse our own set spec
         self._generate_active_sets()
+
+        ## parse each active set
         pass
 
     def _generate_active_sets(self):

@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 from action.general_handler import General_handler
+from action.platforms_handler import Platforms_handler
+
 from action.repositories_handler import Repository_handler
 from action.mirrors_handler import Mirrors_handler
 
