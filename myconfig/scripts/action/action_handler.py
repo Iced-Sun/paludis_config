@@ -36,6 +36,8 @@ class Action_handler:
         self._generate_active_sets()
 
         ## parse each active set
+        self._parse_active_sets()
+
         pass
 
     def _generate_active_sets(self):
@@ -83,7 +85,7 @@ class Action_handler:
                 pass
             pass
 
-        # 2. pull dependecy sets by '@require set' from seen active sets
+        # 2. pull dependecy sets by a non-package spec from seen active sets
         sets = []
         # gather dependent sets
         for s in self._active_sets:
@@ -93,9 +95,9 @@ class Action_handler:
 
             with s['path'].open() as f:
                 for line in f.read().splitlines():
-                    require_match = re.match('^@require\s+(.+)$', line)
-                    if require_match:
-                        sets += require_match.group(1).split(' ')
+                    set_inclusion_match = re.match('^([-a-zA-Z0-9]+)(\t+.+)?$', line)
+                    if set_inclusion_match:
+                        sets.append(set_inclusion_match.group(1))
                         pass
                     pass
                 pass
@@ -118,6 +120,33 @@ class Action_handler:
 
         # end of self._generate_active_sets()
         pass
+
+    def _parse_active_sets(self):
+        self._parsed_spec = []
+
+        for s in self._active_sets:
+            if s['name'] != 'toolchain':
+                continue
+
+            with s['path'].open() as f:
+                for line in f.read().splitlines():
+                    # skip a comment line
+                    if re.match('^\s*#.*$', line):
+                        continue
+
+                    # split the line to parts
+                    m = re.match('^(\t+)?([+-])?(.+)(.+)?(#.*)?$', line)
+                    tabs = m.group(1)
+                    mark = m.group(2)
+                    spec = m.group(3)
+                    options = m.group(4)
+
+                    self._parsed_spec.append({
+                        'spec': spec,
+                        'mark': mark,
+                        'type': 'package' if '/' in spec else 'set',
+                        'is_dependecy': tabs is not None
+                    })
 
     # end of class Action_handler
     pass
