@@ -32,20 +32,22 @@ class Action_handler:
         self._action = Path(script_path_parts[0]).stem
         self._sub_action = Path(script_path_parts[1]).stem if len(script_path_parts) == 2 else None
 
-        ## parse our own set spec
+        ## record the set names
+        self._machine_sets = sorted(self._set_path.glob('@*'))
+        self._general_sets = sorted(self._set_path.glob('[0-9][0-9]-*'))
+        self._weak_sets = sorted(self._set_path.glob('[?]*'))
+
+        ## the active set has detailed set spec
+        self._active_sets = []
         self._generate_active_sets()
 
-        ## parse each active set
+        ## parse each line in relevant sets
+        self._parsed_spec = []
         self._parse_active_sets()
 
         pass
 
     def _generate_active_sets(self):
-        self._machine_sets = sorted(self._set_path.glob('@*'))
-        self._general_sets = sorted(self._set_path.glob('[0-9][0-9]-*'))
-        self._weak_sets = sorted(self._set_path.glob('[?]*'))
-        self._active_sets = []
-
         ## find the active sets
         # 1. match against the world file
         for installed in self._installed_spec:
@@ -122,8 +124,6 @@ class Action_handler:
         pass
 
     def _parse_active_sets(self):
-        self._parsed_spec = []
-
         for s in self._active_sets:
             with s['path'].open() as f:
                 for line in f.read().splitlines():

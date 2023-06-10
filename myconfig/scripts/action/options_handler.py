@@ -12,7 +12,7 @@ class Options_handler(Action_handler):
     @property
     def configuration(self) -> str:
         return '\n'.join(
-            f'{spec["spec"]}\t{spec["options"]["options"]}'
+            f'{spec["spec"]:<{24}}\t{spec["options"]["options"]}'
             for spec in self._parsed_spec
             if spec['mark'] != '@'
             and spec['type'] == 'package'
