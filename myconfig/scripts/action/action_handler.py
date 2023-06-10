@@ -46,7 +46,8 @@ class Action_handler:
         self._generate_active_sets()
 
         ## parse each line in relevant sets
-        self._parsed_spec = []
+        self._spec_config = []
+        self._spec_environ = []
         self._parse_weak_sets()
         self._parse_active_sets()
 
@@ -130,7 +131,7 @@ class Action_handler:
 
     def _parse_line_spec(self, line: str, context_set_type: str):
         # split the line to parts
-        m = re.match('^(?P<leading_tabs>\t+)?(?P<mark>[~@+-])?(?P<spec>\S+)(?P<options_tabs>\t+)?(?P<options>.+)?$', line)
+        m = re.match('^(?P<leading_tabs>\t+)?(?P<mark>[~@+-])?(?P<spec>\S+)(?P<options_tabs>\t+)?(?P<config>.+)?$', line)
 
         line_spec = {
             'spec': m.group('spec'),
@@ -138,24 +139,26 @@ class Action_handler:
             'type': 'package' if '/' in m.group('spec') else 'set',
             'is_dependecy': m.group('leading_tabs') is not None or context_set_type == 'weak-set',
             'has_wildcard': True if '*' in m.group('spec') else False,
-            'options': m.group('options')
+            'config': m.group('config')
         }
 
         # parse the options
-        if line_spec['options'] is not None:
+        if line_spec['config'] is not None:
             if line_spec['mark'] == '@':
-                # the build options
+                # the build options: they are in fact environment variables
+
                 pass
             else:
                 # the package options
-                om = re.match('^(?P<options>[^&]+)?(\s*)?(?P<suggestions>&.+)?$', line_spec['options'])
-                line_spec['options'] = {
-                    'options': om.group('options'),
-                    'suggestions': om.group('suggestions')[1:] if om.group('suggestions') is not None else None
-                }
+                om = re.match('^(?P<options>[^&]+)?(\s*)?(?P<suggestions>&.+)?$', line_spec['config'])
+                line_spec['options'] = om.group('options')
+                line_spec['suggestions'] = om.group('suggestions')[1:] if om.group('suggestions') is not None else None
+
+                # insert to the spec config
+                self._spec_config.append(line_spec)
                 pass
             pass
-        return line_spec
+        pass
 
     def _parse_weak_sets(self):
         for s in self._weak_sets:
@@ -166,7 +169,7 @@ class Action_handler:
                         continue
 
                     # insert the spec
-                    self._parsed_spec.append(self._parse_line_spec(line, s['type']))
+                    self._parse_line_spec(line, s['type'])
                     pass
                 pass
             pass
@@ -181,7 +184,11 @@ class Action_handler:
                         continue
 
                     # insert the spec
-                    self._parsed_spec.append(self._parse_line_spec(line, s['type']))
+                    self._parse_line_spec(line, s['type'])
+                    pass
+                pass
+            pass
+        pass
 
     # end of class Action_handler
     pass

@@ -11,6 +11,10 @@ class Package_unmask_handler(Action_handler):
 
     @property
     def configuration(self) -> str:
-        return '\n'.join(spec['spec'] for spec in self._parsed_spec if spec['mark'] == '+' and spec['type'] == 'package')
+        return '\n'.join(
+            config['spec']
+            for config in self._spec_config
+            if config['mark'] == '+' and config['type'] == 'package'
+        )
 
     pass

@@ -12,12 +12,10 @@ class Suggestions_handler(Action_handler):
     @property
     def configuration(self) -> str:
         return '\n'.join(
-            f'{spec["spec"]:<{16}}\t{spec["options"]["suggestions"]}'
-            for spec in self._parsed_spec
-            if spec['mark'] != '@'
-            and spec['type'] == 'package'
-            and spec['options'] is not None
-            and spec['options']['suggestions'] is not None
+            f'{config["spec"]:<{16}}\t{config["suggestions"]}'
+            for config in self._spec_config
+            if config['mark'] != '@' and config['type'] == 'package'
+            and config['suggestions'] is not None
         )
 
     pass

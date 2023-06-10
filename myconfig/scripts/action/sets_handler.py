@@ -12,12 +12,11 @@ class Sets_handler(Action_handler):
     @property
     def configuration(self) -> str:
         return '\n'.join(
-            f'* {spec["spec"]}'
-            for spec in self._parsed_spec
-            if spec['mark'] != '@'
-            and spec['type'] == 'package'
-            and spec['is_dependecy'] is False
-            and spec['has_wildcard'] is False
+            f'* {config["spec"]}'
+            for config in self._spec_config
+            if config['type'] == 'package'
+            and config['is_dependecy'] is False
+            and config['has_wildcard'] is False
         )
 
     pass

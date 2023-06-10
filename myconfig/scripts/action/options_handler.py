@@ -12,12 +12,9 @@ class Options_handler(Action_handler):
     @property
     def configuration(self) -> str:
         return '\n'.join(
-            f'{spec["spec"]:<{24}}\t{spec["options"]["options"]}'
-            for spec in self._parsed_spec
-            if spec['mark'] != '@'
-            and spec['type'] == 'package'
-            and spec['options'] is not None
-            and spec['options']['options'] is not None
+            f'{config["spec"]:<{24}}\t{config["options"]}'
+            for config in self._spec_config
+            if config['type'] == 'package' and config['options'] is not None
         )
 
     pass
