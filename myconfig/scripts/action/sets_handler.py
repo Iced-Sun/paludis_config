@@ -17,6 +17,7 @@ class Sets_handler(Action_handler):
             if spec['mark'] != '@'
             and spec['type'] == 'package'
             and spec['is_dependecy'] is False
+            and spec['has_wildcard'] is False
         )
 
     pass

@@ -138,6 +138,7 @@ class Action_handler:
                         'mark': m.group('mark'),
                         'type': 'package' if '/' in m.group('spec') else 'set',
                         'is_dependecy': m.group('leading_tabs') is not None,
+                        'has_wildcard': True if '*' in m.group('spec') else False,
                         'options': m.group('options')
                     }
 
