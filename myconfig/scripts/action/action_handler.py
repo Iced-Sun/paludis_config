@@ -182,6 +182,10 @@ class Action_handler:
                 self._spec_config.append(line_spec)
                 pass
             pass
+        else:
+            # just a spec without configurations
+            self._spec_config.append(line_spec)
+            pass
         pass
 
     def _parse_weak_sets(self):
@@ -220,7 +224,7 @@ class Action_handler:
         #
         # if other suboption is needed, it should be parsed in _parse_line_spec
         for conf in self._spec_config:
-            if conf['options'] is not None and 'TARGETS:' in conf['options']:
+            if 'options' in conf and conf['options'] is not None and 'TARGETS:' in conf['options']:
                 targets = re.match('^.*TARGETS:\s+(?P<targets>.+)$', conf['options']).group('targets')
                 for target in targets.split(' '):
                     if not target.startswith('-') and target not in self._TARGETS:

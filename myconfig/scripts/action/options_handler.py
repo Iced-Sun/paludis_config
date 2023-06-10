@@ -13,7 +13,9 @@ class Options_handler(Action_handler):
         return '\n'.join(
             f'{config["spec"]:<{24}}\t{config["options"]}'
             for config in self._spec_config
-            if config['type'] == 'package' and config['options'] is not None
+            if config['type'] == 'package'
+            and 'options' in config
+            and config['options'] is not None
         )
 
     pass

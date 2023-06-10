@@ -14,6 +14,7 @@ class Suggestions_handler(Action_handler):
             f'{config["spec"]:<{16}}\t{config["suggestions"]}'
             for config in self._spec_config
             if config['mark'] != '@' and config['type'] == 'package'
+            and 'suggestions' in config
             and config['suggestions'] is not None
         )
 
