@@ -63,6 +63,10 @@ class Action_handler:
         self._parse_weak_sets()
         self._parse_active_sets()
 
+        ## finally, find out how many targets we should support
+        self._CHOST = next(v[0]['value'] for k, v in self._spec_environ.items() if k == 'CHOST')
+        self._TARGETS = [self._CHOST]
+        self._parse_build_targets()
         pass
 
     def _generate_active_sets(self):
@@ -205,6 +209,23 @@ class Action_handler:
 
                     # insert the spec
                     self._parse_line_spec(line, s['type'])
+                    pass
+                pass
+            pass
+        pass
+
+    def _parse_build_targets(self):
+        # for now, only 'targets' suboption is needed, hence the parsing is
+        # done here
+        #
+        # if other suboption is needed, it should be parsed in _parse_line_spec
+        for conf in self._spec_config:
+            if conf['options'] is not None and 'TARGETS:' in conf['options']:
+                targets = re.match('^.*TARGETS:\s+(?P<targets>.+)$', conf['options']).group('targets')
+                for target in targets.split(' '):
+                    if not target.startswith('-') and target not in self._TARGETS:
+                        self._TARGETS.append(target)
+                        pass
                     pass
                 pass
             pass
