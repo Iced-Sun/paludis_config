@@ -53,9 +53,15 @@ class Bashrc_handler(Action_handler):
 
         # target fixes: CFLAGS, LDFLAGS will be never used for building
         for target in self._TARGETS:
-            env[f'{target.replace("-", "_")}_CFLAGS'] = env['CFLAGS']
-            env[f'{target.replace("-", "_")}_CXXFLAGS'] = env['CFLAGS']
-            env[f'{target.replace("-", "_")}_LDFLAGS'] = env['LDFLAGS']
+            _target = target.replace("-", "_")
+            if f'{_target}_CFLAGS' not in env:
+                env[f'{_target}_CFLAGS'] = env['CFLAGS']
+                pass
+            if f'{_target}_LDFLAGS' not in env:
+                env[f'{_target}_LDFLAGS'] = env['LDFLAGS']
+                pass
+
+            env[f'{_target}_CXXFLAGS'] = env[f'{_target}_CFLAGS']
             pass
 
         return '\n'.join(f'{k}="{v}"' for k, v in env.items())
