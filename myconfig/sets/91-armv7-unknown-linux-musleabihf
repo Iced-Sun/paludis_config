@@ -1,0 +1,10 @@
+*/*					TARGETS: armv7-unknown-linux-musleabihf
+	app-admin/eclectic-clang	TARGETS: -armv7-unknown-linux-gnueabihf
+	app-admin/eclectic-llvm		TARGETS: -armv7-unknown-linux-gnueabihf
+	dev-lang/clang			TARGETS: -armv7-unknown-linux-gnueabihf
+	dev-lang/rust			TARGETS: -armv7-unknown-linux-gnueabihf
+
+# default CFLAGS
+# https://stackoverflow.com/questions/53138447/conflicts-between-cpu-and-arch-while-building
+#@*/*		MY__armv7_unknown_linux_musleabihf_CFLAGS: -O2 -mcpu=cortex-a7 -mfpu=neon-vfpv4 -pipe
+@*/*		armv7_unknown_linux_musleabihf_CFLAGS: -O3 -march=armv7-a -mtune=cortex-a7 -pipe
