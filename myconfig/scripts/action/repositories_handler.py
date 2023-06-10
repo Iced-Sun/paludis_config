@@ -3,7 +3,7 @@ from pathlib import Path
 from action.action_handler import Action_handler
 
 class Repository_handler(Action_handler):
-    script_path_pattern = re.compile('^(/etc/paludis/)?repositories/(.+)(.bash)?$')
+    script_path_pattern = '^(/etc/paludis/)?repositories/(.+)(.bash)?$'
     arch_target_pattern = re.compile('^(x86_64|i386|i686|arm|mips)(.*)-(.+)-(.+)-(.+)$')
 
     def __init__(self, script_path: Path):
@@ -46,6 +46,7 @@ location = $root/var/db/paludis/repositories/{'installed' if self._sub_action ==
 name = {self._sub_action}
 split_debug_location = /usr/{self._target_triple['target']}/lib/debug
 tool_prefix = {self._target_triple['target']}-
+{'' if self._sub_action == 'installed' else f'cross_compile_host = {self._target_triple["target"]}'}
 '''
             case _:
                 raise Exception('do not support the repository {}'.format(self._sub_action))
