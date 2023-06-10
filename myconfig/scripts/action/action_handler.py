@@ -35,7 +35,11 @@ class Action_handler:
         ## record the set names
         self._machine_sets = sorted(self._set_path.glob('@*'))
         self._general_sets = sorted(self._set_path.glob('[0-9][0-9]-*'))
-        self._weak_sets = sorted(self._set_path.glob('[?]*'))
+        self._weak_sets = [{
+            'name': re.match('^\?(\d{2}-)?(?P<name>.*)$', path.name).group('name'),
+            'path': path,
+            'type': 'weak-set'
+        } for path in self._set_path.glob('[?]*')]
 
         ## the active set has detailed set spec
         self._active_sets = []
@@ -43,6 +47,7 @@ class Action_handler:
 
         ## parse each line in relevant sets
         self._parsed_spec = []
+        self._parse_weak_sets()
         self._parse_active_sets()
 
         pass
@@ -91,7 +96,7 @@ class Action_handler:
         sets = []
         # gather dependent sets
         for s in self._active_sets:
-            # only world sets can pull dependencies
+            # only world sets can pull inclusion
             if s['pulled_by'] != 'world':
                 continue
 
@@ -116,11 +121,55 @@ class Action_handler:
                 # use next() to find exactly one general set
                 'path': next(_ for _ in self._general_sets if _.match(f'*/[0-9][0-9]-{s}')),
                 'type': 'general-set',
-                'pulled_by': 'dependecy'
+                'pulled_by': 'inclusion'
             }]
             pass
 
         # end of self._generate_active_sets()
+        pass
+
+    def _parse_line_spec(self, line: str, context_set_type: str):
+        # split the line to parts
+        m = re.match('^(?P<leading_tabs>\t+)?(?P<mark>[~@+-])?(?P<spec>\S+)(?P<options_tabs>\t+)?(?P<options>.+)?$', line)
+
+        line_spec = {
+            'spec': m.group('spec'),
+            'mark': m.group('mark'),
+            'type': 'package' if '/' in m.group('spec') else 'set',
+            'is_dependecy': m.group('leading_tabs') is not None or context_set_type == 'weak-set',
+            'has_wildcard': True if '*' in m.group('spec') else False,
+            'options': m.group('options')
+        }
+
+        # parse the options
+        if line_spec['options'] is not None:
+            if line_spec['mark'] == '@':
+                # the build options
+                pass
+            else:
+                # the package options
+                om = re.match('^(?P<options>[^&]+)?(\s*)?(?P<suggestions>&.+)?$', line_spec['options'])
+                line_spec['options'] = {
+                    'options': om.group('options'),
+                    'suggestions': om.group('suggestions')[1:] if om.group('suggestions') is not None else None
+                }
+                pass
+            pass
+        return line_spec
+
+    def _parse_weak_sets(self):
+        for s in self._weak_sets:
+            with s['path'].open() as f:
+                for line in f.read().splitlines():
+                    # skip a comment or blank line
+                    if re.match('^\s*#.*$|^\s*$', line):
+                        continue
+
+                    # insert the spec
+                    self._parsed_spec.append(self._parse_line_spec(line, s['type']))
+                    pass
+                pass
+            pass
         pass
 
     def _parse_active_sets(self):
@@ -131,34 +180,8 @@ class Action_handler:
                     if re.match('^\s*#.*$|^\s*$', line):
                         continue
 
-                    # split the line to parts
-                    m = re.match('^(?P<leading_tabs>\t+)?(?P<mark>[@+-])?(?P<spec>\S+)(?P<options_tabs>\t+)?(?P<options>.+)?$', line)
-                    line_spec = {
-                        'spec': m.group('spec'),
-                        'mark': m.group('mark'),
-                        'type': 'package' if '/' in m.group('spec') else 'set',
-                        'is_dependecy': m.group('leading_tabs') is not None,
-                        'has_wildcard': True if '*' in m.group('spec') else False,
-                        'options': m.group('options')
-                    }
-
-                    # parse the options
-                    if line_spec['options'] is not None:
-                        if line_spec['mark'] == '@':
-                            # the build options
-                            pass
-                        else:
-                            # the package options
-                            om = re.match('^(?P<options>[^&]+)?(\s*)?(?P<suggestions>&.+)?$', line_spec['options'])
-                            line_spec['options'] = {
-                                'options': om.group('options'),
-                                'suggestions': om.group('suggestions')[1:] if om.group('suggestions') is not None else None
-                            }
-                            pass
-                        pass
-
                     # insert the spec
-                    self._parsed_spec.append(line_spec)
+                    self._parsed_spec.append(self._parse_line_spec(line, s['type']))
 
     # end of class Action_handler
     pass
