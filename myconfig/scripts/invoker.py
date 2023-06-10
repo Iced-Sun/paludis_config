@@ -12,21 +12,17 @@ from action.package_unmask_handler import Package_unmask_handler
 from action.suggestions_handler import Suggestions_handler
 from action.options_handler import Options_handler
 
+from action.bashrc_handler import Bashrc_handler
+
 import sys
 from pathlib import Path
 
-# the first argument is always the script itself
-if len(sys.argv) > 1:
-    # <action>.bash or <action>
-    script_path = Path(sys.argv[1])
-    pass
-
 handled = False
-for Handler in Platforms_handler, General_handler, Mirrors_handler, Repository_handler, Sets_handler, Package_mask_handler, Package_unmask_handler, Suggestions_handler, Options_handler:
-    if Handler.script_path_pattern.match(str(script_path)):
-        print(Handler(script_path).configuration)
+for Handler in Platforms_handler, General_handler, Mirrors_handler, Repository_handler, Sets_handler, Package_mask_handler, Package_unmask_handler, Suggestions_handler, Options_handler, Bashrc_handler:
+    if Handler.match(Path(sys.argv[1]), sys.argv[2] if len(sys.argv) == 3 else None):
+        print(Handler(Path(sys.argv[1])).configuration)
         handled = True
-        pass
+        break
     pass
 
 if not handled:

@@ -1,10 +1,7 @@
-import re
+from action.action_handler import Action_handler
 
-class General_handler:
-    script_path_pattern = re.compile('^(/etc/paludis/)?general(.bash)?$')
-
-    def __init__(self, script_path):
-        pass
+class General_handler(Action_handler):
+    script_path_pattern = '^(/etc/paludis/)?general(.bash)?$'
 
     @property
     def configuration(self) -> str:

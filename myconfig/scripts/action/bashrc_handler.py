@@ -1,8 +1,8 @@
 from pathlib import Path
 from action.action_handler import Action_handler
 
-class Package_mask_handler(Action_handler):
-    script_path_pattern = '^(/etc/paludis/)?package_mask(.bash)?$'
+class Bashrc_handler(Action_handler):
+    script_path_pattern = '^(/etc/paludis/)?bashrc$'
 
     def __init__(self, script_path: Path):
         super().__init__(script_path)
@@ -11,9 +11,8 @@ class Package_mask_handler(Action_handler):
     @property
     def configuration(self) -> str:
         return '\n'.join(
-            config['spec']
-            for config in self._spec_config
-            if config['mark'] == '-' and config['type'] == 'package'
+            f'''{key}="{value[0]['value']}"'''
+            for key, value in self._spec_environ.items()
         )
 
     pass

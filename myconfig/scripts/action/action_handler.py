@@ -2,6 +2,16 @@ from pathlib import Path
 import os, re
 
 class Action_handler:
+    @classmethod
+    def match(cls, script_path, action):
+        if re.match(cls.script_path_pattern, str(script_path)) is not None:
+            return True
+
+        if action is not None and re.match(cls.script_path_pattern, action) is not None:
+            return True
+
+        return False
+
     def __init__(self, script_path: Path):
         ## configure the environment
         # paths and files
@@ -9,6 +19,7 @@ class Action_handler:
         self._wrapper_path = script_path.resolve()
         self._config_path = self._wrapper_path.parents[1]
         self._set_path = self._config_path / 'sets'
+
         # hard-coded, should be consistent with the value in
         # repositories/installed.conf
         self._world_file = '/var/db/paludis/repositories/installed/world'
@@ -34,6 +45,7 @@ class Action_handler:
 
         ## record the set names
         self._machine_sets = sorted(self._set_path.glob('@*'))
+
         self._general_sets = sorted(self._set_path.glob('[0-9][0-9]-*'))
         self._weak_sets = [{
             'name': re.match('^\?(\d{2}-)?(?P<name>.*)$', path.name).group('name'),
@@ -47,7 +59,7 @@ class Action_handler:
 
         ## parse each line in relevant sets
         self._spec_config = []
-        self._spec_environ = []
+        self._spec_environ = {}
         self._parse_weak_sets()
         self._parse_active_sets()
 
@@ -146,7 +158,15 @@ class Action_handler:
         if line_spec['config'] is not None:
             if line_spec['mark'] == '@':
                 # the build options: they are in fact environment variables
+                em = re.match('^(?P<key>.+):\s+(?P<value>.+)$', line_spec['config'])
+                if em.group('key') not in self._spec_environ:
+                    self._spec_environ[em.group('key')] = []
+                    pass
 
+                self._spec_environ[em.group('key')].append({
+                    'spec': line_spec['spec'],
+                    'value': em.group('value')
+                })
                 pass
             else:
                 # the package options

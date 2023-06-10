@@ -1,7 +1,7 @@
-import re
+from action.action_handler import Action_handler
 
-class Mirrors_handler:
-    script_path_pattern = re.compile('^(/etc/paludis/)?mirrors(.bash)?$')
+class Mirrors_handler(Action_handler):
+    script_path_pattern = '^(/etc/paludis/)?mirrors(.bash)?$'
 
     preferred_sites = ['ustc', 'bjtu', 'cqu', 'lzu', 'tsu', 'netease', 'aliyun', 'huawei', 'tencent' ]
 
@@ -70,9 +70,6 @@ class Mirrors_handler:
             'repositories': [ 'sourceforge' ]
         }
     }
-
-    def __init__(self, script_path):
-        pass
 
     @property
     def configuration(self) -> str:

@@ -1,10 +1,7 @@
-import re
+from action.action_handler import Action_handler
 
-class Platforms_handler:
-    script_path_pattern = re.compile('^(/etc/paludis/)?platforms(.bash)?$')
-
-    def __init__(self, script_path):
-        pass
+class Platforms_handler(Action_handler):
+    script_path_pattern = '^(/etc/paludis/)?platforms(.bash)?$'
 
     @property
     def configuration(self) -> str:

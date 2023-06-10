@@ -1,9 +1,8 @@
-import re
 from pathlib import Path
 from action.action_handler import Action_handler
 
 class Package_unmask_handler(Action_handler):
-    script_path_pattern = re.compile('^(/etc/paludis/)?package_unmask(.bash)?$')
+    script_path_pattern = '^(/etc/paludis/)?package_unmask(.bash)?$'
 
     def __init__(self, script_path: Path):
         super().__init__(script_path)
