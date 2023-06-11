@@ -62,6 +62,7 @@ class Action_handler:
                 'PALUDIS_CROSS_COMPILE_HOST' in os.environ
                 and os.environ['PALUDIS_CROSS_COMPILE_HOST'] == s['name']
             )
+            or (Path(self._paludis_config_dir) / 'repositories' / (s['name'] + '.bash')).exists()
         ]
 
         ## the active set has detailed set spec
