@@ -22,21 +22,18 @@
 @dev-python/Cython	CFLAGS:			^-fno-semantic-interposition
 
 ## parallel building
-@*/*			EXJOBS:			"$((`cat /proc/cpuinfo | grep processor | wc -l`+2))"
-
-## custom options
-@*/*			MY__EXTRA_ECONF:	--disable-static
+@*/*			EXJOBS:			$((`cat /proc/cpuinfo | grep processor | wc -l`+2))
 
 ### global/system option defaults
 ## disable everything by default
 */*			-*
-*/*			PARTS:		-* binaries configuration data libraries
-*/*			PROVIDERS:	-*
-*/*			LINGUAS:	-* zh zh_CN
+*/*			PARTS:			-* binaries configuration data libraries
+*/*			PROVIDERS:		-*
+*/*			LINGUAS:		-* zh zh_CN
 
 ## build
-*/*			BUILD_OPTIONS:	symbols=strip -recommended_tests
-*/*			TARGETS:	-* x86_64-pc-linux-gnu
+*/*			BUILD_OPTIONS:		symbols=strip -recommended_tests
+*/*			TARGETS:		-* x86_64-pc-linux-gnu
 
 ## system
 */*			pam systemd udev
@@ -48,15 +45,15 @@
 */*			zstd
 
 ## alternatives
-*/*			PROVIDERS: openssl
-*/*			PROVIDERS: systemd systemd-logind
-*/*			PROVIDERS: elfutils
+*/*			PROVIDERS:		openssl
+*/*			PROVIDERS:		systemd systemd-logind
+*/*			PROVIDERS:		elfutils
 
 ## filesystem attributes
 */*			acl xattr
 
 ## language bindings
-*/*			PYTHON_ABIS:	-* 3.10
-*/*			VALA_ABIS:	-*
-*/*			LUA_ABIS:	-*
-*/*			RUBY_ABIS:	-*
+*/*			PYTHON_ABIS:		-* 3.10
+*/*			VALA_ABIS:		-*
+*/*			LUA_ABIS:		-*
+*/*			RUBY_ABIS:		-*
