@@ -12,3 +12,5 @@
 !/repositories/installed_accounts.conf
 
 /sets/*.bash
+
+__pycache__
