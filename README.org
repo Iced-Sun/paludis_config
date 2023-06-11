@@ -38,12 +38,12 @@ more configuration parts separated by special marks.
    world dependency on the package. Optionally, a leading mark could be applied
    for special purposes:
 
-   | Mark       | Configuration          |
-   |------------+------------------------|
-   | =<TAB>=    | dependency             |
-   | =+=        | repository unmask      |
-   | =~=        | unstable unmask        |
-   | =-=        | user mask              |
+   | Mark  | Configuration     |
+   |-------+-------------------|
+   | =<TAB>= | dependency        |
+   | =+=     | repository unmask |
+   | =~=     | unstable unmask   |
+   | =-=     | user mask         |
 
    =<TAB>= denotes the package is dependency, hence the package will not be
    part of world file. Any package in weak configuration (=?<default>=) is
@@ -57,17 +57,16 @@ more configuration parts separated by special marks.
 3. A configuration part starting with =&= defines the /suggestion taking/
    configuration.
 
+4. A line with a non spec (cat/pkg) induces a set inclusion
+
 If a line starts with a =@= mark, it defines a bashrc configuration for a
 package, or a set inclusion.
 
-| Mark       | Configuration          |
-|------------+------------------------|
-| =@requrie= | set inclusion          |
-| =@=        | build options (bashrc) |
+| Mark | Configuration          |
+|------+------------------------|
+| =@=    | build options (bashrc) |
 
-1. =@require= pulls in the configurations from the following sets.
-
-2. =@= defines environment variabls for building (as in bashrc). Each line must
+1. =@= defines environment variabls for building (as in bashrc). Each line must
    specify only one pair of a variable (e.g., CFLAGS, EXJOBS, CHOST, etc.) and
    its value, with the following marks supported:
 
