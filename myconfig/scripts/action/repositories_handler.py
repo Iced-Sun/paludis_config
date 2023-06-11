@@ -4,13 +4,12 @@ from action.action_handler import Action_handler
 
 class Repository_handler(Action_handler):
     script_path_pattern = '^(/etc/paludis/)?repositories/(.+)(.bash)?$'
-    arch_target_pattern = re.compile('^(x86_64|i386|i686|arm|mips)(.*)-(.+)-(.+)-(.+)$')
 
     def __init__(self, script_path: Path):
         super().__init__(script_path)
 
         if self._sub_action == 'installed':
-            arch_target_pattern_match = Repository_handler.arch_target_pattern.match('x86_64-pc-linux-gnu')
+            arch_target_pattern_match = Action_handler.arch_target_pattern.match('x86_64-pc-linux-gnu')
             self._format = 'exndbam'
             self._target_triple = {
                 'target': arch_target_pattern_match.group(0),

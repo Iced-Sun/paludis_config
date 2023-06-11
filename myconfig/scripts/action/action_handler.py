@@ -2,6 +2,8 @@ from pathlib import Path
 import os, re
 
 class Action_handler:
+    arch_target_pattern = re.compile('^(x86_64|i386|i686|arm|mips)(.*)-(.+)-(.+)-(.+)$')
+
     @classmethod
     def match(cls, script_path, action):
         if re.match(cls.script_path_pattern, str(script_path)) is not None:
@@ -52,6 +54,15 @@ class Action_handler:
             'path': path,
             'type': 'weak-set'
         } for path in self._set_path.glob('[?]*')]
+        # remove weak sets if not match the cross_compile_host
+        self._weak_sets = [
+            s for s in self._weak_sets
+            if not Action_handler.arch_target_pattern.match(s['name'])
+            or (
+                'PALUDIS_CROSS_COMPILE_HOST' in os.environ
+                and os.environ['PALUDIS_CROSS_COMPILE_HOST'] == s['name']
+            )
+        ]
 
         ## the active set has detailed set spec
         self._active_sets = []
