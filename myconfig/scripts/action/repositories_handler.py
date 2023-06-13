@@ -1,17 +1,27 @@
 import re
 from pathlib import Path
 from action.action_handler import Action_handler
+from action.set_files_mixin import Set_files_mixin
+from action.host_mixin import Host_mixin
 
-class Repository_handler(Action_handler):
+class Repository_handler(Host_mixin, Set_files_mixin, Action_handler):
     script_path_pattern = '^(/etc/paludis/)?repositories/(.+)(.bash)?$'
 
     def __init__(self, script_path: Path):
         super().__init__(script_path)
 
         if self._sub_action == 'installed':
-            arch_target_pattern_match = Action_handler.arch_target_pattern.match('x86_64-pc-linux-gnu')
-            self._format = 'exndbam'
-            self._target_triple = {
+            arch_target_pattern_match = Action_handler.arch_target_pattern.match(self.host)
+            format = 'exndbam'
+            pass
+
+        elif Action_handler.arch_target_pattern.match(self._sub_action):
+            arch_target_pattern_match = Action_handler.arch_target_pattern.match(self._sub_action)
+            format = 'exndbam'
+            pass
+
+        if format == 'exndbam':
+            target_triple = {
                 'target': arch_target_pattern_match.group(0),
                 'arch': arch_target_pattern_match.group(1),
                 'sub': arch_target_pattern_match.group(2),
@@ -19,36 +29,30 @@ class Repository_handler(Action_handler):
                 'sys': arch_target_pattern_match.group(4),
                 'env': arch_target_pattern_match.group(5)
             }
-            pass
 
-        elif Repository_handler.arch_target_pattern.match(self._sub_action):
-            arch_target_pattern_match = Repository_handler.arch_target_pattern.match(self._sub_action)
-            self._format = 'exndbam'
-            self._target_triple = {
-                'target': arch_target_pattern_match.group(0),
-                'arch': arch_target_pattern_match.group(1),
-                'sub': arch_target_pattern_match.group(2),
-                'vendor': arch_target_pattern_match.group(3),
-                'sys': arch_target_pattern_match.group(4),
-                'env': arch_target_pattern_match.group(5)
-            }
-            pass
+            if self._sub_action == 'installed':
+                location = 'installed'
+                pass
+            else:
+                location = f'cross-installed/{target_triple["target"]}'
+                pass
 
+            self._configurations = [
+                'format = exndbam',
+                f'location = $root/var/db/paludis/repositories/{location}',
+                f'name = {self._sub_action}',
+                f'split_debug_location = /usr/{target_triple["target"]}/lib/debug',
+                f'tool_prefix = {target_triple["target"]}-'
+            ]
+
+            if self._sub_action != 'installed':
+                self._configurations.append(f'cross_compile_host = {target_triple["target"]}')
+                pass
+            pass
         pass
 
     @property
     def configuration(self) -> str:
-        match self._format:
-            case 'exndbam':
-                return f'''format = exndbam
-location = $root/var/db/paludis/repositories/{'installed' if self._sub_action == 'installed' else f'cross-installed/{self._target_triple["target"]}'}
-name = {self._sub_action}
-split_debug_location = /usr/{self._target_triple['target']}/lib/debug
-tool_prefix = {self._target_triple['target']}-
-{'' if self._sub_action == 'installed' else f'cross_compile_host = {self._target_triple["target"]}'}
-'''
-            case _:
-                raise Exception('do not support the repository {}'.format(self._sub_action))
-        pass
+        return '\n'.join(self._configurations)
 
     pass
