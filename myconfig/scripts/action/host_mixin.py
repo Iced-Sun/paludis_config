@@ -2,7 +2,15 @@ import re
 
 class Host_mixin:
     @property
-    def host(self):
+    def host(self) -> str:
+        if not hasattr(self, '_host'):
+            self._init_host()
+            pass
+        return self._host
+
+    def _init_host(self):
+        self._host = None
+
         for section in self._configured_set_paths.values():
             for set_path in section:
                 with set_path.open() as f:
@@ -13,7 +21,7 @@ class Host_mixin:
                         if m.group('mark') == '@':
                             em = re.match('^(?P<key>.+):\s+(?P<value>.+)$', m.group('config'))
                             if em.group('key') == 'CHOST' and m.group('spec') == '*/*':
-                                return em.group('value')
+                                self._host = em.group('value')
                             pass
                         pass
                     pass
@@ -22,6 +30,7 @@ class Host_mixin:
 
         ### end of host
         pass
+
 
     ### end of Host_mixin
     pass

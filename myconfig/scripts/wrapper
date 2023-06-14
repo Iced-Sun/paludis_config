@@ -4,4 +4,4 @@
 SCRIPT_FULL_PATH=$(dirname $(realpath $0))
 
 # pass the script name along with the arguments
-${SCRIPT_FULL_PATH}/invoker.py "$0" "$@"
+exec ${SCRIPT_FULL_PATH}/invoker.py "$0" "$@"

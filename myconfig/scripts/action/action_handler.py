@@ -21,6 +21,8 @@ class Action_handler:
             script_path = script_path.relative_to(paludis_config_dir)
             pass
 
+        self._script_path = script_path
+
         script_path_parts = script_path.parts
         self._action = Path(script_path_parts[0]).stem
         self._sub_action = Path(script_path_parts[1]).stem if len(script_path_parts) == 2 else None

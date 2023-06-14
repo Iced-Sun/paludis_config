@@ -20,7 +20,9 @@ from pathlib import Path
 handled = False
 for Handler in Platforms_handler, General_handler, Mirrors_handler, Repository_handler, Sets_handler, Package_mask_handler, Package_unmask_handler, Suggestions_handler, Options_handler, Bashrc_handler:
     if Handler.match(Path(sys.argv[1]), sys.argv[2] if len(sys.argv) == 3 else None):
-        print(Handler(Path(sys.argv[1])).configuration)
+        handler = Handler(Path(sys.argv[1]))
+        print(handler.configuration)
+
         handled = True
         break
     pass
