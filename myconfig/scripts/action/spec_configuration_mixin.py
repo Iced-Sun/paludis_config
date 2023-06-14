@@ -24,7 +24,7 @@ class Spec_configuration_mixin:
         pass
 
     def _parse_line_as_spec(self, line: str):
-        # split the line to parts
+        # parse the line
         m = re.match('^(?P<leading_tabs>\t+)?(?P<mark>[~@+-])?(?P<spec>\S+)(?P<config_tabs>\t+)?(?P<config>.+)?$', line)
 
         line_spec = {
@@ -32,9 +32,21 @@ class Spec_configuration_mixin:
             'mark': m.group('mark'),
             'type': 'package' if '/' in m.group('spec') else 'set',
             'is_dependecy': m.group('leading_tabs') is not None,
-            'has_wildcard': True if '*' in m.group('spec') else False,
-            'config': m.group('config')
+            'has_wildcard': True if '*' in m.group('spec') else False
         }
+
+        # parse the configuration
+        if m.group('config') is None:
+            return line_spec
+
+        if line_spec['mark'] == '@':
+            return line_spec
+        else:
+            # the package options
+            cm = re.match('^(?P<options>[^&]+)?(\s*)?(?P<suggestions>&.+)?$', m.group('config'))
+            line_spec['options'] = cm.group('options')
+            line_spec['suggestions'] = cm.group('suggestions')[1:] if cm.group('suggestions') is not None else None
+            pass
 
         return line_spec
 

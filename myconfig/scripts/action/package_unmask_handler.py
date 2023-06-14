@@ -1,7 +1,9 @@
 from pathlib import Path
 from action.action_handler import Action_handler
+from action.set_files_mixin import Set_files_mixin
+from action.spec_configuration_mixin import Spec_configuration_mixin
 
-class Package_unmask_handler(Action_handler):
+class Package_unmask_handler(Spec_configuration_mixin, Set_files_mixin, Action_handler):
     script_path_pattern = '^(/etc/paludis/)?package_unmask(.bash)?$'
 
     def __init__(self, script_path: Path):
@@ -12,7 +14,7 @@ class Package_unmask_handler(Action_handler):
     def configuration(self) -> str:
         return '\n'.join(
             config['spec']
-            for config in self._spec_config
+            for config in self.active_spec_configurations
             if config['mark'] == '+' and config['type'] == 'package'
         )
 
