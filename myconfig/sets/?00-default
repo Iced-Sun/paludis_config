@@ -27,9 +27,12 @@
 ### global/system option defaults
 ## disable everything by default
 */*			-*
+*/*			AMD64_CPU_FEATURES:	-*
+*/*			X86_CPU_FEATURES:	-*
+*/*			LINGUAS:		-* zh zh_CN
 */*			PARTS:			-* binaries configuration data libraries
 */*			PROVIDERS:		-*
-*/*			LINGUAS:		-* zh zh_CN
+*/*			VIDEO_DRIVERS:		-*
 
 ## build
 */*			BUILD_OPTIONS:		symbols=strip -recommended_tests
