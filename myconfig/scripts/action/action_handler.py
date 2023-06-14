@@ -15,17 +15,22 @@ class Action_handler:
         return False
 
     def __init__(self, script_path: Path):
+        ## save the wrapper path
+        self._wrapper_path = script_path.resolve()
+
+        ## induce the actions from script name
         paludis_config_dir = os.environ['PALUDIS_CONFIG_DIR'] if 'PALUDIS_CONFIG_DIR' in os.environ else '/etc/paludis'
 
         if script_path.is_absolute():
-            script_path = script_path.relative_to(paludis_config_dir)
+            relative_script_path = script_path.relative_to(paludis_config_dir)
+            pass
+        else:
+            relative_script_path = script_path
             pass
 
-        self._script_path = script_path
-
-        script_path_parts = script_path.parts
-        self._action = Path(script_path_parts[0]).stem
-        self._sub_action = Path(script_path_parts[1]).stem if len(script_path_parts) == 2 else None
+        parts = relative_script_path.parts
+        self._action = Path(parts[0]).stem
+        self._sub_action = Path(parts[1]).stem if len(parts) == 2 else None
 
         ### end of __init__()
         pass

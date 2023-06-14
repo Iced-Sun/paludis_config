@@ -10,10 +10,8 @@ class Set_files_mixin:
         return self._configured_set_files
 
     def _init_configured_set_files(self):
-        wrapper_path = self._script_path.resolve()
-        config_path = wrapper_path.parents[1]
+        config_path = self._wrapper_path.parents[1]
         set_path = config_path / 'sets'
-
         self._configured_set_files = {
             'machine-set': list(set_path.glob('@*')),
             'general-set': list(set_path.glob('[0-9][0-9]-*')),
