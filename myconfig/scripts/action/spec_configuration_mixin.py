@@ -14,7 +14,7 @@ class Spec_configuration_mixin:
 
         # if the destination is cross-compile target, only the matched set is
         # considered active
-        if self.destination is not None:
+        if self.destination != 'installed':
             for active_set_file in self.active_set_files:
                 if not active_set_file.stem.endswith(self.destination):
                     continue
