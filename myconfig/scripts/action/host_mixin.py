@@ -1,5 +1,3 @@
-import re
-
 class Host_mixin:
     '''depends on Set_file_mixin'''
     @property
@@ -12,6 +10,7 @@ class Host_mixin:
     def _init_host(self):
         self._host = None
 
+        import re
         for section in self.configured_set_files.values():
             for set_path in section:
                 with set_path.open() as f:
