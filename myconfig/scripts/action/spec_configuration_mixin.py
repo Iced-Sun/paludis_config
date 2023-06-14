@@ -11,6 +11,7 @@ class Spec_configuration_mixin:
     def _init_active_spec_configurations(self):
         self._active_spec_configurations = []
 
+        # push active spec from active set
         for active_set_file in self.active_set_files:
             with active_set_file.open() as f:
                 for line in f.read().splitlines():
@@ -21,6 +22,22 @@ class Spec_configuration_mixin:
                     pass
                 pass
             pass
+
+        # push active spec from weak set as dependecy
+        for weak_set_file in self.configured_set_files['weak-set']:
+            with weak_set_file.open() as f:
+                for line in f.read().splitlines():
+                    # skip a comment or blank line
+                    if re.match('^\s*#.*$|^\s*$', line): continue
+
+                    line_spec = self._parse_line_as_spec(line)
+                    line_spec['is_dependecy'] = True
+
+                    self._active_spec_configurations.append(line_spec)
+                    pass
+                pass
+            pass
+
         pass
 
     def _parse_line_as_spec(self, line: str):
