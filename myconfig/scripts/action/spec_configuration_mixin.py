@@ -4,13 +4,21 @@ class Spec_configuration_mixin:
     '''depends on Destination_mixin, Set_files_mixin'''
     @property
     def active_spec_configurations(self):
-        if not hasattr(self, '_active_spec'):
+        if not hasattr(self, '_active_spec_configurations'):
             self._init_active_spec_configurations()
             pass
         return self._active_spec_configurations
 
+    @property
+    def spec_environment(self):
+        if not hasattr(self, '_spec_environment'):
+            self._init_active_spec_configurations()
+            pass
+        return self._spec_environment
+
     def _init_active_spec_configurations(self):
         self._active_spec_configurations = []
+        self._spec_environment = {}
 
         # if the destination is cross-compile target, only the matched set is
         # considered active
@@ -24,7 +32,13 @@ class Spec_configuration_mixin:
                         # skip a comment or blank line
                         if re.match('^\s*#.*$|^\s*$', line): continue
 
-                        self._active_spec_configurations.append(self._parse_line_as_spec(line))
+                        line_spec = self._parse_line_as_spec(line)
+                        if line_spec['mark'] == '@':
+                            self._add_to_spec_environment(line_spec)
+                            pass
+                        else:
+                            self._active_spec_configurations.append(line_spec)
+                            pass
                         pass
                     pass
                 continue
@@ -41,7 +55,13 @@ class Spec_configuration_mixin:
                     # skip a comment or blank line
                     if re.match('^\s*#.*$|^\s*$', line): continue
 
-                    self._active_spec_configurations.append(self._parse_line_as_spec(line))
+                    line_spec = self._parse_line_as_spec(line)
+                    if line_spec['mark'] == '@':
+                        self._add_to_spec_environment(line_spec)
+                        pass
+                    else:
+                        self._active_spec_configurations.append(line_spec)
+                        pass
                     pass
                 pass
             pass
@@ -56,7 +76,12 @@ class Spec_configuration_mixin:
                     line_spec = self._parse_line_as_spec(line)
                     line_spec['is_dependecy'] = True
 
-                    self._active_spec_configurations.append(line_spec)
+                    if line_spec['mark'] == '@':
+                        self._add_to_spec_environment(line_spec)
+                        pass
+                    else:
+                        self._active_spec_configurations.append(line_spec)
+                        pass
                     pass
                 pass
             pass
@@ -80,6 +105,7 @@ class Spec_configuration_mixin:
             return line_spec
 
         if line_spec['mark'] == '@':
+            line_spec['config'] = m.group('config')
             return line_spec
         else:
             # the package options
@@ -89,6 +115,22 @@ class Spec_configuration_mixin:
             pass
 
         return line_spec
+
+    def _add_to_spec_environment(self, line_spec):
+        # the build options: they are in fact environment variables
+        m = re.match('^(?P<key>.+):\s+(?P<value>.+)$', line_spec['config'])
+        if m is None:
+            return
+
+        if m.group('key') not in self._spec_environment:
+            self._spec_environment[m.group('key')] = []
+            pass
+
+        self._spec_environment[m.group('key')].append({
+            'spec': line_spec['spec'],
+            'value': m.group('value')
+        })
+        return
 
     ### end of Spec_configuration_mixin
     pass
