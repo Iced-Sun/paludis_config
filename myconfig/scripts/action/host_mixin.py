@@ -1,6 +1,7 @@
 import re
 
 class Host_mixin:
+    '''depends on Set_file_mixin'''
     @property
     def host(self) -> str:
         if not hasattr(self, '_host'):

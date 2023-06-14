@@ -22,6 +22,10 @@ class Destination_mixin:
             self._destination = os.environ['CAVE_PERFORM_CMDLINE_destination']
             pass
         else:
+            ## not in cave environment
+            if 'CAVE' not in os.environ:
+                return
+
             destination_file_path = Path(f'/tmp/cave.{os.getppid()}')
             if destination_file_path.exists():
                 with destination_file_path.open() as f:

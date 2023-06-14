@@ -1,6 +1,7 @@
 import re
 
 class Spec_configuration_mixin:
+    '''depends on Destination_mixin, Set_files_mixin'''
     @property
     def active_spec_configurations(self):
         if not hasattr(self, '_active_spec'):
@@ -11,8 +12,30 @@ class Spec_configuration_mixin:
     def _init_active_spec_configurations(self):
         self._active_spec_configurations = []
 
+        # if the destination is cross-compile target, only the matched set is
+        # considered active
+        if self.destination is not None:
+            for active_set_file in self.active_set_files:
+                if not active_set_file.stem.endswith(self.destination):
+                    continue
+
+                with active_set_file.open() as f:
+                    for line in f.read().splitlines():
+                        # skip a comment or blank line
+                        if re.match('^\s*#.*$|^\s*$', line): continue
+
+                        self._active_spec_configurations.append(self._parse_line_as_spec(line))
+                        pass
+                    pass
+                continue
+            return
+
         # push active spec from active set
         for active_set_file in self.active_set_files:
+            # skip any set matches to a specific target
+            if len([target for target in self.configured_targets if active_set_file.stem.endswith(target)]) > 0:
+                continue
+
             with active_set_file.open() as f:
                 for line in f.read().splitlines():
                     # skip a comment or blank line
@@ -38,7 +61,7 @@ class Spec_configuration_mixin:
                 pass
             pass
 
-        pass
+        return
 
     def _parse_line_as_spec(self, line: str):
         # parse the line
