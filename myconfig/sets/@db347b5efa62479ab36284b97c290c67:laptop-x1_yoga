@@ -1,13 +1,18 @@
+## general sets
 cui
 gui
 desktop
 laptop
-armv7-unknown-linux-musleabihf
 transient
 
-*/*		AMD64_CPU_FEATURES:	         sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3
-*/*		X86_CPU_FEATURES:	sse sse2 sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3
-*/*		VIDEO_DRIVERS:		-* iris
+## include armv7-unknown-linux-musleabihf
+armv7-unknown-linux-musleabihf
+*/*					TARGETS:		-* armv7-unknown-linux-musleabihf
+app-virtualization/qemu			arm
+
+## machine specific
+*/*					AMD64_CPU_FEATURES:	         sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3
+*/*					X86_CPU_FEATURES:	sse sse2 sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3
 
 ## firmware
 firmware/linux-firmware
@@ -27,41 +32,29 @@ net-wireless/blueman
 ## touchscreen and pen
 	sys-libs/libinput		wacom
 
-## EFI and boot
-sys-apps/systemd			efi
-
 ## hardware ability
 media/mpv				va pipewire
 	media/ffmpeg			va
 	x11-libs/libva			X opengl	&x11-drivers/intel-media-driver
+	x11-dri/libdrm			VIDEO_DRIVERS: intel
 
 ## fs
 sys-fs/ntfs-3g_ntfsprogs
 sys-fs/dosfstools
 
 ## postgres
-dev-db/postgresql			readline
-	dev-db/postgresql-client	pgdump readline ssl
+dev-db/postgresql			readline postgresql_extensions: pg_trgm
+dev-db/postgresql-client		pgdump readline ssl
 
 ## java
 virtual/jdk				PROVIDERS: openjdk-bin
-	net-print/cups-filters
-		app-text/poppler	lcms
-	app-misc/ca-certificates	ca-trust
 
 ## gnupg
 app-crypt/gnupg
-	app-crypt/pinentry		keyring emacs gnome
+	app-crypt/pinentry		keyring emacs -gnome qt5
 
 ## nodejs
 dev-lang/node
-	net-libs/nghttp2		utils
-
-## virtualization
-#app-virtualization/qemu			amd64 gtk3
-
-## machinectl import-*
-sys-apps/systemd			importd libcurl gcrypt
 
 ## jdee requires python[readline]
 	dev-lang/python			readline
@@ -72,36 +65,49 @@ app-office/gnucash			gnucash dbi
 	dev-cpp/gtest			googlemock
 	dev-libs/libdbi-drivers		sqlite
 
-## datagrip requires: key & password management
-gnome-desktop/gnome-keyring
-	gnome-desktop/gcr		gobject-introspection
-
 ## misc
 net-proxy/proxychains-ng
 net-misc/onedrive
-app-misc/xstow
 
 ## wireguard
 net/wireguard-tools			PROVIDERS: -* nftables
 
-## docker-compose
-	dev-lang/python			sqlite
-
 ## feishu
-net-print/cups
+#net-print/cups				avahi
+#	net-dns/avahi			dns_sd dbus
 
 ## docker
 app-virtualization/moby
+	sys-apps/runc			seccomp
 app-virtualization/docker-cli
 
 ## baidunetdisk
 x11-libs/libXScrnSaver
 
 ## firefox
-dev-libs/dbus-glib
+#	dev-libs/dbus-glib
 
 ## pipewire
 media/pipewire				alsa bluetooth dbus -camera -aptx -echo-cancel-webrtc -fdk-aac -ffmpeg -gstreamer -ldac pulseaudio
 	sys-sound/alsa-plugins		pulseaudio
 	media-sound/pulseaudio		bluetooth
 media/wireplumber			lua_abis: 5.4
+
+## gtk 4
+	x11-libs/gtk:4
+		x11-libs/graphene	gobject-introspection
+
+## emacs
+x11-libs/libvterm
+
+## misc
+wayland-apps/wlsunset
+
+## qt6
+	x11-libs/qtbase:6		PROVIDERS: heimdal
+		dev-libs/libxslt	crypt
+
+	media-libs/opencv		camera contrib qt6 CONTRIB_MODULES: face
+	x11-libs/qttools:6		assistant
+	dev-python/PyQt6		multimedia
+	x11-libs/qtmultimedia		ffmpeg pulseaudio -vaapi -qml
