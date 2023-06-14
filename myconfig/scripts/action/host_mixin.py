@@ -11,7 +11,7 @@ class Host_mixin:
     def _init_host(self):
         self._host = None
 
-        for section in self._configured_set_paths.values():
+        for section in self.configured_set_files.values():
             for set_path in section:
                 with set_path.open() as f:
                     for line in f.read().splitlines():

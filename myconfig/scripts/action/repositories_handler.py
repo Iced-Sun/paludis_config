@@ -7,9 +7,8 @@ from action.host_mixin import Host_mixin
 class Repository_handler(Host_mixin, Set_files_mixin, Action_handler):
     script_path_pattern = '^(/etc/paludis/)?repositories/(.+)(.bash)?$'
 
-    def __init__(self, script_path: Path):
-        super().__init__(script_path)
-
+    @property
+    def configuration(self) -> str:
         if self._sub_action == 'installed':
             arch_target_pattern_match = Action_handler.arch_target_pattern.match(self.host)
             format = 'exndbam'
@@ -37,7 +36,7 @@ class Repository_handler(Host_mixin, Set_files_mixin, Action_handler):
                 location = f'cross-installed/{target_triple["target"]}'
                 pass
 
-            self._configurations = [
+            configurations = [
                 'format = exndbam',
                 f'location = $root/var/db/paludis/repositories/{location}',
                 f'name = {self._sub_action}',
@@ -46,13 +45,10 @@ class Repository_handler(Host_mixin, Set_files_mixin, Action_handler):
             ]
 
             if self._sub_action != 'installed':
-                self._configurations.append(f'cross_compile_host = {target_triple["target"]}')
+                configurations.append(f'cross_compile_host = {target_triple["target"]}')
                 pass
             pass
-        pass
 
-    @property
-    def configuration(self) -> str:
-        return '\n'.join(self._configurations)
+        return '\n'.join(configurations)
 
     pass
