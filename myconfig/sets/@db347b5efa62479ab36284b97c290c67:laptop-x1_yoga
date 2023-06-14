@@ -68,13 +68,7 @@ app-office/gnucash			gnucash dbi
 ## misc
 net-proxy/proxychains-ng
 net-misc/onedrive
-
-## wireguard
 net/wireguard-tools			PROVIDERS: -* nftables
-
-## feishu
-#net-print/cups				avahi
-#	net-dns/avahi			dns_sd dbus
 
 ## docker
 app-virtualization/moby
@@ -84,30 +78,14 @@ app-virtualization/docker-cli
 ## baidunetdisk
 x11-libs/libXScrnSaver
 
-## firefox
-#	dev-libs/dbus-glib
-
 ## pipewire
 media/pipewire				alsa bluetooth dbus -camera -aptx -echo-cancel-webrtc -fdk-aac -ffmpeg -gstreamer -ldac pulseaudio
 	sys-sound/alsa-plugins		pulseaudio
 	media-sound/pulseaudio		bluetooth
 media/wireplumber			lua_abis: 5.4
 
-## gtk 4
-	x11-libs/gtk:4
-		x11-libs/graphene	gobject-introspection
-
 ## emacs
 x11-libs/libvterm
 
 ## misc
 wayland-apps/wlsunset
-
-## qt6
-	x11-libs/qtbase:6		PROVIDERS: heimdal
-		dev-libs/libxslt	crypt
-
-	media-libs/opencv		camera contrib qt6 CONTRIB_MODULES: face
-	x11-libs/qttools:6		assistant
-	dev-python/PyQt6		multimedia
-	x11-libs/qtmultimedia		ffmpeg pulseaudio -vaapi -qml

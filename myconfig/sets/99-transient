@@ -1,21 +1,31 @@
 */*::subi					BUILD_OPTIONS:		work=preserve
 
+## qt6
+	x11-libs/qtbase:6		PROVIDERS: heimdal
+		dev-libs/libxslt	crypt
+
+	media-libs/opencv		camera contrib qt6 CONTRIB_MODULES: face
+	x11-libs/qttools:6		assistant
+	dev-python/PyQt6		multimedia
+	x11-libs/qtmultimedia		ffmpeg pulseaudio -vaapi -qml
+
+## try avif
+	net-libs/webkit avif
+		media-libs/libavif	providers: aom
+
 ## gtk-doc-autotools require libxml2[python]
 	dev-libs/libxml2			python
 
 ## notifications
 	app-editors/emacs			dbus
 
-## ARM
-#*/*			TARGETS:	armv6-unknown-linux-gnueabi armv6-unknown-linux-gnueabihf armv6-unknown-linux-musleabi armv6-unknown-linux-musleabihf
-
-#net-scanner/nmap	gtk
-
-## qemu
-#app-virtualization/qemu		amd64 gtk3 jemalloc aarch64 arm
-#	dev-python/Sphinx	providers: graphicsmagick
-
 # build-fix
-net-libs/webkit opengl X
-	media-plugins/gst-plugins-base	X GSTREAMER_PLUGINS: opengl
-	dev-libs/at-spi2-core		X
+	net-libs/webkit opengl X
+		media-plugins/gst-plugins-base	X GSTREAMER_PLUGINS: opengl
+		dev-libs/at-spi2-core		X
+
+# curl
+	net-misc/curl				brotli http2
+
+# no geoclue
+	net-libs/webkit				&-gps/geoclue
