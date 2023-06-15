@@ -1,11 +1,33 @@
-*/*				TARGETS: armv7-unknown-linux-musleabihf
-app-admin/eclectic-clang	TARGETS: -armv7-unknown-linux-gnueabihf
-app-admin/eclectic-llvm		TARGETS: -armv7-unknown-linux-gnueabihf
-dev-lang/clang			TARGETS: -armv7-unknown-linux-gnueabihf
-dev-lang/rust			TARGETS: -armv7-unknown-linux-gnueabihf
-
 # default CFLAGS
 # https://stackoverflow.com/questions/53138447/conflicts-between-cpu-and-arch-while-building
-@*/*				armv7_unknown_linux_musleabihf_CFLAGS: -O3 -march=armv7-a -mtune=cortex-a7 -pipe
+@*/*				CFLAGS:			-O3 -march=armv7-a -mtune=cortex-a7 -pipe
+@*/*				CFLAGS:			^-flto
+@*/*				CFLAGS:			^-fno-math-errno ^-fno-trapping-math
+@*/*				EXJOBS:			$((`cat /proc/cpuinfo | grep processor | wc -l`+2))
 
-sys-libs/musl
+## options
+*/*				-*
+*/*				PARTS:			-* binaries configuration data libraries
+*/*				PROVIDERS:		-*
+*/*				LINGUAS:		-*
+
+## build
+*/*				BUILD_OPTIONS:		symbols=strip -recommended_tests
+
+## enable static libraries
+*/*				static
+@*/*				MY__EXTRA_ECONF: --enable-static
+
+## packages
+@sys-libs/libstdc++		CFLAGS: $-flto
+*/*				PROVIDERS: openssl
+
+# system
+virtual/pkg-config		PROVIDERS: pkgconf
+	dev-libs/openssl	PARTS: development
+	sys-libs/zlib		PARTS: development
+	sys-libs/ncurses	PARTS: development
+	sys-libs/readline	PARTS: development
+	dev-libs/pcre2		PARTS: development
+	app-arch/bzip2		PARTS: development
+
