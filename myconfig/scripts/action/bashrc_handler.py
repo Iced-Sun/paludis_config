@@ -2,11 +2,12 @@ import os
 from pathlib import Path
 from action.action_handler import Action_handler
 from action.set_files_mixin import Set_files_mixin
+from action.host_mixin import Host_mixin
 from action.target_mixin import Target_mixin
 from action.destination_mixin import Destination_mixin
 from action.spec_configuration_mixin import Spec_configuration_mixin
 
-class Bashrc_handler(Spec_configuration_mixin, Destination_mixin, Target_mixin, Set_files_mixin, Action_handler):
+class Bashrc_handler(Spec_configuration_mixin, Destination_mixin, Target_mixin, Host_mixin, Set_files_mixin, Action_handler):
     script_path_pattern = '^(/etc/paludis/)?bashrc$'
 
     def __init__(self, script_path: Path):
@@ -56,7 +57,7 @@ class Bashrc_handler(Spec_configuration_mixin, Destination_mixin, Target_mixin, 
             pass
 
         # target fixes: CFLAGS, LDFLAGS will be never used for building
-        for target in self.configured_targets:
+        for target in [ self.host, *self.configured_targets ]:
             _target = target.replace("-", "_")
             if f'{_target}_CFLAGS' not in env:
                 env[f'{_target}_CFLAGS'] = env['CFLAGS']
