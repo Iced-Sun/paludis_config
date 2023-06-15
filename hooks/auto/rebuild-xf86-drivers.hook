@@ -1,25 +1,24 @@
 #!/usr/bin/env bash
 
 hook_auto_names() {
-    echo install_post
+	echo install_post
 }
 
 hook_run_install_post() {
+	[[ "${TARGET##x11-server/xorg-server}" == "${TARGET}" ]] && return 0
 
-    [[ "${TARGET##x11-server/xorg-server}" == "${TARGET}" ]] && return 0
+	source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
 
-    source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
+	PKG=$(${CAVE:-cave} print-ids --matching 'x11-drivers/*::installed' --format '%p ')
 
-    PKG=$(${CAVE:-cave} print-ids --matching 'x11-drivers/*::installed' --format '%p ')
+	if [[ -z ${PKG} ]]; then
+		ewarn_unhooked "You don't have any X11 drivers installed."
+		return 0
+	fi
 
-    if [[ -z ${PKG} ]]; then
-	ewarn_unhooked "You don't have any X11 drivers installed."
+	einfo_unhooked "Rebuilding installed x11-drivers: ${PKG}"
+
+	${CAVE:-cave} resolve ${PKG} -x1
+
 	return 0
-    fi
-
-    einfo_unhooked "Rebuilding installed x11-drivers: ${PKG}"
-
-    ${CAVE:-cave} resolve ${PKG} -x1
-    
-    return 0
 }

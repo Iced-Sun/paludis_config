@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 hook_auto_names() {
-    echo merger_install_pre
+	echo merger_install_pre
 }
 
 NOPURGE=( zh_CN ) # en en_GB?
@@ -9,63 +9,61 @@ LOCALEDIRS=( /usr/share/locale )
 MANPAGEDIRS=( /usr/share/man )
 
 purgelocale() {
-    pushd ${1} >/dev/null
+	pushd ${1} >/dev/null
 
-    BEFORE=$(du -s -BK | cut -dK -f1)
-    for LOCALE in `find . -type d -path '*/LC_MESSAGES' | cut  -d/ -f2`; do
-	if echo "${NOPURGE[@]}" | grep -q ${LOCALE}; then
-	    continue
-	fi
-	einfo_unhooked "  <-- ${LOCALE}"
-	rm -rf ./${LOCALE}
-    done
+	BEFORE=$(du -s -BK | cut -dK -f1)
+	for LOCALE in `find . -type d -path '*/LC_MESSAGES' | cut  -d/ -f2`; do
+		if echo "${NOPURGE[@]}" | grep -q ${LOCALE}; then
+			continue
+		fi
+		einfo_unhooked "  <-- ${LOCALE}"
+		rm -rf ./${LOCALE}
+	done
 
-    AFTER=$(du -s -BK | cut -dK -f1)
-    einfo_unhooked "Disk space freed in ${1}: $((BEFORE-AFTER))K"
+	AFTER=$(du -s -BK | cut -dK -f1)
+	einfo_unhooked "Disk space freed in ${1}: $((BEFORE-AFTER))K"
 
-    popd >/dev/null
+	popd >/dev/null
 }
 
 purgeman() {
-    pushd ${1} >/dev/null
+	pushd ${1} >/dev/null
 
-    BEFORE=$(du -s -BK | cut -dK -f1)
-    for LOCALE in *; do
-	if echo "${NOPURGE[@]}" | grep -q ${LOCALE}; then
-	    continue
-	fi
+	BEFORE=$(du -s -BK | cut -dK -f1)
+	for LOCALE in *; do
+		if echo "${NOPURGE[@]}" | grep -q ${LOCALE}; then
+			continue
+		fi
 
-	if echo ${LOCALE} | grep -q man; then
-	    continue
-	fi
-	einfo "  <-- ${LOCALE}"
-	rm -rf ./${LOCALE}
-    done
+		if echo ${LOCALE} | grep -q man; then
+			continue
+		fi
+		einfo "  <-- ${LOCALE}"
+		rm -rf ./${LOCALE}
+	done
 
-    AFTER=$(du -s -BK | cut -dK -f1)
-    einfo_unhooked "Disk space freed in ${1}: $((BEFORE-AFTER))K"
+	AFTER=$(du -s -BK | cut -dK -f1)
+	einfo_unhooked "Disk space freed in ${1}: $((BEFORE-AFTER))K"
 
-    popd >/dev/null
+	popd >/dev/null
 }
 
 hook_run_merger_install_pre() {
-    source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
+	source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
 
-    for FOLDER in ${LOCALEDIRS[@]}; do
-	if [[ -d ${IMAGE}/${FOLDER} ]]; then
-	    einfo_unhooked "Purging .mo language files in ${FOLDER} except for locale ${NOPURGE[@]}..."
-	    purgelocale "${IMAGE}/${FOLDER}"
-	fi
-    done
+	for FOLDER in ${LOCALEDIRS[@]}; do
+		if [[ -d ${IMAGE}/${FOLDER} ]]; then
+			einfo_unhooked "Purging .mo language files in ${FOLDER} except for locale ${NOPURGE[@]}..."
+			purgelocale "${IMAGE}/${FOLDER}"
+		fi
+	done
 
-    for FOLDER in ${MANPAGEDIRS[@]}; do
-	if [[ -d ${IMAGE}/${FOLDER} ]]; then
-	    einfo_unhooked "Purging manpages in ${FOLDER} except for locale ${NOPURGE[@]}..."
-	    purgeman "${IMAGE}/${FOLDER}"
-	fi
-    done
+	for FOLDER in ${MANPAGEDIRS[@]}; do
+		if [[ -d ${IMAGE}/${FOLDER} ]]; then
+			einfo_unhooked "Purging manpages in ${FOLDER} except for locale ${NOPURGE[@]}..."
+			purgeman "${IMAGE}/${FOLDER}"
+		fi
+	done
 
-    return 0
+	return 0
 }
-
-

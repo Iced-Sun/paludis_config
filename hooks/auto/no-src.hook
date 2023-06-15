@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
 
 hook_auto_names() {
-    echo merger_install_pre
+	echo merger_install_pre
 }
 
 hook_run_merger_install_pre() {
-    source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
+	source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
 
-    if [[ -d ${IMAGE}/usr/src ]]; then
-	einfo_unhooked "Removing package source in /usr/src..."
-	(
-            rm -fr ${IMAGE}/usr/src/
-	) 2>/dev/null
-    fi
+	if [[ -d ${IMAGE}/usr/src ]]; then
+		einfo_unhooked "Removing package source in /usr/src..."
+		(
+			rm -fr ${IMAGE}/usr/src/
+		) 2>/dev/null
+	fi
 
-    return 0
+	return 0
 }

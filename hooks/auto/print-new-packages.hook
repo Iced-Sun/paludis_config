@@ -1,31 +1,31 @@
 #!/usr/bin/env bash
 
 hook_auto_names() {
-    echo sync_all_pre sync_all_post
+  echo sync_all_pre sync_all_post
 }
 
 BEFORE="${ROOT}/${XDG_RUNTIME_DIR:-/run}/paludis-sync-before"
 AFTER="${ROOT}/${XDG_RUNTIME_DIR:-/run}/paludis-sync-after"
 
 hook_run_sync_all_pre() {
-    source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
-    
-    einfo_unhooked "Building available packages list"
-    ${CAVE:-cave} print-packages | sort -u > ${BEFORE}
+	source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
 
-    return 0
+	einfo_unhooked "Building available packages list"
+	${CAVE:-cave} print-packages | sort -u > ${BEFORE}
+
+	return 0
 }
 
 hook_run_sync_all_post() {
-    source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
-    
-    einfo_unhooked "Newly available packages:"
-    ${CAVE:-cave} print-packages | sort -u > ${AFTER}
-    
-    diff ${BEFORE} ${AFTER} | grep '^>' | cut -d' ' -f2- | while read line ; do
-         einfo "  ${line}"
-    done
-    rm -f ${BEFORE} ${AFTER}
+	source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
 
-    return 0
+	einfo_unhooked "Newly available packages:"
+	${CAVE:-cave} print-packages | sort -u > ${AFTER}
+
+	diff ${BEFORE} ${AFTER} | grep '^>' | cut -d' ' -f2- | while read line ; do
+		einfo "  ${line}"
+	done
+	rm -f ${BEFORE} ${AFTER}
+
+	return 0
 }

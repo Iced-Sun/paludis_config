@@ -3,22 +3,20 @@
 PHASES=( sync_all_post )
 
 hook_auto_names() {
-    echo ${PHASES[@]}
+	echo ${PHASES[@]}
 }
 
 for h in ${PHASES[@]}; do
-    eval "hook_run_${h}() { update_search_index ; }"
+	eval "hook_run_${h}() { update_search_index ; }"
 done
 
 update_search_index() {
-    source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
+	source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
 
-    IDX=${ROOT}/var/cache/paludis/pkg.index
+	IDX=${ROOT}/var/cache/paludis/pkg.index
 
-    einfo_unhooked "Rebuilding package indices..."
-    ${CAVE:-cave} manage-search-index --create ${IDX}
+	einfo_unhooked "Rebuilding package indices..."
+	${CAVE:-cave} manage-search-index --create ${IDX}
 
-    return 0
+	return 0
 }
-
-

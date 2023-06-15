@@ -1,17 +1,16 @@
 #!/usr/bin/env bash
 
 hook_auto_names() {
-    echo sync_all_post
+	echo sync_all_post
 }
 
 hook_run_sync_all_post() {
-    source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
-    
-    einfo_unhooked "Removing unused distfiles..."
-    (
-	${CAVE:-cave} print-unused-distfiles | xargs rm -v --
-    ) 2>/dev/null
+	source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
 
-    return 0
+	einfo_unhooked "Removing unused distfiles..."
+	(
+		${CAVE:-cave} print-unused-distfiles | xargs rm -v --
+	) 2>/dev/null
+
+	return 0
 }
-

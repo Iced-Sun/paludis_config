@@ -1,50 +1,50 @@
 #!/bin/bash
 
 hook_auto_names() {
-    echo merger_install_pre
+	echo merger_install_pre
 }
 
 hook_run_merger_install_pre() {
-    ${CAVE:-cave} print-best-version sys-apps/systemd >/dev/null || return 0
+	${CAVE:-cave} print-best-version sys-apps/systemd >/dev/null || return 0
 
-    source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
+	source ${PALUDIS_EBUILD_DIR}/echo_functions.bash
 
-    FILES=/etc/paludis/myconfig/systemd/${CATEGORY}/${PN}
-    [[ -d ${FILES} ]] || return 0
-    
-    pushd ${FILES} >/dev/null
-    UNITS=( `find . -regextype posix-extended -regex '.*\.(service|target|timer|socket|conf)' -printf '%P\n'` )
-    popd >/dev/null
+	FILES=/etc/paludis/myconfig/systemd/${CATEGORY}/${PN}
+	[[ -d ${FILES} ]] || return 0
 
-    ## multiarch
-    TARGETS=( `for dir in ${IMAGE}/usr/*/bin; do echo $(basename $(dirname $dir)); done` )
+	pushd ${FILES} >/dev/null
+	UNITS=( `find . -regextype posix-extended -regex '.*\.(service|target|timer|socket|conf)' -printf '%P\n'` )
+	popd >/dev/null
 
-    for unit in ${UNITS[@]}; do
-	if [[ -f "${IMAGE}/usr/${TARGET}/lib/systemd/$unit" ]]; then
-	    ewarn_unhooked "The systemd unit $unit is already shipped with ${PN}."
+	## multiarch
+	TARGETS=( `for dir in ${IMAGE}/usr/*/bin; do echo $(basename $(dirname $dir)); done` )
 
-	    unit_old=$unit
-	    unit=${unit%.*}.1.${unit##*.}
+	for unit in ${UNITS[@]}; do
+		if [[ -f "${IMAGE}/usr/${TARGET}/lib/systemd/$unit" ]]; then
+			ewarn_unhooked "The systemd unit $unit is already shipped with ${PN}."
 
-	    ewarn "Will rename the $unit_old to $unit..."
-	fi
+			unit_old=$unit
+			unit=${unit%.*}.1.${unit##*.}
 
-	for target in ${TARGETS[@]}; do
-            if [[ -L ${FILES}/$unit ]]; then
-                 einfo_unhooked "Installing symbolic link \"$unit\"..."
-                 local dest=`dirname "${IMAGE}/usr/$target/lib/systemd/$unit"`
-                 mkdir -p $dest
-		 cp -d ${FILES}/$unit $dest
-                 continue
-            fi
+			ewarn "Will rename the $unit_old to $unit..."
+		fi
 
-	    einfo_unhooked "Installing systemd component \"$unit\" to target \"$target\"..."
-	    install -m 644 -D ${FILES}/$unit "${IMAGE}/usr/$target/lib/systemd/$unit"
+		for target in ${TARGETS[@]}; do
+			if [[ -L ${FILES}/$unit ]]; then
+				einfo_unhooked "Installing symbolic link \"$unit\"..."
+				local dest=`dirname "${IMAGE}/usr/$target/lib/systemd/$unit"`
+				mkdir -p $dest
+				cp -d ${FILES}/$unit $dest
+				continue
+			fi
 
-	    einfo_unhooked "Patching ${UNIT} with multiarch paths..."
-	    sed -i "${IMAGE}/usr/$target/lib/systemd/$unit" -e "s|/usr/bin|/usr/$target/bin|"
+			einfo_unhooked "Installing systemd component \"$unit\" to target \"$target\"..."
+			install -m 644 -D ${FILES}/$unit "${IMAGE}/usr/$target/lib/systemd/$unit"
+
+			einfo_unhooked "Patching ${UNIT} with multiarch paths..."
+			sed -i "${IMAGE}/usr/$target/lib/systemd/$unit" -e "s|/usr/bin|/usr/$target/bin|"
+		done
 	done
-    done
 
-    return 0
+	return 0
 }
