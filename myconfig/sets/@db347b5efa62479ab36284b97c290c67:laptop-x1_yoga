@@ -48,6 +48,8 @@ dev-db/postgresql-client		pgdump readline ssl
 
 ## java
 virtual/jdk				PROVIDERS: openjdk-bin
+	dev-lang/openjdk-bin
+		app-misc/ca-certificates	ca-trust
 
 ## gnupg
 app-crypt/gnupg
