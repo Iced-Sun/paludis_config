@@ -11,8 +11,8 @@ armv7-unknown-linux-musleabihf
 app-virtualization/qemu			arm
 
 ## machine specific
-*/*					AMD64_CPU_FEATURES:	         sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3
-*/*					X86_CPU_FEATURES:	sse sse2 sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3
+*/*					AMD64_CPU_FEATURES:	         sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3 fma4
+*/*					X86_CPU_FEATURES:	sse sse2 sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3 fma4
 
 ## firmware
 firmware/linux-firmware

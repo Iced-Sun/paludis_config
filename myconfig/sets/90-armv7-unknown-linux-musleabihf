@@ -13,6 +13,8 @@
 
 ## build
 */*				BUILD_OPTIONS:		symbols=strip -recommended_tests
+*/*				ARM_CPU_FEATURES:	neon
+*/*				LIBC:			musl
 
 ## enable static libraries
 */*				static
