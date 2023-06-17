@@ -35,8 +35,20 @@ class Destination_mixin:
                         pass
                     pass
                 pass
+            ## parse CAVE_RESOLVE_CMDLINE_make to infer the destination
+            if 'CAVE_RESOLVE_CMDLINE_make' in os.environ and os.environ['CAVE_RESOLVE_CMDLINE_make'] == 'x':
+                if 'CAVE_RESOLVE_CMDLINE_cross_host' in os.environ:
+                    self._destination = os.environ['CAVE_RESOLVE_CMDLINE_cross_host']
+                    pass
+                else:
+                    if len(self.configured_targets) == 1:
+                        self._destination = self.configured_targets[0]
+                        pass
+                    pass
+                pass
             pass
-        pass
+
+        return
 
     ### end of Destination_mixin
     pass
