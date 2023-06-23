@@ -20,35 +20,14 @@ class Spec_configuration_mixin:
         self._active_spec_configurations = []
         self._spec_environment = {}
 
-        # if the destination is cross-compile target, only the matched set is
-        # considered active
-        if self.destination != 'installed':
-            for active_set_file in self.active_set_files:
-                if not active_set_file.stem.endswith(self.destination):
-                    continue
-
-                with active_set_file.open() as f:
-                    for line in f.read().splitlines():
-                        # skip a comment or blank line
-                        if re.match('^\s*#.*$|^\s*$', line): continue
-
-                        line_spec = self._parse_line_as_spec(line)
-                        if line_spec['mark'] == '@':
-                            self._add_to_spec_environment(line_spec)
-                            pass
-                        else:
-                            self._active_spec_configurations.append(line_spec)
-                            pass
-                        pass
-                    pass
-                continue
-            return
-
         # push active spec from active set
         for active_set_file in self.active_set_files:
-            # skip any set matches to a specific target
-            if len([target for target in self.configured_targets if active_set_file.stem.endswith(target)]) > 0:
-                continue
+            targetSets = [
+                target
+                for target in self.configured_targets
+                if active_set_file.stem.endswith(target)
+            ]
+            setTarget = targetSets[0] if len(targetSets) == 1 else None
 
             with active_set_file.open() as f:
                 for line in f.read().splitlines():
@@ -56,13 +35,44 @@ class Spec_configuration_mixin:
                     if re.match('^\s*#.*$|^\s*$', line): continue
 
                     line_spec = self._parse_line_as_spec(line)
-                    if line_spec['mark'] == '@':
-                        self._add_to_spec_environment(line_spec)
+                    #if line_spec['mark'] == '@':
+                    #    self._add_to_spec_environment(line_spec)
+                    #    pass
+                    #else:
+                    #    self._active_spec_configurations.append(line_spec)
+                    #    pass
+                    if self.destination != 'installed': # cross compiling
+                        # parse only the destination-named set
+                        if setTarget == self.destination:
+                            if line_spec['mark'] == '@':
+                                self._add_to_spec_environment(line_spec, setTarget)
+                                pass
+                            else:
+                                self._active_spec_configurations.append(line_spec)
+                                pass
+                            pass
                         pass
-                    else:
-                        self._active_spec_configurations.append(line_spec)
+                    else: # native compiling
+                        if setTarget is None: # a regular set
+                            if line_spec['mark'] == '@':
+                                self._add_to_spec_environment(line_spec)
+                                pass
+                            else:
+                                self._active_spec_configurations.append(line_spec)
+                                pass
+                            pass
+                        else: # a target set
+                            if line_spec['mark'] == '@' and line_spec['spec'] == '*/*' and (
+                                line_spec['config'].startswith('CHOST')
+                                or line_spec['config'].startswith('CFLAGS')
+                                or line_spec['config'].startswith('CXXFLAGS')
+                                or line_spec['config'].startswith('LDFLAGS')
+                            ):
+                                self._add_to_spec_environment(line_spec, setTarget)
+                            pass
                         pass
-                    pass
+
+                    continue
                 pass
             pass
 
@@ -76,13 +86,32 @@ class Spec_configuration_mixin:
                     line_spec = self._parse_line_as_spec(line)
                     line_spec['is_dependecy'] = True
 
-                    if line_spec['mark'] == '@':
-                        self._add_to_spec_environment(line_spec)
+                    if self.destination != 'installed': # cross compiling
+                        if line_spec['mark'] == '@' and line_spec['spec'] == '*/*' and (
+                                line_spec['config'].startswith('CHOST')
+                                or line_spec['config'].startswith('CFLAGS')
+                                or line_spec['config'].startswith('CXXFLAGS')
+                                or line_spec['config'].startswith('LDFLAGS')
+                        ):
+                            self._add_to_spec_environment(line_spec)
+                            pass
                         pass
                     else:
-                        self._active_spec_configurations.append(line_spec)
+                        if line_spec['mark'] == '@':
+                            self._add_to_spec_environment(line_spec)
+                            pass
+                        else:
+                            self._active_spec_configurations.append(line_spec)
+                            pass
                         pass
-                    pass
+
+                    #if line_spec['mark'] == '@':
+                    #    self._add_to_spec_environment(line_spec)
+                    #    pass
+                    #else:
+                    #    self._active_spec_configurations.append(line_spec)
+                    #    pass
+                    continue
                 pass
             pass
 
@@ -116,17 +145,22 @@ class Spec_configuration_mixin:
 
         return line_spec
 
-    def _add_to_spec_environment(self, line_spec):
+    def _add_to_spec_environment(self, line_spec, target=None):
         # the build options: they are in fact environment variables
         m = re.match('^(?P<key>.+):\s+(?P<value>.+)$', line_spec['config'])
         if m is None:
             return
 
-        if m.group('key') not in self._spec_environment:
-            self._spec_environment[m.group('key')] = []
+        key = m.group('key')
+        if key in ['CHOST', 'CFLAGS', 'CXXFLAGS', 'LDFLAGS']:
+            key = key if target is None else f'{target.replace("-", "_")}_{key}'
             pass
 
-        self._spec_environment[m.group('key')].append({
+        if key not in self._spec_environment:
+            self._spec_environment[key] = []
+            pass
+
+        self._spec_environment[key].append({
             'spec': line_spec['spec'],
             'value': m.group('value')
         })

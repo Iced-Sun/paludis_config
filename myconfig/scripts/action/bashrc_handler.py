@@ -56,18 +56,30 @@ class Bashrc_handler(Spec_configuration_mixin, Destination_mixin, Target_mixin, 
                 pass
             pass
 
-        # target fixes: CFLAGS, LDFLAGS will be never used for building
-        for target in [ self.host, *self.configured_targets ]:
-            _target = target.replace("-", "_")
-            if f'{_target}_CFLAGS' not in env:
-                env[f'{_target}_CFLAGS'] = env['CFLAGS']
-                pass
-            if f'{_target}_LDFLAGS' not in env and 'LDFLAGS' in env:
-                env[f'{_target}_LDFLAGS'] = env['LDFLAGS']
-                pass
 
-            env[f'{_target}_CXXFLAGS'] = env[f'{_target}_CFLAGS']
-            pass
+        # complete unprefixed host flags
+        if 'CXXFLAGS' not in env: env['CXXFLAGS'] = env['CFLAGS']
+
+        # complete prefixed host flags
+        _host = self.host.replace('-', '_')
+        env[f'{_host}_CFLAGS'] = env['CFLAGS']
+        env[f'{_host}_CXXFLAGS'] = env['CXXFLAGS']
+        env[f'{_host}_LDFLAGS'] = env['LDFLAGS']
+
+        # complete target flags
+        for target in self.configured_targets:
+            _target = target.replace('-', '_')
+            if _target is not None:
+                if f'{_target}_CXXFLAGS' not in env: env[f'{_target}_CXXFLAGS'] = env[f'{_target}_CFLAGS']
+                pass
+            continue
+
+        # clean up the unprefixed host flags
+        if 'CFLAGS' in env: del env['CFLAGS']
+        if 'CPPFLAGS' in env: del env['CPPFLAGS']
+        if 'CXXFLAGS' in env: del env['CXXFLAGS']
+        if 'CXXCPPFLAGS' in env: del env['CXXCPPFLAGS']
+        if 'LDFLAGS' in env: del env['LDFLAGS']
 
         return '\n'.join(f'{k}="{v}"' for k, v in env.items())
 
