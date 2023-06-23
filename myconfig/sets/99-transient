@@ -1,24 +1,5 @@
 */*::subi					BUILD_OPTIONS:		work=preserve
 
-## qt6
-	x11-libs/qtbase:6		PROVIDERS: heimdal
-		dev-libs/libxslt	crypt
-
-	media-libs/opencv		camera contrib qt6 CONTRIB_MODULES: face
-	x11-libs/qttools:6		assistant
-	dev-python/PyQt6		multimedia
-	x11-libs/qtmultimedia		ffmpeg pulseaudio -vaapi -qml
-
-## try avif
-	net-libs/webkit avif
-		media-libs/libavif	providers: aom
-
-## gtk-doc-autotools require libxml2[python]
-	dev-libs/libxml2			python
-
-## notifications
-	app-editors/emacs			dbus
-
 # build-fix
 	net-libs/webkit opengl X
 		media-plugins/gst-plugins-base	X GSTREAMER_PLUGINS: opengl

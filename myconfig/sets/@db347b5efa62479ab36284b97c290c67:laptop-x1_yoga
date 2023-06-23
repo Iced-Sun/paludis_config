@@ -13,6 +13,7 @@ app-virtualization/qemu			arm
 ## machine specific
 */*					AMD64_CPU_FEATURES:	         sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3 fma4
 */*					X86_CPU_FEATURES:	sse sse2 sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3 fma4
+	x11-dri/mesa			VIDEO_DRIVERS: 		iris
 
 ## firmware
 firmware/linux-firmware
@@ -87,6 +88,7 @@ media/pipewire				alsa bluetooth dbus -camera -aptx -echo-cancel-webrtc -fdk-aac
 media/wireplumber			lua_abis: 5.4
 
 ## emacs
+	app-editors/emacs			dbus
 x11-libs/libvterm
 
 ## misc
