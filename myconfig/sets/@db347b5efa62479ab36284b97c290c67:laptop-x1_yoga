@@ -54,7 +54,7 @@ virtual/jdk				PROVIDERS: openjdk-bin
 
 ## gnupg
 app-crypt/gnupg
-	app-crypt/pinentry		keyring emacs -gnome qt5
+	app-crypt/pinentry		keyring gnome
 
 ## nodejs
 dev-lang/node
