@@ -1,13 +1,12 @@
 # default CFLAGS
 # https://stackoverflow.com/questions/53138447/conflicts-between-cpu-and-arch-while-building
 @*/*				CFLAGS:			-O3 -march=armv7-a -mtune=cortex-a7 -pipe
-@*/*				CFLAGS:			^-flto
 @*/*				CFLAGS:			^-fno-math-errno ^-fno-trapping-math
 @*/*				EXJOBS:			$((`cat /proc/cpuinfo | grep processor | wc -l`+2))
 
 ## options
 */*				-*
-*/*				PARTS:			-* binaries configuration data libraries
+*/*				PARTS:			-* binaries configuration data development libraries
 */*				PROVIDERS:		-*
 */*				LINGUAS:		-*
 
@@ -21,15 +20,14 @@
 @*/*				MY__EXTRA_ECONF: --enable-static
 
 ## packages
-@sys-libs/libstdc++		CFLAGS: $-flto
 */*				PROVIDERS: openssl
 
 # system
+app-arch/bzip2
+sys-libs/musl
 virtual/pkg-config		PROVIDERS: pkgconf
-	dev-libs/openssl	PARTS: development
-	sys-libs/zlib		PARTS: development
-	sys-libs/ncurses	PARTS: development
-	sys-libs/readline	PARTS: development
-	dev-libs/pcre2		PARTS: development
-	app-arch/bzip2		PARTS: development
 
+## build fix
+@sys-apps/kmod			MY__EXTRA_ECONF: $--enable-static
+	app-shells/bash		-static
+@sys-sound/alsa-lib		MY__EXTRA_ECONF: $--enable-static
