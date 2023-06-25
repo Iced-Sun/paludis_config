@@ -21,6 +21,15 @@
 @dev-lang/python	CFLAGS:			^-fno-semantic-interposition
 @dev-python/Cython	CFLAGS:			^-fno-semantic-interposition
 
+# enable static libraries
+*/*			static
+@*/*			MY__EXTRA_ECONF:	--enable-static
+@sys-apps/kmod		MY__EXTRA_ECONF:	$--enable-static
+@sys-sound/alsa-lib	MY__EXTRA_ECONF:	$--enable-static
+
+# disable static libraries
+#@*/*			MY__EXTRA_ECONF:	--disable-static
+
 ## parallel building
 @*/*			EXJOBS:			$((`cat /proc/cpuinfo | grep processor | wc -l`+2))
 
