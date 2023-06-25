@@ -93,3 +93,10 @@ x11-libs/libvterm
 
 ## misc
 wayland-apps/wlsunset
+
+## fcitx
+#inputmethods/fcitx-configtool		qt
+	inputmethods/fcitx-qt		qt5
+	x11-libs/qtbase			gui
+	x11-libs/qttools		gui
+		x11-libs/qtbase		sql sqlite
