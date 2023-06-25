@@ -26,36 +26,53 @@ class Bashrc_handler(Spec_configuration_mixin, Destination_mixin, Target_mixin, 
         else:
             env = {}
             for key, values in self.spec_environment.items():
-                # filter matching values
-                values = [
-                    value['value'].split(' ') for value in values
-                    if value['spec'] == f'{category}/{pn}'
-                    or value['spec'] == f'{category}/*'
-                    or value['spec'] == '*/*'
-                ]
+                # search for the value base for exact match
+                value = next((v
+                              for v in values
+                              if v['spec'] == f'{category}/{pn}'
+                              and (
+                                  not v['value'].startswith('^-') and not v['value'].startswith('$-')
+                              )), None)
+
+                if value is not None:
+                    # filter matching values
+                    values = [
+                        value['value'].split(' ')
+                        for value in values
+                        if value['spec'] == f'{category}/{pn}'
+                    ]
+                    pass
+                else:
+                    value = next((v for v in values if not v['value'].startswith('^-') and not v['value'].startswith('$-')), {'value': ''})
+                    values = [
+                        value['value'].split(' ')
+                        for value in values
+                        if value['spec'] == f'{category}/{pn}'
+                        or value['spec'] == '*/*'
+                    ]
+                    pass
+
+                value = value['value'].split(' ')
+
                 if len(values) == 0:
                     continue
-
-                # search for the value base
-                value = next(v for v in values if not v[0].startswith('^') or not v[0].startswith('$'))
 
                 # append or delete modifications
                 for v in values:
                     for vv in v:
-                        if vv.startswith('^'):
+                        if vv.startswith('^-'):
                             value.append(vv[1:])
                             pass
-                        elif vv.startswith('$'):
+                        elif vv.startswith('$-'):
                             value.remove(vv[1:]) if vv[1:] in value else None
                             pass
-                        pass
-                    pass
+                        continue
+                    continue
 
                 # set the value
                 env[key] = ' '.join(value)
                 pass
             pass
-
 
         # complete unprefixed host flags
         if 'CXXFLAGS' not in env: env['CXXFLAGS'] = env['CFLAGS']
