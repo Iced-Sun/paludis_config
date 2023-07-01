@@ -29,7 +29,7 @@ class Bashrc_handler(Spec_configuration_mixin, Destination_mixin, Target_mixin, 
                 # search for the value base for exact match
                 value = next((v
                               for v in values
-                              if v['spec'] == f'{category}/{pn}'
+                              if v['spec'].startswith(f'{category}/{pn}')
                               and (
                                   not v['value'].startswith('^-') and not v['value'].startswith('$-')
                               )), None)
@@ -39,7 +39,7 @@ class Bashrc_handler(Spec_configuration_mixin, Destination_mixin, Target_mixin, 
                     values = [
                         value['value'].split(' ')
                         for value in values
-                        if value['spec'] == f'{category}/{pn}'
+                        if value['spec'].startswith(f'{category}/{pn}')
                     ]
                     pass
                 else:
@@ -47,7 +47,7 @@ class Bashrc_handler(Spec_configuration_mixin, Destination_mixin, Target_mixin, 
                     values = [
                         value['value'].split(' ')
                         for value in values
-                        if value['spec'] == f'{category}/{pn}'
+                        if value['spec'].startswith(f'{category}/{pn}')
                         or value['spec'] == '*/*'
                     ]
                     pass
