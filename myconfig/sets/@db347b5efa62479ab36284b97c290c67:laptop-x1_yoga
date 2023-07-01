@@ -13,7 +13,7 @@ app-virtualization/qemu			arm
 ## machine specific
 */*					AMD64_CPU_FEATURES:	         sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3 fma4
 */*					X86_CPU_FEATURES:	sse sse2 sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3 fma4
-	x11-dri/mesa			VIDEO_DRIVERS: 		iris
+	x11-dri/mesa			VIDEO_DRIVERS:		iris
 
 ## firmware
 firmware/linux-firmware
@@ -58,12 +58,17 @@ app-crypt/gnupg
 
 ## nodejs
 dev-lang/node
+	net-libs/nghttp2		-systemd
 
 ## jdee requires python[readline]
 	dev-lang/python			readline
 
 ## office
 app-office/wps-office
+	x11-libs/qtwayland:5
+		x11-libs/qtbase		gui
+		x11-libs/qttools	gui
+			x11-libs/qtbase	sql sqlite
 app-office/gnucash			gnucash dbi
 	dev-cpp/gtest			googlemock
 	dev-libs/libdbi-drivers		sqlite
@@ -96,7 +101,4 @@ wayland-apps/wlsunset
 
 ## fcitx
 #inputmethods/fcitx-configtool		qt
-	inputmethods/fcitx-qt		qt5
-	x11-libs/qtbase			gui
-	x11-libs/qttools		gui
-		x11-libs/qtbase		sql sqlite
+#	inputmethods/fcitx-qt		qt5

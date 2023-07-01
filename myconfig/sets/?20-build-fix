@@ -1,43 +1,49 @@
 ### System packages & toolchain: be very conservative
-@sys-boot/grub			CFLAGS: -O2 -march=native -pipe
-@sys-boot/grub			LDFLAGS: -Wl,-O1
+@sys-boot/grub				CFLAGS: -O2 -march=native -pipe
+@sys-boot/grub				LDFLAGS: -Wl,-O1
 
 ### LTO breaks quite a few packages
 ## GCC itself should be compiled without LTO, or it breaks the building or even causes runtime segfaults.
-@sys-devel/gcc			CFLAGS: $-flto
+@sys-devel/gcc[<=12.3.0]		CFLAGS: $-flto
+
+## static link needs -ffat-lto-objects
+
+## undefined reference
+@app-text/qpdf[<=11.2.0]		CFLAGS: $-gflto
+@dev-libs/double-conversion[<=3.3.0]	CFLAGS: $-flto
+#@net-print/cups[<=2.4.4]		CFLAGS: $-flto
+@x11-libs/qtbase[<=5.15.10_p129]	CFLAGS: $-flto
 
 ## ffmpeg needs its own options (--enable-pic --enable-lto); have to modify the exlib directly
 # no effect since ffmpeg doesn't use econf()
-#@media/ffmpeg			MY__EXTRA_ECONF: --enable-pic --enable-lto
+#@media/ffmpeg				MY__EXTRA_ECONF: --enable-pic --enable-lto
 
 ## configuring failure
 # Guessing byte order ... unknown
-@dev-lang/perl			CFLAGS: $-flto
+@dev-lang/perl				CFLAGS: $-flto
+
 # checking whether float word ordering is bigendian... unknown
-@dev-lang/python		CFLAGS: $-flto
-@dev-lang/python		MY__EXTRA_ECONF: --with-lto
+@dev-lang/python			CFLAGS: $-flto
+@dev-lang/python			MY__EXTRA_ECONF: --with-lto
 
 ## linking failure
-@x11-server/xorg-server		CFLAGS: $-flto
+@x11-server/xorg-server			CFLAGS: $-flto
 
 # Error: invalid attempt to declare external version name as default in symbol
-@sys-libs/libgcc		CFLAGS: $-flto
-@sys-libs/libstdc++		CFLAGS: $-flto
-@sys-libs/libgomp		CFLAGS: $-flto
-@x11-libs/qtbase		CFLAGS: $-flto
-@sys-sound/alsa-lib		CFLAGS: $-flto
+@sys-libs/libgomp[<=12.3.0]		CFLAGS: $-flto
 
 # undefined reference
-@dev-lang/node			CFLAGS: $-flto
-@dev-lang/rust			CFLAGS: $-flto
+@dev-lang/node				CFLAGS: $-flto
+@dev-lang/rust				CFLAGS: $-flto
 
 # broken rust build
-@dev-lang/llvm			CFLAGS: $-flto
+@dev-lang/llvm				CFLAGS: $-flto
 
 ## runtime segfault
-@sys-apps/paludis		CFLAGS: $-flto
-@app-office/gnucash		CFLAGS: $-flto
-@dev-lang/ruby			CFLAGS: $-flto
+@dev-lang/ruby				CFLAGS: $-flto
+@sys-apps/paludis			CFLAGS: $-flto
+@app-office/gnucash			CFLAGS: $-flto
+	@sys-libs/libstdc++[<=12.3.0]	CFLAGS: $-flto
 
 ## never finish the building
 @dev-lang/clang			CFLAGS: $-flto
