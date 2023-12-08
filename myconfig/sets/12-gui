@@ -35,3 +35,8 @@ inputmethods/fcitx-chinese-addons
 
 ## gtk-theme
 gnome-desktop/gsettings-desktop-schemas
+
+## gtk4
+	x11-libs/gtk			media
+		media-plugins/gst-plugins-base	GSTREAMER_PLUGINS: -* opus vorbis
+		x11-libs/graphene	gobject-introspection
