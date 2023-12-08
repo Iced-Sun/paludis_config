@@ -4,7 +4,7 @@
 
 ### LTO breaks quite a few packages
 ## GCC itself should be compiled without LTO, or it breaks the building or even causes runtime segfaults.
-@sys-devel/gcc[<=12.3.0]		CFLAGS: $-flto
+@sys-devel/gcc:12			CFLAGS: $-flto
 
 ## static link needs -ffat-lto-objects
 
@@ -16,36 +16,40 @@
 
 ## ffmpeg needs its own options (--enable-pic --enable-lto); have to modify the exlib directly
 # no effect since ffmpeg doesn't use econf()
-#@media/ffmpeg				MY__EXTRA_ECONF: --enable-pic --enable-lto
+#@media/ffmpeg:6			MY__EXTRA_ECONF: --enable-pic --enable-lto
 
 ## configuring failure
 # Guessing byte order ... unknown
-@dev-lang/perl				CFLAGS: $-flto
+@dev-lang/perl:5.36			CFLAGS: $-flto
 
 # checking whether float word ordering is bigendian... unknown
-@dev-lang/python			CFLAGS: $-flto
-@dev-lang/python			MY__EXTRA_ECONF: --with-lto
+@dev-lang/python:3.10			CFLAGS: $-flto
+@dev-lang/python:3.10			MY__EXTRA_ECONF: --with-lto
 
 ## linking failure
-@x11-server/xorg-server			CFLAGS: $-flto
+@x11-server/xorg-server[=21.1.8]	CFLAGS: $-flto
 
 # Error: invalid attempt to declare external version name as default in symbol
-@sys-libs/libgomp[<=12.3.0]		CFLAGS: $-flto
+@sys-libs/libgomp:12			CFLAGS: $-flto
 
 # undefined reference
-@dev-lang/node				CFLAGS: $-flto
-@dev-lang/rust				CFLAGS: $-flto
+@dev-lang/node[=20.9.0]			CFLAGS: $-flto
+@dev-lang/rust[=1.74.0]			CFLAGS: $-flto
+@net-libs/webkit:4.1			CFLAGS: $-flto
 
 # broken rust build
-@dev-lang/llvm				CFLAGS: $-flto
+@dev-lang/llvm:16			CFLAGS: $-flto
+
+# no symbols
+@sys-libs/libgcc:13			CFLAGS: $-flto
 
 ## runtime segfault
-@dev-lang/ruby				CFLAGS: $-flto
-@sys-apps/paludis			CFLAGS: $-flto
-@app-office/gnucash			CFLAGS: $-flto
-	@sys-libs/libstdc++[<=12.3.0]	CFLAGS: $-flto
+@dev-lang/ruby:3.2			CFLAGS: $-flto
+@sys-apps/paludis[=3.0.0-r1]		CFLAGS: $-flto
+@app-office/gnucash[=5.3]		CFLAGS: $-flto
+	@sys-libs/libstdc++:12		CFLAGS: $-flto
 
 ## never finish the building
-@dev-lang/clang			CFLAGS: $-flto
+@dev-lang/clang:16			CFLAGS: $-flto
 
 ### general
