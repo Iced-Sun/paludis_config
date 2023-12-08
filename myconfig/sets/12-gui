@@ -3,6 +3,7 @@
 ## defaults
 */*					PROVIDERS:	jpeg-turbo
 */*					PROVIDERS:	ffmpeg
+*/*					FFMPEG_ABIS:	-* 6
 
 ## decent fonts
 fonts/terminus-font			X
