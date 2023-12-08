@@ -36,6 +36,7 @@
 */*			PARTS:			-* binaries configuration data libraries
 */*			PROVIDERS:		-*
 */*			VIDEO_DRIVERS:		-*
+*/*			&-*/*
 
 ## build
 */*			BUILD_OPTIONS:		symbols=strip -recommended_tests
@@ -58,7 +59,7 @@
 */*			acl xattr
 
 ## language bindings
-*/*			PYTHON_ABIS:		-* 3.10
+*/*			PYTHON_ABIS:		-* 3.11
 */*			VALA_ABIS:		-*
 */*			LUA_ABIS:		-*
 */*			RUBY_ABIS:		-*
