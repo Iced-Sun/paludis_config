@@ -8,12 +8,6 @@
 
 ## static link needs -ffat-lto-objects
 
-## undefined reference
-@app-text/qpdf[<=11.2.0]		CFLAGS: $-gflto
-@dev-libs/double-conversion[<=3.3.0]	CFLAGS: $-flto
-#@net-print/cups[<=2.4.4]		CFLAGS: $-flto
-@x11-libs/qtbase[<=5.15.10_p129]	CFLAGS: $-flto
-
 ## ffmpeg needs its own options (--enable-pic --enable-lto); have to modify the exlib directly
 # no effect since ffmpeg doesn't use econf()
 #@media/ffmpeg:6			MY__EXTRA_ECONF: --enable-pic --enable-lto
@@ -33,12 +27,12 @@
 @sys-libs/libgomp:12			CFLAGS: $-flto
 
 # undefined reference
+@app-text/qpdf[<=11.2.0]		CFLAGS: $-flto
+@dev-libs/double-conversion[<=3.3.0]	CFLAGS: $-flto
+#@net-print/cups[<=2.4.4]		CFLAGS: $-flto
+@x11-libs/qtbase[<=5.15.10_p129]	CFLAGS: $-flto
 @dev-lang/node[=20.9.0]			CFLAGS: $-flto
-@dev-lang/rust[=1.74.0]			CFLAGS: $-flto
 @net-libs/webkit:4.1			CFLAGS: $-flto
-
-# broken rust build
-@dev-lang/llvm:16			CFLAGS: $-flto
 
 # no symbols
 @sys-libs/libgcc:13			CFLAGS: $-flto
@@ -48,8 +42,5 @@
 @sys-apps/paludis[=3.0.0-r1]		CFLAGS: $-flto
 @app-office/gnucash[=5.3]		CFLAGS: $-flto
 	@sys-libs/libstdc++:12		CFLAGS: $-flto
-
-## never finish the building
-@dev-lang/clang:16			CFLAGS: $-flto
 
 ### general

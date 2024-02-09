@@ -54,6 +54,7 @@
 ## alternatives
 */*			PROVIDERS:		openssl
 */*			PROVIDERS:		elfutils
+virtual/sydbox		PROVIDERS:		sydbox
 
 ## filesystem attributes
 */*			acl xattr
