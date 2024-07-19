@@ -8,3 +8,5 @@ gnome-desktop/librsvg
 
 dev-lang/clang					polly
 	dev-lang/llvm				polly
+
+app-text/poppler				lcms
