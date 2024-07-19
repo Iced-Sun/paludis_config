@@ -1,7 +1,7 @@
 */*::subi					BUILD_OPTIONS:		work=preserve
 
 # build-fix
-	net-libs/webkit opengl X
+	net-libs/webkit X
 		media-plugins/gst-plugins-base	X GSTREAMER_PLUGINS: opengl
 		dev-libs/at-spi2-core		X
 
@@ -10,3 +10,8 @@
 
 # no geoclue
 	net-libs/webkit				&-gps/geoclue
+		media-libs/libavif		providers: aom
+
+# gst-libav doesn't support ffmpeg:7
+	virtual/gst-plugin-vpx			providers: -ffmpeg libvpx
+		media-plugins/gst-plugins-good	GSTREAMER_PLUGINS: vpx
