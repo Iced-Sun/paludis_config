@@ -1,21 +1,27 @@
+## global preferences
+*/*				providers: openssl
+*/*				providers: elfutils
+virtual/sydbox			providers: sydbox
+
 ## prefex gnu and libarchive
-virtual/*			PROVIDERS: -* gnu libarchive
+virtual/*			providers: -* gnu libarchive
 
 # specialist
-virtual/gzip			PROVIDERS: -* pigz
-virtual/cpio			PROVIDERS: -* libarchive
-virtual/unzip			PROVIDERS: -* unzip
+virtual/gzip			providers: -* pigz
+virtual/cpio			providers: -* libarchive
+virtual/unzip			providers: -* unzip
 # fixme: pbzip2 cannot be used as the alternative of bzip2 in the system set
 
 ## coreutils
-virtual/man			PROVIDERS: -* man
+virtual/man			providers: -* man
 
 ## system
-virtual/pkg-config		PROVIDERS: pkgconf
+virtual/pkg-config		providers: pkgconf
 
 ## misc
-app-text/xmlto			PROVIDERS: lynx
-app-arch/libarchive		PROVIDERS: libxml2
-dev-libs/at-spi2-core		PROVIDERS: dbus-daemon
-virtual/notification-daemon	PROVIDERS: mako
-virtual/kerberos		PROVIDERS: heimdal
+app-text/xmlto			providers: lynx
+app-arch/libarchive		providers: libxml2
+dev-libs/at-spi2-core		providers: dbus-daemon
+dev-python/Sphinx		providers: graphicsmagick
+virtual/notification-daemon	providers: mako
+virtual/kerberos		providers: heimdal

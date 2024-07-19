@@ -25,22 +25,22 @@
 @*/*			MY__EXTRA_ECONF:	--disable-static
 
 ## parallel building
-@*/*			EXJOBS:			$((`cat /proc/cpuinfo | grep processor | wc -l`+2))
+@*/*			exjobs:			$((`cat /proc/cpuinfo | grep processor | wc -l`+2))
 
 ### global/system option defaults
 ## disable everything by default
 */*			-*
-*/*			AMD64_CPU_FEATURES:	-*
-*/*			X86_CPU_FEATURES:	-*
-*/*			LINGUAS:		-* zh zh_CN
-*/*			PARTS:			-* binaries configuration data libraries
-*/*			PROVIDERS:		-*
-*/*			VIDEO_DRIVERS:		-*
+*/*			amd64_cpu_features:	-*
+*/*			x86_cpu_features:	-*
+*/*			linguas:		-* zh zh_CN
+*/*			parts:			-* binaries configuration data libraries
+*/*			providers:		-*
+*/*			video_drivers:		-*
 */*			&-*/*
 
 ## build
-*/*			BUILD_OPTIONS:		symbols=strip -recommended_tests
-*/*			TARGETS:		-* x86_64-pc-linux-gnu
+*/*			build_options:		symbols=strip -recommended_tests
+*/*			targets:		-* x86_64-pc-linux-gnu
 
 ## system
 */*			pam udev
@@ -51,16 +51,11 @@
 ## compression
 */*			zstd
 
-## alternatives
-*/*			PROVIDERS:		openssl
-*/*			PROVIDERS:		elfutils
-virtual/sydbox		PROVIDERS:		sydbox
-
 ## filesystem attributes
 */*			acl xattr
 
 ## language bindings
-*/*			PYTHON_ABIS:		-* 3.11
-*/*			VALA_ABIS:		-*
-*/*			LUA_ABIS:		-*
-*/*			RUBY_ABIS:		-*
+*/*			python_abis:		-* 3.12
+*/*			vala_abis:		-*
+*/*			lua_abis:		-*
+*/*			ruby_abis:		-*
