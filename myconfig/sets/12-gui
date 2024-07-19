@@ -11,7 +11,10 @@ fonts/noto
 fonts/Sarasa-Gothic
 
 ## apps dedicated for X
-app-editors/emacs			X cairo harfbuzz freetype jpeg png tiff xpm xim providers: gtk3
+app-editors/emacs			X cairo harfbuzz freetype providers: gtk3
+# pgtk: --without-xinput2 --with-xwidgets --with-pgtk
+@app-editors/emacs			MY__EXTRA_ECONF: ^--without-xinput2 ^--with-xwidgets ^--with-pgtk
+
 
 ## i18n
 inputmethods/fcitx			dbus
@@ -23,25 +26,16 @@ gnome-desktop/gsettings-desktop-schemas
 
 ## gtk4
 	x11-libs/gtk			media
-		media-plugins/gst-plugins-base	GSTREAMER_PLUGINS: -* opus vorbis
+		media-plugins/gst-plugins-base	gstreamer_plugins: -* opus vorbis
 		x11-libs/graphene	gobject-introspection
 
-## mail
-net-mail/isync
-mail-client/mu				emacs
-mail-mta/msmtp
-
 ## media
-sys-sound/alsa-utils
-# upstream systemd doesn't support user config
-media-sound/mpd				alsa ffmpeg -systemd		&-*/*
-media-sound/ncmpcpp			taglib
 media/mpv				alsa opengl
 	media-libs/libass		fontconfig
 media-gfx/imv				png jpeg tiff svg jxl
 
 ## text
-virtual/zathura-pdf			PROVIDERS: zathura-pdf-poppler
+virtual/zathura-pdf			providers: zathura-pdf-poppler
 	app-text/poppler		glib cairo boost
 		dev-libs/nspr		parts: development
 

@@ -16,11 +16,26 @@ virtual/unzip
 
 ## editors
 app-editors/emacs	modules
+# native: --with-native-compilation=yes requires libgccjit
+# tree-sitter: https://github.com/casouri/tree-sitter-module/releases
+@app-editors/emacs	MY__EXTRA_ECONF: ^--with-tree-sitter
+	dev-lib/tree-sitter
+
+## mail
+net-mail/isync
+mail-client/mu		emacs
+mail-mta/msmtp
+
+## media
+sys-sound/alsa-utils
+# upstream systemd doesn't support user config
+media-sound/mpd		alsa ffmpeg -systemd	&-*/*
+media-sound/ncmpcpp	taglib
 
 ## miscs
 app-admin/sudo
 app-misc/mc
 app-shells/fish
-	dev-libs/pcre2	PARTS: development
+	dev-libs/pcre2	parts: development
 app-terminal/tmux
 sys-process/htop	cgroups			&-dev-util/strace sys-process/lsof
