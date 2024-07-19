@@ -4,10 +4,6 @@
 x11-apps/xdg-utils
 virtual/notification-daemon
 
-## mail
-net-mail/isync
-mail-client/mu				emacs
-mail-mta/msmtp
 ## render/compositor/display server/window manager
 compositor/sway				grab tray
 	sys-libs/wlroots		caps libseat
@@ -15,25 +11,9 @@ x11-plugins/i3status
 wayland-apps/swayidle
 wayland-apps/swaylock
 
-## media
-sys-sound/alsa-utils
-# upstream systemd doesn't support user config
-media-sound/mpd				alsa ffmpeg -systemd		&-*/*
-media-sound/ncmpcpp			taglib
-media/mpv				alsa opengl
-	media-libs/libass		fontconfig
-media-gfx/imv				png jpeg tiff svg
 # for root access
 x11-apps/xhost
 
-## text
-virtual/zathura-pdf			PROVIDERS: zathura-pdf-poppler
-	app-text/poppler		glib cairo boost
-		dev-libs/nspr		parts: development
-
-## firefox require 'gdk_x11_display_get_type' symbol
-	x11-libs/gtk+			X
-		x11-libs/cairo		X
 # utilities
 #wayland-apps/wdisplays
 wayland-apps/foot

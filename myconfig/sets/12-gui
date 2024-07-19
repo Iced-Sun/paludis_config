@@ -25,3 +25,26 @@ gnome-desktop/gsettings-desktop-schemas
 	x11-libs/gtk			media
 		media-plugins/gst-plugins-base	GSTREAMER_PLUGINS: -* opus vorbis
 		x11-libs/graphene	gobject-introspection
+
+## mail
+net-mail/isync
+mail-client/mu				emacs
+mail-mta/msmtp
+
+## media
+sys-sound/alsa-utils
+# upstream systemd doesn't support user config
+media-sound/mpd				alsa ffmpeg -systemd		&-*/*
+media-sound/ncmpcpp			taglib
+media/mpv				alsa opengl
+	media-libs/libass		fontconfig
+media-gfx/imv				png jpeg tiff svg jxl
+
+## text
+virtual/zathura-pdf			PROVIDERS: zathura-pdf-poppler
+	app-text/poppler		glib cairo boost
+		dev-libs/nspr		parts: development
+
+## firefox require 'gdk_x11_display_get_type' symbol
+	x11-libs/gtk+			X
+		x11-libs/cairo		X
