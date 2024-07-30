@@ -3,31 +3,49 @@
 @sys-boot/grub				LDFLAGS: -Wl,-O1
 
 ### LTO breaks quite a few packages
-## LTO takes centuries to compile...
+## Toolchains should not be lto-compiled, or it breaks the building or even causes runtime segfaults.
+##
+## Besides, LTO takes centuries and eat huge memories to compile...
+@sys-devel/gcc				CFLAGS: $-flto
 @dev-lang/llvm				CFLAGS: $-flto
 @dev-lang/clang				CFLAGS: $-flto
 @dev-lang/rust				CFLAGS: $-flto
 
 ## static link needs -ffat-lto-objects
 
-## ffmpeg needs its own options (--enable-pic --enable-lto); have to modify the exlib directly
-# no effect since ffmpeg doesn't use econf()
-#@media/ffmpeg:6			MY__EXTRA_ECONF: --enable-pic --enable-lto
-
 ## configuring failure
+# python-3.12.3: checking whether float word ordering is bigendian... unknown
+@dev-lang/python			CFLAGS: $-flto
+@dev-lang/python			MY__EXTRA_ECONF: ^--with-lto
 
 ## linking failure
+# xorg-server-21.1.13-r1: -Werror=array-bounds
+@x11-server/xorg-server			CFLAGS: $-flto
+
+# Error: invalid attempt to declare external version name as default in symbol
+# libgomp-13.3.0
+@sys-libs/libgomp			CFLAGS: $-flto
+# libstdc++-13.3.0
+@sys-libs/libstdc++			CFLAGS: $-flto
+# libgcc-13.3.0
+@sys-libs/libgcc			CFLAGS: $-flto
 
 # undefined reference
-@net-libs/webkit:4.1			CFLAGS: $-flto
+@net-libs/webkit			CFLAGS: $-flto
+# node-20.16.0
+@dev-lang/node[=20.9.0]			CFLAGS: $-flto
 
 # undefined reference by lld
 @dev-lang/zig				CFLAGS: $-flto
 	@sys-devel/lld			CFLAGS: $-flto
 
 # no symbols
-@sys-libs/libgcc:13			CFLAGS: $-flto
 
 ## runtime segfault
 
+## clang requires llvm[gold] to support -flto
+@sys-libs/libc++abi			CFLAGS: $-flto
+
 ### general
+# sydbox-1.2.3 ignores statically links, hence the dependency pinktrace should be built statically
+@dev-libs/pinktrace			MY__EXTRA_ECONF: $--disable-static

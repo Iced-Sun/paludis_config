@@ -20,6 +20,7 @@ app-editors/emacs	modules
 # tree-sitter: https://github.com/casouri/tree-sitter-module/releases
 @app-editors/emacs	MY__EXTRA_ECONF: ^--with-tree-sitter
 	dev-lib/tree-sitter
+@app-editors/emacs	MY__EXTRA_ECONF: ^--with-sqlite3
 
 ## mail
 net-mail/isync

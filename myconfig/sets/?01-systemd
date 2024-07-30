@@ -1,2 +1,2 @@
 */*		systemd
-*/*		PROVIDERS: systemd systemd-logind
+*/*		providers: systemd systemd-logind

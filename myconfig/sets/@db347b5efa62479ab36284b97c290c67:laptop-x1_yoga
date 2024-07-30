@@ -11,9 +11,10 @@ armv7-unknown-linux-musleabihf
 app-virtualization/qemu			arm
 
 ## machine specific
-*/*					AMD64_CPU_FEATURES:	         sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3 fma4
-*/*					X86_CPU_FEATURES:	sse sse2 sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3 fma4
-	x11-dri/mesa			VIDEO_DRIVERS:		iris
+*/*					amd64_cpu_features:	         sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3 fma4
+*/*					x86_cpu_features:	sse sse2 sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3 fma4
+	x11-dri/mesa			video_drivers:		iris
+		x11-dri/mesa		llvm
 
 ## firmware
 firmware/linux-firmware
@@ -34,17 +35,19 @@ net-wireless/blueman
 	sys-libs/libinput		wacom
 
 ## hardware ability
-media/mpv				va pipewire
-	media/ffmpeg			va
-	x11-libs/libva			X opengl	&x11-drivers/intel-media-driver
-	x11-dri/libdrm			VIDEO_DRIVERS: intel
+media/mpv				vaapi pipewire
+	# glslang just breaks the build of libplacebo
+	media-libs/libplacebo		providers: -glslang shaderc
+		media/ffmpeg		vaapi
+		x11-libs/libva		X opengl	&x11-drivers/intel-media-driver
+		x11-dri/libdrm		VIDEO_DRIVERS: intel
 
 ## fs
 sys-fs/ntfs-3g_ntfsprogs
 sys-fs/dosfstools
 
 ## postgres
-dev-db/postgresql			readline postgresql_extensions: pg_trgm
+dev-db/postgresql			readline postgresql_extensions: pg_trgm pgcrypto
 dev-db/postgresql-client		pgdump readline ssl
 
 ## java
@@ -58,7 +61,7 @@ app-crypt/gnupg
 
 ## nodejs
 dev-lang/node
-	net-libs/nghttp2		-systemd
+	net-libs/nghttp2		-systemd utils
 
 ## jdee requires python[readline]
 	dev-lang/python			readline
@@ -75,7 +78,6 @@ app-office/gnucash			gnucash dbi
 
 ## misc
 net-proxy/proxychains-ng
-net-misc/onedrive
 net/wireguard-tools			PROVIDERS: -* nftables
 
 ## docker
@@ -93,7 +95,8 @@ media/pipewire				alsa bluetooth dbus -camera -aptx -echo-cancel-webrtc -fdk-aac
 media/wireplumber			lua_abis: 5.4
 
 ## emacs
-	app-editors/emacs			dbus
+	app-editors/emacs		dbus
+		fonts/LxgwWenKai
 x11-libs/libvterm
 
 ## misc
@@ -102,3 +105,6 @@ wayland-apps/wlsunset
 ## fcitx
 #inputmethods/fcitx-configtool		qt
 #	inputmethods/fcitx-qt		qt5
+
+## feishu
+net-im/feishu

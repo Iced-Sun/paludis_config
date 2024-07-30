@@ -10,6 +10,9 @@
 ## Optimization
 # LTO
 @*/*			CFLAGS:			^-flto
+## ffmpeg needs its own options (--enable-pic --enable-lto); have to modify the exlib directly
+# no effect since ffmpeg doesn't use econf()
+#@media/ffmpeg:7	MY__EXTRA_ECONF:	^--enable-pic ^--enable-lto
 
 # SAFEST_FAST_MATH
 @*/*			CFLAGS:			^-fno-math-errno ^-fno-trapping-math
@@ -25,7 +28,7 @@
 @*/*			MY__EXTRA_ECONF:	--disable-static
 
 ## parallel building
-@*/*			exjobs:			$((`cat /proc/cpuinfo | grep processor | wc -l`+2))
+@*/*			EXJOBS:			$((`cat /proc/cpuinfo | grep processor | wc -l`+2))
 
 ### global/system option defaults
 ## disable everything by default
@@ -55,7 +58,8 @@
 */*			acl xattr
 
 ## language bindings
-*/*			python_abis:		-* 3.12
-*/*			vala_abis:		-*
+*/*			llvm_abis:		-* 18
 */*			lua_abis:		-*
+*/*			python_abis:		-* 3.12
 */*			ruby_abis:		-*
+*/*			vala_abis:		-*

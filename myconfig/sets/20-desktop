@@ -1,6 +1,7 @@
 ### General desktop packages ###
 
 ## desktop
+sys-apps/xdg-desktop-portal
 x11-apps/xdg-utils
 virtual/notification-daemon
 
