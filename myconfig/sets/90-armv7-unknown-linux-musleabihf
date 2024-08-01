@@ -6,28 +6,28 @@
 
 ## options
 */*				-*
-*/*				PARTS:			-* binaries configuration data development libraries
-*/*				PROVIDERS:		-*
-*/*				LINGUAS:		-*
+*/*				parts:			-* binaries configuration data development libraries
+*/*				providers:		-*
+*/*				linguas:		-*
 
 ## build
-*/*				BUILD_OPTIONS:		symbols=strip -recommended_tests
-*/*				ARM_CPU_FEATURES:	neon
-*/*				LIBC:			musl
+*/*				build_options:		symbols=strip -recommended_tests
+*/*				arm_cpu_features:	neon
+*/*				libc:			musl
 
 ## enable static libraries
 */*				static
-@*/*				MY__EXTRA_ECONF: --enable-static
+@*/*				MY__EXTRA_ECONF:	--enable-static
 
 ## packages
-*/*				PROVIDERS: openssl
+*/*				providers:		openssl
 
 # system
 app-arch/bzip2
 sys-libs/musl
-virtual/pkg-config		PROVIDERS: pkgconf
+virtual/pkg-config		providers:		pkgconf
 
 ## build fix
-@sys-apps/kmod			MY__EXTRA_ECONF: $--enable-static
+@sys-apps/kmod			MY__EXTRA_ECONF:	$--enable-static
 	app-shells/bash		-static
-@sys-sound/alsa-lib		MY__EXTRA_ECONF: $--enable-static
+@sys-sound/alsa-lib		MY__EXTRA_ECONF:	$--enable-static

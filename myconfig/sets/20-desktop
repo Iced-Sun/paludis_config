@@ -15,6 +15,9 @@ wayland-apps/swaylock
 # for root access
 x11-apps/xhost
 
-# utilities
+## utilities
 #wayland-apps/wdisplays
 wayland-apps/foot
+wayland-apps/grim
+wayland-apps/slurp
+wayland-apps/wmenu

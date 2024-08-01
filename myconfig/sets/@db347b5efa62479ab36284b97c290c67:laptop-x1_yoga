@@ -96,7 +96,8 @@ media/wireplumber			lua_abis: 5.4
 
 ## emacs
 	app-editors/emacs		dbus
-		fonts/LxgwWenKai
+dev-libs/tree-sitter
+fonts/LxgwWenKai
 x11-libs/libvterm
 
 ## misc
@@ -108,3 +109,9 @@ wayland-apps/wlsunset
 
 ## feishu
 net-im/feishu
+
+## zig
+dev-lang/zig
+
+## syncthing
+net-p2p/syncthing
