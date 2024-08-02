@@ -58,6 +58,8 @@ virtual/jdk				PROVIDERS: openjdk-bin
 ## gnupg
 app-crypt/gnupg
 	app-crypt/pinentry		keyring gnome
+		gnome-desktop/gnome-keyring
+			gnome-desktop/gcr:0	gobject-introspection
 
 ## nodejs
 dev-lang/node
