@@ -10,3 +10,5 @@ dev-lang/clang					polly
 	dev-lang/llvm				polly
 
 app-text/poppler				lcms
+
+dev-libs/glib					gobject-introspection

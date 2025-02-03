@@ -18,6 +18,13 @@
 @dev-lang/python			CFLAGS: $-flto
 @dev-lang/python			MY__EXTRA_ECONF: ^--with-lto
 
+# perl-5.40: Cannot check byte order without known uvsize
+@dev-lang/perl				CFLAGS: $-flto
+
+## building failure
+# No such file or directory
+@dev-lang/node[=22.11.0]		CFLAGS: $-flto
+
 ## linking failure
 # xorg-server-21.1.13-r1: -Werror=array-bounds
 @x11-server/xorg-server			CFLAGS: $-flto
@@ -49,3 +56,6 @@
 ### general
 # sydbox-1.2.3 ignores statically links, hence the dependency pinktrace should be built statically
 @dev-libs/pinktrace			MY__EXTRA_ECONF: $--disable-static
+
+# libtool requires --enable-static to build both pic & non-pic objects
+@sys-devel/libtool			MY__EXTRA_ECONF: $--disable-static

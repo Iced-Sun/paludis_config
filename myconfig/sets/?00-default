@@ -62,4 +62,4 @@
 */*			lua_abis:		-*
 */*			python_abis:		-* 3.12
 */*			ruby_abis:		-*
-*/*			vala_abis:		-*
+*/*			vala_abis:		-* 0.56

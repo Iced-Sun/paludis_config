@@ -5,16 +5,31 @@ desktop
 laptop
 transient
 
-## include armv7-unknown-linux-musleabihf
+## cross root
+*/*					TARGETS:		-*
+
+# include armv7-unknown-linux-musleabihf
 armv7-unknown-linux-musleabihf
-*/*					TARGETS:		-* armv7-unknown-linux-musleabihf
+*/*					TARGETS:		armv7-unknown-linux-musleabihf
 app-virtualization/qemu			arm
+
+# include aarch64-unknown-linux-musleabi
+aarch64-unknown-linux-musleabi
+*/*					TARGETS:		aarch64-unknown-linux-musleabi
+app-virtualization/qemu			aarch64
+
+# rustc use host cflags to build extra targets
+	dev-lang/rust			TARGETS:		-*
 
 ## machine specific
 */*					amd64_cpu_features:	         sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3 fma4
 */*					x86_cpu_features:	sse sse2 sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3 fma4
 	x11-dri/mesa			video_drivers:		iris
 		x11-dri/mesa		llvm
+
+## gfw
+@*/*					GO111MODULE:		on
+@*/*					GOPROXY:		https://goproxy.cn,direct
 
 ## firmware
 firmware/linux-firmware
@@ -26,7 +41,7 @@ net-wireless/blueman
 	gnome-bindings/pygobject	cairo
 	x11-libs/libnotify		gobject-introspection
 	x11-libs/gtk+:3			gobject-introspection
-		dev-libs/atk		gobject-introspection
+		dev-libs/at-spi2-core	gobject-introspection
 		x11-libs/pango		gobject-introspection
 		x11-libs/gdk-pixbuf	gobject-introspection
 		x11-libs/harfbuzz	gobject-introspection
@@ -83,9 +98,9 @@ net-proxy/proxychains-ng
 net/wireguard-tools			PROVIDERS: -* nftables
 
 ## docker
-app-virtualization/moby
-	sys-apps/runc			seccomp
-app-virtualization/docker-cli
+#app-virtualization/moby
+#	sys-apps/runc			seccomp
+#app-virtualization/docker-cli
 
 ## baidunetdisk
 x11-libs/libXScrnSaver
@@ -117,3 +132,6 @@ dev-lang/zig
 
 ## syncthing
 net-p2p/syncthing
+
+## m32 is not enabled
+@dev-util/strace			MY__EXTRA_ECONF: ^--disable-mpers

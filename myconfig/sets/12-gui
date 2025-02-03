@@ -15,7 +15,6 @@ app-editors/emacs			X cairo harfbuzz freetype providers: gtk3
 # pgtk: --without-xinput2 --with-xwidgets --with-pgtk
 @app-editors/emacs			MY__EXTRA_ECONF: ^--without-xinput2 ^--with-xwidgets ^--with-pgtk
 
-
 ## i18n
 inputmethods/fcitx			dbus
 inputmethods/fcitx-gtk			gtk3 gtk4

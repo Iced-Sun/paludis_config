@@ -15,3 +15,7 @@
 # gst-libav doesn't support ffmpeg:7
 	virtual/gst-plugin-vpx			providers: -ffmpeg libvpx
 		media-plugins/gst-plugins-good	GSTREAMER_PLUGINS: vpx
+
+		media-plugins/gst-plugins-base	GSTREAMER_PLUGINS: ogg
+
+dev-util/strace		providers: elfutils-unwind
