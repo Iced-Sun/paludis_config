@@ -14,7 +14,7 @@ class Target_mixin:
 
         for section in self.configured_set_files.values():
             for set_path in section:
-                m = re.match('\d{2}-(?P<target_triple>\w+-\w+-\w+-\w+)', set_path.stem)
+                m = re.match(r'\d{2}-(?P<target_triple>\w+-\w+-\w+-\w+)', set_path.stem)
                 if m is not None:
                     self._configured_targets.append(m.group('target_triple'))
                     pass

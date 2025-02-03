@@ -2,7 +2,7 @@ from pathlib import Path
 import os, re
 
 class Action_handler:
-    arch_target_pattern = re.compile('^(x86_64|i386|i686|arm|mips)(.*)-(.+)-(.+)-(.+)$')
+    arch_target_pattern = re.compile('^(x86_64|i386|i686|arm|mips|aarch64)(.*)-(.+)-(.+)-(.+)$')
 
     @classmethod
     def match(cls, script_path, action):

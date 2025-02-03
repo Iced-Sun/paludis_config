@@ -87,7 +87,9 @@ class Bashrc_handler(Spec_configuration_mixin, Destination_mixin, Target_mixin, 
         for target in self.configured_targets:
             _target = target.replace('-', '_')
             if _target is not None:
-                if f'{_target}_CXXFLAGS' not in env: env[f'{_target}_CXXFLAGS'] = env[f'{_target}_CFLAGS']
+                if f'{_target}_CFLAGS' in env and f'{_target}_CXXFLAGS' not in env:
+                    env[f'{_target}_CXXFLAGS'] = env[f'{_target}_CFLAGS']
+                    pass
                 pass
             continue
 

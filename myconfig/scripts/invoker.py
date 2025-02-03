@@ -28,4 +28,4 @@ for Handler in Platforms_handler, General_handler, Mirrors_handler, Repository_h
     pass
 
 if not handled:
-    raise Exception(f'unhandled script <{script_path}>')
+    raise Exception(f'unhandled script <{sys.argv}>')

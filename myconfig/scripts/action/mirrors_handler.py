@@ -3,7 +3,8 @@ from action.action_handler import Action_handler
 class Mirrors_handler(Action_handler):
     script_path_pattern = '^(/etc/paludis/)?mirrors(.bash)?$'
 
-    preferred_sites = ['ustc', 'bjtu', 'cqu', 'lzu', 'tsu', 'netease', 'aliyun', 'huawei', 'tencent' ]
+    #preferred_sites = ['ustc', 'bjtu', 'cqu', 'lzu', 'tsu', 'netease', 'aliyun', 'huawei', 'tencent' ]
+    preferred_sites = ['ustc', 'cqu', 'lzu', 'tsu', 'netease', 'aliyun', 'huawei', 'tencent' ]
 
     ## https://lework.github.io/lemonitor/#/%E6%B5%8B%E9%80%9F
     mirror_sites = {
