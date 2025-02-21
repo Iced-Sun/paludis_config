@@ -15,11 +15,11 @@ class Host_mixin:
             for set_path in section:
                 with set_path.open() as f:
                     for line in f.read().splitlines():
-                        if re.match('^\s*#.*$|^\s*$', line): continue
+                        if re.match(r'^\s*#.*$|^\s*$', line): continue
 
-                        m = re.match('^(?P<leading_tabs>\t+)?(?P<mark>[~@+-])?(?P<spec>\S+)(?P<configs_tabs>\t+)?(?P<config>.+)?$', line)
+                        m = re.match(r'^(?P<leading_tabs>\t+)?(?P<mark>[~@+-])?(?P<spec>\S+)(?P<configs_tabs>\t+)?(?P<config>.+)?$', line)
                         if m.group('mark') == '@':
-                            em = re.match('^(?P<key>.+):\s+(?P<value>.+)$', m.group('config'))
+                            em = re.match(r'^(?P<key>.+):\s+(?P<value>.+)$', m.group('config'))
                             if em.group('key') == 'CHOST' and m.group('spec') == '*/*':
                                 self._host = em.group('value')
                             pass

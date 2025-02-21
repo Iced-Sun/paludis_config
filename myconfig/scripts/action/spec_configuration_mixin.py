@@ -32,7 +32,7 @@ class Spec_configuration_mixin:
             with active_set_file.open() as f:
                 for line in f.read().splitlines():
                     # skip a comment or blank line
-                    if re.match('^\s*#.*$|^\s*$', line): continue
+                    if re.match(r'^\s*#.*$|^\s*$', line): continue
 
                     line_spec = self._parse_line_as_spec(line)
                     #if line_spec['mark'] == '@':
@@ -81,7 +81,7 @@ class Spec_configuration_mixin:
             with weak_set_file.open() as f:
                 for line in f.read().splitlines():
                     # skip a comment or blank line
-                    if re.match('^\s*#.*$|^\s*$', line): continue
+                    if re.match(r'^\s*#.*$|^\s*$', line): continue
 
                     line_spec = self._parse_line_as_spec(line)
                     line_spec['is_dependecy'] = True
@@ -119,7 +119,7 @@ class Spec_configuration_mixin:
 
     def _parse_line_as_spec(self, line: str):
         # parse the line
-        m = re.match('^(?P<leading_tabs>\t+)?(?P<mark>[~@+-])?(?P<spec>\S+)(?P<config_tabs>\t+)?(?P<config>.+)?$', line)
+        m = re.match(r'^(?P<leading_tabs>\t+)?(?P<mark>[~@+-])?(?P<spec>\S+)(?P<config_tabs>\t+)?(?P<config>.+)?$', line)
 
         line_spec = {
             'spec': m.group('spec'),
@@ -138,7 +138,7 @@ class Spec_configuration_mixin:
             return line_spec
         else:
             # the package options
-            cm = re.match('^(?P<options>[^&]+)?(\s*)?(?P<suggestions>&.+)?$', m.group('config'))
+            cm = re.match(r'^(?P<options>[^&]+)?(\s*)?(?P<suggestions>&.+)?$', m.group('config'))
             line_spec['options'] = cm.group('options')
             line_spec['suggestions'] = cm.group('suggestions')[1:] if cm.group('suggestions') is not None else None
             pass
@@ -147,7 +147,7 @@ class Spec_configuration_mixin:
 
     def _add_to_spec_environment(self, line_spec, target=None):
         # the build options: they are in fact environment variables
-        m = re.match('^(?P<key>.+):\s+(?P<value>.+)$', line_spec['config'])
+        m = re.match(r'^(?P<key>.+):\s+(?P<value>.+)$', line_spec['config'])
         if m is None:
             return
 

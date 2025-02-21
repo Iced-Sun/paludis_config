@@ -25,7 +25,7 @@ class Destination_mixin:
             params = ' '.join(os.environ['CAVE_CMDLINE_PARAMS'].split())
             if '-mx' in params or '-m x' in params or '--make cross-compile' in params:
                 import re
-                m = re.match('.*(-4|--cross-host) (?P<cross_host>[-\w]+).*', params)
+                m = re.match(r'.*(-4|--cross-host) (?P<cross_host>[-\w]+).*', params)
                 if m is not None:
                     self._destination = m.group('cross_host')
                     pass

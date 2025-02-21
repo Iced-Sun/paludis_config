@@ -19,14 +19,21 @@ class Bashrc_handler(Spec_configuration_mixin, Destination_mixin, Target_mixin, 
         category = os.environ['CATEGORY'] if 'CATEGORY' in os.environ else None
         pn = os.environ['PN'] if 'PN' in os.environ else None
 
-        # no package set: print wildcards only
+        ## TODO this is total mess!
+        # assemble environment variables
         if category is None or pn is None:
+            # no package set: output wildcards only
             env = { key: ' '.join(v['value'] for v in values if v['spec'] == '*/*') for key, values in self.spec_environment.items() }
             pass
         else:
             env = {}
+            # key:    environment variable name
+            # values: { spec: package spec; value: environment variable value }[]
             for key, values in self.spec_environment.items():
-                # search for the value base for exact match
+                # sort by spec to support overriding wildcard values
+                values.sort(key=lambda v: v['spec'])
+
+                # search for verbatim value (no modification will be applied)
                 value = next((v
                               for v in values
                               if v['spec'].startswith(f'{category}/{pn}')
@@ -35,27 +42,38 @@ class Bashrc_handler(Spec_configuration_mixin, Destination_mixin, Target_mixin, 
                               )), None)
 
                 if value is not None:
-                    # filter matching values
+                    # found verbatim value, save them in values
                     values = [
                         value['value'].split(' ')
                         for value in values
+                        # ignore wildcard values
                         if value['spec'].startswith(f'{category}/{pn}')
                     ]
                     pass
                 else:
-                    value = next((v for v in values if not v['value'].startswith('^-') and not v['value'].startswith('$-')), {'value': ''})
+                    # extract the verbatim value of wildcard packages as the base value)
+                    value = next((v
+                                  for v in values
+                                  if v['spec'] == '*/*'
+                                  and (
+                                      not v['value'].startswith('^-') and not v['value'].startswith('$-')
+                                  )), {'value': ''})
+                    # save all other complementary values
                     values = [
                         value['value'].split(' ')
                         for value in values
                         if value['spec'].startswith(f'{category}/{pn}')
-                        or value['spec'] == '*/*'
+                        or (
+                            value['spec'] == '*/*'
+                            # exclude the wildcard verbatim values
+                            and (
+                                value['value'].startswith('^-') or value['value'].startswith('$-')
+                            )
+                        )
                     ]
                     pass
 
                 value = value['value'].split(' ')
-
-                if len(values) == 0:
-                    continue
 
                 # append or delete modifications
                 for v in values:
