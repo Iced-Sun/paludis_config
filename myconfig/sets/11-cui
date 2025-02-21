@@ -1,12 +1,5 @@
 ### Essential console applications ###
 
-## system
-sys-apps/busybox        static
-sys-apps/systemd	lz4 openssl		&sys-boot/dracut
-sys-apps/paludis	prebuilt-documentation search-index pbin
-	sys-apps/sydbox	seccomp
-		dev-libs/pinktrace	pvm
-
 ## dev
 dev-scm/git		curl			&-*/*
 

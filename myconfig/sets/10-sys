@@ -1,0 +1,7 @@
+### Essential console applications: system ###
+sys-apps/systemd			efi						providers: -*	&sys-boot/dracut
+	sys-boot/dracut
+		sys-apps/coreutils	xattr
+sys-apps/paludis			prebuilt-documentation search-index pbin
+	sys-apps/sydbox			seccomp
+		dev-libs/pinktrace	pvm
