@@ -1,0 +1,8 @@
+### graphic: enable graphic support for some console applications
+
+## emacs
+app-editors/emacs			X cairo harfbuzz freetype providers: gtk3
+	x11-libs/gtk+:3
+		dev-libs/at-spi2-core	X
+# pgtk: --without-xinput2 --with-xwidgets --with-pgtk?
+@app-editors/emacs			MY__EXTRA_ECONF: ^--without-xinput2 ^--with-pgtk

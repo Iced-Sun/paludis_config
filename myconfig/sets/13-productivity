@@ -1,0 +1,12 @@
+### console: productivity
+
+## mail
+net-mail/isync
+mail-client/mu		emacs
+mail-mta/msmtp
+
+## media
+sys-sound/alsa-utils
+# upstream systemd doesn't support user config
+media-sound/mpd		alsa ffmpeg -systemd	&-*/*
+media-sound/ncmpcpp	taglib

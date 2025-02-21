@@ -1,0 +1,20 @@
+### console: system administration
+
+## app-arch
+app-arch/p7zip
+virtual/unzip
+
+## shell & file manager
+app-misc/mc
+app-shells/fish
+	dev-libs/pcre2	parts: development
+
+## tools
+app-admin/sudo
+app-terminal/tmux
+
+## monitoring
+sys-process/htop	cgroups			&-dev-util/strace sys-process/lsof
+
+## configuration
+net-wireless/iwd

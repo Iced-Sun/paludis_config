@@ -1,0 +1,33 @@
+### General desktop packages ###
+
+## desktop
+sys-apps/xdg-desktop-portal
+	media/pipewire
+		media/wireplumber	lua_abis: 5.4
+x11-apps/xdg-utils
+virtual/notification-daemon
+
+## media
+media/mpv				alsa opengl
+	media-libs/libass		fontconfig
+media-gfx/imv				png jpeg tiff svg jxl
+
+## text
+virtual/zathura-pdf			providers: zathura-pdf-poppler
+	app-text/poppler		glib cairo boost
+		dev-libs/nspr		parts: development
+
+## utilities
+x11-plugins/i3status
+wayland-apps/swayidle
+wayland-apps/swaylock
+
+## screen capture
+wayland-apps/grim
+wayland-apps/slurp
+
+## launcher
+wayland-apps/wmenu
+
+## display manager
+#wayland-apps/wdisplays

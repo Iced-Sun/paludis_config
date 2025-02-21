@@ -1,0 +1,30 @@
+### graphic: infrastructure
+
+## defaults
+*/*					providers:	jpeg-turbo
+*/*					providers:	ffmpeg
+*/*					ffmpeg_abis:	-* 7
+
+## fonts
+fonts/terminus-font			X
+fonts/Sarasa-Gothic
+
+## inputmethods
+inputmethods/fcitx			dbus
+# cairo-xcb
+	x11-libs/cairo			X
+# gtk4 pulls in gobject-instrospection
+inputmethods/fcitx-gtk			gtk3 -gtk4
+inputmethods/fcitx-chinese-addons
+
+## gtk-theme
+gnome-desktop/gsettings-desktop-schemas
+
+## render/compositor/display server/window manager
+compositor/sway				grab tray
+	sys-libs/wlroots		caps libseat
+# root access for xwayland
+x11-apps/xhost
+
+## terminal
+wayland-apps/foot
