@@ -20,6 +20,46 @@ class Spec_configuration_mixin:
         self._active_spec_configurations = []
         self._spec_environment = {}
 
+        ## order matters
+        # push active spec from weak set as dependecy
+        for weak_set_file in self.configured_set_files['weak-set']:
+            with weak_set_file.open() as f:
+                for line in f.read().splitlines():
+                    # skip a comment or blank line
+                    if re.match(r'^\s*#.*$|^\s*$', line): continue
+
+                    line_spec = self._parse_line_as_spec(line)
+                    line_spec['is_dependecy'] = True
+
+                    if self.destination != 'installed': # cross compiling
+                        if line_spec['mark'] == '@' and line_spec['spec'] == '*/*' and (
+                                line_spec['config'].startswith('CHOST')
+                                or line_spec['config'].startswith('CFLAGS')
+                                or line_spec['config'].startswith('CXXFLAGS')
+                                or line_spec['config'].startswith('LDFLAGS')
+                        ):
+                            self._add_to_spec_environment(line_spec)
+                            pass
+                        pass
+                    else:
+                        if line_spec['mark'] == '@':
+                            self._add_to_spec_environment(line_spec)
+                            pass
+                        else:
+                            self._active_spec_configurations.append(line_spec)
+                            pass
+                        pass
+
+                    #if line_spec['mark'] == '@':
+                    #    self._add_to_spec_environment(line_spec)
+                    #    pass
+                    #else:
+                    #    self._active_spec_configurations.append(line_spec)
+                    #    pass
+                    continue
+                pass
+            pass
+
         # push active spec from active set
         for active_set_file in self.active_set_files:
             targetSets = [
@@ -63,54 +103,15 @@ class Spec_configuration_mixin:
                             pass
                         else: # a target set
                             if line_spec['mark'] == '@' and line_spec['spec'] == '*/*' and (
-                                line_spec['config'].startswith('CHOST')
-                                or line_spec['config'].startswith('CFLAGS')
-                                or line_spec['config'].startswith('CXXFLAGS')
-                                or line_spec['config'].startswith('LDFLAGS')
+                                    line_spec['config'].startswith('CHOST')
+                                    or line_spec['config'].startswith('CFLAGS')
+                                    or line_spec['config'].startswith('CXXFLAGS')
+                                    or line_spec['config'].startswith('LDFLAGS')
                             ):
                                 self._add_to_spec_environment(line_spec, setTarget)
                             pass
                         pass
 
-                    continue
-                pass
-            pass
-
-        # push active spec from weak set as dependecy
-        for weak_set_file in self.configured_set_files['weak-set']:
-            with weak_set_file.open() as f:
-                for line in f.read().splitlines():
-                    # skip a comment or blank line
-                    if re.match(r'^\s*#.*$|^\s*$', line): continue
-
-                    line_spec = self._parse_line_as_spec(line)
-                    line_spec['is_dependecy'] = True
-
-                    if self.destination != 'installed': # cross compiling
-                        if line_spec['mark'] == '@' and line_spec['spec'] == '*/*' and (
-                                line_spec['config'].startswith('CHOST')
-                                or line_spec['config'].startswith('CFLAGS')
-                                or line_spec['config'].startswith('CXXFLAGS')
-                                or line_spec['config'].startswith('LDFLAGS')
-                        ):
-                            self._add_to_spec_environment(line_spec)
-                            pass
-                        pass
-                    else:
-                        if line_spec['mark'] == '@':
-                            self._add_to_spec_environment(line_spec)
-                            pass
-                        else:
-                            self._active_spec_configurations.append(line_spec)
-                            pass
-                        pass
-
-                    #if line_spec['mark'] == '@':
-                    #    self._add_to_spec_environment(line_spec)
-                    #    pass
-                    #else:
-                    #    self._active_spec_configurations.append(line_spec)
-                    #    pass
                     continue
                 pass
             pass

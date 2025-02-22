@@ -13,9 +13,9 @@ class Set_files_mixin:
         config_path = self._wrapper_path.parents[1]
         set_path = config_path / 'sets'
         self._configured_set_files = {
-            'machine-set': list(set_path.glob('@*')),
-            'general-set': list(set_path.glob('[0-9][0-9]-*')),
-            'weak-set': list(set_path.glob('[?]*'))
+            'machine-set': sorted(set_path.glob('@*')),
+            'general-set': sorted(set_path.glob('[0-9][0-9]-*')),
+            'weak-set': sorted(set_path.glob('[?]*'))
         }
         pass
 
