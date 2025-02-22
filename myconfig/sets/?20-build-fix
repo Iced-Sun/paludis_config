@@ -22,9 +22,6 @@
 @dev-lang/perl				CFLAGS: $-flto
 
 ## building failure
-# No such file or directory
-@dev-lang/node[=22.11.0]		CFLAGS: $-flto
-
 ## linking failure
 # xorg-server-21.1.13-r1: -Werror=array-bounds
 @x11-server/xorg-server			CFLAGS: $-flto
@@ -39,8 +36,7 @@
 
 # undefined reference
 @net-libs/webkit			CFLAGS: $-flto
-# node-20.16.0
-@dev-lang/node[=20.9.0]			CFLAGS: $-flto
+@dev-libs/spidermonkey[=115.10.0]	CFLAGS: $-flto
 
 # undefined reference by lld
 @dev-lang/zig				CFLAGS: $-flto

@@ -16,10 +16,10 @@ desktop
 */*					linguas:		zh_CN
 
 ## cross root
-*/*					TARGETS:		-*
+*/*					targets:		-*
 
 # rustc use host cflags to build extra targets
-	dev-lang/rust			TARGETS:		-*
+	dev-lang/rust			targets:		-*
 
 ## machine specific
 */*					amd64_cpu_features:	mmxext ssse3 sse4.1 sse4.2 sse4a avx avx2 fma3 fma4
@@ -95,11 +95,9 @@ app-office/gnucash			gnucash dbi
 #media/pipewire				alsa bluetooth dbus -camera -aptx -echo-cancel-webrtc -fdk-aac -ffmpeg -gstreamer -ldac pulseaudio
 #	sys-sound/alsa-plugins		pulseaudio
 #	media-sound/pulseaudio		bluetooth
-#media/wireplumber			lua_abis: 5.4
 
 ## emacs
 #	app-editors/emacs		dbus
-#dev-libs/tree-sitter
 #fonts/LxgwWenKai
 #x11-libs/libvterm
 

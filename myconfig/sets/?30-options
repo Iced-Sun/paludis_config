@@ -1,6 +1,7 @@
+### General & necessary/inevitable options
 media-libs/freetype				harfbuzz
 	x11-libs/harfbuzz
-		dev-libs/icu			PARTS: development
+		dev-libs/icu			parts: development
 
 gnome-desktop/librsvg
 	# bootstrap rust requires +internal-llvm

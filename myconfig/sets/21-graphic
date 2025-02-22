@@ -6,3 +6,10 @@ app-editors/emacs			X cairo harfbuzz freetype providers: gtk3
 		dev-libs/at-spi2-core	X
 # pgtk: --without-xinput2 --with-xwidgets --with-pgtk?
 @app-editors/emacs			MY__EXTRA_ECONF: ^--without-xinput2 ^--with-pgtk
+
+## gnupg
+# it pulls in too much dependencies, use `echo hey | gpg --pinentry-mode loopback --clearsign`;
+# `set -x GPG_TTY (tty)` helps
+#	app-crypt/pinentry		keyring gnome
+#		gnome-desktop/gnome-keyring
+#			gnome-desktop/gcr:0	gobject-introspection

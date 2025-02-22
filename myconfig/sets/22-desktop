@@ -1,14 +1,11 @@
 ### General desktop packages ###
 
 ## desktop
-sys-apps/xdg-desktop-portal
-	media/pipewire
-		media/wireplumber	lua_abis: 5.4
 x11-apps/xdg-utils
 virtual/notification-daemon
 
 ## media
-media/mpv				alsa opengl
+media/mpv				alsa opengl pipewire
 	media-libs/libass		fontconfig
 media-gfx/imv				png jpeg tiff svg jxl
 
@@ -31,3 +28,9 @@ wayland-apps/wmenu
 
 ## display manager
 #wayland-apps/wdisplays
+
+## flatpak
+sys-apps/flatpak
+	sys-apps/xdg-desktop-portal
+		media/pipewire
+			media/wireplumber	lua_abis: 5.4

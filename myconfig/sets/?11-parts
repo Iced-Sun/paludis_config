@@ -1,19 +1,19 @@
 ## headers
-app-arch/bzip2			PARTS: development
-app-arch/lz4			PARTS: development
-app-arch/xz			PARTS: development
-	dev-libs/expat		PARTS: development
-	dev-libs/libffi		PARTS: development
-	dev-libs/gmp		PARTS: development
-	dev-libs/mpfr		PARTS: development
-	dev-libs/pcre		PARTS: development
-	dev-libs/popt		PARTS: development
-	sys-apps/attr		PARTS: development
-	sys-apps/file		PARTS: development
-	sys-libs/libcap		PARTS: development
-	sys-libs/ncurses	PARTS: development
-	sys-libs/pam		PARTS: development
-	sys-libs/readline	PARTS: development
-	sys-libs/zlib		PARTS: development
-dev-libs/libpthread-stubs	PARTS: development
-dev-libs/openssl		PARTS: development
+app-arch/bzip2			parts: development
+app-arch/lz4			parts: development
+app-arch/xz			parts: development
+	dev-libs/expat		parts: development
+	dev-libs/libffi		parts: development
+	dev-libs/gmp		parts: development
+	dev-libs/mpfr		parts: development
+	dev-libs/pcre		parts: development
+	dev-libs/popt		parts: development
+	sys-apps/attr		parts: development
+	sys-apps/file		parts: development
+	sys-libs/libcap		parts: development
+	sys-libs/ncurses	parts: development
+	sys-libs/pam		parts: development
+	sys-libs/readline	parts: development
+	sys-libs/zlib		parts: development
+dev-libs/libpthread-stubs	parts: development
+dev-libs/openssl		parts: development
