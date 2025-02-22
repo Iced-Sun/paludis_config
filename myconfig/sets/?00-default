@@ -35,7 +35,7 @@
 */*			-*
 */*			amd64_cpu_features:	-*
 */*			x86_cpu_features:	-*
-*/*			linguas:		-* zh zh_CN
+*/*			linguas:		-*
 */*			parts:			-* binaries configuration data libraries
 */*			providers:		-*
 */*			video_drivers:		-*
@@ -54,11 +54,8 @@
 ## compression
 */*			zstd
 
-## filesystem attributes
-*/*			acl xattr
-
 ## language bindings
-*/*			llvm_abis:		-* 18
+*/*			llvm_abis:		-* 19
 */*			lua_abis:		-*
 */*			python_abis:		-* 3.12
 */*			ruby_abis:		-*
