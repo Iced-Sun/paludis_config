@@ -2,12 +2,11 @@
 
 ## desktop
 x11-apps/xdg-utils
-virtual/notification-daemon
 
 ## media
 media/mpv				alsa opengl pipewire
 	media-libs/libass		fontconfig
-media-gfx/imv				png jpeg tiff svg jxl
+media-gfx/swayimg			png jpeg tiff svg
 
 ## text
 virtual/zathura-pdf			providers: zathura-pdf-poppler
@@ -31,6 +30,3 @@ wayland-apps/wmenu
 
 ## flatpak
 sys-apps/flatpak
-	sys-apps/xdg-desktop-portal
-		media/pipewire
-			media/wireplumber	lua_abis: 5.4

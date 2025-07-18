@@ -3,10 +3,10 @@
 # build-fix
 	net-libs/webkit X
 		media-plugins/gst-plugins-base	X GSTREAMER_PLUGINS: opengl
-		dev-libs/at-spi2-core		X
 
 # curl
 	net-misc/curl				brotli http2
+		net-libs/nghttp2		utils
 
 # no geoclue
 	net-libs/webkit				&-gps/geoclue

@@ -1,0 +1,61 @@
+### desktop environment
+
+## defaults
+*/*					providers:	jpeg-turbo
+*/*					providers:	ffmpeg
+*/*					ffmpeg_abis:	-* 7
+
+## compositor
+compositor/sway				grab tray
+	sys-libs/wlroots		caps libseat
+# root access for xwayland
+x11-apps/xhost
+
+## notification daemon
+virtual/notification-daemon
+
+## pipewire
+media/pipewire		alsa dbus
+media/wireplumber	lua_abis: 5.4
+
+## XDG Desktop Portal
+sys-apps/xdg-desktop-portal
+
+## XDG Desktop Portal backends: gtk+wlr
+sys-apps/xdg-desktop-portal-gtk
+	gnome-desktop/gnome-desktop	legacy
+		x11-libs/gtk		media
+			media-plugins/gst-plugins-base	gstreamer_plugins: opengl opus vorbis
+		gnome-desktop/gsettings-desktop-schemas	gobject-introspection
+	x11-libs/gtk+			X gobject-introspection
+		dev-libs/at-spi2-core	gobject-introspection
+sys-apps/xdg-desktop-portal-wlr
+
+# secret portal backend
+gnome-desktop/gnome-keyring
+	gnome-desktop/gcr		gobject-introspection
+		x11-libs/gtk+		gobject-introspection
+			dev-libs/at-spi2-core	gobject-introspection
+
+## inputmethods
+inputmethods/fcitx			dbus
+# cairo-xcb
+	x11-libs/cairo			X
+inputmethods/fcitx-gtk			gtk3 gtk4
+	x11-libs/gtk
+		x11-libs/gdk-pixbuf	gobject-introspection
+		x11-libs/pango		gobject-introspection
+			x11-libs/harfbuzz	gobject-introspection
+		x11-libs/graphene	gobject-introspection
+inputmethods/fcitx-chinese-addons
+
+## fonts
+fonts/terminus-font			X
+fonts/Sarasa-Gothic
+
+## gtk-theme
+gnome-desktop/gsettings-desktop-schemas
+gnome-desktop/adwaita-icon-theme
+
+## terminal
+wayland-apps/foot

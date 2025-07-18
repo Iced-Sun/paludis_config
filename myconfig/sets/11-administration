@@ -8,6 +8,7 @@ virtual/unzip
 app-misc/mc
 app-shells/fish
 	dev-libs/pcre2	parts: development
+app-shells/atuin
 
 ## tools
 app-admin/sudo
