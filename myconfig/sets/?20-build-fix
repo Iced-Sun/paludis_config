@@ -44,7 +44,11 @@
 
 # no symbols
 
+# relocation R_X86_64_PC32 against undefined hidden symbol `ring_core_0_17_8_OPENSSL_ia32cap_P' can not be used when making a shared object
+@app-shells/atuin			CFLAGS: $-flto
+
 ## runtime segfault
+@app-editors/emacs[=29.1]		CFLAGS: $-flto
 
 ## clang requires llvm[gold] to support -flto
 @sys-libs/libc++abi			CFLAGS: $-flto

@@ -1,25 +1,36 @@
 ## general sets
-cui
-gui
-desktop
-laptop
-transient
+# console
+systems
+administration
+development
+productivity
+
+# graphic
+graphic
+desktop-environment
+desktop-application
+
+# transient
+*/*::subi				build_options: work=preserve
 
 ## cross root
-*/*					TARGETS:		-*
+*/*					targets:		-*
 
 # include armv7-unknown-linux-musleabihf
-armv7-unknown-linux-musleabihf
-*/*					TARGETS:		armv7-unknown-linux-musleabihf
+#armv7-unknown-linux-musleabihf
+#*/*					targets:		armv7-unknown-linux-musleabihf
 app-virtualization/qemu			arm
 
 # include aarch64-unknown-linux-musleabi
-aarch64-unknown-linux-musleabi
-*/*					TARGETS:		aarch64-unknown-linux-musleabi
+#aarch64-unknown-linux-musleabi
+#*/*					targets:		aarch64-unknown-linux-musleabi
 app-virtualization/qemu			aarch64
 
 # rustc use host cflags to build extra targets
-	dev-lang/rust			TARGETS:		-*
+	dev-lang/rust			targets:		-*
+
+## defaults
+*/*					linguas:		zh_CN
 
 ## machine specific
 */*					amd64_cpu_features:	         sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3 fma4
@@ -50,12 +61,8 @@ net-wireless/blueman
 	sys-libs/libinput		wacom
 
 ## hardware ability
-media/mpv				vaapi pipewire
-	# glslang just breaks the build of libplacebo
-	media-libs/libplacebo		providers: -glslang shaderc
-		media/ffmpeg		vaapi
 		x11-libs/libva		X opengl	&x11-drivers/intel-media-driver
-		x11-dri/libdrm		VIDEO_DRIVERS: intel
+		x11-dri/libdrm		video_drivers: intel
 
 ## fs
 sys-fs/ntfs-3g_ntfsprogs
@@ -65,33 +72,11 @@ sys-fs/dosfstools
 dev-db/postgresql			readline postgresql_extensions: pg_trgm pgcrypto
 dev-db/postgresql-client		pgdump readline ssl
 
-## java
-virtual/jdk				PROVIDERS: openjdk-bin
-	dev-lang/openjdk-bin
-		app-misc/ca-certificates	ca-trust
-
 ## gnupg
 app-crypt/gnupg
 	app-crypt/pinentry		keyring gnome
 		gnome-desktop/gnome-keyring
 			gnome-desktop/gcr:0	gobject-introspection
-
-## nodejs
-dev-lang/node
-	net-libs/nghttp2		-systemd utils
-
-## jdee requires python[readline]
-	dev-lang/python			readline
-
-## office
-app-office/wps-office
-	x11-libs/qtwayland:5
-		x11-libs/qtbase		gui
-		x11-libs/qttools	gui
-			x11-libs/qtbase	sql sqlite
-app-office/gnucash			gnucash dbi
-	dev-cpp/gtest			googlemock
-	dev-libs/libdbi-drivers		sqlite
 
 ## misc
 net-proxy/proxychains-ng
@@ -113,7 +98,6 @@ media/wireplumber			lua_abis: 5.4
 
 ## emacs
 	app-editors/emacs		dbus
-dev-libs/tree-sitter
 fonts/LxgwWenKai
 x11-libs/libvterm
 
@@ -123,9 +107,6 @@ wayland-apps/wlsunset
 ## fcitx
 #inputmethods/fcitx-configtool		qt
 #	inputmethods/fcitx-qt		qt5
-
-## feishu
-net-im/feishu
 
 ## zig
 dev-lang/zig
