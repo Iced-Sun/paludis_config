@@ -55,8 +55,8 @@
 */*			zstd
 
 ## language bindings
-*/*			llvm_abis:		-* 20
+*/*			llvm_abis:		-* 21
 */*			lua_abis:		-*
-*/*			python_abis:		-* 3.12
-*/*			ruby_abis:		-*
+*/*			python_abis:		-* 3.13
+*/*			ruby_abis:		-* 3.4
 */*			vala_abis:		-* 0.56

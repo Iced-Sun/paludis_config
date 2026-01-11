@@ -3,7 +3,7 @@
 ## defaults
 */*					providers:	jpeg-turbo
 */*					providers:	ffmpeg
-*/*					ffmpeg_abis:	-* 7
+*/*					ffmpeg_abis:	-* 8
 
 ## compositor
 compositor/sway				grab tray
@@ -13,6 +13,7 @@ x11-apps/xhost
 
 ## notification daemon
 virtual/notification-daemon
+x11-libs/libnotify
 
 ## pipewire
 media/pipewire		alsa dbus

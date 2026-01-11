@@ -37,10 +37,14 @@
 # undefined reference
 @net-libs/webkit			CFLAGS: $-flto
 @dev-libs/spidermonkey[=115.10.0]	CFLAGS: $-flto
+@dev-lang/node[=22.17.1]		CFLAGS: $-flto
 
 # undefined reference by lld
 @dev-lang/zig				CFLAGS: $-flto
 	@sys-devel/lld			CFLAGS: $-flto
+
+# libssh2.so.1: error adding symbols: DSO missing from command line
+@dev-rust/cargo-c[=0.10.13]		CFLAGS: $-flto
 
 # no symbols
 
