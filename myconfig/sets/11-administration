@@ -12,7 +12,7 @@ app-shells/atuin
 
 ## tools
 app-admin/sudo
-app-terminal/tmux
+app-terminal/tmux	jemalloc
 
 ## monitoring
 sys-process/htop	cgroups			&-dev-util/strace sys-process/lsof

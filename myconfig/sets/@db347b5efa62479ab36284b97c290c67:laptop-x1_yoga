@@ -87,9 +87,6 @@ net/wireguard-tools			PROVIDERS: -* nftables
 #	sys-apps/runc			seccomp
 #app-virtualization/docker-cli
 
-## baidunetdisk
-x11-libs/libXScrnSaver
-
 ## pipewire
 media/pipewire				alsa bluetooth dbus -camera -aptx -echo-cancel-webrtc -fdk-aac -ffmpeg -gstreamer -ldac pulseaudio
 	sys-sound/alsa-plugins		pulseaudio
@@ -99,7 +96,6 @@ media/wireplumber			lua_abis: 5.4
 ## emacs
 	app-editors/emacs		dbus
 fonts/LxgwWenKai
-x11-libs/libvterm
 
 ## misc
 wayland-apps/wlsunset

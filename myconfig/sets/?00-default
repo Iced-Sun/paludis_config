@@ -1,4 +1,7 @@
 ### build options (bashrc)
+## Fix SHELL
+@*/*			SHELL:			/bin/sh
+
 ## CHOST
 @*/*			CHOST:			x86_64-pc-linux-gnu
 
@@ -29,6 +32,8 @@
 
 ## parallel building
 @*/*			EXJOBS:			$((`cat /proc/cpuinfo | grep processor | wc -l`+2))
+# webkit consumes huge memory
+@net-libs/webkit	EXJOBS:			4
 
 ### global/system option defaults
 ## disable everything by default

@@ -42,6 +42,7 @@
 # undefined reference by lld
 @dev-lang/zig				CFLAGS: $-flto
 	@sys-devel/lld			CFLAGS: $-flto
+@sys-apps/uv				CFLAGS: $-flto
 
 # libssh2.so.1: error adding symbols: DSO missing from command line
 @dev-rust/cargo-c[=0.10.13]		CFLAGS: $-flto

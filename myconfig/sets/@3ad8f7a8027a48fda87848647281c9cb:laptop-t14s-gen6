@@ -51,8 +51,6 @@ x11-drivers/xf86-video-amdgpu
 
 ## hardware ability
 #media/mpv				vaapi
-	# glslang just breaks the build of libplacebo
-	media-libs/libplacebo		providers: -glslang shaderc
 #		media/ffmpeg		vaapi
 #		x11-libs/libva		X opengl	&x11-drivers/intel-media-driver
 #		x11-dri/libdrm		video_drivers: intel
@@ -66,9 +64,9 @@ net-proxy/proxychains-ng
 #net/wireguard-tools			providers: -* nftables
 
 ## docker
-#app-virtualization/moby
-#	sys-apps/runc			seccomp
-#app-virtualization/docker-cli
+app-virtualization/moby
+	sys-apps/runc			seccomp
+app-virtualization/docker-cli
 
 ## pipewire
 #media/pipewire				alsa bluetooth dbus -camera -aptx -echo-cancel-webrtc -fdk-aac -ffmpeg -gstreamer -ldac pulseaudio
@@ -78,7 +76,6 @@ net-proxy/proxychains-ng
 ## emacs
 	app-editors/emacs		dbus
 fonts/LxgwWenKai
-x11-libs/libvterm
 
 ## misc
 #wayland-apps/wlsunset
@@ -88,7 +85,7 @@ x11-libs/libvterm
 #	inputmethods/fcitx-qt		qt5
 
 ## zig
-+dev-lang/zig[=scm]
+#+dev-lang/zig[=scm]
 
 ## syncthing
 net-p2p/syncthing
@@ -99,6 +96,8 @@ net-p2p/syncthing
 ## firefox: compile in this box
 net-www/firefox				lto
 	dev-lang/python			sqlite
+# ld.lld: error: Invalid summary version 12. Version should be in the range [1-10]
+	net-www/firefox[=140.0.4]	-lto
 
 ## productivity
 dev-db/dbeaver

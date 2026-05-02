@@ -24,6 +24,7 @@ sys-apps/xdg-desktop-portal
 
 ## XDG Desktop Portal backends: gtk+wlr
 sys-apps/xdg-desktop-portal-gtk
+	sys-fs/fuse			io_uring
 	gnome-desktop/gnome-desktop	legacy
 		x11-libs/gtk		media
 			media-plugins/gst-plugins-base	gstreamer_plugins: opengl opus vorbis
@@ -51,7 +52,6 @@ inputmethods/fcitx-gtk			gtk3 gtk4
 inputmethods/fcitx-chinese-addons
 
 ## fonts
-fonts/terminus-font			X
 fonts/Sarasa-Gothic
 
 ## gtk-theme
