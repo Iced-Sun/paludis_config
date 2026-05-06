@@ -15,27 +15,27 @@
 
 ## configuring failure
 # python-3.12.3: checking whether float word ordering is bigendian... unknown
-@dev-lang/python			CFLAGS: $-flto
-@dev-lang/python			MY__EXTRA_ECONF: ^--with-lto
+@dev-lang/python[=3.12.3]		CFLAGS: $-flto
+@dev-lang/python[=3.12.3]		MY__EXTRA_ECONF: ^--with-lto
 
 # perl-5.40: Cannot check byte order without known uvsize
-@dev-lang/perl				CFLAGS: $-flto
+@dev-lang/perl[=5.40]			CFLAGS: $-flto
 
 ## building failure
 ## linking failure
 # xorg-server-21.1.13-r1: -Werror=array-bounds
-@x11-server/xorg-server			CFLAGS: $-flto
+@x11-server/xorg-server[=21.1.13-r1]	CFLAGS: $-flto
 
 # Error: invalid attempt to declare external version name as default in symbol
 # libgomp-13.3.0
-@sys-libs/libgomp			CFLAGS: $-flto
+@sys-libs/libgomp[=13.3.0]		CFLAGS: $-flto
 # libstdc++-13.3.0
-@sys-libs/libstdc++			CFLAGS: $-flto
+@sys-libs/libstdc++[=13.3.0]		CFLAGS: $-flto
 # libgcc-13.3.0
-@sys-libs/libgcc			CFLAGS: $-flto
+@sys-libs/libgcc[=13.3.0]		CFLAGS: $-flto
 
 # undefined reference
-@net-libs/webkit			CFLAGS: $-flto
+@net-libs/webkit[=2.46.6-r4100]		CFLAGS: $-flto
 @dev-libs/spidermonkey[=115.10.0]	CFLAGS: $-flto
 @dev-lang/node[=22.17.1]		CFLAGS: $-flto
 
@@ -50,7 +50,7 @@
 # no symbols
 
 # relocation R_X86_64_PC32 against undefined hidden symbol `ring_core_0_17_8_OPENSSL_ia32cap_P' can not be used when making a shared object
-@app-shells/atuin			CFLAGS: $-flto
+@app-shells/atuin[=18.8.0]		CFLAGS: $-flto
 
 ## runtime segfault
 @app-editors/emacs[=29.1]		CFLAGS: $-flto
