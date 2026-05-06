@@ -58,9 +58,12 @@
 ## clang requires llvm[gold] to support -flto
 @sys-libs/libc++abi			CFLAGS: $-flto
 
-### general
+### misc
 # sydbox-1.2.3 ignores statically links, hence the dependency pinktrace should be built statically
 @dev-libs/pinktrace			MY__EXTRA_ECONF: $--disable-static
 
 # libtool requires --enable-static to build both pic & non-pic objects
 @sys-devel/libtool			MY__EXTRA_ECONF: $--disable-static
+
+# libplacebo doesn't link to required libraries
+@media-libs/libplacebo[=7.360.1]	LDFLAGS: ^-lSPIRV-Tools-opt ^-lSPIRV-Tools ^-lSPIRV-Tools-link
