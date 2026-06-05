@@ -1,0 +1,29 @@
+### settings
+## defaults
+*/*					linguas:		zh_CN
+
+## gfw
+@*/*					GO111MODULE:		on
+@*/*					GOPROXY:		https://goproxy.cn,direct
+
+## cross root
+*/*					targets:		-*
+
+# rustc use host cflags to build extra targets
+	dev-lang/rust			targets:		-*
+
+### packages
+## misc
+net-proxy/proxychains-ng
+
+## pipewire
+media/pipewire				alsa -bluetooth dbus -camera -aptx -echo-cancel-webrtc -fdk-aac -ffmpeg -gstreamer -ldac -pulseaudio
+media/wireplumber			lua_abis: 5.4
+
+## syncthing
+net-p2p/syncthing
+
+## productivity
+dev-db/dbeaver
+	virtual/jdk			providers: openjdk-bin
+		app-misc/ca-certificates	ca-trust

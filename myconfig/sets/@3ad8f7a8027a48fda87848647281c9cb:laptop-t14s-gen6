@@ -13,14 +13,8 @@ desktop-application
 # transient
 */*::subi				build_options: work=preserve
 
-## defaults
-*/*					linguas:		zh_CN
-
-## cross root
-*/*					targets:		-*
-
-# rustc use host cflags to build extra targets
-	dev-lang/rust			targets:		-*
+# computer box
+laptop
 
 ## machine specific
 */*					amd64_cpu_features:	mmxext ssse3 sse4.1 sse4.2 sse4a avx avx2 fma3 fma4
@@ -30,10 +24,6 @@ desktop-application
 		x11-dri/mesa		video_drivers:		gallium-swrast
 		x11-server/xorg-server				&x11-drivers/xf86-video-amdgpu
 x11-drivers/xf86-video-amdgpu
-
-## gfw
-@*/*					GO111MODULE:		on
-@*/*					GOPROXY:		https://goproxy.cn,direct
 
 ## bluetooth
 #net-wireless/blueman
@@ -46,9 +36,6 @@ x11-drivers/xf86-video-amdgpu
 #		x11-libs/gdk-pixbuf	gobject-introspection
 #		x11-libs/harfbuzz	gobject-introspection
 
-## touchscreen and pen
-#	sys-libs/libinput		wacom
-
 ## hardware ability
 #media/mpv				vaapi
 #		media/ffmpeg		vaapi
@@ -59,19 +46,10 @@ x11-drivers/xf86-video-amdgpu
 #dev-lang/node
 #	net-libs/nghttp2		-systemd utils
 
-## misc
-net-proxy/proxychains-ng
-#net/wireguard-tools			providers: -* nftables
-
 ## docker
 app-virtualization/moby
 	sys-apps/runc			seccomp
 app-virtualization/docker-cli
-
-## pipewire
-#media/pipewire				alsa bluetooth dbus -camera -aptx -echo-cancel-webrtc -fdk-aac -ffmpeg -gstreamer -ldac pulseaudio
-#	sys-sound/alsa-plugins		pulseaudio
-#	media-sound/pulseaudio		bluetooth
 
 ## emacs
 	app-editors/emacs		dbus
@@ -84,29 +62,21 @@ fonts/LxgwWenKai
 #inputmethods/fcitx-configtool		qt
 #	inputmethods/fcitx-qt		qt5
 
-## zig
-#+dev-lang/zig[=scm]
-
-## syncthing
-net-p2p/syncthing
-
 ## m32 is not enabled
 #@dev-util/strace			MY__EXTRA_ECONF: ^--disable-mpers
 
 ## firefox: compile in this box
 net-www/firefox				lto
 	dev-lang/python			sqlite
-# ld.lld: error: Invalid summary version 12. Version should be in the range [1-10]
-	net-www/firefox[=140.0.4]	-lto
 
 ## productivity
-dev-db/dbeaver
-	virtual/jdk			providers: openjdk-bin
-		app-misc/ca-certificates	ca-trust
-net-im/feishu
+net-im/feishu				wayland
 app-office/gnucash			gnucash dbi
 	media-libs/libavif		providers: aom
 	dev-libs/libdbi-drivers		sqlite
+net-im/wechat
+	media-sound/apulse
+	app-crypt/krb5
 
 gnome-desktop/gnome-pomodoro
 
@@ -114,3 +84,6 @@ gnome-desktop/gnome-pomodoro
 ## m32 is not enabled
 @dev-util/strace			MY__EXTRA_ECONF: ^--disable-mpers
 @dev-util/strace			CFLAGS: $-flto
+
+## postgres
+dev-db/postgresql			-* icu python postgresql_extensions: pgcrypto

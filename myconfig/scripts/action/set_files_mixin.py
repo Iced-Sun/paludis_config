@@ -14,7 +14,7 @@ class Set_files_mixin:
         set_path = config_path / 'sets'
         self._configured_set_files = {
             'machine-set': sorted(set_path.glob('@*')),
-            'general-set': sorted(set_path.glob('[0-9][0-9]-*')),
+            'general-set': sorted(set_path.glob('[0-9a-z][0-9]-*')),
             'weak-set': sorted(set_path.glob('[?]*'))
         }
         pass
@@ -59,7 +59,7 @@ class Set_files_mixin:
             # match a general set
             else:
                 self._active_set_files.append(
-                    next(_ for _ in self.configured_set_files['general-set'] if _.match(f'*/[0-9][0-9]-{world_set}'))
+                    next(_ for _ in self.configured_set_files['general-set'] if _.match(f'*/[0-9a-z][0-9]-{world_set}'))
                 )
                 pass
             pass
@@ -84,7 +84,7 @@ class Set_files_mixin:
                 continue
 
             self._active_set_files.append(
-                next(_ for _ in self.configured_set_files['general-set'] if _.match(f'*/[0-9][0-9]-{dependency_set_name}'))
+                next(_ for _ in self.configured_set_files['general-set'] if _.match(f'*/[0-9a-z][0-9]-{dependency_set_name}'))
             )
             pass
 
