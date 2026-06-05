@@ -22,17 +22,18 @@
 @dev-lang/perl[=5.40]			CFLAGS: $-flto
 
 ## building failure
+
 ## linking failure
 # xorg-server-21.1.13-r1: -Werror=array-bounds
 @x11-server/xorg-server[=21.1.13-r1]	CFLAGS: $-flto
 
-# Error: invalid attempt to declare external version name as default in symbol
-# libgomp-13.3.0
-@sys-libs/libgomp[=13.3.0]		CFLAGS: $-flto
-# libstdc++-13.3.0
-@sys-libs/libstdc++[=13.3.0]		CFLAGS: $-flto
-# libgcc-13.3.0
-@sys-libs/libgcc[=13.3.0]		CFLAGS: $-flto
+# -Werror=lto-type-mismatch
+@sys-libs/libatomic:15			CFLAGS: $-flto
+
+# Error: invalid attempt to declare external version name as default in symbol `_ZNSt19istreambuf_iteratorIcSt11char_traitsIcEEppEv@@GLIBCXX_3.4.5'
+@sys-libs/libstdc++:15			CFLAGS: $-flto
+@sys-libs/libgcc:15			CFLAGS: $-flto
+@sys-libs/libgomp:15			CFLAGS: $-flto
 
 # undefined reference
 @net-libs/webkit[=2.46.6-r4100]		CFLAGS: $-flto
@@ -40,9 +41,9 @@
 @dev-lang/node[=22.17.1]		CFLAGS: $-flto
 
 # undefined reference by lld
-@dev-lang/zig				CFLAGS: $-flto
-	@sys-devel/lld			CFLAGS: $-flto
-@sys-apps/uv				CFLAGS: $-flto
+@dev-lang/zig:0.16			CFLAGS: $-flto
+	@sys-devel/lld:1		CFLAGS: $-flto
+@sys-apps/uv:1				CFLAGS: $-flto
 
 # libssh2.so.1: error adding symbols: DSO missing from command line
 @dev-rust/cargo-c[=0.10.13]		CFLAGS: $-flto
