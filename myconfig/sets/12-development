@@ -14,14 +14,3 @@ dev-libs/tree-sitter:0
 		net-misc/curl	http2
 			net-libs/nghttp2	utils
 @app-editors/emacs	MY__EXTRA_ECONF: ^--with-sqlite3
-
-## mail
-net-mail/isync
-mail-client/mu		emacs
-mail-mta/msmtp
-
-## media
-sys-sound/alsa-utils
-# upstream systemd doesn't support user config
-media-sound/mpd		alsa ffmpeg -systemd	&-*/*
-media-sound/ncmpcpp	taglib

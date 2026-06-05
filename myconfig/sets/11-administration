@@ -17,5 +17,8 @@ app-terminal/tmux	jemalloc
 ## monitoring
 sys-process/htop	cgroups			&-dev-util/strace sys-process/lsof
 
-## configuration
+## networks
 net-wireless/iwd
+# tailscale
+# CONFIG_TUN
+net/tailscale

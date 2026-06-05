@@ -6,6 +6,7 @@ mail-client/mu		emacs
 mail-mta/msmtp
 
 ## media
+media-sound/apulse
 sys-sound/alsa-utils
 # upstream systemd doesn't support user config
 media-sound/mpd		alsa ffmpeg -systemd	&-*/*
