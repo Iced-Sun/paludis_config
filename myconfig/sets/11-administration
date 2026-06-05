@@ -20,5 +20,15 @@ sys-process/htop	cgroups			&-dev-util/strace sys-process/lsof
 ## networks
 net-wireless/iwd
 # tailscale
+# CONFIG_IP_MULTIPLE_TABLES
+# CONFIG_IPV6_MULTIPLE_TABLES
+#
+# CONFIG_NF_CONNTRACK_MARK
+#
+# CONFIG_NF_TABLES
+# CONFIG_NFT_NAT
+# CONFIG_NFT_CT
+# CONFIG_NFT_MASQ
+#
 # CONFIG_TUN
 net/tailscale
