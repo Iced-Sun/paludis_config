@@ -1,3 +1,7 @@
+## alternatives
 */*	providers:	jpeg-turbo
 */*	providers:	ffmpeg
 */*	ffmpeg_abis:	-* 8
+
+## desktop
+*/*	vulkan
