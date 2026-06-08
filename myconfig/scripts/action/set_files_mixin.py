@@ -34,7 +34,7 @@ class Set_files_mixin:
         # repositories/installed -> set files; need some sort-out
         world_sets = []
         with Path('/var/db/paludis/repositories/installed/world').open() as f:
-            world_sets = [line for line in f.read().splitlines() if '/' not in line]
+            world_sets = [line for line in f.read().splitlines() if line]
             pass
 
         ## find the active sets by matching against the world set
