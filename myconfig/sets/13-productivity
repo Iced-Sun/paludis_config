@@ -9,5 +9,5 @@ mail-mta/msmtp
 media-sound/apulse
 sys-sound/alsa-utils
 # upstream systemd doesn't support user config
-media-sound/mpd		alsa ffmpeg -systemd	&-*/*
+media-sound/mpd		alsa ffmpeg -systemd
 media-sound/ncmpcpp	taglib

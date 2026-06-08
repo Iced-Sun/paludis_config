@@ -1,7 +1,7 @@
 ### console: development
 
 ## dev
-dev-scm/git		curl			&-*/*
+dev-scm/git		curl
 
 ## editors
 app-editors/emacs	modules
