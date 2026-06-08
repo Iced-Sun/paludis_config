@@ -1,15 +1,15 @@
-/repositories/*
-!/repositories/*.bash
-/repositories/installed-*.bash
-!/repositories/arbor.conf
-!/repositories/accounts.conf
-!/repositories/unpackaged.conf
-!/repositories/unwritten.conf
-!/repositories/graveyard.conf
-!/repositories/repository.conf
-!/repositories/unavailable-unofficial.conf
-!/repositories/unavailable.conf
-!/repositories/installed_accounts.conf
+/repositories*/*
+!/repositories*/*.bash
+/repositories*/installed-*.bash
+!/repositories*/arbor.conf
+!/repositories*/accounts.conf
+!/repositories*/unpackaged.conf
+!/repositories*/unwritten.conf
+!/repositories*/graveyard.conf
+!/repositories*/repository.conf
+!/repositories*/unavailable-unofficial.conf
+!/repositories*/unavailable.conf
+!/repositories*/installed_accounts.conf
 
 /sets/*.bash
 
