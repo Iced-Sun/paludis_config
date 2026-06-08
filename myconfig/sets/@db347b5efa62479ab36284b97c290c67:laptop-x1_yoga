@@ -28,8 +28,11 @@ firmware/intel-microcode
 ## 00:02.0 VGA compatible controller: Intel Corporation Skylake-U GT2 [HD Graphics 520] (rev 07)
 # https://en.wikipedia.org/wiki/List_of_Intel_graphics_processing_units#Gen9
 	x11-dri/libdrm			video_drivers:		intel
-	x11-dri/mesa			-vaapi llvm video_drivers:	iris
-	x11-libs/libva			X &x11-drivers/intel-media-driver
+	x11-dri/mesa			llvm video_drivers:	iris
+
+# intel need libva to enable hardware video acceleration
+*/*::media				vaapi
+	x11-libs/libva			&x11-drivers/intel-media-driver
 
 ## touchscreen and pen
 	sys-libs/libinput		wacom
@@ -71,14 +74,6 @@ app-crypt/gnupg
 #app-virtualization/moby
 #	sys-apps/runc			seccomp
 #app-virtualization/docker-cli
-
-## emacs
-	app-editors/emacs		dbus
-fonts/LxgwWenKai
-
-## fcitx
-#inputmethods/fcitx-configtool		qt
-#	inputmethods/fcitx-qt		qt5
 
 ## zig
 dev-lang/zig

@@ -29,6 +29,12 @@ dev-lang/zig
 net-dialup/minicom
 sys-apps/uv
 
+## fonts
+fonts/LxgwWenKai
+
+## notification
+	app-editors/emacs		dbus
+
 ## prebuilt
 dev-db/dbeaver
 	virtual/jdk			providers: openjdk-bin
