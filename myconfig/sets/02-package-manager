@@ -1,0 +1,4 @@
+## package manager
+sys-apps/paludis			prebuilt-documentation search-index pbin
+	sys-apps/sydbox			seccomp
+		dev-libs/pinktrace	pvm

@@ -1,8 +1,5 @@
-*/*					wayland xwayland opengl
+*/*			wayland vulkan vaapi
 
-sys-libs/wlroots			X
-	x11-dri/mesa			X
-		dev-libs/libglvnd	X
-	x11-server/xorg-server		&-*/*
-		dev-libs/libepoxy	X
-	x11-libs/libxkbcommon		X
+# presumed
+x11-dri/mesa		X
+dev-libs/libglvnd	X

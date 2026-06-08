@@ -1,0 +1,3 @@
+*/*	providers:	jpeg-turbo
+*/*	providers:	ffmpeg
+*/*	ffmpeg_abis:	-* 8

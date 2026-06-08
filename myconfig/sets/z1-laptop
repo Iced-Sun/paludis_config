@@ -15,15 +15,21 @@
 ### packages
 ## misc
 net-proxy/proxychains-ng
+wayland-apps/wlsunset
 
-## pipewire
-media/pipewire				alsa -bluetooth dbus -camera -aptx -echo-cancel-webrtc -fdk-aac -ffmpeg -gstreamer -ldac -pulseaudio
-media/wireplumber			lua_abis: 5.4
+## fs
+sys-fs/ntfs-3g_ntfsprogs
+sys-fs/dosfstools
 
 ## syncthing
 net-p2p/syncthing
 
-## productivity
+## develepment
+dev-lang/zig
+net-dialup/minicom
+sys-apps/uv
+
+## prebuilt
 dev-db/dbeaver
 	virtual/jdk			providers: openjdk-bin
 		app-misc/ca-certificates	ca-trust

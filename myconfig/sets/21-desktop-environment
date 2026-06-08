@@ -1,23 +1,15 @@
 ### desktop environment
 
-## defaults
-*/*					providers:	jpeg-turbo
-*/*					providers:	ffmpeg
-*/*					ffmpeg_abis:	-* 8
-
 ## compositor
-compositor/sway				grab tray
-	sys-libs/wlroots		caps libseat
-# root access for xwayland
-x11-apps/xhost
+compositor/sway				tray
 
 ## notification daemon
 virtual/notification-daemon
 x11-libs/libnotify
 
 ## pipewire
-media/pipewire		alsa dbus
-media/wireplumber	lua_abis: 5.4
+media/pipewire				alsa dbus
+media/wireplumber			lua_abis: 5.5
 
 ## XDG Desktop Portal
 sys-apps/xdg-desktop-portal
@@ -26,23 +18,24 @@ sys-apps/xdg-desktop-portal
 sys-apps/xdg-desktop-portal-gtk
 	sys-fs/fuse			io_uring
 	gnome-desktop/gnome-desktop	legacy
+		# presumed
 		x11-libs/gtk		media
 			media-plugins/gst-plugins-base	gstreamer_plugins: opengl opus vorbis
 		gnome-desktop/gsettings-desktop-schemas	gobject-introspection
 	x11-libs/gtk+			X gobject-introspection
-		dev-libs/at-spi2-core	gobject-introspection
+		dev-libs/at-spi2-core	X gobject-introspection
+		dev-libs/libepoxy	X
+		x11-libs/cairo		X
 sys-apps/xdg-desktop-portal-wlr
 
 # secret portal backend
 gnome-desktop/gnome-keyring
 	gnome-desktop/gcr		gobject-introspection
-		x11-libs/gtk+		gobject-introspection
-			dev-libs/at-spi2-core	gobject-introspection
+		x11-libs/gtk+		X gobject-introspection
 
 ## inputmethods
 inputmethods/fcitx			dbus
 # cairo-xcb
-	x11-libs/cairo			X
 inputmethods/fcitx-gtk			gtk3 gtk4
 	x11-libs/gtk
 		x11-libs/gdk-pixbuf	gobject-introspection
