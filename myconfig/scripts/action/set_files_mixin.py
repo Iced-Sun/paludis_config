@@ -17,6 +17,9 @@ class Set_files_mixin:
             'general-set': sorted(set_path.glob('[0-9a-z][0-9]-*')),
             'weak-set': sorted(set_path.glob('[?]*'))
         }
+
+        ## since _init_active_set_files changes weak-set, let's include it
+        self._init_active_set_files()
         pass
 
     @property
@@ -80,12 +83,21 @@ class Set_files_mixin:
 
         ## find the declared dependency sets
         for dependency_set_name in dependency_set_names:
+            ## the set is handled
             if next((_ for _ in self._active_set_files if _ == dependency_set_name), None) is not None:
                 continue
 
-            self._active_set_files.append(
-                next(_ for _ in self.configured_set_files['general-set'] if _.match(f'*/[0-9a-z][0-9]-{dependency_set_name}'))
-            )
+            next_is_general_set = next((_ for _ in self.configured_set_files['general-set'] if _.match(f'*/[0-9a-z][0-9]-{dependency_set_name}')), None)
+            ## the dependency is a general set, mark it an active_set_files set
+            if next_is_general_set:
+                self._active_set_files.append(next_is_general_set)
+                pass
+            ## the dependency is a negative weak set, remove it from weak sets
+            else:
+                next_is_weak_set = next((_ for _ in self.configured_set_files['weak-set'] if _.match(f'*/[?]{dependency_set_name[1:]}')), None)
+                if next_is_weak_set:
+                    self._configured_set_files['weak-set'].remove(next_is_weak_set)
+                    pass
             pass
 
         # end of self._init_active_set_names()
