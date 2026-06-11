@@ -12,14 +12,14 @@ class Options_handler(Spec_configuration_mixin, Destination_mixin, Target_mixin,
         super().__init__(script_path)
         pass
 
+    def __pickline(self, config) -> str:
+        if config['type'] == 'package' and 'options' in config and config['options'] is not None:
+            return f'{config["spec"]:<{24}}\t{config["options"]}'
+
+        return Action_handler._pickline(self, config)
+
     @property
     def configuration(self) -> str:
-        return '\n'.join(
-            f'{config["spec"]:<{24}}\t{config["options"]}'
-            for config in self.active_spec_configurations
-            if config['type'] == 'package'
-            and 'options' in config
-            and config['options'] is not None
-        )
+        return '\n'.join(filter(None, (self.__pickline(config) for config in self.active_spec_configurations)))
 
     pass

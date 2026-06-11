@@ -12,14 +12,14 @@ class Sets_handler(Spec_configuration_mixin, Destination_mixin, Target_mixin, Se
         super().__init__(script_path)
         pass
 
+    def __pickline(self, config) -> str:
+        if config['type'] == 'package' and config['is_dependecy'] is False and config['has_wildcard'] is False:
+            return f'* {config["spec"]}'
+
+        return Action_handler._pickline(self, config)
+
     @property
     def configuration(self) -> str:
-        return '\n'.join(
-            f'* {config["spec"]}'
-            for config in self.active_spec_configurations
-            if config['type'] == 'package'
-            and config['is_dependecy'] is False
-            and config['has_wildcard'] is False
-        )
+        return '\n'.join(filter(None, (self.__pickline(config) for config in self.active_spec_configurations)))
 
     pass

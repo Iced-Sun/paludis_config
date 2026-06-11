@@ -35,5 +35,10 @@ class Action_handler:
         ### end of __init__()
         pass
 
+    def _pickline(self, config) -> str:
+        if config['type'] == 'comment':
+            return config['comment']
+        return None
+
     ### end of class Action_handler
     pass

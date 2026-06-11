@@ -12,12 +12,14 @@ class Package_mask_handler(Spec_configuration_mixin, Destination_mixin, Target_m
         super().__init__(script_path)
         pass
 
+    def __pickline(self, config) -> str:
+        if config['type'] == 'package' and config['mark'] == '-':
+            return config['spec']
+
+        return Action_handler._pickline(self, config)
+
     @property
     def configuration(self) -> str:
-        return '\n'.join(
-            config['spec']
-            for config in self.active_spec_configurations
-            if config['mark'] == '-' and config['type'] == 'package'
-        )
+        return '\n'.join(filter(None, (self.__pickline(config) for config in self.active_spec_configurations)))
 
     pass
