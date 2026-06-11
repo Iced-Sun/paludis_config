@@ -83,8 +83,8 @@ class Set_files_mixin:
 
         ## find the declared dependency sets
         for dependency_set_name in dependency_set_names:
-            ## the set is handled
-            if next((_ for _ in self._active_set_files if _ == dependency_set_name), None) is not None:
+            ## the set is already handled
+            if next((_ for _ in self._active_set_files if _.match(f'*/*-{dependency_set_name}')), None) is not None:
                 continue
 
             next_is_general_set = next((_ for _ in self.configured_set_files['general-set'] if _.match(f'*/[0-9a-z][0-9]-{dependency_set_name}')), None)
