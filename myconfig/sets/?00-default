@@ -11,12 +11,6 @@
 @*/*			LDFLAGS:		-Wl,-O1 -Wl,--as-needed -Wl,--sort-common
 
 ## Optimization
-# LTO
-@*/*			CFLAGS:			^-flto
-## ffmpeg needs its own options (--enable-pic --enable-lto); have to modify the exlib directly
-# no effect since ffmpeg doesn't use econf()
-#@media/ffmpeg:7	MY__EXTRA_ECONF:	^--enable-pic ^--enable-lto
-
 # SAFEST_FAST_MATH
 @*/*			CFLAGS:			^-fno-math-errno ^-fno-trapping-math
 
