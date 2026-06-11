@@ -10,7 +10,7 @@ The package configuration set files are located in
    A specific set which includes package configuration for a specific machine
    (mostly hardware), such as cpu features, video drivers, firmwares, etc.).
 
-   The configurations are appended in the end of the paludis configurations,
+   The configurations are *appended* in the end of the paludis configurations,
    i.e., it has the highest priority and will overwrite other configurations.
 
 2. =<order>-<name>=
@@ -21,13 +21,28 @@ The package configuration set files are located in
    Both the machine set and the ordinary set can pull in packages as the world
    dependecy (paludis installed world file).
 
-3. =?<default>=
+3. =?<order>-<default>=
 
    A weak configuration set defines package options or/and suggestions, without
    pulling packages as the world dependency.
 
-   The configuration will be prepend to the front of the paludis
-   configurations.
+   The configuration will be *prepended* to the paludis configurations.
+
+   By convention, it groups (overridable) global defaults that will be always
+   enabled.
+
+4. =?<feature>=
+
+   A feature configuration set defines deactivatable package options and
+   suggestions, without pulling packages as the world dependency.
+
+   The configuration will be inserted right before the machine set, hence it
+   overrides both weak sets and general sets, but can be overridden by the
+   machine set.
+
+   By convention, it groups settings around a specific feature (X, wayland,
+   pipewire, etc.), and could be referenced in the machine set file to disable
+   it.
 
 ** set file contents
 

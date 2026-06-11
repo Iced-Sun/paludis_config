@@ -15,10 +15,11 @@ class Set_files_mixin:
         self._configured_set_files = {
             'machine-set': sorted(set_path.glob('@*')),
             'general-set': sorted(set_path.glob('[0-9a-z][0-9]-*')),
-            'weak-set': sorted(set_path.glob('[?]*'))
+            'weak-set': sorted(set_path.glob('[?][0-9][0-9]-*')),
+            'feature-set': sorted(set_path.glob('[?][!0-9]*'))
         }
 
-        ## since _init_active_set_files changes weak-set, let's include it
+        ## feature-set could be deactivated by the machine-set
         self._init_active_set_files()
         pass
 
@@ -84,7 +85,7 @@ class Set_files_mixin:
         ## find the declared dependency sets
         for dependency_set_name in dependency_set_names:
             ## the set is already handled
-            if next((_ for _ in self._active_set_files if _.match(f'*/*-{dependency_set_name}')), None) is not None:
+            if next((_ for _ in self._active_set_files if _.match(f'*-{dependency_set_name}')), None) is not None:
                 continue
 
             next_is_general_set = next((_ for _ in self.configured_set_files['general-set'] if _.match(f'*/[0-9a-z][0-9]-{dependency_set_name}')), None)
@@ -92,14 +93,16 @@ class Set_files_mixin:
             if next_is_general_set:
                 self._active_set_files.append(next_is_general_set)
                 pass
-            ## the dependency is a negative weak set, remove it from weak sets
+            ## the dependency is a deactivated feature set
             else:
-                next_is_weak_set = next((_ for _ in self.configured_set_files['weak-set'] if _.match(f'*/[?]{dependency_set_name[1:]}')), None)
-                if next_is_weak_set:
-                    self._configured_set_files['weak-set'].remove(next_is_weak_set)
+                next_is_feature_set = next((_ for _ in self.configured_set_files['feature-set'] if _.match(f'*/[?]{dependency_set_name[1:]}')), None)
+                if next_is_feature_set:
+                    self._configured_set_files['feature-set'].remove(next_is_feature_set)
                     pass
             pass
 
+        ## sort active sets
+        self._active_set_files.sort(key = lambda path: '~~~~' if path.name.startswith('@') else path.name)
         # end of self._init_active_set_names()
         pass
 

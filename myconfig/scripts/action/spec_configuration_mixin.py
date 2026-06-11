@@ -23,45 +23,25 @@ class Spec_configuration_mixin:
         ## order matters
         # push active spec from weak set as dependecy
         for weak_set_file in self.configured_set_files['weak-set']:
+            self._active_spec_configurations.append({'type': 'comment', 'comment': f'# {weak_set_file.name}'})
             with weak_set_file.open() as f:
                 for line in f.read().splitlines():
                     # skip a comment or blank line
                     if re.match(r'^\s*#.*$|^\s*$', line): continue
 
-                    line_spec = self._parse_line_as_spec(line)
-                    line_spec['is_dependecy'] = True
+                    # parse the configuration line, generate the intermediate
+                    # spec for later generation
+                    self._pickup_spec(self._parse_line_as_spec(line, { 'is_dependecy': True }))
 
-                    if self.destination != 'installed': # cross compiling
-                        if line_spec['mark'] == '@' and line_spec['spec'] == '*/*' and (
-                                line_spec['config'].startswith('CHOST')
-                                or line_spec['config'].startswith('CFLAGS')
-                                or line_spec['config'].startswith('CXXFLAGS')
-                                or line_spec['config'].startswith('LDFLAGS')
-                        ):
-                            self._add_to_spec_environment(line_spec)
-                            pass
-                        pass
-                    else:
-                        if line_spec['mark'] == '@':
-                            self._add_to_spec_environment(line_spec)
-                            pass
-                        else:
-                            self._active_spec_configurations.append(line_spec)
-                            pass
-                        pass
-
-                    #if line_spec['mark'] == '@':
-                    #    self._add_to_spec_environment(line_spec)
-                    #    pass
-                    #else:
-                    #    self._active_spec_configurations.append(line_spec)
-                    #    pass
                     continue
                 pass
             pass
 
-        # push active spec from active set
+        # push active spec from active set, except the machine set
         for active_set_file in self.active_set_files:
+            # the machine set will be parsed at last
+            if active_set_file.name.startswith('@'): continue
+
             targetSets = [
                 target
                 for target in self.configured_targets
@@ -69,60 +49,106 @@ class Spec_configuration_mixin:
             ]
             setTarget = targetSets[0] if len(targetSets) == 1 else None
 
+            self._active_spec_configurations.append({'type': 'comment', 'comment': f'# {active_set_file.name}'})
             with active_set_file.open() as f:
                 for line in f.read().splitlines():
                     # skip a comment or blank line
                     if re.match(r'^\s*#.*$|^\s*$', line): continue
 
-                    line_spec = self._parse_line_as_spec(line)
-                    #if line_spec['mark'] == '@':
-                    #    self._add_to_spec_environment(line_spec)
-                    #    pass
-                    #else:
-                    #    self._active_spec_configurations.append(line_spec)
-                    #    pass
-                    if self.destination != 'installed': # cross compiling
-                        # parse only the destination-named set
-                        if setTarget == self.destination:
-                            if line_spec['mark'] == '@':
-                                self._add_to_spec_environment(line_spec, setTarget)
-                                pass
-                            else:
-                                self._active_spec_configurations.append(line_spec)
-                                pass
-                            pass
-                        pass
-                    else: # native compiling
-                        if setTarget is None: # a regular set
-                            if line_spec['mark'] == '@':
-                                self._add_to_spec_environment(line_spec)
-                                pass
-                            else:
-                                self._active_spec_configurations.append(line_spec)
-                                pass
-                            pass
-                        else: # a target set
-                            if line_spec['mark'] == '@' and line_spec['spec'] == '*/*' and (
-                                    line_spec['config'].startswith('CHOST')
-                                    or line_spec['config'].startswith('CFLAGS')
-                                    or line_spec['config'].startswith('CXXFLAGS')
-                                    or line_spec['config'].startswith('LDFLAGS')
-                            ):
-                                self._add_to_spec_environment(line_spec, setTarget)
-                            pass
-                        pass
+                    # parse the configuration line, generate the intermediate
+                    # spec for later generation
+                    self._pickup_spec(self._parse_line_as_spec(line), setTarget)
 
                     continue
                 pass
-            pass
+            continue
+
+        # push activated feature set
+        for feature_set_file in self.configured_set_files['feature-set']:
+            self._active_spec_configurations.append({'type': 'comment', 'comment': f'# {feature_set_file.name}'})
+            with feature_set_file.open() as f:
+                for line in f.read().splitlines():
+                    # skip a comment or blank line
+                    if re.match(r'^\s*#.*$|^\s*$', line): continue
+
+                    # parse the configuration line, generate the intermediate
+                    # spec for later generation
+                    self._pickup_spec(self._parse_line_as_spec(line))
+
+                    continue
+                pass
+            continue
+
+        # push machine set
+        for machine_set_file in self.active_set_files:
+            if not machine_set_file.name.startswith('@'): continue
+
+            self._active_spec_configurations.append({'type': 'comment', 'comment': f'# {machine_set_file.name}'})
+            with machine_set_file.open() as f:
+                for line in f.read().splitlines():
+                    # skip a comment or blank line
+                    if re.match(r'^\s*#.*$|^\s*$', line): continue
+
+                    # parse the configuration line, generate the intermediate
+                    # spec for later generation
+                    self._pickup_spec(self._parse_line_as_spec(line))
+
+                    continue
+                pass
+            continue
 
         return
 
-    def _parse_line_as_spec(self, line: str):
+    def _pickup_spec(self, line_spec, target=None):
+        is_env_general_and_buildflags = (
+            line_spec['mark'] == '@'
+            and line_spec['spec'] == '*/*'
+            and line_spec['config'].startswith(('CHOST', 'CFLAGS', 'CXXFLAGS', 'LDFLAGS'))
+        )
+
+        # cross compiling
+        if self.destination != 'installed':
+            if is_env_general_and_buildflags:
+                self._add_to_spec_environment(line_spec)
+                pass
+
+            # pick up only destination matching the target
+            if target == self.destination:
+                if line_spec['mark'] == '@':
+                    self._add_to_spec_environment(line_spec, target)
+                    pass
+                else:
+                    self._active_spec_configurations.append(line_spec)
+                    pass
+                pass
+
+            pass
+        # native compiling
+        else:
+            # toolchain
+            if target:
+                if is_env_general_and_buildflags:
+                    self._add_to_spec_environment(line_spec, target)
+                    pass
+                pass
+            # host packages
+            else:
+                if line_spec['mark'] == '@':
+                    self._add_to_spec_environment(line_spec)
+                    pass
+                else:
+                    self._active_spec_configurations.append(line_spec)
+                    pass
+                pass
+            pass
+        return
+
+    def _parse_line_as_spec(self, line: str, default={}):
         # parse the line
         m = re.match(r'^(?P<leading_tabs>\t+)?(?P<mark>[~@+-])?(?P<spec>\S+)(?P<config_tabs>\t+)?(?P<config>.+)?$', line)
 
         line_spec = {
+            **default,
             'spec': m.group('spec'),
             'mark': m.group('mark'),
             'type': 'package' if '/' in m.group('spec') else 'set',
