@@ -73,7 +73,7 @@ class Spec_configuration_mixin:
 
                     # parse the configuration line, generate the intermediate
                     # spec for later generation
-                    self._pickup_spec(self._parse_line_as_spec(line))
+                    self._pickup_spec(self._parse_line_as_spec(line, { 'is_dependecy': True }))
 
                     continue
                 pass
@@ -143,17 +143,17 @@ class Spec_configuration_mixin:
             pass
         return
 
-    def _parse_line_as_spec(self, line: str, default={}):
+    def _parse_line_as_spec(self, line: str, advice={}):
         # parse the line
         m = re.match(r'^(?P<leading_tabs>\t+)?(?P<mark>[~@+-])?(?P<spec>\S+)(?P<config_tabs>\t+)?(?P<config>.+)?$', line)
 
         line_spec = {
-            **default,
             'spec': m.group('spec'),
             'mark': m.group('mark'),
             'type': 'package' if '/' in m.group('spec') else 'set',
             'is_dependecy': m.group('leading_tabs') is not None,
-            'has_wildcard': True if '*' in m.group('spec') else False
+            'has_wildcard': True if '*' in m.group('spec') else False,
+            **advice
         }
 
         # parse the configuration
