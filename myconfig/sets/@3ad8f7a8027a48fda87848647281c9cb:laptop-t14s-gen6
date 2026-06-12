@@ -24,9 +24,94 @@ laptop
 */*					amd64_cpu_features:	mmxext ssse3 sse4.1 sse4.2 sse4a avx avx2 fma3 fma4
 */*					x86_cpu_features:	mmxext ssse3 sse4.1 sse4.2 sse4a avx avx2 fma3 fma4
 
-## c3:00.0 Display controller: Advanced Micro Devices, Inc. [AMD/ATI] Strix [Radeon 880M / 890M] (rev d2)
+## c3:00.0 Display controller: Advanced Micro Devices, Inc. [AMD/ATI] Strix [Radeon 880M / 890M] [1002:150e] (rev d2)
+# kernel driver: amdgpu
+# kernel module: amdgpu
 		x11-dri/mesa		llvm video_drivers:	radeon gallium-swrast
 		x11-dri/libdrm		video_drivers:		radeon
+
+### https://linux-hardware.org/index.php?id=pci:1022-15e2-1022-15e2
+
+#00:00.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Strix/Strix Halo Root Complex [1022:1507]
+# CONFIG_AMD_NB
+# CONFIG_AMD_PMF CONFIG_X86
+# CONFIG_AMD_PMC CONFIG_X86
+
+#00:00.2 IOMMU: Advanced Micro Devices, Inc. [AMD] Strix/Strix Halo IOMMU [1022:1508]
+#00:01.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Strix/Strix Halo Dummy Host Bridge [1022:1509]
+# CONFIG_AGP CONFIG_AGP_AMD
+
+#00:01.1 PCI bridge: Advanced Micro Devices, Inc. [AMD] Strix/Strix Halo PCIe USB4 Bridge [1022:150a] pcieport
+#00:01.2 PCI bridge: Advanced Micro Devices, Inc. [AMD] Strix/Strix Halo PCIe USB4 Bridge [1022:150a] pcieport
+#00:02.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Strix/Strix Halo Dummy Host Bridge [1022:1509]
+# CONFIG_AGP CONFIG_AGP_AMD
+
+#00:02.1 PCI bridge: Advanced Micro Devices, Inc. [AMD] Strix/Strix Halo GPP Bridge [1022:150b] pcieport
+#00:02.3 PCI bridge: Advanced Micro Devices, Inc. [AMD] Strix/Strix Halo GPP Bridge [1022:150b] pcieport
+#00:03.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Strix/Strix Halo Dummy Host Bridge [1022:1509]
+#00:08.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Strix/Strix Halo Dummy Host Bridge [1022:1509]
+#00:08.1 PCI bridge: Advanced Micro Devices, Inc. [AMD] Strix/Strix Halo Internal GPP Bridge to Bus [C:A] [1022:150c] pcieport
+#00:08.2 PCI bridge: Advanced Micro Devices, Inc. [AMD] Strix/Strix Halo Internal GPP Bridge to Bus [C:A] [1022:150c] pcieport
+#00:08.3 PCI bridge: Advanced Micro Devices, Inc. [AMD] Strix/Strix Halo Internal GPP Bridge to Bus [C:A] [1022:150c] pcieport
+
+#00:14.0 SMBus: Advanced Micro Devices, Inc. [AMD] FCH SMBus Controller [1022:790b] (rev 71) piix4_smbus i2c_piix4, sp5100_tco
+# CONFIG_I2C_PIIX4
+# CONFIG_SP5100_TCO CONFIG_WATCHDOG
+
+#00:14.3 ISA bridge: Advanced Micro Devices, Inc. [AMD] FCH LPC Bridge [1022:790e] (rev 51)
+#00:18.0 Host bridge: Advanced Micro Devices, Inc. [AMD] Strix Data Fabric; Function 0 [1022:16f8]
+# CONFIG_AGP CONFIG_AGP_AMD
+
+#00:18.1 Host bridge: Advanced Micro Devices, Inc. [AMD] Strix Data Fabric; Function 1 [1022:16f9]
+# CONFIG_AGP CONFIG_AGP_AMD
+
+#00:18.2 Host bridge: Advanced Micro Devices, Inc. [AMD] Strix Data Fabric; Function 2 [1022:16fa]
+# CONFIG_AGP CONFIG_AGP_AMD
+
+#00:18.3 Host bridge: Advanced Micro Devices, Inc. [AMD] Strix Data Fabric; Function 3 [1022:16fb] k10temp
+# CONFIG_AGP CONFIG_AGP_AMD
+# CONFIG_AMD_NB
+# CONFIG_HWMON CONFIG_SENSORS_K10TEMP
+
+#00:18.4 Host bridge: Advanced Micro Devices, Inc. [AMD] Strix Data Fabric; Function 4 [1022:16fc]
+# CONFIG_AGP CONFIG_AGP_AMD
+# CONFIG_AMD_NB
+
+#00:18.5 Host bridge: Advanced Micro Devices, Inc. [AMD] Strix Data Fabric; Function 5 [1022:16fd]
+# CONFIG_AGP CONFIG_AGP_AMD
+
+#00:18.6 Host bridge: Advanced Micro Devices, Inc. [AMD] Strix Data Fabric; Function 6 [1022:16fe]
+# CONFIG_AGP CONFIG_AGP_AMD
+
+#00:18.7 Host bridge: Advanced Micro Devices, Inc. [AMD] Strix Data Fabric; Function 7 [1022:16ff]
+# CONFIG_AGP CONFIG_AGP_AMD
+
+#c1:00.0 Non-Volatile memory controller: KIOXIA Corporation NVMe SSD Controller XG8 [1e0f:0010] (rev 01) nvme
+#c2:00.0 Network controller: Qualcomm Technologies, Inc WCN785x Wi-Fi 7(802.11be) 320MHz 2x2 [FastConnect 7800] [17cb:1107] (rev 01) ath12k_pci ath12k
+# CONFIG_ATH12K CONFIG_WLAN CONFIG_WLAN_VENDOR_ATH
+
+#c3:00.1 Audio device: Advanced Micro Devices, Inc. [AMD/ATI] Radeon High Definition Audio Controller [1002:1640] snd_hda_intel
+#c3:00.2 Encryption controller: Advanced Micro Devices, Inc. [AMD] Strix/Krackan/Strix Halo CCP/ASP [1022:17e0] ccp
+# CONFIG_CRYPTO CONFIG_CRYPTO_DEV_CCP CONFIG_CRYPTO_DEV_CCP_DD CONFIG_PCI
+
+#c3:00.4 USB controller: Advanced Micro Devices, Inc. [AMD] Device 151e [1022:151e] xhci_hcd xhci_pci
+
+#c3:00.5 Multimedia controller: Advanced Micro Devices, Inc. [AMD] Audio Coprocessor [1022:15e2] (rev 70) snd_acp_pci snd_acp_pci, snd_sof_amd_acp70
+# CONFIG_SND CONFIG_SND_SOC CONFIG_SND_SOC_SOF_AMD_ACP70 CONFIG_SND_SOC_SOF_AMD_TOPLEVEL
+
+#c3:00.6 Audio device: Advanced Micro Devices, Inc. [AMD] Ryzen HD Audio Controller [1022:15e3] snd_hda_intel
+# CONFIG_SND CONFIG_SND_HDA CONFIG_SND_HDA_INTEL
+
+#c4:00.0 Non-Essential Instrumentation [1300]: Advanced Micro Devices, Inc. [AMD] Strix/Strix Halo PCIe Dummy Function [1022:150d]
+#c4:00.1 Signal processing controller: Advanced Micro Devices, Inc. [AMD] Strix/Krackan/Strix Halo Neural Processing Unit [1022
+:17f0] (rev 10) amdxdna
+# CONFIG_DRM_ACCEL CONFIG_DRM_ACCEL_AMDXDNA
+
+#c5:00.0 USB controller: Advanced Micro Devices, Inc. [AMD] Device 151f [1022:151f] xhci_hcd
+#c5:00.3 USB controller: Advanced Micro Devices, Inc. [AMD] Device 151a [1022:151a] xhci_hcd
+#c5:00.4 USB controller: Advanced Micro Devices, Inc. [AMD] Device 151b [1022:151b] xhci_hcd
+#c5:00.5 USB controller: Advanced Micro Devices, Inc. [AMD] USB4 Router 0 [1022:151c] thunderbolt
+#c5:00.6 USB controller: Advanced Micro Devices, Inc. [AMD] USB4 Router 1 [1022:151d] thunderbolt
 
 ## bluetooth
 #net-wireless/blueman
