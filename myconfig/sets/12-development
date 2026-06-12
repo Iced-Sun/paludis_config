@@ -10,7 +10,6 @@ app-editors/emacs	modules
 # tree-sitter: https://github.com/casouri/tree-sitter-module/releases
 @app-editors/emacs	MY__EXTRA_ECONF: ^--with-tree-sitter
 dev-libs/tree-sitter:0
-	dev-lang/rust	polly
 		net-misc/curl	http2
 			net-libs/nghttp2	utils
 @app-editors/emacs	MY__EXTRA_ECONF: ^--with-sqlite3

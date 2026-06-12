@@ -7,12 +7,9 @@ compositor/sway				tray
 virtual/notification-daemon
 x11-libs/libnotify
 
-## pipewire
-media/pipewire				alsa dbus
-media/wireplumber			lua_abis: 5.5
-
 ## XDG Desktop Portal
 sys-apps/xdg-desktop-portal
+		media/wireplumber	lua_abis: 5.5
 
 ## XDG Desktop Portal backends: gtk+wlr
 sys-apps/xdg-desktop-portal-gtk

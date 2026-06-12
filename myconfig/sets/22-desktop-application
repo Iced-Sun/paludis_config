@@ -4,7 +4,7 @@
 x11-apps/xdg-utils
 
 ## media
-media/mpv				alsa pipewire
+media/mpv				alsa
 	media-libs/libass		fontconfig
 	media-libs/libplacebo		providers: glslang
 media-gfx/swayimg			png jpeg tiff svg

@@ -3,9 +3,6 @@ media-libs/freetype				harfbuzz
 	x11-libs/harfbuzz
 		dev-libs/icu			parts: development
 
-dev-lang/clang					polly
-	dev-lang/llvm				polly
-
 app-text/poppler				lcms
 
 dev-libs/glib					gobject-introspection
