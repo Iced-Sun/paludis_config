@@ -15,7 +15,7 @@ app-admin/sudo
 app-terminal/tmux	jemalloc
 
 ## monitoring
-sys-process/htop	cgroups			&-dev-util/strace sys-process/lsof
+sys-process/htop	cgroups			&sys-process/lsof
 
 ## networks
 net-wireless/iwd

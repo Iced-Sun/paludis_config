@@ -51,17 +51,12 @@ net-www/firefox				lto
 #		net-libs/nghttp2	-systemd utils
 
 ## productivity
-net-im/feishu				wayland
+net-im/feishu
 app-office/gnucash			gnucash dbi
 	media-libs/libavif		providers: aom
 	dev-libs/libdbi-drivers		sqlite
 
 gnome-desktop/gnome-pomodoro
-
-	dev-util/strace			providers: libunwind
-## m32 is not enabled
-@dev-util/strace			MY__EXTRA_ECONF: ^--disable-mpers
-@dev-util/strace			CFLAGS: $-flto
 
 ## postgres
 dev-db/postgresql			-* icu python postgresql_extensions: pgcrypto

@@ -19,6 +19,10 @@ transient
 ## host
 laptop
 
+## feature
+# too heavy for this computer box
+-lto
+
 ### hardware
 ## Intel(R) Core(TM) i7-6600U CPU @ 2.60GHz
 */*					amd64_cpu_features:	         sse3 ssse3 sse4.1 sse4.2 avx avx2 fma3 fma4
@@ -77,6 +81,3 @@ app-crypt/gnupg
 
 ## zig
 dev-lang/zig
-
-## m32 is not enabled
-@dev-util/strace			MY__EXTRA_ECONF: ^--disable-mpers

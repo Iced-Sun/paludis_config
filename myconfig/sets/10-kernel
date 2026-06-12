@@ -1,5 +1,5 @@
 ### console: linux kernel
-sys-apps/systemd			efi	providers: -*	&sys-boot/dracut
+sys-apps/systemd			efi	providers: &sys-boot/dracut
 	sys-boot/dracut
 		sys-apps/coreutils	xattr
 firmware/linux-firmware
