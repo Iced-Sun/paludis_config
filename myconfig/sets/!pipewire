@@ -1,5 +1,6 @@
 ## pipewire & session manager
 media/pipewire		alsa dbus
+media-sound/pipemixer
 
 ## selected applications
-media/mpv		-alsa pipewire
+	media/mpv	-alsa pipewire

@@ -1,8 +1,9 @@
 ### enable LTO by default
-@*/*			CFLAGS:			^-flto
+*/*					lto
+@*/*					CFLAGS: ^-flto
 ## ffmpeg needs its own options (--enable-pic --enable-lto); have to modify the exlib directly
 # no effect since ffmpeg doesn't use econf()
-#@media/ffmpeg:7	MY__EXTRA_ECONF:	^--enable-pic ^--enable-lto
+#@media/ffmpeg:7			MY_EXTRA_ECONF:	^--enable-pic ^--enable-lto
 
 ### LTO breaks quite a few packages
 ## Toolchains should not be lto-compiled, or it breaks the building or even causes runtime segfaults.

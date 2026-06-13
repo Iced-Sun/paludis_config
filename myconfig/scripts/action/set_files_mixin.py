@@ -16,7 +16,7 @@ class Set_files_mixin:
             'machine-set': sorted(set_path.glob('@*')),
             'general-set': sorted(set_path.glob('[0-9a-z][0-9]-*')),
             'weak-set': sorted(set_path.glob('[?][0-9][0-9]-*')),
-            'feature-set': sorted(set_path.glob('[?][!0-9]*'))
+            'feature-set': sorted(set_path.glob('!*'))
         }
 
         ## feature-set could be deactivated by the machine-set

@@ -73,7 +73,7 @@ class Spec_configuration_mixin:
 
                     # parse the configuration line, generate the intermediate
                     # spec for later generation
-                    self._pickup_spec(self._parse_line_as_spec(line, { 'is_dependecy': True }))
+                    self._pickup_spec(self._parse_line_as_spec(line))
 
                     continue
                 pass
