@@ -34,8 +34,3 @@ fonts/LxgwWenKai
 
 ## notification
 	app-editors/emacs		dbus
-
-## prebuilt
-dev-db/dbeaver
-	virtual/jdk			providers: openjdk-bin
-		app-misc/ca-certificates	ca-trust

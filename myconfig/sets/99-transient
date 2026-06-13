@@ -1,14 +1,1 @@
 */*::subi					BUILD_OPTIONS:		work=preserve
-
-# build-fix
-	net-libs/webkit X
-
-# curl
-	net-misc/curl				brotli http2
-		net-libs/nghttp2		utils
-
-# no geoclue
-	net-libs/webkit				&-gps/geoclue
-		media-libs/libavif		providers: aom
-
-dev-util/strace		providers: elfutils-unwind

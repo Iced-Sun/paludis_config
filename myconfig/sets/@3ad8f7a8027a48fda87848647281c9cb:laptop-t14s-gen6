@@ -130,10 +130,9 @@ app-virtualization/moby
 app-virtualization/docker-cli
 
 ## firefox: compile in this box
-net-www/firefox				lto
+net-www/firefox
 	dev-lang/python			sqlite
 	dev-lang/node
-#		net-libs/nghttp2	-systemd utils
 
 ## productivity
 net-im/feishu
@@ -145,3 +144,8 @@ gnome-desktop/gnome-pomodoro
 
 ## postgres
 dev-db/postgresql			-* icu python postgresql_extensions: pgcrypto
+
+## prebuilt
+dev-db/dbeaver
+	virtual/jdk			providers: openjdk-bin
+		app-misc/ca-certificates	ca-trust
